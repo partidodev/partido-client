@@ -1,72 +1,30 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:partido_flutter/authentication_service.dart';
+import 'package:partido_flutter/api.dart';
 import 'package:partido_flutter/create_bill_page.dart';
 import 'package:partido_flutter/home_page.dart';
 import 'package:partido_flutter/login_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:retrofit/dio.dart';
 
-AuthenticationService authenticationService = new AuthenticationService();
+import 'api_service.dart';
+import 'model/user.dart';
 
 void main() async {
   // Set default home.
   Widget _defaultHome = new LoginPage();
 
-  InterceptorsWrapper interceptors =
-      InterceptorsWrapper(onRequest: (RequestOptions options) async {
-    // Do something before request is sent
+  Api api = ApiService.getApi();
 
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    List<String> cookies = preferences.getStringList('COOKIES');
-
-    String cookiestring = "";
-    for (String cookie in cookies) {
-      List<String> parser = cookie.split(";");
-      cookiestring = cookiestring + parser[0] + "; ";
+  // Check if User is already logged in (if valid cookie is existing) and
+  // set first screen to HomePage or continue with LoginPage
+  try {
+    HttpResponse<User> _result = await api.getLoginStatus();
+    if (_result.response.statusCode == 200) {
+      _defaultHome = new HomePage();
     }
+  } catch (e) { /* Error 401, ignore and continue with LoginPage */ }
 
-    options.headers.putIfAbsent("Cookie", () => cookiestring);
 
-    return options; //continue
-  }, onResponse: (Response response) async {
-    if (response.headers['Set-Cookie'].isNotEmpty) {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      List<String> cookies = preferences.getStringList('COOKIES');
-
-      for (String header in response.headers['Set-Cookie']) {
-        if (header.contains("remember-me")) {
-          for (String cookie in cookies) {
-            if (cookie.contains("remember-me")) {
-              cookies.remove(cookie);
-            }
-          }
-        }
-        if (header.contains("JSESSIONID")) {
-          for (String cookie in cookies) {
-            if (cookie.contains("JSESSIONID")) {
-              cookies.remove(cookie);
-            }
-          }
-        }
-        cookies.add(header);
-      }
-
-      preferences.clear();
-      await preferences.setStringList("COOKIES", cookies);
-    }
-
-    return response;
-  });
-
-  Dio dio = new Dio();
-  dio.interceptors.add(interceptors);
-
-  bool _result = await authenticationService.autoLogin();
-  if (_result) {
-    _defaultHome = new HomePage();
-  }
-
-  // Run app!
+  // Run the app!
   runApp(new MaterialApp(
     title: 'Partido',
     theme: ThemeData(
@@ -74,6 +32,7 @@ void main() async {
     ),
     routes: {
       '/': (_) => _defaultHome,
+      '/home': (_) => HomePage(),
       '/login': (_) => LoginPage(),
       '/create-bill': (_) => CreateBillPage(),
     },

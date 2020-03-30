@@ -1,36 +1,71 @@
 import 'package:dio/dio.dart';
-import 'package:partido_flutter/model/bill.dart';
-import 'package:partido_flutter/model/group.dart';
-import 'package:partido_flutter/model/new_user.dart';
-import 'package:partido_flutter/model/report.dart';
-import 'package:partido_flutter/model/user.dart';
-import 'package:retrofit/retrofit.dart';
+import 'package:flutter/material.dart';
+import 'package:partido_flutter/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-@RestApi(baseUrl: "http://fosforito.net:8090/")
-abstract class ApiService {
-  factory ApiService(Dio dio) = _ApiService;
+class ApiService {
 
-  @POST("/login")
-  Future<Response> login(@Body() String data);
+  static InterceptorsWrapper interceptors =
+  InterceptorsWrapper(onRequest: (RequestOptions options) async {
+    // Do something before request is sent
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String> cookies = preferences.getStringList('COOKIES');
 
-  @POST("/users")
-  Future<User> register(@Body() NewUser data);
+    String cookiestring = "";
+    if (cookies != null) {
+      for (String cookie in cookies) {
+        List<String> parser = cookie.split(";");
+        cookiestring = cookiestring + parser[0] + "; ";
+      }
 
-  @GET("/currentuser")
-  Future<User> getCurrentUser();
+      options.headers.putIfAbsent("Cookie", () => cookiestring);
+    }
+    return options; //continue
+  }, onResponse: (Response response) async {
+    if (response.headers['Set-Cookie'].isNotEmpty) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      List<String> cookies = preferences.getStringList('COOKIES');
 
-  @GET("/currentusergroups")
-  Future<List<Group>> getMyGroups();
+      if (cookies == null) {
+        cookies = new List();
+      }
 
-  @GET("/groups/{groupId}")
-  Future<Group> getGroup(@Path("groupId") int groupId);
+      var toRemove = [];
+      var toAdd = [];
+      for (String header in response.headers['Set-Cookie']) {
+        if (header.contains("remember-me")) {
+          cookies.forEach( (cookie) {
+            if (cookie.contains("remember-me")) {
+              toRemove.add(cookie);
+            }
+          });
+        }
+        if (header.contains("JSESSIONID")) {
+          cookies.forEach( (cookie) {
+            if (cookie.contains("JSESSIONID")) {
+              toRemove.add(cookie);
+            }
+          });
+        }
+        toAdd.add(header);
+      }
 
-  @GET("/groups/{groupId}/bills")
-  Future<List<Bill>> getBillsForGroup(@Path("groupId") int groupId);
+      cookies.removeWhere((cookie) => toRemove.contains(cookie));
+      for (String cookie in toAdd) {
+        cookies.add(cookie);
+      }
 
-  @POST("/groups/{groupId}/bills")
-  Future<Bill> createBill(@Body() Bill bill, @Path("groupId") int groupId);
+      preferences.clear();
+      await preferences.setStringList("COOKIES", cookies);
+    }
 
-  @GET("/groups/{groupId}/report")
-  Future<Report> getReportForGroup(@Path("groupId") int groupId);
+    return response;
+  });
+
+  static Api getApi() {
+    Dio dio = new Dio();
+    dio.interceptors.add(interceptors);
+    return new Api(dio);
+  }
 }

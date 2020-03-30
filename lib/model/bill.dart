@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:partido_flutter/model/split.dart';
 
+part 'bill.g.dart';
+
 @JsonSerializable()
 class Bill {
   int id;
@@ -23,4 +25,5 @@ class Bill {
       this.splits});
 
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
+  Map<String, dynamic> toJson() => _$BillToJson(this);
 }
