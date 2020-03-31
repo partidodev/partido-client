@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   Api api = ApiService.getApi();
 
   void _logout() async {
@@ -30,43 +29,56 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Provider.of<AppState>(context, listen: false).changeSelectedGroup(1);
-    return new Scaffold(
-      appBar: AppBar(
-        title: Text('Partido'),
-        actions: <Widget>[
-          PopupMenuButton<HomeMenuItem>(
-            onSelected: (HomeMenuItem result) {
-              if (result == HomeMenuItem.logout) {
-                _logout();
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<HomeMenuItem>>[
-              const PopupMenuItem<HomeMenuItem>(
-                value: HomeMenuItem.logout,
-                child: Text('Logout'),
-              ),
-            ],
-          )
-        ],
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Consumer<AppState>(
-              builder: (context, appState, child) {
-                return Text('No. items: ${appState.getBills().length}');
-              },
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Partido'),
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.assessment)),
+                Tab(icon: Icon(Icons.format_list_bulleted)),
+              ],
             ),
-          ],
+            actions: <Widget>[
+              PopupMenuButton<HomeMenuItem>(
+                onSelected: (HomeMenuItem result) {
+                  if (result == HomeMenuItem.logout) {
+                    _logout();
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<HomeMenuItem>>[
+                  const PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.logout,
+                    child: Text('Logout'),
+                  ),
+                ],
+              )
+            ],
+          ),
+          body: TabBarView(
+            children: [
+              Consumer<AppState>(
+                builder: (context, appState, child) {
+                  return Text('No. items: ${appState.getBills().length}');
+                },
+              ),
+              Icon(Icons.directions_car),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/create-bill');
+            },
+            tooltip: 'Create bill',
+            child: Icon(Icons.add),
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/create-bill');
-        },
-        tooltip: 'Create bill',
-        child: Icon(Icons.add),
       ),
     );
   }
