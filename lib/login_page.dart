@@ -49,12 +49,11 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 20.0),
               Text(
                 'Login',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 15.0),
               TextFormField(
                   onSaved: (value) => _email = value,
                   keyboardType: TextInputType.emailAddress,
@@ -69,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 onChanged: _onRememberMeChanged,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 15.0),
               RaisedButton(
                   child: Text("Login"),
                   onPressed: () {
