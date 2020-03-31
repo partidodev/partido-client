@@ -17,9 +17,10 @@ class _Api implements Api {
   String baseUrl;
 
   @override
-  login(username, password) async {
+  login(username, password, rememberMe) async {
     ArgumentError.checkNotNull(username, 'username');
     ArgumentError.checkNotNull(password, 'password');
+    ArgumentError.checkNotNull(rememberMe, 'rememberMe');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = FormData();
@@ -29,7 +30,28 @@ class _Api implements Api {
     if (password != null) {
       _data.fields.add(MapEntry('password', password));
     }
+    if (rememberMe != null) {
+      _data.fields.add(MapEntry('remember-me', rememberMe));
+    }
     final Response<String> _result = await _dio.request('/login',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return Future.value(httpResponse);
+  }
+
+  @override
+  logout() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<String> _result = await _dio.request('/logout',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

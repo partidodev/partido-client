@@ -4,11 +4,15 @@ import 'package:partido_flutter/create_bill_page.dart';
 import 'package:partido_flutter/home_page.dart';
 import 'package:partido_flutter/login_page.dart';
 import 'package:retrofit/dio.dart';
+import 'package:logger/logger.dart';
 
 import 'api_service.dart';
 import 'model/user.dart';
 
 void main() async {
+
+  var logger = Logger(printer: PrettyPrinter(),);
+
   // Set default home.
   Widget _defaultHome = new LoginPage();
 
@@ -21,8 +25,9 @@ void main() async {
     if (_result.response.statusCode == 200) {
       _defaultHome = new HomePage();
     }
-  } catch (e) { /* Error 401, ignore and continue with LoginPage */ }
-
+  } catch (e) {
+    logger.d("Opening login page, session invalid, code 401=Unauthorized", e);
+  }
 
   // Run the app!
   runApp(new MaterialApp(

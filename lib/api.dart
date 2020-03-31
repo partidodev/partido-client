@@ -10,12 +10,17 @@ part 'api.g.dart';
 
 @RestApi(baseUrl: "http://fosforito.net:8090/")
 abstract class Api {
-
   factory Api(Dio dio) = _Api;
 
   @POST("/login")
   @MultiPart()
-  Future<HttpResponse<String>> login(@Part("username") String username, @Part("password") String password);
+  Future<HttpResponse<String>> login(
+      @Part("username") String username,
+      @Part("password") String password,
+      @Part("remember-me") String rememberMe);
+
+  @POST("/logout")
+  Future<HttpResponse<String>> logout();
 
   @POST("/users")
   Future<User> register(@Body() NewUser data);

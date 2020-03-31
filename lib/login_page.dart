@@ -17,14 +17,24 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _password;
   String _email;
+  bool _rememberMe = false;
+  int rememberMeNumber = 0;
 
   void _login() async {
-    HttpResponse<String> response = await api.login("$_email", "$_password");
+    HttpResponse<String> response = await api.login("$_email", "$_password", "$rememberMeNumber");
     if (response.response.statusCode == 200) {
-      //Navigator.pushNamed(context, '/home');
       Navigator.pushReplacementNamed(context, "/home");
     }
   }
+
+  void _onRememberMeChanged(bool newValue) => setState(() {
+    _rememberMe = newValue;
+    if (_rememberMe) {
+      rememberMeNumber = 1;
+    } else {
+      rememberMeNumber = 0;
+    }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +63,12 @@ class _LoginPageState extends State<LoginPage> {
                   onSaved: (value) => _password = value,
                   obscureText: true,
                   decoration: InputDecoration(labelText: "Password")),
+              CheckboxListTile(
+                title: Text("Remember me"),
+                value: _rememberMe,
+                onChanged: _onRememberMeChanged,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
               SizedBox(height: 20.0),
               RaisedButton(
                   child: Text("Login"),

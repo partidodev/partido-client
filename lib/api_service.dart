@@ -23,7 +23,7 @@ class ApiService {
     }
     return options; //continue
   }, onResponse: (Response response) async {
-    if (response.headers['Set-Cookie'].isNotEmpty) {
+    if (response.headers['Set-Cookie'] != null && response.headers['Set-Cookie'].isNotEmpty) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       List<String> cookies = preferences.getStringList('COOKIES');
 
