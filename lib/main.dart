@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:partido_flutter/api.dart';
-import 'package:partido_flutter/create_bill_page.dart';
-import 'package:partido_flutter/home_page.dart';
-import 'package:partido_flutter/login_page.dart';
+import 'package:partido_client/api/api.dart';
+import 'package:partido_client/pages/create_bill_page.dart';
+import 'package:partido_client/pages/home_page.dart';
+import 'package:partido_client/pages/login_page.dart';
+import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:logger/logger.dart';
 
-import 'api_service.dart';
+import 'api/api_service.dart';
+import 'app_state.dart';
 import 'model/user.dart';
 
 void main() async {
@@ -30,16 +32,21 @@ void main() async {
   }
 
   // Run the app!
-  runApp(new MaterialApp(
-    title: 'Partido',
-    theme: ThemeData(
-      primarySwatch: Colors.green,
-    ),
-    routes: {
-      '/': (_) => _defaultHome,
-      '/home': (_) => HomePage(),
-      '/login': (_) => LoginPage(),
-      '/create-bill': (_) => CreateBillPage(),
-    },
-  ));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: new MaterialApp(
+        title: 'Partido',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        routes: {
+          '/': (_) => _defaultHome,
+          '/home': (_) => HomePage(),
+          '/login': (_) => LoginPage(),
+          '/create-bill': (_) => CreateBillPage(),
+        },
+      )
+    )
+  );
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:retrofit/dio.dart';
 
-import 'api.dart';
-import 'api_service.dart';
+import '../api/api.dart';
+import '../api/api_service.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);

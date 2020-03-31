@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:partido_flutter/model/bill.dart';
-import 'package:partido_flutter/model/group.dart';
-import 'package:partido_flutter/model/new_user.dart';
-import 'package:partido_flutter/model/report.dart';
-import 'package:partido_flutter/model/user.dart';
+import 'package:partido_client/model/bill.dart';
+import 'package:partido_client/model/group.dart';
+import 'package:partido_client/model/new_user.dart';
+import 'package:partido_client/model/report.dart';
+import 'package:partido_client/model/user.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api.g.dart';

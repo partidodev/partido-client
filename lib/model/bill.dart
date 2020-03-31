@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:partido_flutter/model/split.dart';
+import 'package:partido_client/model/split.dart';
 
 part 'bill.g.dart';
 

@@ -1,8 +1,10 @@
+import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'api.dart';
-import 'api_service.dart';
+import '../api/api.dart';
+import '../api/api_service.dart';
+import '../app_state.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -27,9 +29,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<AppState>(context, listen: false).changeSelectedGroup(1);
     return new Scaffold(
       appBar: AppBar(
-        //leading: new Container(),
         title: Text('Partido'),
         actions: <Widget>[
           PopupMenuButton<HomeMenuItem>(
@@ -51,8 +53,10 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Home / Dashboard',
+            Consumer<AppState>(
+              builder: (context, appState, child) {
+                return Text('No. items: ${appState.getBills().length}');
+              },
             ),
           ],
         ),
