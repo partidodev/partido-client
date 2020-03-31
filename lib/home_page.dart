@@ -8,16 +8,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       appBar: AppBar(
+        //leading: new Container(),
         title: Text('Partido'),
       ),
       body: Center(
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
@@ -27,7 +26,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.pushNamed(context, '/create-bill'); },
+        onPressed: () {
+          Navigator.pushNamed(context, '/create-bill');
+        },
         tooltip: 'Create bill',
         child: Icon(Icons.add),
       ),

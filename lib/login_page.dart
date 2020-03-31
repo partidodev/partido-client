@@ -12,7 +12,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
@@ -22,15 +21,16 @@ class _LoginPageState extends State<LoginPage> {
   void _login() async {
     HttpResponse<String> response = await api.login("$_email", "$_password");
     if (response.response.statusCode == 200) {
-      Navigator.pushNamed(context, '/home');
+      //Navigator.pushNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, "/home");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Partido'),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -54,14 +54,16 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   decoration: InputDecoration(labelText: "Password")),
               SizedBox(height: 20.0),
-              RaisedButton(child: Text("Login"), onPressed: () {
-                // save the fields..
-                final form = _formKey.currentState;
-                form.save();
-                if (form.validate()) {
-                  _login();
-                }
-              }),
+              RaisedButton(
+                  child: Text("Login"),
+                  onPressed: () {
+                    // save the fields..
+                    final form = _formKey.currentState;
+                    form.save();
+                    if (form.validate()) {
+                      _login();
+                    }
+                  }),
             ],
           ),
         ),
