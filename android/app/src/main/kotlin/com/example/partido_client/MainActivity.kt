@@ -1,4 +1,4 @@
-package com.example.partido_flutter
+package com.example.partido_client
 
 import android.os.Bundle
 
