@@ -3,22 +3,22 @@ import 'package:partido_client/model/bill.dart';
 
 import 'api/api.dart';
 import 'api/api_service.dart';
+import 'model/group.dart';
 import 'model/user.dart';
 
 class AppState extends ChangeNotifier {
-
   Api api = ApiService.getApi();
 
   User _currentUser = null;
+  Group _selectedGroup = null;
   List<Bill> _bills = [];
   int _selectedGroupId = -1;
 
-  void initAppState() {
+  void initAppState() async {
+    _currentUser = await api.getCurrentUser();
     changeSelectedGroup(1);
   }
 
-  // Adds [bill] to current group.
-  // This is the only way to modify the bill list from the outside.
   void addBill(Bill bill) {
     _bills.add(bill);
     notifyListeners();
@@ -35,11 +35,28 @@ class AppState extends ChangeNotifier {
 
   void changeSelectedGroup(int groupId) async {
     _selectedGroupId = groupId;
-    this._bills = await api.getBillsForGroup(groupId);
+    _selectedGroup = await api.getGroup(groupId);
+    _bills = await api.getBillsForGroup(groupId);
     notifyListeners();
   }
 
-  int getSelectedGroup() {
+  int getSelectedGroupId() {
     return _selectedGroupId;
+  }
+
+  Group getSelectedGroup() {
+    return _selectedGroup;
+  }
+
+  User getCurrentUser() {
+    return _currentUser;
+  }
+
+  User getUserFromGroupById(int creatorId) {
+    for (User user in _selectedGroup.users) {
+      if (user.id == creatorId) {
+        return user;
+      }
+    }
   }
 }

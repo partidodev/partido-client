@@ -63,12 +63,25 @@ class _HomePageState extends State<HomePage> {
           ),
           body: TabBarView(
             children: [
+              Icon(Icons.directions_car),
               Consumer<AppState>(
                 builder: (context, appState, child) {
-                  return Text('No. items: ${appState.getBills().length}');
+                  //return Text('No. items: ${appState.getBills().length}');
+                  return ListView.separated(
+                    separatorBuilder: (context, index) => Divider(height: 0.0,),
+                    itemCount: appState.getBills().length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.shopping_cart),
+                        title: Text('${appState.getBills()[index].description}'),
+                        subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                        trailing: Text('${appState.getBills()[index].totalAmount} ${appState.getSelectedGroup().currency}'),
+
+                      );
+                    },
+                  );
                 },
               ),
-              Icon(Icons.directions_car),
             ],
           ),
           floatingActionButton: FloatingActionButton(
