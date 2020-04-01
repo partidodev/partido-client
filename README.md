@@ -16,16 +16,16 @@ Or use this command to continuously regenerate the code if files are changed:
 To prepare a release, adjust the marked entries in the file `<partido-project>/android/app/build.gradle`:
 
 ```
-    compileSdkVersion 29                                <-- set to latest SDK
+    compileSdkVersion 29                                # <-- set to latest SDK
 
     ...
 
     defaultConfig {
         applicationId "net.fosforito.partido"
-        minSdkVersion 24                                <-- (optional, if needed)
-        targetSdkVersion 29                             <-- set to latest SDK
-        versionCode 4                                   <-- increment every release by 1 
-        versionName "2.0.0"                             <-- increment every release pendinng on changes
+        minSdkVersion 24                                # <-- (optional, if needed)
+        targetSdkVersion 29                             # <-- set to latest SDK
+        versionCode 4                                   # <-- increment every release by 1 
+        versionName "2.0.0"                             # <-- increment every release pendinng on changes
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 ```
