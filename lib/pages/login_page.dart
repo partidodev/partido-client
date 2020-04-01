@@ -69,7 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               SizedBox(height: 15.0),
-              RaisedButton(
+              MaterialButton(
+                  minWidth: double.infinity,
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
                   child: Text("Login"),
                   onPressed: () {
                     // save the fields..

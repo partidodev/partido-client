@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppState>(context, listen: false).changeSelectedGroup(1);
+    Provider.of<AppState>(context, listen: false).initAppState();
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.green,

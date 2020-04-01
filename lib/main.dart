@@ -13,7 +13,7 @@ import 'model/user.dart';
 
 void main() async {
 
-  var logger = Logger(printer: PrettyPrinter(),);
+  var logger = Logger(printer: PrettyPrinter());
 
   // Set default home.
   Widget _defaultHome = new LoginPage();
@@ -28,7 +28,7 @@ void main() async {
       _defaultHome = new HomePage();
     }
   } catch (e) {
-    logger.d("Opening login page, session invalid, code 401=Unauthorized", e);
+    logger.d("Opening login page. Session invalid or server problem?", e);
   }
 
   // Run the app!

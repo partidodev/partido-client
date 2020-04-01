@@ -41,7 +41,7 @@ abstract class Api {
   Future<List<Bill>> getBillsForGroup(@Path("groupId") int groupId);
 
   @POST("/groups/{groupId}/bills")
-  Future<Bill> createBill(@Body() Bill bill, @Path("groupId") int groupId);
+  Future<HttpResponse<Bill>> createBill(@Body() Bill bill, @Path("groupId") int groupId);
 
   @GET("/groups/{groupId}/report")
   Future<Report> getReportForGroup(@Path("groupId") int groupId);

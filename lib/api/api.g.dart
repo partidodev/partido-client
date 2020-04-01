@@ -198,7 +198,8 @@ class _Api implements Api {
             baseUrl: baseUrl),
         data: _data);
     final value = Bill.fromJson(_result.data);
-    return Future.value(value);
+    final httpResponse = HttpResponse(value, _result);
+    return Future.value(httpResponse);
   }
 
   @override

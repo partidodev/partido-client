@@ -10,15 +10,21 @@ import 'model/user.dart';
 class AppState extends ChangeNotifier {
   Api api = ApiService.getApi();
 
-  User _currentUser = null;
-  Group _selectedGroup = null;
+  User _currentUser = new User();
+  Group _selectedGroup = new Group(users: []);
   List<Bill> _bills = [];
-  Report _report = null;
+  Report _report = new Report(balances: []);
   int _selectedGroupId = -1;
 
   void initAppState() async {
     _currentUser = await api.getCurrentUser();
-    changeSelectedGroup(1);
+    changeSelectedGroup(1); // TODO: remove fix group selection and get this number from SharedPrefs
+  }
+
+  void refreshAppState() async {
+    _bills = await api.getBillsForGroup(_selectedGroupId);
+    _report = await api.getReportForGroup(_selectedGroupId);
+    notifyListeners();
   }
 
   void addBill(Bill bill) {
@@ -42,8 +48,8 @@ class AppState extends ChangeNotifier {
   void changeSelectedGroup(int groupId) async {
     _selectedGroupId = groupId;
     _selectedGroup = await api.getGroup(groupId);
-    _bills = await api.getBillsForGroup(groupId);
-    _report = await api.getReportForGroup(groupId);
+    _bills = await api.getBillsForGroup(_selectedGroupId);
+    _report = await api.getReportForGroup(_selectedGroupId);
     notifyListeners();
   }
 
