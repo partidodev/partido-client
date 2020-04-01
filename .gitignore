@@ -90,3 +90,5 @@ doc/api/
 *.js.deps
 *.js.map
 
+# keep upload credentials for Google Play Console outside of git repo
+android/key.properties
