@@ -61,13 +61,21 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          body: TabBarView(
-            children: [
-              Icon(Icons.directions_car),
-              Consumer<AppState>(
-                builder: (context, appState, child) {
-                  //return Text('No. items: ${appState.getBills().length}');
-                  return ListView.separated(
+          body: Consumer<AppState>(
+            builder: (context, appState, child) {
+              return TabBarView(
+                children: [
+                  ListView.builder(
+                    itemCount: appState.getReport().balances.length,
+                    itemBuilder: (context, index) {
+                      return Card(child: ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                        trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                      ));
+                    },
+                  ),
+                  ListView.separated(
                     separatorBuilder: (context, index) => Divider(height: 0.0,),
                     itemCount: appState.getBills().length,
                     itemBuilder: (context, index) {
@@ -75,14 +83,13 @@ class _HomePageState extends State<HomePage> {
                         leading: Icon(Icons.shopping_cart),
                         title: Text('${appState.getBills()[index].description}'),
                         subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                        trailing: Text('${appState.getBills()[index].totalAmount} ${appState.getSelectedGroup().currency}'),
-
+                        trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
                       );
                     },
-                  );
-                },
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {

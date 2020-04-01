@@ -4,6 +4,7 @@ import 'package:partido_client/model/bill.dart';
 import 'api/api.dart';
 import 'api/api_service.dart';
 import 'model/group.dart';
+import 'model/report.dart';
 import 'model/user.dart';
 
 class AppState extends ChangeNotifier {
@@ -12,6 +13,7 @@ class AppState extends ChangeNotifier {
   User _currentUser = null;
   Group _selectedGroup = null;
   List<Bill> _bills = [];
+  Report _report = null;
   int _selectedGroupId = -1;
 
   void initAppState() async {
@@ -33,10 +35,15 @@ class AppState extends ChangeNotifier {
     return _bills;
   }
 
+  Report getReport() {
+    return _report;
+  }
+
   void changeSelectedGroup(int groupId) async {
     _selectedGroupId = groupId;
     _selectedGroup = await api.getGroup(groupId);
     _bills = await api.getBillsForGroup(groupId);
+    _report = await api.getReportForGroup(groupId);
     notifyListeners();
   }
 
