@@ -12,13 +12,21 @@ class AppState extends ChangeNotifier {
 
   User _currentUser = new User();
   Group _selectedGroup = new Group(users: []);
+  List<Group> _myGroups = [];
   List<Bill> _bills = [];
   Report _report = new Report(balances: []);
   int _selectedGroupId = -1;
 
   void initAppState() async {
     _currentUser = await api.getCurrentUser();
-    changeSelectedGroup(1); // TODO: remove fix group selection and get this number from SharedPrefs
+    // TODO: remove fix group selection and get this number from SharedPrefs; must be loaded before the following
+    if (_selectedGroupId == -1) {
+      _selectedGroupId = 1;
+    }
+    reloadReport();
+    reloadSelectedGroup();
+    reloadBillList();
+    reloadMyGroups();
   }
 
   void refreshAppState() async {
@@ -47,9 +55,28 @@ class AppState extends ChangeNotifier {
 
   void changeSelectedGroup(int groupId) async {
     _selectedGroupId = groupId;
-    _selectedGroup = await api.getGroup(groupId);
+    reloadSelectedGroup();
+    reloadBillList();
+    reloadReport();
+  }
+
+  void reloadSelectedGroup() async {
+    _selectedGroup = await api.getGroup(_selectedGroupId);
+    notifyListeners();
+  }
+
+  void reloadBillList() async {
     _bills = await api.getBillsForGroup(_selectedGroupId);
+    notifyListeners();
+  }
+
+  void reloadReport() async {
     _report = await api.getReportForGroup(_selectedGroupId);
+    notifyListeners();
+  }
+
+  void reloadMyGroups() async {
+    _myGroups = await api.getMyGroups();
     notifyListeners();
   }
 
@@ -63,6 +90,10 @@ class AppState extends ChangeNotifier {
 
   User getCurrentUser() {
     return _currentUser;
+  }
+
+  List<Group> getMyGroups() {
+    return _myGroups;
   }
 
   User getUserFromGroupById(int creatorId) {

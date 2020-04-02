@@ -26,6 +26,50 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future _openGroupsDialog() async {
+    await showDialog(
+        context: context,
+        child: Consumer<AppState>(builder: (context, appState, child) {
+          return new SimpleDialog(
+            title: new Text("My Groups"),
+            children: <Widget>[
+              new SimpleDialogOption(
+                child: new Text("Standard"),
+                onPressed: () {
+                  Navigator.pop(
+                      context,
+                      Provider.of<AppState>(context, listen: false)
+                          .changeSelectedGroup(1));
+                },
+              ),
+              new SimpleDialogOption(
+                child: new Text("Testgruppe"),
+                onPressed: () {
+                  Navigator.pop(
+                      context,
+                      Provider.of<AppState>(context, listen: false)
+                          .changeSelectedGroup(2));
+                },
+              ),
+              new SimpleDialogOption(
+                child: new Text("Create new Group"),
+                onPressed: () {
+                  Navigator.pop(context, "");
+                },
+              )
+            ],
+          );
+        }));
+  }
+
+  Color _getColorForNumberBalance(String number) {
+    if (double.parse(number) >= 0) {
+      return Color.fromRGBO(0, 0, 0, 1);
+    } else {
+      return Color.fromRGBO(235, 64, 52, 1);
+    }
+}
+
   @override
   Widget build(BuildContext context) {
     Provider.of<AppState>(context, listen: false).initAppState();
@@ -45,17 +89,34 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.group),
+                tooltip: "Groups",
+                onPressed: _openGroupsDialog,
+              ),
               PopupMenuButton<HomeMenuItem>(
                 onSelected: (HomeMenuItem result) {
-                  if (result == HomeMenuItem.logout) {
+                  if (result == HomeMenuItem.account) {
                     _logout();
+                  } else if (result == HomeMenuItem.about) {
+                    // About dialog
+                  } else if (result == HomeMenuItem.feedback) {
+                    // Feedback
                   }
                 },
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<HomeMenuItem>>[
                   const PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.logout,
-                    child: Text('Logout'),
+                    value: HomeMenuItem.account,
+                    child: Text('Account (Logout)'),
+                  ),
+                  const PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.about,
+                    child: Text('About Partido'),
+                  ),
+                  const PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.feedback,
+                    child: Text('Send Feedback'),
                   ),
                 ],
               )
@@ -66,24 +127,35 @@ class _HomePageState extends State<HomePage> {
               return TabBarView(
                 children: [
                   ListView.builder(
+                    padding: EdgeInsets.only(bottom: 70),
                     itemCount: appState.getReport().balances.length,
                     itemBuilder: (context, index) {
-                      return Card(child: ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                        trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
-                      ));
+                      return Card(
+                          child: ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                            trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                              style: TextStyle(color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2))),
+                            ),
+                          )
+                      );
                     },
                   ),
                   ListView.separated(
-                    separatorBuilder: (context, index) => Divider(height: 0.0,),
+                    padding: EdgeInsets.only(bottom: 70),
+                    separatorBuilder: (context, index) => Divider(
+                      height: 0.0,
+                    ),
                     itemCount: appState.getBills().length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         leading: Icon(Icons.shopping_cart),
-                        title: Text('${appState.getBills()[index].description}'),
-                        subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                        trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                        title:
+                            Text('${appState.getBills()[index].description}'),
+                        subtitle: Text(
+                            '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                        trailing: Text(
+                            '${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
                       );
                     },
                   ),
@@ -104,4 +176,4 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-enum HomeMenuItem { logout }
+enum HomeMenuItem { account, about, feedback }

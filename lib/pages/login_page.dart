@@ -5,6 +5,7 @@ import '../api/api.dart';
 import '../api/api_service.dart';
 
 class LoginPage extends StatefulWidget {
+
   LoginPage({Key key}) : super(key: key);
 
   @override
@@ -12,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
