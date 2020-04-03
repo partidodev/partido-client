@@ -56,7 +56,6 @@ class ApiService {
         cookies.add(cookie);
       }
 
-      preferences.clear();
       await preferences.setStringList("COOKIES", cookies);
     }
 

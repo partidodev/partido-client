@@ -130,8 +130,8 @@ class _HomePageState extends State<HomePage> {
                       Card(
                         child: ListTile(
                           //leading: Icon(Icons.group, size: 30),
-                          title: Text('${appState.getSelectedGroup().name}'),
-                          subtitle: Text('${appState.getSelectedGroup().status}'),
+                          title: appState.getSelectedGroup().name != null ? Text('${appState.getSelectedGroup().name}') : Text('Welcome to Partido!'),
+                          subtitle: appState.getSelectedGroup().status != null ? Text('${appState.getSelectedGroup().status}') : Text('Select or create a group to start!'),
                         ),
                       ),
                       ListView.builder(

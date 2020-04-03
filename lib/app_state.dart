@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:partido_client/model/bill.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
 import 'api/api_service.dart';
@@ -15,13 +16,15 @@ class AppState extends ChangeNotifier {
   List<Group> _myGroups = [];
   List<Bill> _bills = [];
   Report _report = new Report(balances: []);
-  int _selectedGroupId = -1;
+  int _selectedGroupId = -1; // iniial value to check if id must be loaded or not
+
+
 
   void initAppState() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     _currentUser = await api.getCurrentUser();
-    // TODO: remove fix group selection and get this number from SharedPrefs; must be loaded before the following
     if (_selectedGroupId == -1) {
-      _selectedGroupId = 1;
+      _selectedGroupId = preferences.getInt('SELECTEDGROUP');
     }
     reloadReport();
     reloadSelectedGroup();
@@ -54,6 +57,8 @@ class AppState extends ChangeNotifier {
   }
 
   void changeSelectedGroup(int groupId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setInt("SELECTEDGROUP", groupId);
     _selectedGroupId = groupId;
     reloadSelectedGroup();
     reloadBillList();
