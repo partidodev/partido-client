@@ -105,10 +105,21 @@ class _CreateBillPageState extends State<CreateBillPage> {
                   onSaved: (value) => _description = value,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(labelText: "Description")),
-              TextFormField(
-                  onSaved: (value) => _amount = value,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(labelText: "Amount")),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                      child: TextFormField(
+                        onSaved: (value) => _amount = value,
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(labelText: "Amount"),
+                        textAlign: TextAlign.end,
+                      ),
+                  ),
+                  Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
+                  style: TextStyle(height: 3.2),),
+                ],
+              ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Date"),
                 controller: dateController,
