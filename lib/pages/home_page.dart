@@ -30,33 +30,31 @@ class _HomePageState extends State<HomePage> {
     await showDialog(
         context: context,
         child: Consumer<AppState>(builder: (context, appState, child) {
-          return new SimpleDialog(
-            title: new Text("My Groups"),
-            children: <Widget>[
-              new SimpleDialogOption(
-                child: new Text("Standard"),
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+            title: Text("My Groups"),
+            content: Container(
+                width: double.maxFinite,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: appState.getMyGroups().length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                        contentPadding: EdgeInsets.only(left: 24),
+                        title: Text(appState.getMyGroups()[index].name),
+                        onTap: () => { appState.changeSelectedGroup(appState.getMyGroups()[index].id), Navigator.of(context).pop() },
+                    );
+                  },
+                ),
+              ),
+            actions: <Widget>[
+              FlatButton(
+                padding: EdgeInsets.only(left: 14, right: 14),
+                child: Text('Create new'),
                 onPressed: () {
-                  Navigator.pop(
-                      context,
-                      Provider.of<AppState>(context, listen: false)
-                          .changeSelectedGroup(1));
+                  Navigator.of(context).pop();
                 },
               ),
-              new SimpleDialogOption(
-                child: new Text("Testgruppe"),
-                onPressed: () {
-                  Navigator.pop(
-                      context,
-                      Provider.of<AppState>(context, listen: false)
-                          .changeSelectedGroup(2));
-                },
-              ),
-              new SimpleDialogOption(
-                child: new Text("Create new Group"),
-                onPressed: () {
-                  Navigator.pop(context, "");
-                },
-              )
             ],
           );
         }));
@@ -126,20 +124,33 @@ class _HomePageState extends State<HomePage> {
             builder: (context, appState, child) {
               return TabBarView(
                 children: [
-                  ListView.builder(
-                    padding: EdgeInsets.only(bottom: 70),
-                    itemCount: appState.getReport().balances.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                          child: ListTile(
-                            leading: Icon(Icons.person),
-                            title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                            trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
-                              style: TextStyle(color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2))),
-                            ),
-                          )
-                      );
-                    },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Card(
+                        child: ListTile(
+                          //leading: Icon(Icons.group, size: 30),
+                          title: Text('${appState.getSelectedGroup().name}'),
+                          subtitle: Text('${appState.getSelectedGroup().status}'),
+                        ),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(bottom: 70),
+                        itemCount: appState.getReport().balances.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                              child: ListTile(
+                                leading: Icon(Icons.person),
+                                title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                                trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                  style: TextStyle(color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2))),
+                                ),
+                              )
+                          );
+                        },
+                      ),
+                    ],
                   ),
                   ListView.separated(
                     padding: EdgeInsets.only(bottom: 70),
