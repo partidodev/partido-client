@@ -87,7 +87,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
   @override
   Widget build(BuildContext context) {
-    //_mySelection == null ? _mySelection = Provider.of<AppState>(context, listen: false).getCurrentUser().id : null;
+    _fromUserId = _fromUserId ?? Provider.of<AppState>(context, listen: false).getCurrentUser().id;
     return Scaffold(
       appBar: AppBar(
         title: Text('Create bill'),
