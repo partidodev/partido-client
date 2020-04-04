@@ -26,8 +26,9 @@ class _CreateBillPageState extends State<CreateBillPage> {
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
-  String _description = null;
-  String _amount = null;
+  int _fromUserId;
+  String _description;
+  String _amount;
 
   DateTime _selectedDate = DateTime.now();
   var dateController = new TextEditingController(text: "${DateTime.now().toLocal()}".split(' ')[0]);
@@ -47,19 +48,18 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
   void _createBill() async {
 
-    User mainUser = Provider.of<AppState>(context, listen: false).getCurrentUser(); // TODO: make paying user selectable via drop down in form
     double normalizedAmount = double.parse(_amount.toString().replaceAll(",", "."));
 
     Bill bill = new Bill();
     bill.description = _description;
     bill.totalAmount = normalizedAmount;
-    bill.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);//_selectedDate.toString().substring(0, 19); // Format "2019-03-01 00:00:00"
+    bill.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
     bill.parts = Provider.of<AppState>(context, listen: false).getSelectedGroup().users.length; // Every user pays the same amout but current user pays everything at first
     List<Split> splits = [];
 
     for (User user in Provider.of<AppState>(context, listen: false).getSelectedGroup().users) {
       Split split = new Split();
-      if (user.id == mainUser.id) {
+      if (user.id == _fromUserId) {
         split.main = true;
         split.paid = normalizedAmount;
       } else {
@@ -87,6 +87,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
   @override
   Widget build(BuildContext context) {
+    //_mySelection == null ? _mySelection = Provider.of<AppState>(context, listen: false).getCurrentUser().id : null;
     return Scaffold(
       appBar: AppBar(
         title: Text('Create bill'),
@@ -99,10 +100,26 @@ class _CreateBillPageState extends State<CreateBillPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("From me\nFor all users in group"),
+              Text("NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
               SizedBox(height: 15.0),
+              DropdownButtonFormField<int>(
+                isDense: true,
+                isExpanded: true,
+                decoration: InputDecoration(labelText: "From"),
+                value: _fromUserId,
+                onChanged: (int value) {
+                  setState(() { _fromUserId = value; });
+                },
+                items: Provider.of<AppState>(context, listen: false).getSelectedGroup().users.map((User user) {
+                  return new DropdownMenuItem<int>(
+                    value: user.id,
+                    child: new Text(user.username),
+                  );
+                }).toList(),
+              ),
               TextFormField(
                   onSaved: (value) => _description = value,
+                  textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(labelText: "Description")),
               Row(

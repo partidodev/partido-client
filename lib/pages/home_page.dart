@@ -1,6 +1,8 @@
+import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
@@ -66,7 +68,16 @@ class _HomePageState extends State<HomePage> {
     } else {
       return Color.fromRGBO(235, 64, 52, 1);
     }
-}
+  }
+
+  _launchFeedbackUrl() async {
+    const url = 'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                   } else if (result == HomeMenuItem.about) {
                     // About dialog
                   } else if (result == HomeMenuItem.feedback) {
-                    // Feedback
+                    _launchFeedbackUrl();
                   }
                 },
                 itemBuilder: (BuildContext context) =>
@@ -132,6 +143,7 @@ class _HomePageState extends State<HomePage> {
                           //leading: Icon(Icons.group, size: 30),
                           title: appState.getSelectedGroup().name != null ? Text('${appState.getSelectedGroup().name}') : Text('Welcome to Partido!'),
                           subtitle: appState.getSelectedGroup().status != null ? Text('${appState.getSelectedGroup().status}') : Text('Select or create a group to start!'),
+                          trailing: appState.getSelectedGroup().status != null ? IconButton(icon: Icon(Icons.chevron_right), onPressed: () {},) : null,
                         ),
                       ),
                       ListView.builder(
@@ -161,12 +173,17 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         leading: Icon(Icons.shopping_cart),
-                        title:
-                            Text('${appState.getBills()[index].description}'),
-                        subtitle: Text(
-                            '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                        trailing: Text(
-                            '${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                        title: Text('${appState.getBills()[index].description}'),
+                        subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                        trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BillDetailsPage(bill: appState.getBills()[index]),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
