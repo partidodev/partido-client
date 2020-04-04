@@ -35,7 +35,7 @@ class BillDetailsPage extends StatelessWidget {
                   ListTile(
                     title: Text('${bill.description}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
                     subtitle: Text('Created by ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
-                    leading: Icon(Icons.description, size: 40, color: Colors.green,),
+                    leading: Icon(Icons.description, size: 40, color: Colors.green),
                   ),
                 ],
               ),
@@ -61,7 +61,7 @@ class BillDetailsPage extends StatelessWidget {
                   children: <Widget>[
                     ListTile(
                       title: Text('Splits', style: TextStyle(fontWeight: FontWeight.w500)),
-                      leading: Icon(Icons.call_split),
+                      leading: Icon(Icons.call_split, color: Colors.green),
                     ),
                     Divider(),
                     ListView.builder(

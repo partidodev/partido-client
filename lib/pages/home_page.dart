@@ -146,29 +146,36 @@ class _HomePageState extends State<HomePage> {
                           trailing: appState.getSelectedGroup().status != null ? IconButton(icon: Icon(Icons.chevron_right), onPressed: () {},) : null,
                         ),
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(bottom: 70),
-                        itemCount: appState.getReport().balances.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                              child: ListTile(
-                                leading: Icon(Icons.person),
-                                title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                                trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
-                                  style: TextStyle(color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2))),
-                                ),
-                              )
-                          );
-                        },
+                      Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            ListTile(
+                              title: Text('Balances', style: TextStyle(fontWeight: FontWeight.w500)),
+                              leading: Icon(Icons.equalizer, color: Colors.green),
+                            ),
+                            Divider(),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: appState.getReport().balances.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Icon(Icons.person),
+                                  title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                                  trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                    style: TextStyle(color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2))),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                   ListView.separated(
                     padding: EdgeInsets.only(bottom: 70),
-                    separatorBuilder: (context, index) => Divider(
-                      height: 0.0,
-                    ),
+                    separatorBuilder: (context, index) => Divider(height: 0.0),
                     itemCount: appState.getBills().length,
                     itemBuilder: (context, index) {
                       return ListTile(
