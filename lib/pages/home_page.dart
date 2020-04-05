@@ -93,146 +93,155 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Provider.of<AppState>(context, listen: false).initAppState();
     return DefaultTabController(
-        length: 2,
-        child: Consumer<AppState>(builder: (context, appState, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Partido'),
-              bottom: TabBar(
-                tabs: [
-                  Tab(icon: Icon(Icons.assessment)),
-                  Tab(icon: Icon(Icons.format_list_bulleted)),
-                ],
-              ),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.group),
-                  tooltip: "Groups",
-                  onPressed: _openGroupsDialog,
-                ),
-                PopupMenuButton<HomeMenuItem>(
-                  onSelected: (HomeMenuItem result) {
-                    if (result == HomeMenuItem.account) {
-                      _logout();
-                    } else if (result == HomeMenuItem.about) {
-                      // About dialog
-                    } else if (result == HomeMenuItem.feedback) {
-                      _launchFeedbackUrl();
-                    }
-                  },
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<HomeMenuItem>>[
-                    const PopupMenuItem<HomeMenuItem>(
-                      value: HomeMenuItem.account,
-                      child: Text('Account (Logout)'),
-                    ),
-                    const PopupMenuItem<HomeMenuItem>(
-                      value: HomeMenuItem.about,
-                      child: Text('About Partido'),
-                    ),
-                    const PopupMenuItem<HomeMenuItem>(
-                      value: HomeMenuItem.feedback,
-                      child: Text('Send Feedback'),
-                    ),
-                  ],
-                )
+      length: 2,
+      child: Consumer<AppState>(builder: (context, appState, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Partido'),
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.assessment)),
+                Tab(icon: Icon(Icons.format_list_bulleted)),
               ],
             ),
-            body: TabBarView(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Card(
-                      child: ListTile(
-                        //leading: Icon(Icons.group, size: 30),
-                        title: appState.getSelectedGroup().name != null
-                            ? Text('${appState.getSelectedGroup().name}')
-                            : Text('Welcome to Partido!'),
-                        subtitle: appState.getSelectedGroup().status != null
-                            ? Text('${appState.getSelectedGroup().status}')
-                            : Text('Select or create a group to start!'),
-                        trailing: appState.getSelectedGroup().status != null
-                            ? IconButton(
-                                icon: Icon(Icons.chevron_right),
-                                onPressed: () {},
-                              )
-                            : null,
-                      ),
-                    ),
-                    if (appState.getSelectedGroup().name != null)
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.group),
+                tooltip: "Groups",
+                onPressed: _openGroupsDialog,
+              ),
+              PopupMenuButton<HomeMenuItem>(
+                onSelected: (HomeMenuItem result) {
+                  if (result == HomeMenuItem.account) {
+                    _logout();
+                  } else if (result == HomeMenuItem.about) {
+                    // About dialog
+                  } else if (result == HomeMenuItem.feedback) {
+                    _launchFeedbackUrl();
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<HomeMenuItem>>[
+                  const PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.account,
+                    child: Text('Account (Logout)'),
+                  ),
+                  const PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.about,
+                    child: Text('About Partido'),
+                  ),
+                  const PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.feedback,
+                    child: Text('Send Feedback'),
+                  ),
+                ],
+              )
+            ],
+          ),
+          body: TabBarView(
+            children: [
+              ListView(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
                       Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ListTile(
-                              title: Text('Balances',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w500)),
-                              leading:
-                                  Icon(Icons.equalizer, color: Colors.green),
-                            ),
-                            Divider(),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: appState.getReport().balances.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: Icon(Icons.person),
-                                  title: Text(
-                                      '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                                  trailing: Text(
-                                    '${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
-                                    style: TextStyle(
-                                        color: _getColorForNumberBalance(
-                                            appState
-                                                .getReport()
-                                                .balances[index]
-                                                .balance
-                                                .toStringAsFixed(2))),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                        child: ListTile(
+                          //leading: Icon(Icons.group, size: 30),
+                          title: appState.getSelectedGroup().name != null
+                              ? Text('${appState.getSelectedGroup().name}')
+                              : Text('Welcome to Partido!'),
+                          subtitle: appState.getSelectedGroup().status != null
+                              ? Text('${appState.getSelectedGroup().status}')
+                              : Text('Select or create a group to start!'),
+                          trailing: appState.getSelectedGroup().status != null
+                              ? IconButton(
+                                  icon: Icon(Icons.chevron_right),
+                                  onPressed: () {},
+                                )
+                              : null,
                         ),
                       ),
-                  ],
-                ),
-                ListView.separated(
-                  padding: EdgeInsets.only(bottom: 70),
-                  separatorBuilder: (context, index) => Divider(height: 0.0),
-                  itemCount: appState.getBills().length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Icon(Icons.shopping_cart),
-                      title: Text('${appState.getBills()[index].description}'),
-                      subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                      trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
-                      onTap: () {
-                        Navigator.push(context,
-                          MaterialPageRoute(
-                            builder: (context) => BillDetailsPage(bill: appState.getBills()[index]),
+                      if (appState.getSelectedGroup().name != null)
+                        Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListTile(
+                                title: Text('Balances',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500)),
+                                leading:
+                                    Icon(Icons.equalizer, color: Colors.green),
+                              ),
+                              Divider(),
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: appState.getReport().balances.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    leading: Icon(Icons.person),
+                                    title: Text(
+                                        '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                                    trailing: Text(
+                                      '${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                      style: TextStyle(
+                                          color: _getColorForNumberBalance(
+                                              appState
+                                                  .getReport()
+                                                  .balances[index]
+                                                  .balance
+                                                  .toStringAsFixed(2))),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed:  () {
-                if (appState.getSelectedGroup().name != null) {
-                  Navigator.pushNamed(context, '/create-bill');
-                }
-              },
-              tooltip: 'Create bill',
-              child: Icon(Icons.add),
-            ),
-          );
-        }),
-      );
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+              ListView.separated(
+                padding: EdgeInsets.only(bottom: 70),
+                separatorBuilder: (context, index) => Divider(height: 0.0),
+                itemCount: appState.getBills().length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(Icons.shopping_cart),
+                    title: Text('${appState.getBills()[index].description}'),
+                    subtitle: Text(
+                        '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                    trailing: Text(
+                        '${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BillDetailsPage(bill: appState.getBills()[index]),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              if (appState.getSelectedGroup().name != null) {
+                Navigator.pushNamed(context, '/create-bill');
+              }
+            },
+            tooltip: 'Create bill',
+            child: Icon(Icons.add),
+          ),
+        );
+      }),
+    );
   }
 }
 

@@ -50,72 +50,76 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text('Partido'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Login',
-                style: TextStyle(fontSize: 20),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Login',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(height: 15.0),
+                  TextFormField(
+                    onSaved: (value) => _email = value,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(labelText: "Email Address"),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter your email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    onSaved: (value) => _password = value,
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: "Password"),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text("Remember me"),
+                    value: _rememberMe,
+                    onChanged: _onRememberMeChanged,
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  SizedBox(height: 15.0),
+                  MaterialButton(
+                      minWidth: double.infinity,
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      child: Text("Login"),
+                      onPressed: () {
+                        final form = _formKey.currentState;
+                        form.save();
+                        if (form.validate()) {
+                          _login();
+                        }
+                      }),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.only(left: 14, right: 14),
+                      child: Text('Sign up'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 15.0),
-              TextFormField(
-                onSaved: (value) => _email = value,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: "Email Address"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter your email address';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                onSaved: (value) => _password = value,
-                obscureText: true,
-                decoration: InputDecoration(labelText: "Password"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              CheckboxListTile(
-                title: Text("Remember me"),
-                value: _rememberMe,
-                onChanged: _onRememberMeChanged,
-                controlAffinity: ListTileControlAffinity.leading,
-              ),
-              SizedBox(height: 15.0),
-              MaterialButton(
-                  minWidth: double.infinity,
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  child: Text("Login"),
-                  onPressed: () {
-                    final form = _formKey.currentState;
-                    form.save();
-                    if (form.validate()) {
-                      _login();
-                    }
-                  }),
-              SizedBox(
-                width: double.infinity,
-                child: FlatButton(
-                  padding: EdgeInsets.only(left: 14, right: 14),
-                  child: Text('Sign up'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

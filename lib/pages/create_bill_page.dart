@@ -20,7 +20,6 @@ class CreateBillPage extends StatefulWidget {
 }
 
 class _CreateBillPageState extends State<CreateBillPage> {
-
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
@@ -31,33 +30,41 @@ class _CreateBillPageState extends State<CreateBillPage> {
   String _amount;
 
   DateTime _selectedDate = DateTime.now();
-  var dateController = new TextEditingController(text: "${DateTime.now().toLocal()}".split(' ')[0]);
+  var dateController = new TextEditingController(
+      text: "${DateTime.now().toLocal()}".split(' ')[0]);
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: _selectedDate,
         firstDate: DateTime(2000, 1),
-        lastDate: DateTime(2100, 12)
-    );
+        lastDate: DateTime(2100, 12));
     if (picked != null && picked != _selectedDate) {
-      setState(() { _selectedDate = picked; });
+      setState(() {
+        _selectedDate = picked;
+      });
     }
     dateController.text = "${_selectedDate.toLocal()}".split(' ')[0];
   }
 
   void _createBill() async {
-
-    double normalizedAmount = double.parse(_amount.toString().replaceAll(",", "."));
+    double normalizedAmount =
+        double.parse(_amount.toString().replaceAll(",", "."));
 
     Bill bill = new Bill();
     bill.description = _description;
     bill.totalAmount = normalizedAmount;
-    bill.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    bill.parts = Provider.of<AppState>(context, listen: false).getSelectedGroup().users.length; // Every user pays the same amout but current user pays everything at first
+    bill.billingDate =
+        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
+    bill.parts = Provider.of<AppState>(context, listen: false)
+        .getSelectedGroup()
+        .users
+        .length; // Every user pays the same amout but current user pays everything at first
     List<Split> splits = [];
 
-    for (User user in Provider.of<AppState>(context, listen: false).getSelectedGroup().users) {
+    for (User user in Provider.of<AppState>(context, listen: false)
+        .getSelectedGroup()
+        .users) {
       Split split = new Split();
       if (user.id == _fromUserId) {
         split.main = true;
@@ -87,89 +94,109 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
   @override
   Widget build(BuildContext context) {
-    _fromUserId = _fromUserId ?? Provider.of<AppState>(context, listen: false).getCurrentUser().id;
+    _fromUserId = _fromUserId ??
+        Provider.of<AppState>(context, listen: false).getCurrentUser().id;
     return Scaffold(
       appBar: AppBar(
         title: Text('Create bill'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
-              SizedBox(height: 15.0),
-              DropdownButtonFormField<int>(
-                isDense: true,
-                isExpanded: true,
-                decoration: InputDecoration(labelText: "From"),
-                value: _fromUserId,
-                onChanged: (int value) {
-                  setState(() { _fromUserId = value; });
-                },
-                items: Provider.of<AppState>(context, listen: false).getSelectedGroup().users.map((User user) {
-                  return new DropdownMenuItem<int>(
-                    value: user.id,
-                    child: new Text(user.username),
-                  );
-                }).toList(),
-              ),
-              TextFormField(
-                  onSaved: (value) => _description = value,
-                  textCapitalization: TextCapitalization.sentences,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "Description"),
-                  validator: (value) {
-                    if (value.isEmpty) { return 'Please enter a description'; }
-                    if (value.length > 255) { return 'Max. 255 characters allowed'; }
-                    return null;
-                  },
-                ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                      child: TextFormField(
-                        onSaved: (value) => _amount = value,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
-                        decoration: InputDecoration(labelText: "Amount"),
-                        textAlign: TextAlign.end,
-                        validator: (value) {
-                          if (value.isEmpty) { return 'Please enter the total amount'; }
-                          return null;
-                        },
-                      ),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                      "NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
+                  SizedBox(height: 15.0),
+                  DropdownButtonFormField<int>(
+                    isDense: true,
+                    isExpanded: true,
+                    decoration: InputDecoration(labelText: "From"),
+                    value: _fromUserId,
+                    onChanged: (int value) {
+                      setState(() {
+                        _fromUserId = value;
+                      });
+                    },
+                    items: Provider.of<AppState>(context, listen: false)
+                        .getSelectedGroup()
+                        .users
+                        .map((User user) {
+                      return new DropdownMenuItem<int>(
+                        value: user.id,
+                        child: new Text(user.username),
+                      );
+                    }).toList(),
                   ),
-                  Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
-                  style: TextStyle(height: 3.2),),
+                  TextFormField(
+                    onSaved: (value) => _description = value,
+                    textCapitalization: TextCapitalization.sentences,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(labelText: "Description"),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a description';
+                      }
+                      if (value.length > 255) {
+                        return 'Max. 255 characters allowed';
+                      }
+                      return null;
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: TextFormField(
+                          onSaved: (value) => _amount = value,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          decoration: InputDecoration(labelText: "Amount"),
+                          textAlign: TextAlign.end,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter the total amount';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Text(
+                        "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
+                        style: TextStyle(height: 3.2),
+                      ),
+                    ],
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Date"),
+                    controller: dateController,
+                    readOnly: true,
+                    onTap: () => _selectDate(context),
+                  ),
+                  SizedBox(height: 15.0),
+                  MaterialButton(
+                      minWidth: double.infinity,
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      child: Text("Create bill"),
+                      onPressed: () {
+                        // save the fields..
+                        final form = _formKey.currentState;
+                        form.save();
+                        if (form.validate()) {
+                          _createBill();
+                        }
+                      }),
                 ],
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Date"),
-                controller: dateController,
-                readOnly: true,
-                onTap: () => _selectDate(context),
-              ),
-              SizedBox(height: 15.0),
-            MaterialButton(
-                minWidth: double.infinity,
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                child: Text("Create bill"),
-                onPressed: () {
-                  // save the fields..
-                  final form = _formKey.currentState;
-                  form.save();
-                  if (form.validate()) {
-                    _createBill();
-                  }
-                }),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
