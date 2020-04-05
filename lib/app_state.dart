@@ -41,6 +41,13 @@ class AppState extends ChangeNotifier {
     }
   }
 
+  void clearAppState() async {
+    _selectedGroupId = -1;
+    _selectedGroup = new Group(users: []);
+    _bills = [];
+    _report = new Report(balances: []);
+  }
+
   void refreshAppState() async {
     _bills = await api.getBillsForGroup(_selectedGroupId);
     _report = await api.getReportForGroup(_selectedGroupId);

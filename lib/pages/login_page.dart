@@ -6,8 +6,6 @@ import '../api/api.dart';
 import '../api/api_service.dart';
 
 class LoginPage extends StatefulWidget {
-
-
   LoginPage({Key key}) : super(key: key);
 
   @override
@@ -15,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
@@ -28,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() async {
     try {
-      HttpResponse<String> response = await api.login(
-          "$_email", "$_password", "$rememberMeNumber");
+      HttpResponse<String> response =
+          await api.login("$_email", "$_password", "$rememberMeNumber");
       if (response.response.statusCode == 200) {
         Navigator.pushReplacementNamed(context, "/home");
       }
@@ -39,13 +36,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onRememberMeChanged(bool newValue) => setState(() {
-    _rememberMe = newValue;
-    if (_rememberMe) {
-      rememberMeNumber = 1;
-    } else {
-      rememberMeNumber = 0;
-    }
-  });
+        _rememberMe = newValue;
+        if (_rememberMe) {
+          rememberMeNumber = 1;
+        } else {
+          rememberMeNumber = 0;
+        }
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -66,22 +63,26 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 15.0),
               TextFormField(
-                  onSaved: (value) => _email = value,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: "Email Address"),
-                  validator: (value) {
-                    if (value.isEmpty) { return 'Please enter your email address'; }
-                    return null;
-                  },
+                onSaved: (value) => _email = value,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(labelText: "Email Address"),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your email address';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
-                  onSaved: (value) => _password = value,
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: "Password"),
-                  validator: (value) {
-                    if (value.isEmpty) { return 'Please enter your password'; }
-                    return null;
-                  },
+                onSaved: (value) => _password = value,
+                obscureText: true,
+                decoration: InputDecoration(labelText: "Password"),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
               ),
               CheckboxListTile(
                 title: Text("Remember me"),
@@ -101,17 +102,16 @@ class _LoginPageState extends State<LoginPage> {
                     if (form.validate()) {
                       _login();
                     }
-                  }
-              ),
+                  }),
               SizedBox(
                 width: double.infinity,
                 child: FlatButton(
-                    padding: EdgeInsets.only(left: 14, right: 14),
-                    child: Text('Sign up'),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                  ),
+                  padding: EdgeInsets.only(left: 14, right: 14),
+                  child: Text('Sign up'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                ),
               ),
             ],
           ),

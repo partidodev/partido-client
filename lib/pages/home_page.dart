@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
     } finally {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.remove("COOKIES");
+      Provider.of<AppState>(context, listen: false).clearAppState();
     }
   }
 
@@ -40,19 +41,23 @@ class _HomePageState extends State<HomePage> {
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
             title: Text("My Groups"),
             content: Container(
-                width: double.maxFinite,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: appState.getMyGroups().length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        contentPadding: EdgeInsets.only(left: 24),
-                        title: Text(appState.getMyGroups()[index].name),
-                        onTap: () => { appState.changeSelectedGroup(appState.getMyGroups()[index].id), Navigator.of(context).pop() },
-                    );
-                  },
-                ),
+              width: double.maxFinite,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: appState.getMyGroups().length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.only(left: 24),
+                    title: Text(appState.getMyGroups()[index].name),
+                    onTap: () => {
+                      appState.changeSelectedGroup(
+                          appState.getMyGroups()[index].id),
+                      Navigator.of(context).pop()
+                    },
+                  );
+                },
               ),
+            ),
             actions: <Widget>[
               FlatButton(
                 padding: EdgeInsets.only(left: 14, right: 14),
@@ -75,7 +80,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchFeedbackUrl() async {
-    const url = 'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
+    const url =
+        'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -86,77 +92,85 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Provider.of<AppState>(context, listen: false).initAppState();
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: DefaultTabController(
+    return DefaultTabController(
         length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Partido'),
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.assessment)),
-                Tab(icon: Icon(Icons.format_list_bulleted)),
+        child: Consumer<AppState>(builder: (context, appState, child) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Partido'),
+              bottom: TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.assessment)),
+                  Tab(icon: Icon(Icons.format_list_bulleted)),
+                ],
+              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.group),
+                  tooltip: "Groups",
+                  onPressed: _openGroupsDialog,
+                ),
+                PopupMenuButton<HomeMenuItem>(
+                  onSelected: (HomeMenuItem result) {
+                    if (result == HomeMenuItem.account) {
+                      _logout();
+                    } else if (result == HomeMenuItem.about) {
+                      // About dialog
+                    } else if (result == HomeMenuItem.feedback) {
+                      _launchFeedbackUrl();
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<HomeMenuItem>>[
+                    const PopupMenuItem<HomeMenuItem>(
+                      value: HomeMenuItem.account,
+                      child: Text('Account (Logout)'),
+                    ),
+                    const PopupMenuItem<HomeMenuItem>(
+                      value: HomeMenuItem.about,
+                      child: Text('About Partido'),
+                    ),
+                    const PopupMenuItem<HomeMenuItem>(
+                      value: HomeMenuItem.feedback,
+                      child: Text('Send Feedback'),
+                    ),
+                  ],
+                )
               ],
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.group),
-                tooltip: "Groups",
-                onPressed: _openGroupsDialog,
-              ),
-              PopupMenuButton<HomeMenuItem>(
-                onSelected: (HomeMenuItem result) {
-                  if (result == HomeMenuItem.account) {
-                    _logout();
-                  } else if (result == HomeMenuItem.about) {
-                    // About dialog
-                  } else if (result == HomeMenuItem.feedback) {
-                    _launchFeedbackUrl();
-                  }
-                },
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuEntry<HomeMenuItem>>[
-                  const PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.account,
-                    child: Text('Account (Logout)'),
-                  ),
-                  const PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.about,
-                    child: Text('About Partido'),
-                  ),
-                  const PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.feedback,
-                    child: Text('Send Feedback'),
-                  ),
-                ],
-              )
-            ],
-          ),
-          body: Consumer<AppState>(
-            builder: (context, appState, child) {
-              return TabBarView(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Card(
-                        child: ListTile(
-                          //leading: Icon(Icons.group, size: 30),
-                          title: appState.getSelectedGroup().name != null ? Text('${appState.getSelectedGroup().name}') : Text('Welcome to Partido!'),
-                          subtitle: appState.getSelectedGroup().status != null ? Text('${appState.getSelectedGroup().status}') : Text('Select or create a group to start!'),
-                          trailing: appState.getSelectedGroup().status != null ? IconButton(icon: Icon(Icons.chevron_right), onPressed: () {},) : null,
-                        ),
+            body: TabBarView(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Card(
+                      child: ListTile(
+                        //leading: Icon(Icons.group, size: 30),
+                        title: appState.getSelectedGroup().name != null
+                            ? Text('${appState.getSelectedGroup().name}')
+                            : Text('Welcome to Partido!'),
+                        subtitle: appState.getSelectedGroup().status != null
+                            ? Text('${appState.getSelectedGroup().status}')
+                            : Text('Select or create a group to start!'),
+                        trailing: appState.getSelectedGroup().status != null
+                            ? IconButton(
+                                icon: Icon(Icons.chevron_right),
+                                onPressed: () {},
+                              )
+                            : null,
                       ),
-                      if (appState.getSelectedGroup().name != null) Card(
+                    ),
+                    if (appState.getSelectedGroup().name != null)
+                      Card(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             ListTile(
-                              title: Text('Balances', style: TextStyle(fontWeight: FontWeight.w500)),
-                              leading: Icon(Icons.equalizer, color: Colors.green),
+                              title: Text('Balances',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w500)),
+                              leading:
+                                  Icon(Icons.equalizer, color: Colors.green),
                             ),
                             Divider(),
                             ListView.builder(
@@ -165,9 +179,17 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   leading: Icon(Icons.person),
-                                  title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                                  trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
-                                    style: TextStyle(color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2))),
+                                  title: Text(
+                                      '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                                  trailing: Text(
+                                    '${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                    style: TextStyle(
+                                        color: _getColorForNumberBalance(
+                                            appState
+                                                .getReport()
+                                                .balances[index]
+                                                .balance
+                                                .toStringAsFixed(2))),
                                   ),
                                 );
                               },
@@ -175,41 +197,42 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                  ListView.separated(
-                    padding: EdgeInsets.only(bottom: 70),
-                    separatorBuilder: (context, index) => Divider(height: 0.0),
-                    itemCount: appState.getBills().length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Icon(Icons.shopping_cart),
-                        title: Text('${appState.getBills()[index].description}'),
-                        subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                        trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BillDetailsPage(bill: appState.getBills()[index]),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ],
-              );
-            },
-          ),
-          floatingActionButton:  FloatingActionButton(
-            onPressed: (Provider.of<AppState>(context, listen: false).getSelectedGroup().name != null) ? () { Navigator.pushNamed(context, '/create-bill'); } : null,
-            tooltip: 'Create bill',
-            child: Icon(Icons.add),
-          ),
-        ),
-      ),
-    );
+                  ],
+                ),
+                ListView.separated(
+                  padding: EdgeInsets.only(bottom: 70),
+                  separatorBuilder: (context, index) => Divider(height: 0.0),
+                  itemCount: appState.getBills().length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Icon(Icons.shopping_cart),
+                      title: Text('${appState.getBills()[index].description}'),
+                      subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                      trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                      onTap: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(
+                            builder: (context) => BillDetailsPage(bill: appState.getBills()[index]),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed:  () {
+                if (appState.getSelectedGroup().name != null) {
+                  Navigator.pushNamed(context, '/create-bill');
+                }
+              },
+              tooltip: 'Create bill',
+              child: Icon(Icons.add),
+            ),
+          );
+        }),
+      );
   }
 }
 
