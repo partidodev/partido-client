@@ -2,6 +2,7 @@ import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart';
@@ -25,6 +26,9 @@ class _HomePageState extends State<HomePage> {
       // Logout causes always a 401 or 302 (redirect to /login).
       // That's why we just catch the error and open login page.
       Navigator.pushReplacementNamed(context, "/login");
+    } finally {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.remove("COOKIES");
     }
   }
 
@@ -146,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                           trailing: appState.getSelectedGroup().status != null ? IconButton(icon: Icon(Icons.chevron_right), onPressed: () {},) : null,
                         ),
                       ),
-                      Card(
+                      if (appState.getSelectedGroup().name != null) Card(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -198,10 +202,8 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/create-bill');
-            },
+          floatingActionButton:  FloatingActionButton(
+            onPressed: (Provider.of<AppState>(context, listen: false).getSelectedGroup().name != null) ? () { Navigator.pushNamed(context, '/create-bill'); } : null,
             tooltip: 'Create bill',
             child: Icon(Icons.add),
           ),

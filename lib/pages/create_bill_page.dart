@@ -121,7 +121,13 @@ class _CreateBillPageState extends State<CreateBillPage> {
                   onSaved: (value) => _description = value,
                   textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "Description")),
+                  decoration: InputDecoration(labelText: "Description"),
+                  validator: (value) {
+                    if (value.isEmpty) { return 'Please enter a description'; }
+                    if (value.length > 255) { return 'Max. 255 characters allowed'; }
+                    return null;
+                  },
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -131,6 +137,10 @@ class _CreateBillPageState extends State<CreateBillPage> {
                         keyboardType: TextInputType.numberWithOptions(decimal: true),
                         decoration: InputDecoration(labelText: "Amount"),
                         textAlign: TextAlign.end,
+                        validator: (value) {
+                          if (value.isEmpty) { return 'Please enter the total amount'; }
+                          return null;
+                        },
                       ),
                   ),
                   Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",

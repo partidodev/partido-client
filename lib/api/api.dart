@@ -23,7 +23,7 @@ abstract class Api {
   Future<HttpResponse<String>> logout();
 
   @POST("/users")
-  Future<User> register(@Body() NewUser data);
+  Future<HttpResponse<User>> register(@Body() NewUser data);
 
   @GET("/currentuser")
   Future<User> getCurrentUser();

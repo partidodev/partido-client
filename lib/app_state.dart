@@ -16,20 +16,29 @@ class AppState extends ChangeNotifier {
   List<Group> _myGroups = [];
   List<Bill> _bills = [];
   Report _report = new Report(balances: []);
-  int _selectedGroupId = -1; // iniial value to check if id must be loaded or not
-
-
+  int _selectedGroupId = -1; // initial value to check if id must be loaded or not
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     _currentUser = await api.getCurrentUser();
+    _myGroups = await api.getMyGroups();
+    notifyListeners();
+    // Get current user and his groups first. Then check if user logged
+    // in has a preferred group to see and if he can get it's details.
+    // (the user may have logged in with an other account, where he cannot
+    // see the same groups as before)
     if (_selectedGroupId == -1) {
-      _selectedGroupId = preferences.getInt('SELECTEDGROUP');
+      int preferredGroupId = preferences.getInt('SELECTEDGROUP');
+      for (Group group in _myGroups) {
+        if (group.id == preferredGroupId) {
+          _selectedGroupId = preferredGroupId;
+          reloadReport();
+          reloadSelectedGroup();
+          reloadBillList();
+          break;
+        }
+      }
     }
-    reloadReport();
-    reloadSelectedGroup();
-    reloadBillList();
-    reloadMyGroups();
   }
 
   void refreshAppState() async {

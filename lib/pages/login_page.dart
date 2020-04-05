@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:retrofit/dio.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
 
 class LoginPage extends StatefulWidget {
+
 
   LoginPage({Key key}) : super(key: key);
 
@@ -13,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
 
@@ -23,9 +27,14 @@ class _LoginPageState extends State<LoginPage> {
   int rememberMeNumber = 0;
 
   void _login() async {
-    HttpResponse<String> response = await api.login("$_email", "$_password", "$rememberMeNumber");
-    if (response.response.statusCode == 200) {
-      Navigator.pushReplacementNamed(context, "/home");
+    try {
+      HttpResponse<String> response = await api.login(
+          "$_email", "$_password", "$rememberMeNumber");
+      if (response.response.statusCode == 200) {
+        Navigator.pushReplacementNamed(context, "/home");
+      }
+    } catch (w) {
+      logger.w('Login failed', w);
     }
   }
 
@@ -59,11 +68,21 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                   onSaved: (value) => _email = value,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: "Email Address")),
+                  decoration: InputDecoration(labelText: "Email Address"),
+                  validator: (value) {
+                    if (value.isEmpty) { return 'Please enter your email address'; }
+                    return null;
+                  },
+              ),
               TextFormField(
                   onSaved: (value) => _password = value,
                   obscureText: true,
-                  decoration: InputDecoration(labelText: "Password")),
+                  decoration: InputDecoration(labelText: "Password"),
+                  validator: (value) {
+                    if (value.isEmpty) { return 'Please enter your password'; }
+                    return null;
+                  },
+              ),
               CheckboxListTile(
                 title: Text("Remember me"),
                 value: _rememberMe,
@@ -77,13 +96,23 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: Colors.white,
                   child: Text("Login"),
                   onPressed: () {
-                    // save the fields..
                     final form = _formKey.currentState;
                     form.save();
                     if (form.validate()) {
                       _login();
                     }
-                  }),
+                  }
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: FlatButton(
+                    padding: EdgeInsets.only(left: 14, right: 14),
+                    child: Text('Sign up'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                  ),
+              ),
             ],
           ),
         ),
