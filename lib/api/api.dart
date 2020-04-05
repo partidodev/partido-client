@@ -34,6 +34,9 @@ abstract class Api {
   @GET("/currentusergroups")
   Future<List<Group>> getMyGroups();
 
+  @POST("/groups/")
+  Future<HttpResponse<Group>> createGroup(@Body() Group group);
+
   @GET("/groups/{groupId}")
   Future<Group> getGroup(@Path("groupId") int groupId);
 

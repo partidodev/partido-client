@@ -79,7 +79,7 @@ class BillDetailsPage extends StatelessWidget {
                       Divider(),
                       ListView.builder(
                         shrinkWrap: true,
-                        //padding: EdgeInsets.only(bottom: 70),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: bill.splits.length,
                         itemBuilder: (context, index) {
                           return ListTile(

@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.only(left: 14, right: 14),
                 child: Text('Create new'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/create-group');
                 },
               ),
             ],
