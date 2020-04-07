@@ -12,14 +12,12 @@ NewUser _$NewUserFromJson(Map<String, dynamic> json) {
   )
     ..id = json['id'] as int
     ..username = json['username'] as String
-    ..email = json['email'] as String
-    ..birthday = json['birthday'] as String;
+    ..email = json['email'] as String;
 }
 
 Map<String, dynamic> _$NewUserToJson(NewUser instance) => <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
       'email': instance.email,
-      'birthday': instance.birthday,
       'password': instance.password,
     };

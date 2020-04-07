@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:partido_client/model/group.dart';
+import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/report.dart';
 import 'package:partido_client/model/user.dart';
@@ -39,6 +40,9 @@ abstract class Api {
 
   @GET("/groups/{groupId}")
   Future<Group> getGroup(@Path("groupId") int groupId);
+
+  @POST("/groups/{groupId}/join")
+  Future<HttpResponse<String>> joinGroup(@Path("groupId") int groupId, @Body() GroupJoinBody groupJoinBody);
 
   @GET("/groups/{groupId}/bills")
   Future<List<Bill>> getBillsForGroup(@Path("groupId") int groupId);

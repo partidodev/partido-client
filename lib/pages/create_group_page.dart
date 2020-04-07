@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group.dart';
@@ -24,19 +26,36 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   String _name;
   String _description;
   String _currency;
+  bool _joinModeActive = false;
+  String _joinKey;
 
   void _createGroup() async {
-    Group group = new Group(name: _name, status: _description, currency: _currency);
+    Group group = new Group(name: _name, status: _description, currency: _currency, joinModeActive: _joinModeActive, joinKey: _joinKey);
     try {
       HttpResponse<Group> response = await api.createGroup(group);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).changeSelectedGroup(response.data.id);
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pop(context);
       }
     } catch (e) {
       logger.e('Group creation failed', e);
     }
   }
+
+  void _onJoinModeActiveChanged(bool newValue) => setState(() {
+    _joinModeActive = newValue;
+    if (_joinModeActive) {
+      // Do not add @. This character is used as separator in the combined joinKey (key@groupId)
+      const chars = "ABCD?EFGH!JKLMNP_/QRSTUVWX+*YZabcdefghkmn'§pqrstuv%wxyz12345()6789";
+      Random rnd = new Random.secure();
+      String result = "";
+      for (var i = 0; i < 15; i++) {
+        result += chars[rnd.nextInt(chars.length)];
+      }
+      print(result);
+      _joinKey = result;
+    }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +66,12 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
+            padding: EdgeInsets.all(20),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'Create group',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(height: 15.0),
                   TextFormField(
                     onSaved: (value) => _name = value,
                     keyboardType: TextInputType.text,
@@ -97,6 +111,12 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                       }
                       return null;
                     },
+                  ),
+                  CheckboxListTile(
+                    title: Text("Let other users join the group with a key"),
+                    value: _joinModeActive,
+                    onChanged: _onJoinModeActiveChanged,
+                    //controlAffinity: ListTileControlAffinity.leading,
                   ),
                   SizedBox(height: 15.0),
                   MaterialButton(

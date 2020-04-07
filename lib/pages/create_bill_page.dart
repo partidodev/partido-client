@@ -67,10 +67,8 @@ class _CreateBillPageState extends State<CreateBillPage> {
         .users) {
       Split split = new Split();
       if (user.id == _fromUserId) {
-        split.main = true;
         split.paid = normalizedAmount;
       } else {
-        split.main = false;
         split.paid = 0.0;
       }
       split.debtor = user.id;
@@ -110,8 +108,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                      "NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
+                  Text("NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
                   SizedBox(height: 15.0),
                   DropdownButtonFormField<int>(
                     isDense: true,

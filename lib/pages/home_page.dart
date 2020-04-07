@@ -1,3 +1,6 @@
+import 'package:logger/logger.dart';
+import 'package:partido_client/model/group.dart';
+import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
@@ -18,6 +21,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Api api = ApiService.getApi();
+  var logger = Logger(printer: PrettyPrinter());
+
+  final _formKey = GlobalKey<FormState>();
+  String _groupJoinKey;
 
   void _logout() async {
     try {
@@ -30,6 +37,25 @@ class _HomePageState extends State<HomePage> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.remove("COOKIES");
       Provider.of<AppState>(context, listen: false).clearAppState();
+    }
+  }
+
+  void _joinGroup() async {
+
+    String groupKey = _groupJoinKey.split("@")[0];
+    int groupId = int.parse(_groupJoinKey.split("@")[1]);
+
+    GroupJoinBody groupJoinBody = new GroupJoinBody(userId: Provider.of<AppState>(context, listen: false).getCurrentUser().id, joinKey: groupKey);
+
+    try {
+      HttpResponse<String> response = await api.joinGroup(groupId, groupJoinBody);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).changeSelectedGroup(groupId);
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      logger.e("Failed to join grop", e);
     }
   }
 
@@ -60,10 +86,64 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: <Widget>[
               FlatButton(
-                padding: EdgeInsets.only(left: 14, right: 14),
+                child: Text('Join existing'),
+                onPressed: () {
+                  Navigator.pop(context);
+                  _openJoinGroupDialog();
+                },
+
+              ),
+              FlatButton(
                 child: Text('Create new'),
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/create-group');
+                },
+              ),
+            ],
+          );
+        }));
+  }
+
+  Future _openJoinGroupDialog() async {
+    await showDialog(
+        context: context,
+        child: Consumer<AppState>(builder: (context, appState, child) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+            title: Text("Join Group"),
+            content: Container(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              width: double.maxFinite,
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      onSaved: (value) => _groupJoinKey = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(labelText: "Join code"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter the join code you recieved';
+                        }
+                        return null;
+                      },
+                    ),
+                ),
+
+                ],),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Join'),
+                onPressed: () {
+                  final form = _formKey.currentState;
+                  form.save();
+                  if (form.validate()) {
+                    _joinGroup();
+                  }
                 },
               ),
             ],

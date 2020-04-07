@@ -182,6 +182,27 @@ class _Api implements Api {
   }
 
   @override
+  joinGroup(groupId, groupJoinBody) async {
+    ArgumentError.checkNotNull(groupId, 'groupId');
+    ArgumentError.checkNotNull(groupJoinBody, 'groupJoinBody');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(groupJoinBody?.toJson() ?? <String, dynamic>{});
+    final Response<String> _result = await _dio.request('/groups/$groupId/join',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return Future.value(httpResponse);
+  }
+
+  @override
   getBillsForGroup(groupId) async {
     ArgumentError.checkNotNull(groupId, 'groupId');
     const _extra = <String, dynamic>{};

@@ -51,6 +51,7 @@ class AppState extends ChangeNotifier {
   void refreshAppState() async {
     _bills = await api.getBillsForGroup(_selectedGroupId);
     _report = await api.getReportForGroup(_selectedGroupId);
+    _myGroups = await api.getMyGroups();
     notifyListeners();
   }
 
