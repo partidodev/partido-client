@@ -38,6 +38,9 @@ abstract class Api {
   @POST("/groups/")
   Future<HttpResponse<Group>> createGroup(@Body() Group group);
 
+  @PUT("/groups/{groupId}")
+  Future<HttpResponse<Group>> updateGroup(@Path("groupId") int groupId, @Body() Group group);
+
   @GET("/groups/{groupId}")
   Future<Group> getGroup(@Path("groupId") int groupId);
 

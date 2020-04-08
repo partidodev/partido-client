@@ -11,14 +11,17 @@ import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
 
-class CreateGroupPage extends StatefulWidget {
-  CreateGroupPage({Key key}) : super(key: key);
+class EditGroupPage extends StatefulWidget {
+
+  final Group group;
+
+  EditGroupPage({Key key, @required this.group}) : super(key: key);
 
   @override
-  _CreateGroupPageState createState() => _CreateGroupPageState();
+  _EditGroupPageState createState() => _EditGroupPageState();
 }
 
-class _CreateGroupPageState extends State<CreateGroupPage> {
+class _EditGroupPageState extends State<EditGroupPage> {
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
@@ -27,21 +30,35 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   String _name;
   String _description;
   String _currency;
-  bool _joinModeActive = false;
+  bool _joinModeActive;
   String _joinKey;
 
-  void _createGroup() async {
-    Group group = new Group(name: _name, status: _description, currency: _currency, joinModeActive: _joinModeActive, joinKey: _joinKey);
+  TextEditingController groupNameController = new TextEditingController();
+  TextEditingController groupDescriptionController = new TextEditingController();
+  TextEditingController groupCurrencyController = new TextEditingController();
+
+  @override
+  void initState() {
+    groupNameController.text = widget.group.name;
+    groupDescriptionController.text = widget.group.status;
+    groupCurrencyController.text = widget.group.currency;
+    _joinModeActive = widget.group.joinModeActive;
+    _joinKey = widget.group.joinKey;
+    return super.initState();
+  }
+
+  void _updateGroup() async {
+    Group updatedGroup = new Group(name: _name, status: _description, currency: _currency, joinModeActive: _joinModeActive, joinKey: _joinKey);
     try {
-      HttpResponse<Group> response = await api.createGroup(group);
+      HttpResponse<Group> response = await api.updateGroup(widget.group.id, updatedGroup);
       if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false).changeSelectedGroup(response.data.id);
+        Provider.of<AppState>(context, listen: false).refreshAppState();
         Navigator.pop(context);
-        Fluttertoast.showToast(msg: "New group created");
+        Fluttertoast.showToast(msg: "Group settings saved");
       }
     } catch (e) {
-      logger.e('Group creation failed', e);
-      Fluttertoast.showToast(msg: "Group creation failed");
+      logger.e('Saving group settings failed', e);
+      Fluttertoast.showToast(msg: "Saving group settings failed");
     }
   }
 
@@ -64,7 +81,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Create group'),
+        title: Text('Group settings'),
       ),
       body: ListView(
         children: <Widget>[
@@ -76,6 +93,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextFormField(
+                    controller: groupNameController,
                     onSaved: (value) => _name = value,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Group name"),
@@ -91,6 +109,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                     },
                   ),
                   TextFormField(
+                    controller: groupDescriptionController,
                     onSaved: (value) => _description = value,
                     decoration: InputDecoration(labelText: "Description (optional)"),
                     textCapitalization: TextCapitalization.sentences,
@@ -102,6 +121,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                     },
                   ),
                   TextFormField(
+                    controller: groupCurrencyController,
                     onSaved: (value) => _currency = value,
                     decoration: InputDecoration(labelText: "Currency"),
                     textCapitalization: TextCapitalization.sentences,
@@ -126,12 +146,12 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: Text("Create group"),
+                      child: Text("Save changes"),
                       onPressed: () {
                         final form = _formKey.currentState;
                         form.save();
                         if (form.validate()) {
-                          _createGroup();
+                          _updateGroup();
                         }
                       }),
                 ],

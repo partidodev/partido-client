@@ -1,10 +1,14 @@
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
+import 'package:partido_client/pages/edit_group_page.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -118,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                Form(
+                  Form(
                     key: _formKey,
                     child: TextFormField(
                       onSaved: (value) => _groupJoinKey = value,
@@ -131,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         return null;
                       },
                     ),
-                ),
+                  ),
 
                 ],),
             ),
@@ -151,11 +155,64 @@ class _HomePageState extends State<HomePage> {
         }));
   }
 
+  Future _openAboutDialog() async {
+    await showDialog(
+        context: context,
+        child: AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+            title: Text("About Partido"),
+            content: Container(
+              width: double.maxFinite,
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: 24),
+                    title: Text("Imprint"),
+                    onTap: () { _launchImprintUrl(); },
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: 24),
+                    title: Text("Privacy Policy"),
+                    onTap: () { _launchPrivacyPolicyUrl(); },
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Close'),
+                onPressed: () { Navigator.pop(context); },
+              ),
+            ],
+          ),
+        );
+  }
+
   Color _getColorForNumberBalance(String number) {
     if (double.parse(number) >= 0) {
       return Color.fromRGBO(0, 0, 0, 1);
     } else {
       return Color.fromRGBO(235, 64, 52, 1);
+    }
+  }
+
+  _launchImprintUrl() async {
+    const url = 'https://partido.fosforito.net/impressum/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchPrivacyPolicyUrl() async {
+    const url = 'https://partido.fosforito.net/datenschutzerklarung/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -195,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                   if (result == HomeMenuItem.account) {
                     _logout();
                   } else if (result == HomeMenuItem.about) {
-                    // About dialog
+                    _openAboutDialog();
                   } else if (result == HomeMenuItem.feedback) {
                     _launchFeedbackUrl();
                   }
@@ -237,9 +294,19 @@ class _HomePageState extends State<HomePage> {
                           trailing: appState.getSelectedGroup().status != null
                               ? IconButton(
                                   icon: Icon(Icons.chevron_right),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditGroupPage(group: appState.getSelectedGroup()),
+                                      ),
+                                    );
+                                  },
                                 )
-                              : null,
+                              : IconButton(
+                            icon: Icon(Icons.chevron_right),
+                            onPressed: _openGroupsDialog,
+                          ),
                         ),
                       ),
                       if (appState.getSelectedGroup().name != null)
@@ -250,9 +317,9 @@ class _HomePageState extends State<HomePage> {
                               ListTile(
                                 title: Text('Balances',
                                     style:
-                                        TextStyle(fontWeight: FontWeight.w500)),
+                                    TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
-                                    Icon(Icons.equalizer, color: Colors.green),
+                                Icon(Icons.equalizer, color: Colors.green),
                               ),
                               Divider(),
                               ListView.builder(
@@ -276,6 +343,48 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   );
                                 },
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (appState.getSelectedGroup().name != null && appState.getSelectedGroup().joinModeActive)
+                        Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListTile(
+                                title: Text('Join mode active',
+                                    style:
+                                    TextStyle(fontWeight: FontWeight.w500)),
+                                leading: Icon(Icons.group_add, color: Colors.green),
+                              ),
+                              Divider(),
+                              ListTile(
+                                title: Text('For security reasons, disable the group join mode when all users joined the group.'),
+                              ),
+                              ListTile(
+                                title: SelectableText("${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        icon: Icon(Icons.content_copy),
+                                        onPressed: () {
+                                          Clipboard.setData(ClipboardData(
+                                              text: "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"
+                                          ));
+                                          Fluttertoast.showToast(msg: "Copied");
+                                        }
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.share),
+                                      onPressed: () {
+                                        Share.share('Download the Partido app from Google Play Store https://play.google.com/apps/testing/net.fosforito.partido and join my group with the following code: ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}', subject: 'Join my group on Partido!');
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

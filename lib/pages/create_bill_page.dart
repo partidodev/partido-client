@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:partido_client/api/api_service.dart';
@@ -84,9 +85,11 @@ class _CreateBillPageState extends State<CreateBillPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         Navigator.pop(context);
+        Fluttertoast.showToast(msg: "New bill created");
       }
     } catch (e) {
       logger.e("Failed to save bill", e);
+      Fluttertoast.showToast(msg: "An error occurred creating the bill");
     }
   }
 
@@ -163,8 +166,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
                           },
                         ),
                       ),
-                      Text(
-                        "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
+                      Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
                         style: TextStyle(height: 3.2),
                       ),
                     ],
