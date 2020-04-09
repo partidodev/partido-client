@@ -5,6 +5,7 @@ import 'package:partido_client/pages/create_group_page.dart';
 import 'package:partido_client/pages/home_page.dart';
 import 'package:partido_client/pages/login_page.dart';
 import 'package:partido_client/pages/signup_page.dart';
+import 'package:partido_client/pages/signup_successful_page.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:logger/logger.dart';
@@ -47,6 +48,7 @@ void main() async {
           '/home': (_) => HomePage(),
           '/login': (_) => LoginPage(),
           '/signup': (_) => SignupPage(),
+          '/signup-successful': (_) => SignupSuccessfulPage(),
           '/create-bill': (_) => CreateBillPage(),
           '/create-group': (_) => CreateGroupPage(),
         },

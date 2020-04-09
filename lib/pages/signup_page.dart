@@ -34,7 +34,7 @@ class _SignupPageState extends State<SignupPage> {
 
     HttpResponse<User> response = await api.register(newUser);
     if (response.response.statusCode == 200) {
-      Navigator.pushReplacementNamed(context, "/login");
+      Navigator.pushReplacementNamed(context, "/signup-successful");
     }
   }
 
