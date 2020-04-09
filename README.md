@@ -40,3 +40,10 @@ storeFile=../../../keystore.jks     # location of keystore (relative to <partido
 ```
 
 This file (and the upload key / keystore) should not be uploaded to the git repository! .git-ignore contains an entry for `android/key.properties`.
+
+### Icons
+
+Icons are generated with the flutter_launcher_icons plugin.
+See [[https://pub.dev/packages/flutter_launcher_icons]] for detailed usage information.
+
+The configuration of the plugin can be found in the `pubspec.yaml` file and the media file to be used for generation should be put in the `<partido-project>/assets/images` folder.
