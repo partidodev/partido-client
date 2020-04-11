@@ -47,3 +47,7 @@ Icons are generated with the flutter_launcher_icons plugin.
 See [[https://pub.dev/packages/flutter_launcher_icons]] for detailed usage information.
 
 The configuration of the plugin can be found in the `pubspec.yaml` file and the media file to be used for generation should be put in the `<partido-project>/assets/images` folder.
+
+The command to re-generate all icons, using the image files specified in the previous configuration, is:
+
+```flutter pub run flutter_launcher_icons:main```

@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchImprintUrl() async {
-    const url = 'https://partido.fosforito.net/impressum/';
+    const url = 'https://partido.fosforito.net/imprint/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchPrivacyPolicyUrl() async {
-    const url = 'https://partido.fosforito.net/datenschutzerklarung/';
+    const url = 'https://partido.fosforito.net/privacy-policy/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

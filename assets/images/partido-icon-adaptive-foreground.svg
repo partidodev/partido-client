@@ -9,11 +9,11 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg8"
    version="1.1"
-   viewBox="0 0 114.3 114.3"
-   height="432"
-   width="432"
-   sodipodi:docname="partido-icon.svg"
-   inkscape:export-filename="D:\Projekte\partido-android\media\partido-icon-adaptive-foreground.png"
+   viewBox="0 0 79.375 79.375"
+   height="300"
+   width="300"
+   sodipodi:docname="partido-icon-adaptive-foreground.svg"
+   inkscape:export-filename="D:\Projekte\partido-client\assets\images\partido-icon-adaptive-foreground.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
@@ -31,13 +31,36 @@
      id="namedview12"
      showgrid="false"
      units="px"
-     inkscape:zoom="1"
-     inkscape:cx="154.47462"
-     inkscape:cy="149.75975"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="106.6831"
+     inkscape:cy="173.14571"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg8" />
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="42.328811,71.187239"
+       orientation="0,1"
+       id="guide836"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="45.509319,45.415775"
+       orientation="0,1"
+       id="guide838"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="44.66742,61.318311"
+       orientation="1,0"
+       id="guide840"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="69.877618,61.224767"
+       orientation="1,0"
+       id="guide842"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <defs
      id="defs2" />
   <metadata
@@ -53,7 +76,7 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-43.091175,-64.664549)"
+     transform="translate(-43.091175,-99.589549)"
      id="layer1">
     <g
        style="fill:#000000;fill-opacity:0.19730943"
@@ -68,19 +91,19 @@
       </g>
     </g>
     <path
-       d="m 135.31931,156.65215 h 22.31239 v 22.31239 h -22.31239 z m 3.79156,-18.52083 18.52084,18.52083 -22.31241,22.3124 -18.52083,-18.52083 z m -38.92304,-14.62835 3.97846,3.97846 -3.12419,3.12419 -3.97846,-3.97846 z m 0.55105,1.95877 28.53388,28.53387 -6.337,6.33699 -28.533868,-28.53387 z m -6.854795,5.81918 28.533845,28.53385 -3.12419,3.12419 -28.533844,-28.53385 z m -3.122902,-3.1229 2.502614,2.50261 -1.528461,1.52847 -2.502614,-2.50262 z m 1.037891,1.03789 2.602846,2.60285 -3.124195,3.12419 -2.602846,-2.60284 z m 11.349456,-20.92027 2.50262,2.50262 -2.89831,2.89831 -2.50261,-2.50262 z m 2.0951,-0.0118 4.34525,4.34525 -4.55196,4.55196 -4.34525,-4.34526 z m -9.858375,0.97447 2.502618,2.50262 -4.55195,4.55195 -2.502619,-2.50262 z m 3.069579,-0.61273 2.645836,2.64583 -6.393116,6.39312 -2.645835,-2.64584 z m 2.409586,-0.0472 30.8523,30.85231 -8.99169,8.9917 -30.852309,-30.85231 z m 9.9455,1.25205 30.37983,30.37984 -13.33842,13.33842 -30.379838,-30.37984 z"
+       d="m 117.73298,175.17393 h 22.31239 v 22.31239 h -22.31239 z m 3.79156,-18.52083 18.52084,18.52083 -22.31241,22.3124 -18.520835,-18.52083 z m -38.923045,-14.62835 3.97846,3.97846 -3.12419,3.12419 -3.97846,-3.97846 z m 0.55105,1.95877 28.533885,28.53387 -6.337,6.33699 -28.533873,-28.53387 z m -6.854795,5.81918 28.53385,28.53385 -3.12419,3.12419 -28.533849,-28.53385 z m -3.122902,-3.1229 2.502614,2.50261 -1.528461,1.52847 -2.502614,-2.50262 z m 1.037891,1.03789 2.602846,2.60285 -3.124195,3.12419 -2.602846,-2.60284 z m 11.349456,-20.92027 2.50262,2.50262 -2.89831,2.89831 -2.50261,-2.50262 z m 2.0951,-0.0118 4.34525,4.34525 -4.55196,4.55196 -4.34525,-4.34526 z m -9.858375,0.97447 2.502618,2.50262 -4.55195,4.55195 -2.502619,-2.50262 z m 3.069579,-0.61273 2.645836,2.64583 -6.393116,6.39312 -2.645835,-2.64584 z m 2.409586,-0.0472 30.852305,30.85231 -8.99169,8.9917 -30.852314,-30.85231 z m 9.9455,1.25205 30.379835,30.37984 -13.33842,13.33842 -30.379843,-30.37984 z"
        style="fill:#000000;fill-opacity:0.19730943;stroke-width:0.24767578"
        id="rect4684"
        inkscape:connector-curvature="0" />
     <text
        id="text3717"
-       y="130.82304"
-       x="89.774117"
+       y="149.34482"
+       x="72.187782"
        style="font-style:normal;font-weight:normal;font-size:12.95191097px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.32379776"
        xml:space="preserve"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.08458519px;font-family:Norican;-inkscape-font-specification:Norican;fill:#ffffff;stroke-width:0.32379776"
-         y="130.82304"
-         x="89.774117"
+         y="149.34482"
+         x="72.187782"
          id="tspan3715">P</tspan></text>
   </g>
 </svg>

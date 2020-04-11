@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:retrofit/dio.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
@@ -102,7 +106,20 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
                   CheckboxListTile(
-                    title: Text("I accept the Terms and Conditions and the Privacy Policy of Partido"),
+                    title: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(text: 'I have read and accept the ', style: TextStyle(color: Colors.black)),
+                          TextSpan(
+                              text: 'Privacy Policy',
+                              recognizer: new TapGestureRecognizer()..onTap = () {
+                                launch('https://partido.fosforito.net/privacy-policy/');
+                              },
+                              style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
+                          TextSpan(text: ' of Partido', style: TextStyle(color: Colors.black)),
+                        ],
+                      ),
+                    ),
                     value: _acceptTerms,
                     subtitle: !_acceptTerms && formSaved? Text('You can use Partido only if you accept', style: TextStyle(color: Colors.red)) : null,
                     onChanged: _onAcceptTermsChanged,
