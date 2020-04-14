@@ -42,10 +42,6 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
-  void _onAcceptTermsChanged(bool newValue) => setState(() {
-    _acceptTerms = newValue;
-  });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,8 +117,11 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     value: _acceptTerms,
-                    subtitle: !_acceptTerms && formSaved? Text('You can use Partido only if you accept', style: TextStyle(color: Colors.red)) : null,
-                    onChanged: _onAcceptTermsChanged,
+                    subtitle: (!_acceptTerms && formSaved) ? Padding(
+                      padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Text('You can use Partido only if you accept', style: TextStyle(color: Color(0xFFe53935), fontSize: 12))
+                    ) : null,
+                    onChanged: (bool value) => setState(() => _acceptTerms = value),
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   SizedBox(height: 15.0),
@@ -134,7 +133,7 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: () {
                         final form = _formKey.currentState;
                         form.save();
-                        formSaved = true;
+                        setState(() => formSaved = true);
                         if (form.validate() && _acceptTerms) {
                           _signup();
                         }
