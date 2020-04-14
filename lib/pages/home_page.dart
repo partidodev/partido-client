@@ -295,6 +295,7 @@ class _HomePageState extends State<HomePage> {
                           trailing: appState.getSelectedGroup().status != null
                               ? IconButton(
                                   icon: Icon(Icons.chevron_right),
+                                  tooltip: 'Group settings',
                                   onPressed: () {
                                     Navigator.push(
                                       context,
