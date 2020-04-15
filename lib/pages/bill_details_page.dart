@@ -7,6 +7,7 @@ import 'package:partido_client/model/bill.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';
+import 'edit_bill_page.dart';
 
 class BillDetailsPage extends StatelessWidget {
   final Bill bill;
@@ -24,7 +25,14 @@ class BillDetailsPage extends StatelessWidget {
                       .id ==
                   bill.creator
               ? <Widget>[
-                  IconButton(icon: Icon(Icons.edit), onPressed: () { Fluttertoast.showToast(msg: "Feature coming soon!"); }),
+                  IconButton(icon: Icon(Icons.edit), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditBillPage(bill: bill),
+                      ),
+                    );
+                  }),
                 ]
               : null,
         ),

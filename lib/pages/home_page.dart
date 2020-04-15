@@ -403,10 +403,8 @@ class _HomePageState extends State<HomePage> {
                   return ListTile(
                     leading: Icon(Icons.shopping_cart),
                     title: Text('${appState.getBills()[index].description}'),
-                    subtitle: Text(
-                        '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                    trailing: Text(
-                        '${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                    subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                    trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
                     onTap: () {
                       Navigator.push(
                         context,

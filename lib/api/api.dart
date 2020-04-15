@@ -53,6 +53,12 @@ abstract class Api {
   @POST("/groups/{groupId}/bills")
   Future<HttpResponse<Bill>> createBill(@Body() Bill bill, @Path("groupId") int groupId);
 
+  @PUT("/groups/{groupId}/bills/{billId}")
+  Future<HttpResponse<Bill>> updateBill(@Body() Bill bill, @Path("groupId") int groupId, @Path("billId") int billId);
+
+  @DELETE("/bills/{billId}")
+  Future<HttpResponse<String>> deleteBill(@Path("billId") int billId);
+
   @GET("/groups/{groupId}/report")
   Future<Report> getReportForGroup(@Path("groupId") int groupId);
 }

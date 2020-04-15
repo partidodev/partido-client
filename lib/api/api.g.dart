@@ -268,6 +268,48 @@ class _Api implements Api {
   }
 
   @override
+  updateBill(bill, groupId, billId) async {
+    ArgumentError.checkNotNull(bill, 'bill');
+    ArgumentError.checkNotNull(groupId, 'groupId');
+    ArgumentError.checkNotNull(billId, 'billId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(bill?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/groups/$groupId/bills/$billId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Bill.fromJson(_result.data);
+    final httpResponse = HttpResponse(value, _result);
+    return Future.value(httpResponse);
+  }
+
+  @override
+  deleteBill(billId) async {
+    ArgumentError.checkNotNull(billId, 'billId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<String> _result = await _dio.request('/bills/$billId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return Future.value(httpResponse);
+  }
+
+  @override
   getReportForGroup(groupId) async {
     ArgumentError.checkNotNull(groupId, 'groupId');
     const _extra = <String, dynamic>{};

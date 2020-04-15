@@ -1,38 +1,52 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:partido_client/api/api.dart';
-import 'package:partido_client/api/api_service.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:partido_client/model/split.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
-import 'package:intl/intl.dart';
 
+import '../api/api.dart';
+import '../api/api_service.dart';
 import '../app_state.dart';
+import 'bill_details_page.dart';
 
-class CreateBillPage extends StatefulWidget {
-  CreateBillPage({Key key}) : super(key: key);
+class EditBillPage extends StatefulWidget {
+
+  final Bill bill;
+
+  EditBillPage({Key key, @required this.bill}) : super(key: key);
 
   @override
-  _CreateBillPageState createState() => _CreateBillPageState();
+  _EditBillPageState createState() => _EditBillPageState();
 }
 
-class _CreateBillPageState extends State<CreateBillPage> {
+class _EditBillPageState extends State<EditBillPage> {
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
-  int _fromUserId;
   String _description;
   String _amount;
+  DateTime _selectedDate;
+  int _fromUserId;
 
-  DateTime _selectedDate = DateTime.now();
-  var dateController = new TextEditingController(
-      text: "${DateTime.now().toLocal()}".split(' ')[0]);
+  TextEditingController billDescriptionController = new TextEditingController();
+  TextEditingController billAmountController = new TextEditingController();
+  TextEditingController billDateController = new TextEditingController();
+  TextEditingController billFromUserIdController = new TextEditingController();
+
+  @override
+  void initState() {
+    billDescriptionController.text = widget.bill.description;
+    billAmountController.text = widget.bill.totalAmount.toStringAsFixed(2);
+    billDateController.text =  "${DateTime.parse(widget.bill.billingDate).toLocal()}".split(' ')[0];
+    _selectedDate = DateTime.parse(widget.bill.billingDate); //widget.bill.billingDate
+    return super.initState();
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -45,22 +59,17 @@ class _CreateBillPageState extends State<CreateBillPage> {
         _selectedDate = picked;
       });
     }
-    dateController.text = "${_selectedDate.toLocal()}".split(' ')[0];
+    billDateController.text = "${_selectedDate.toLocal()}".split(' ')[0];
   }
 
-  void _createBill() async {
-    double normalizedAmount =
-        double.parse(_amount.toString().replaceAll(",", "."));
+  void _updateBill() async {
+    double normalizedAmount = double.parse(_amount.toString().replaceAll(",", "."));
 
-    Bill bill = new Bill();
-    bill.description = _description;
-    bill.totalAmount = normalizedAmount;
-    bill.billingDate =
-        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    bill.parts = Provider.of<AppState>(context, listen: false)
-        .getSelectedGroup()
-        .users
-        .length; // Every user pays the same amout but current user pays everything at first
+    Bill updatedBill = new Bill();
+    updatedBill.description = _description;
+    updatedBill.totalAmount = normalizedAmount;
+    updatedBill.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
+    updatedBill.parts = Provider.of<AppState>(context, listen: false).getSelectedGroup().users.length; // Every user pays the same amout but current user pays everything at first
     List<Split> splits = [];
 
     for (User user in Provider.of<AppState>(context, listen: false)
@@ -77,20 +86,57 @@ class _CreateBillPageState extends State<CreateBillPage> {
       splits.add(split);
     }
 
-    bill.splits = splits;
+    updatedBill.splits = splits;
 
     try {
-      HttpResponse<Bill> response = await api.createBill(bill,
-          Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      HttpResponse<Bill> response = await api.updateBill(updatedBill, Provider.of<AppState>(context, listen: false).getSelectedGroupId(), widget.bill.id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        Navigator.pop(context);
-        Fluttertoast.showToast(msg: "New bill created");
+        Navigator.pop(context); // close bill editing screen
+        Navigator.pop(context); // close outdated bill details screen
+        Navigator.push(context, MaterialPageRoute(builder: (context) => BillDetailsPage(bill: response.data)));
+        Fluttertoast.showToast(msg: "Bill updated");
       }
     } catch (e) {
       logger.e("Failed to save bill", e);
-      Fluttertoast.showToast(msg: "An error occurred creating the bill");
+      Fluttertoast.showToast(msg: "An error occurred updating the bill");
     }
+  }
+
+  void _deleteBill() async {
+    try {
+      HttpResponse<String> response = await api.deleteBill(widget.bill.id);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        Navigator.pop(context); // close bill deleting dialog
+        Navigator.pop(context); // close bill editing screen
+        Navigator.pop(context); // close bill details screen
+        Fluttertoast.showToast(msg: "Bill deleted");
+      }
+    } catch (e) {
+      logger.e("Failed to delete bill", e);
+      Fluttertoast.showToast(msg: "An error occurred trying to delete the bill");
+    }
+  }
+
+  Future _openDeleteBillDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text("Delete Bill"),
+        content: Text("Are you sure, that you want to delete this bill?"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('No, cancel'),
+            onPressed: () { Navigator.pop(context); },
+          ),
+          FlatButton(
+            child: Text('Yes, delete'),
+            onPressed: _deleteBill,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -98,7 +144,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
     _fromUserId = _fromUserId ?? Provider.of<AppState>(context, listen: false).getCurrentUser().id;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create bill'),
+        title: Text('Group settings'),
       ),
       body: ListView(
         children: <Widget>[
@@ -137,6 +183,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Description"),
+                    controller: billDescriptionController,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter a description';
@@ -154,9 +201,10 @@ class _CreateBillPageState extends State<CreateBillPage> {
                         child: TextFormField(
                           onSaved: (value) => _amount = value,
                           keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          TextInputType.numberWithOptions(decimal: true),
                           decoration: InputDecoration(labelText: "Amount"),
                           textAlign: TextAlign.end,
+                          controller: billAmountController,
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter the total amount';
@@ -172,7 +220,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
                   ),
                   TextFormField(
                     decoration: InputDecoration(labelText: "Date"),
-                    controller: dateController,
+                    controller: billDateController,
                     readOnly: true,
                     onTap: () => _selectDate(context),
                   ),
@@ -181,15 +229,22 @@ class _CreateBillPageState extends State<CreateBillPage> {
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: Text("Create bill"),
+                      child: Text("Update bill"),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;
                         form.save();
                         if (form.validate()) {
-                          _createBill();
+                          _updateBill();
                         }
                       }),
+                  SizedBox(
+                    width: double.infinity,
+                    child:  FlatButton(
+                      onPressed: _openDeleteBillDialog,
+                      child: Text('Delete bill', style: TextStyle(color: Colors.red)),
+                    ),
+                  ),
                 ],
               ),
             ),
