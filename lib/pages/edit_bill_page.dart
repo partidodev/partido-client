@@ -145,6 +145,9 @@ class _EditBillPageState extends State<EditBillPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Group settings'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.delete), onPressed: _openDeleteBillDialog),
+        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -238,13 +241,6 @@ class _EditBillPageState extends State<EditBillPage> {
                           _updateBill();
                         }
                       }),
-                  SizedBox(
-                    width: double.infinity,
-                    child:  FlatButton(
-                      onPressed: _openDeleteBillDialog,
-                      child: Text('Delete bill', style: TextStyle(color: Colors.red)),
-                    ),
-                  ),
                 ],
               ),
             ),
