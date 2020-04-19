@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:retrofit/dio.dart';
 
@@ -32,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (w) {
       logger.w('Login failed', w);
+      Fluttertoast.showToast(msg: "Login failed, please try again");
     }
   }
 

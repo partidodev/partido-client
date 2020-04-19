@@ -32,7 +32,7 @@ class SignupSuccessfulPage extends StatelessWidget {
                     textColor: Colors.white,
                     child: Text("Login"),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, "/login");
+                      Navigator.pushNamedAndRemoveUntil(context, "/login",  (Route<dynamic> route) => false);
                     }),
               ],
             ),

@@ -26,6 +26,9 @@ abstract class Api {
   @POST("/users")
   Future<HttpResponse<User>> register(@Body() NewUser data);
 
+  @PUT("/users/{userId}")
+  Future<HttpResponse<User>> updateUser(@Body() NewUser user, @Path("userId") int userId);
+
   @GET("/currentuser")
   Future<User> getCurrentUser();
 

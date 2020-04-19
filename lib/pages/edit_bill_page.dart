@@ -146,7 +146,11 @@ class _EditBillPageState extends State<EditBillPage> {
       appBar: AppBar(
         title: Text('Group settings'),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.delete), onPressed: _openDeleteBillDialog),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: _openDeleteBillDialog,
+            tooltip: 'Delete bill',
+          ),
         ],
       ),
       body: ListView(
@@ -184,7 +188,6 @@ class _EditBillPageState extends State<EditBillPage> {
                   TextFormField(
                     onSaved: (value) => _description = value,
                     textCapitalization: TextCapitalization.sentences,
-                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Description"),
                     controller: billDescriptionController,
                     validator: (value) {

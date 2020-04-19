@@ -85,6 +85,28 @@ class _Api implements Api {
   }
 
   @override
+  updateUser(user, userId) async {
+    ArgumentError.checkNotNull(user, 'user');
+    ArgumentError.checkNotNull(userId, 'userId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(user?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/users/$userId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = User.fromJson(_result.data);
+    final httpResponse = HttpResponse(value, _result);
+    return Future.value(httpResponse);
+  }
+
+  @override
   getCurrentUser() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

@@ -8,7 +8,9 @@ class NewUser extends User {
 
   String password;
 
-  NewUser({this.password});
+  String newPassword;
+
+  NewUser({this.password, this.newPassword});
 
   factory NewUser.fromJson(Map<String, dynamic> json) => _$NewUserFromJson(json);
   Map<String, dynamic> toJson() => _$NewUserToJson(this);

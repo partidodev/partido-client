@@ -95,7 +95,6 @@ class _EditGroupPageState extends State<EditGroupPage> {
                   TextFormField(
                     controller: groupNameController,
                     onSaved: (value) => _name = value,
-                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Group name"),
                     textCapitalization: TextCapitalization.sentences,
                     validator: (value) {

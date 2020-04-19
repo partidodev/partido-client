@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:partido_client/pages/create_bill_page.dart';
 import 'package:partido_client/pages/create_group_page.dart';
+import 'package:partido_client/pages/edit_account_page.dart';
 import 'package:partido_client/pages/home_page.dart';
 import 'package:partido_client/pages/login_page.dart';
 import 'package:partido_client/pages/signup_page.dart';
@@ -51,6 +52,7 @@ void main() async {
           '/signup-successful': (_) => SignupSuccessfulPage(),
           '/create-bill': (_) => CreateBillPage(),
           '/create-group': (_) => CreateGroupPage(),
+          '/account': (_) => EditAccountPage(),
         },
       )
     )

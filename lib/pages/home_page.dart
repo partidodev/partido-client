@@ -30,20 +30,6 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   String _groupJoinKey;
 
-  void _logout() async {
-    try {
-      HttpResponse<String> response = await api.logout();
-    } catch (e) {
-      // Logout causes always a 401 or 302 (redirect to /login).
-      // That's why we just catch the error and open login page.
-      Navigator.pushReplacementNamed(context, "/login");
-    } finally {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.remove("COOKIES");
-      Provider.of<AppState>(context, listen: false).clearAppState();
-    }
-  }
-
   void _joinGroup() async {
 
     String groupKey = _groupJoinKey.split("@")[0];
@@ -250,7 +236,7 @@ class _HomePageState extends State<HomePage> {
               PopupMenuButton<HomeMenuItem>(
                 onSelected: (HomeMenuItem result) {
                   if (result == HomeMenuItem.account) {
-                    _logout();
+                    Navigator.pushNamed(context, '/account');
                   } else if (result == HomeMenuItem.about) {
                     _openAboutDialog();
                   } else if (result == HomeMenuItem.feedback) {
@@ -261,15 +247,15 @@ class _HomePageState extends State<HomePage> {
                     <PopupMenuEntry<HomeMenuItem>>[
                   const PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.account,
-                    child: Text('Account (Logout)'),
+                    child: Text('Account'),
                   ),
                   const PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.about,
-                    child: Text('About Partido'),
+                    child: Text('About'),
                   ),
                   const PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.feedback,
-                    child: Text('Send Feedback'),
+                    child: Text('Feedback'),
                   ),
                 ],
               )

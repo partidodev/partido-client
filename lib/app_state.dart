@@ -115,6 +115,11 @@ class AppState extends ChangeNotifier {
     return _currentUser;
   }
 
+  void setCurrentUser(User user) {
+    _currentUser = user;
+    notifyListeners();
+  }
+
   List<Group> getMyGroups() {
     return _myGroups;
   }

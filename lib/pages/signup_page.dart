@@ -64,7 +64,6 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(height: 15.0),
                   TextFormField(
                     onSaved: (value) => _username = value,
-                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Username"),
                     validator: (value) {
                       if (value.isEmpty) { return 'Please enter an username'; }
@@ -89,6 +88,8 @@ class _SignupPageState extends State<SignupPage> {
                     decoration: InputDecoration(labelText: "Password"),
                     validator: (value) {
                       if (value.isEmpty) { return 'Please enter a password'; }
+                      if (value.length > 100) { return 'Max. 100 characters allowed'; }
+                      if (value.length < 8) { return 'Min. 8 characters required'; }
                       return null;
                     },
                   ),
