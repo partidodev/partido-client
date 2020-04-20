@@ -144,7 +144,7 @@ class _EditBillPageState extends State<EditBillPage> {
     _fromUserId = _fromUserId ?? Provider.of<AppState>(context, listen: false).getCurrentUser().id;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Group settings'),
+        title: Text('Edit bill'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete),
