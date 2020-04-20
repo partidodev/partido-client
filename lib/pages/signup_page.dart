@@ -106,14 +106,14 @@ class _SignupPageState extends State<SignupPage> {
                     title: RichText(
                       text: TextSpan(
                         children: <TextSpan>[
-                          TextSpan(text: 'I have read and accept the ', style: TextStyle(color: Colors.black)),
+                          TextSpan(text: 'I have read and accept the ', style: Theme.of(context).textTheme.body1),
                           TextSpan(
                               text: 'Privacy Policy',
                               recognizer: new TapGestureRecognizer()..onTap = () {
                                 launch('https://partido.fosforito.net/privacy-policy/');
                               },
-                              style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
-                          TextSpan(text: ' of Partido', style: TextStyle(color: Colors.black)),
+                              style: TextStyle(color: Colors.green)),
+                          TextSpan(text: ' of Partido', style: Theme.of(context).textTheme.body1),
                         ],
                       ),
                     ),

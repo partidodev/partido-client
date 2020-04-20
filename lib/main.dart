@@ -48,6 +48,10 @@ void main() async {
         darkTheme: ThemeData(
           primarySwatch: Colors.green,
           accentColor: Colors.green,
+          textSelectionHandleColor: Colors.green,
+          toggleableActiveColor: Colors.green,
+          highlightColor: Colors.green,
+          indicatorColor: Colors.green,
           brightness: Brightness.dark,
         ),
         routes: {
