@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
+import '../app_state.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -26,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() async {
     try {
-      HttpResponse<String> response =
-          await api.login("$_email", "$_password", "$rememberMeNumber");
+      HttpResponse<String> response = await api.login("$_email", "$_password", "$rememberMeNumber");
+      Provider.of<AppState>(context, listen: false).setRememberLoginStatus("$rememberMeNumber");
       if (response.response.statusCode == 200) {
         Navigator.pushReplacementNamed(context, "/home");
       }

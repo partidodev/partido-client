@@ -60,6 +60,20 @@ class _EditAccountPageState extends State<EditAccountPage> {
         Provider.of<AppState>(context, listen: false).setCurrentUser(response.data);
         Navigator.pop(context);
         Fluttertoast.showToast(msg: "Settings saved");
+
+        try {
+          var loginPassword;
+          if (_newPassword.length == 0) {
+            loginPassword = _oldPassword;
+          } else {
+            loginPassword = _newPassword;
+          }
+          await api.login("$_email", "$loginPassword", Provider.of<AppState>(context, listen: false).getRememberLoginStatus().toString());
+        } catch (w) {
+          logger.w('Login failed', w);
+          Fluttertoast.showToast(msg: "Login failed, please try again");
+        }
+
       }
     } catch (e) {
       logger.e("Failed to save account", e);
@@ -124,8 +138,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("NOTICE: Leave the New Password fields empty if you don't want to change your password. If you change your email, please logout and login again. This is a bug, I'll fix soon."),
-                  SizedBox(height: 15.0),
                   TextFormField(
                     onSaved: (value) => _username = value,
                     textCapitalization: TextCapitalization.sentences,
@@ -164,6 +176,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 30.0),
+                  Text("Change password", style: TextStyle(fontSize: 20),),
+                  SizedBox(height: 10.0),
+                  Text("Leave empty if you don't want to change your current password."),
+                  SizedBox(height: 15.0),
                   TextFormField(
                     onSaved: (value) => _newPassword = value,
                     obscureText: true,

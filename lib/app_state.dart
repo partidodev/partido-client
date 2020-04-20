@@ -131,4 +131,16 @@ class AppState extends ChangeNotifier {
       }
     }
   }
+
+  /// 0 = false
+  /// 1 = true
+  void setRememberLoginStatus(String boolAsNumber) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("REMEMBERLOGIN", boolAsNumber);
+  }
+
+  Future<String> getRememberLoginStatus() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("REMEMBERLOGIN");
+  }
 }
