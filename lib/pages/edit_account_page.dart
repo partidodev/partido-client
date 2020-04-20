@@ -68,7 +68,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
           } else {
             loginPassword = _newPassword;
           }
-          await api.login("$_email", "$loginPassword", Provider.of<AppState>(context, listen: false).getRememberLoginStatus().toString());
+          await api.login("$_email", "$loginPassword", "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
         } catch (w) {
           logger.w('Login failed', w);
           Fluttertoast.showToast(msg: "Login failed, please try again");
@@ -83,7 +83,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
 
   void _logout() async {
     try {
-      HttpResponse<String> response = await api.logout();
+      await api.logout();
     } catch (e) {
       // Logout causes always a 401 (unauthorized) or 302 (redirect to /login).
       // That's why we just catch the error and open login page.
