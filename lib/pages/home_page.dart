@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
-import 'package:partido_client/model/group.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:partido_client/pages/edit_group_page.dart';
@@ -9,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart';
@@ -178,9 +176,13 @@ class _HomePageState extends State<HomePage> {
 
   Color _getColorForNumberBalance(String number) {
     if (double.parse(number) >= 0) {
-      return Color.fromRGBO(0, 0, 0, 1);
+      return null; // Use default text color
     } else {
-      return Color.fromRGBO(235, 64, 52, 1);
+      if (MediaQuery.of(context).platformBrightness == Brightness.light) {
+        return Color.fromRGBO(235, 64, 52, 1); // Color for dark theme
+      } else {
+        return Color.fromRGBO(255, 99, 71, 1); // Color for dark theme
+      }
     }
   }
 
@@ -303,9 +305,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text('Balances',
-                                    style:
-                                    TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text('Balances', style: TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
                                 Icon(Icons.equalizer, color: Colors.green),
                               ),
@@ -317,17 +317,16 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: Icon(Icons.person),
-                                    title: Text(
-                                        '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                                    trailing: Text(
-                                      '${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                    title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                                    trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
                                       style: TextStyle(
-                                          color: _getColorForNumberBalance(
-                                              appState
-                                                  .getReport()
-                                                  .balances[index]
-                                                  .balance
-                                                  .toStringAsFixed(2))),
+                                        color: _getColorForNumberBalance(appState
+                                            .getReport()
+                                            .balances[index]
+                                            .balance
+                                            .toStringAsFixed(2)
+                                        ),
+                                      ),
                                     ),
                                   );
                                 },
@@ -341,15 +340,11 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text('Join mode active',
-                                    style:
-                                    TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text('Join mode active', style: TextStyle(fontWeight: FontWeight.w500)),
                                 leading: Icon(Icons.group_add, color: Colors.green),
                               ),
                               Divider(),
-                              ListTile(
-                                title: Text('For security reasons, disable the group join mode when all users joined the group.'),
-                              ),
+                              ListTile(title: Text('For security reasons, disable the group join mode when all users joined the group.')),
                               ListTile(
                                 title: SelectableText("${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
                                 trailing: Row(

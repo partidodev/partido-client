@@ -43,6 +43,12 @@ void main() async {
         title: 'Partido',
         theme: ThemeData(
           primarySwatch: Colors.green,
+          brightness: Brightness.light,
+        ),
+        darkTheme: ThemeData(
+          primarySwatch: Colors.green,
+          accentColor: Colors.green,
+          brightness: Brightness.dark,
         ),
         routes: {
           '/': (_) => _defaultHome,
