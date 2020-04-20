@@ -125,6 +125,10 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: <Widget>[
               FlatButton(
+                child: Text('Cancel'),
+                onPressed: () { Navigator.pop(context); },
+              ),
+              FlatButton(
                 child: Text('Join'),
                 onPressed: () {
                   final form = _formKey.currentState;
