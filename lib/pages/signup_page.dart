@@ -112,7 +112,7 @@ class _SignupPageState extends State<SignupPage> {
                               recognizer: new TapGestureRecognizer()..onTap = () {
                                 launch('https://partido.fosforito.net/privacy-policy/');
                               },
-                              style: TextStyle(color: Colors.green)),
+                              style: TextStyle(color: Theme.of(context).primaryColor)),
                           TextSpan(text: ' of Partido', style: Theme.of(context).textTheme.body1),
                         ],
                       ),
