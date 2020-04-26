@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +24,10 @@ class ApiService {
     }
     return options; //continue
   }, onResponse: (Response response) async {
+    if (response.statusCode == 401) {
+      // Open login page if 401 unauthorized status is returned from server
+      navService.pushNamedAndRemoveUntil("/login");
+    }
     if (response.headers['Set-Cookie'] != null && response.headers['Set-Cookie'].isNotEmpty) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       List<String> cookies = preferences.getStringList('COOKIES');
