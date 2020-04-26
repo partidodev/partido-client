@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 60),
+                    padding: EdgeInsets.only(top: 47),
                     child: Image(
                       image: AssetImage('assets/images/logo.png'),
                       height: 40,
