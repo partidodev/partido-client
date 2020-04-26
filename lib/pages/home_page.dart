@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchPrivacyPolicyUrl() async {
-    const url = 'https://partido.fosforito.net/privacy-policy/';
+    const url = 'https://partido.fosforito.net/privacy/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
