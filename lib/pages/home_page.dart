@@ -253,15 +253,15 @@ class _HomePageState extends State<HomePage> {
                     <PopupMenuEntry<HomeMenuItem>>[
                   const PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.account,
-                    child: Text('Account'),
+                    child: Text('My Account'),
                   ),
                   const PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.about,
-                    child: Text('About'),
+                    child: Text('About Partido'),
                   ),
                   const PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.feedback,
-                    child: Text('Feedback'),
+                    child: Text('Send Feedback'),
                   ),
                 ],
               )
