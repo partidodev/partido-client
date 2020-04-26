@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:partido_client/pages/edit_group_page.dart';
@@ -29,18 +30,22 @@ class _HomePageState extends State<HomePage> {
   String _groupJoinKey;
 
   void _joinGroup() async {
-
     String groupKey = _groupJoinKey.split("@")[0];
     int groupId = int.parse(_groupJoinKey.split("@")[1]);
 
-    GroupJoinBody groupJoinBody = new GroupJoinBody(userId: Provider.of<AppState>(context, listen: false).getCurrentUser().id, joinKey: groupKey);
+    GroupJoinBody groupJoinBody = new GroupJoinBody(
+        userId:
+            Provider.of<AppState>(context, listen: false).getCurrentUser().id,
+        joinKey: groupKey);
 
     try {
-      HttpResponse<String> response = await api.joinGroup(groupId, groupJoinBody);
+      HttpResponse<String> response =
+          await api.joinGroup(groupId, groupJoinBody);
       if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false).changeSelectedGroup(groupId);
+        Provider.of<AppState>(context, listen: false)
+            .changeSelectedGroup(groupId);
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        Navigator.pop(context);
+        navService.goBack();
       }
     } catch (e) {
       logger.e("Failed to join grop", e);
@@ -66,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => {
                       appState.changeSelectedGroup(
                           appState.getMyGroups()[index].id),
-                      Navigator.of(context).pop()
+                      navService.goBack()
                     },
                   );
                 },
@@ -76,15 +81,14 @@ class _HomePageState extends State<HomePage> {
               FlatButton(
                 child: Text('Join existing'),
                 onPressed: () {
-                  Navigator.pop(context);
+                  navService.goBack();
                   _openJoinGroupDialog();
                 },
-
               ),
               FlatButton(
                 child: Text('Create new'),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/create-group');
+                  navService.pushReplacementNamed('/create-group');
                 },
               ),
             ],
@@ -120,13 +124,15 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                   ),
-
-                ],),
+                ],
+              ),
             ),
             actions: <Widget>[
               FlatButton(
                 child: Text('Cancel'),
-                onPressed: () { Navigator.pop(context); },
+                onPressed: () {
+                  navService.goBack();
+                },
               ),
               FlatButton(
                 child: Text('Join'),
@@ -145,37 +151,43 @@ class _HomePageState extends State<HomePage> {
 
   Future _openAboutDialog() async {
     await showDialog(
-        context: context,
-        child: AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: Text("About Partido"),
-            content: Container(
-              width: double.maxFinite,
-              child: ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  ListTile(
-                    contentPadding: EdgeInsets.only(left: 24),
-                    title: Text("Imprint"),
-                    onTap: () { _launchImprintUrl(); },
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(left: 24),
-                    title: Text("Privacy Policy"),
-                    onTap: () { _launchPrivacyPolicyUrl(); },
-                  ),
-                ],
+      context: context,
+      child: AlertDialog(
+        contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+        title: Text("About Partido"),
+        content: Container(
+          width: double.maxFinite,
+          child: ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 24),
+                title: Text("Imprint"),
+                onTap: () {
+                  _launchImprintUrl();
+                },
               ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Close'),
-                onPressed: () { Navigator.pop(context); },
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 24),
+                title: Text("Privacy Policy"),
+                onTap: () {
+                  _launchPrivacyPolicyUrl();
+                },
               ),
             ],
           ),
-        );
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Close'),
+            onPressed: () {
+              navService.goBack();
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Color _getColorForNumberBalance(String number) {
@@ -242,7 +254,7 @@ class _HomePageState extends State<HomePage> {
               PopupMenuButton<HomeMenuItem>(
                 onSelected: (HomeMenuItem result) {
                   if (result == HomeMenuItem.account) {
-                    Navigator.pushNamed(context, '/account');
+                    navService.pushNamed('/account');
                   } else if (result == HomeMenuItem.about) {
                     _openAboutDialog();
                   } else if (result == HomeMenuItem.feedback) {
@@ -289,18 +301,18 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icon(Icons.chevron_right),
                                   tooltip: 'Group settings',
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
+                                    navService.push(
                                       MaterialPageRoute(
-                                        builder: (context) => EditGroupPage(group: appState.getSelectedGroup()),
+                                        builder: (context) => EditGroupPage(
+                                            group: appState.getSelectedGroup()),
                                       ),
                                     );
                                   },
                                 )
                               : IconButton(
-                            icon: Icon(Icons.chevron_right),
-                            onPressed: _openGroupsDialog,
-                          ),
+                                  icon: Icon(Icons.chevron_right),
+                                  onPressed: _openGroupsDialog,
+                                ),
                         ),
                       ),
                       if (appState.getSelectedGroup().name != null)
@@ -309,9 +321,11 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text('Balances', style: TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text('Balances',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
-                                Icon(Icons.equalizer, color: Colors.green),
+                                    Icon(Icons.equalizer, color: Colors.green),
                               ),
                               Divider(),
                               ListView.builder(
@@ -321,15 +335,17 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: Icon(Icons.person),
-                                    title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
-                                    trailing: Text('${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                    title: Text(
+                                        '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                                    trailing: Text(
+                                      '${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
                                       style: TextStyle(
-                                        color: _getColorForNumberBalance(appState
-                                            .getReport()
-                                            .balances[index]
-                                            .balance
-                                            .toStringAsFixed(2)
-                                        ),
+                                        color: _getColorForNumberBalance(
+                                            appState
+                                                .getReport()
+                                                .balances[index]
+                                                .balance
+                                                .toStringAsFixed(2)),
                                       ),
                                     ),
                                   );
@@ -338,19 +354,26 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                      if (appState.getSelectedGroup().name != null && appState.getSelectedGroup().joinModeActive)
+                      if (appState.getSelectedGroup().name != null &&
+                          appState.getSelectedGroup().joinModeActive)
                         Card(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text('Join mode active', style: TextStyle(fontWeight: FontWeight.w500)),
-                                leading: Icon(Icons.group_add, color: Colors.green),
+                                title: Text('Join mode active',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500)),
+                                leading:
+                                    Icon(Icons.group_add, color: Colors.green),
                               ),
                               Divider(),
-                              ListTile(title: Text('For security reasons, disable the group join mode when all users joined the group.')),
                               ListTile(
-                                title: SelectableText("${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
+                                  title: Text(
+                                      'For security reasons, disable the group join mode when all users joined the group.')),
+                              ListTile(
+                                title: SelectableText(
+                                    "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -359,15 +382,17 @@ class _HomePageState extends State<HomePage> {
                                         icon: Icon(Icons.content_copy),
                                         onPressed: () {
                                           Clipboard.setData(ClipboardData(
-                                              text: "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"
-                                          ));
+                                              text:
+                                                  "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"));
                                           Fluttertoast.showToast(msg: "Copied");
-                                        }
-                                    ),
+                                        }),
                                     IconButton(
                                       icon: Icon(Icons.share),
                                       onPressed: () {
-                                        Share.share('Download the Partido app from Google Play Store https://play.google.com/apps/testing/net.fosforito.partido and join my group with the following code: ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}', subject: 'Join my group on Partido!');
+                                        Share.share(
+                                            'Download the Partido app from Google Play Store https://play.google.com/apps/testing/net.fosforito.partido and join my group with the following code: ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                                            subject:
+                                                'Join my group on Partido!');
                                       },
                                     ),
                                   ],
@@ -388,11 +413,12 @@ class _HomePageState extends State<HomePage> {
                   return ListTile(
                     leading: Icon(Icons.shopping_cart),
                     title: Text('${appState.getBills()[index].description}'),
-                    subtitle: Text('${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                    trailing: Text('${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                    subtitle: Text(
+                        '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                    trailing: Text(
+                        '${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
                     onTap: () {
-                      Navigator.push(
-                        context,
+                      navService.push(
                         MaterialPageRoute(
                           builder: (context) =>
                               BillDetailsPage(bill: appState.getBills()[index]),
@@ -407,7 +433,7 @@ class _HomePageState extends State<HomePage> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (appState.getSelectedGroup().name != null) {
-                Navigator.pushNamed(context, '/create-bill');
+                navService.pushNamed('/create-bill');
               }
             },
             tooltip: 'Create bill',

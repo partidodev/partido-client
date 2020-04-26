@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:partido_client/model/split.dart';
 import 'package:partido_client/model/user.dart';
@@ -92,9 +93,9 @@ class _EditBillPageState extends State<EditBillPage> {
       HttpResponse<Bill> response = await api.updateBill(updatedBill, Provider.of<AppState>(context, listen: false).getSelectedGroupId(), widget.bill.id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        Navigator.pop(context); // close bill editing screen
-        Navigator.pop(context); // close outdated bill details screen
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BillDetailsPage(bill: response.data)));
+        navService.goBack(); // close bill editing screen
+        navService.goBack(); // close outdated bill details screen
+        navService.push(MaterialPageRoute(builder: (context) => BillDetailsPage(bill: response.data)));
         Fluttertoast.showToast(msg: "Bill updated");
       }
     } catch (e) {
@@ -108,9 +109,9 @@ class _EditBillPageState extends State<EditBillPage> {
       HttpResponse<String> response = await api.deleteBill(widget.bill.id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        Navigator.pop(context); // close bill deleting dialog
-        Navigator.pop(context); // close bill editing screen
-        Navigator.pop(context); // close bill details screen
+        navService.goBack(); // close bill deleting dialog
+        navService.goBack(); // close bill editing screen
+        navService.goBack(); // close bill details screen
         Fluttertoast.showToast(msg: "Bill deleted");
       }
     } catch (e) {
@@ -128,7 +129,7 @@ class _EditBillPageState extends State<EditBillPage> {
         actions: <Widget>[
           FlatButton(
             child: Text('No, cancel'),
-            onPressed: () { Navigator.pop(context); },
+            onPressed: () { navService.goBack(); },
           ),
           FlatButton(
             child: Text('Yes, delete'),

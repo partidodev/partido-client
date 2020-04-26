@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 
 class SignupSuccessfulPage extends StatelessWidget {
 
@@ -32,7 +33,7 @@ class SignupSuccessfulPage extends StatelessWidget {
                     textColor: Colors.white,
                     child: Text("Login"),
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(context, "/login",  (Route<dynamic> route) => false);
+                      navService.pushNamedAndRemoveUntil("/login");
                     }),
               ],
             ),

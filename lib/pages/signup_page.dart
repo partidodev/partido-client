@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:retrofit/dio.dart';
@@ -38,7 +39,7 @@ class _SignupPageState extends State<SignupPage> {
 
     HttpResponse<User> response = await api.register(newUser);
     if (response.response.statusCode == 200) {
-      Navigator.pushReplacementNamed(context, "/signup-successful");
+      navService.pushReplacementNamed("/signup-successful");
     }
   }
 
@@ -167,7 +168,7 @@ class _SignupPageState extends State<SignupPage> {
                                     padding: EdgeInsets.only(left: 14, right: 14),
                                     child: Text('Log in'),
                                     onPressed: () {
-                                      Navigator.of(context).pop();
+                                      navService.goBack();
                                     },
                                   ),
                                 ),

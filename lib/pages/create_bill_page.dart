@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:partido_client/api/api_service.dart';
 import 'package:partido_client/model/bill.dart';
@@ -84,7 +85,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
           Provider.of<AppState>(context, listen: false).getSelectedGroupId());
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        Navigator.pop(context);
+        navService.goBack();
         Fluttertoast.showToast(msg: "New bill created");
       }
     } catch (e) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       Provider.of<AppState>(context, listen: false)
           .setRememberLoginStatus("$rememberMeNumber");
       if (response.response.statusCode == 200) {
-        Navigator.pushReplacementNamed(context, "/home");
+        navService.pushReplacementNamed("/home");
       }
     } catch (w) {
       logger.w('Login failed', w);
@@ -141,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: EdgeInsets.only(left: 14, right: 14),
                                   child: Text('Sign up'),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/signup');
+                                    navService.pushNamed('/signup');
                                   },
                                 ),
                               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/split.dart';
@@ -59,7 +60,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).setCurrentUser(response.data);
         Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
-        Navigator.pop(context);
+        navService.goBack();
         Fluttertoast.showToast(msg: "Settings saved");
 
         try {
@@ -88,7 +89,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
     } catch (e) {
       // Logout causes always a 401 (unauthorized) or 302 (redirect to /login).
       // That's why we just catch the error and open login page.
-      Navigator.pushNamedAndRemoveUntil(context, "/login",  (Route<dynamic> route) => false);
+      navService.pushNamedAndRemoveUntil("/login");
     } finally {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.remove("COOKIES");
@@ -105,7 +106,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
         actions: <Widget>[
           FlatButton(
             child: Text('No, cancel'),
-            onPressed: () { Navigator.pop(context); },
+            onPressed: () { navService.goBack(); },
           ),
           FlatButton(
             child: Text('Yes, logout'),

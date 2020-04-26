@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +27,7 @@ class BillDetailsPage extends StatelessWidget {
                   bill.creator
               ? <Widget>[
                   IconButton(icon: Icon(Icons.edit), onPressed: () {
-                    Navigator.push(
-                      context,
+                    navService.push(
                       MaterialPageRoute(
                         builder: (context) => EditBillPage(bill: bill),
                       ),
