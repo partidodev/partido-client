@@ -58,6 +58,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
       HttpResponse<User> response = await api.updateUser(updatedUser, Provider.of<AppState>(context, listen: false).getCurrentUser().id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).setCurrentUser(response.data);
+        Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
         Navigator.pop(context);
         Fluttertoast.showToast(msg: "Settings saved");
 
