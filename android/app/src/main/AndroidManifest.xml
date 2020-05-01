@@ -13,7 +13,6 @@
         android:label="Partido"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true">
         <activity
             android:name=".MainActivity"
