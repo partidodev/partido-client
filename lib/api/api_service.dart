@@ -74,6 +74,7 @@ class ApiService {
   static Api getApi() {
     Dio dio = new Dio();
     // allow self signed certificate from partido server
+    // TODO: works currently only in android app, not web. Web used BrowserHttpClientAdapter
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
       client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
       return client;
