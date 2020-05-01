@@ -9,7 +9,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: "http://fosforito.net:8090/")
+@RestApi(baseUrl: "https://fosforito.net:8090/")
 abstract class Api {
   factory Api(Dio dio) = _Api;
 

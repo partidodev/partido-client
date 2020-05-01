@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:partido_client/api/api.dart';
@@ -70,6 +73,11 @@ class ApiService {
 
   static Api getApi() {
     Dio dio = new Dio();
+    // allow self signed certificate from partido server
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
+      client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     dio.interceptors.add(interceptors);
     return new Api(dio);
   }
