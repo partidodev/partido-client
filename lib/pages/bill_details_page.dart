@@ -1,13 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';
+import '../navigation_service.dart';
 import 'edit_bill_page.dart';
 
 class BillDetailsPage extends StatelessWidget {

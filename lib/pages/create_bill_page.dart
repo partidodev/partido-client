@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:partido_client/api/api_service.dart';
 import 'package:partido_client/model/bill.dart';
@@ -13,6 +12,7 @@ import 'package:retrofit/dio.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
+import '../navigation_service.dart';
 
 class CreateBillPage extends StatefulWidget {
   CreateBillPage({Key key}) : super(key: key);

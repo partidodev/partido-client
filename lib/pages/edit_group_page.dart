@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/group.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
@@ -11,6 +10,7 @@ import 'package:retrofit/dio.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../navigation_service.dart';
 
 class EditGroupPage extends StatefulWidget {
 

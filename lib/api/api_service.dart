@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../navigation_service.dart';
 
 class ApiService {
 

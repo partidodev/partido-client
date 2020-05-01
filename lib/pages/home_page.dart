@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:partido_client/pages/edit_group_page.dart';
@@ -14,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../navigation_service.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);

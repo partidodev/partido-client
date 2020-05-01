@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
-import 'package:partido_client/model/bill.dart';
 import 'package:partido_client/model/new_user.dart';
-import 'package:partido_client/model/split.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
@@ -14,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
-import 'bill_details_page.dart';
+import '../navigation_service.dart';
 
 class EditAccountPage extends StatefulWidget {
   EditAccountPage({Key key}) : super(key: key);
@@ -48,7 +44,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
   }
 
   void _updateAccount() async {
-
     NewUser updatedUser = new NewUser();
     updatedUser.username = _username;
     updatedUser.email = _email;
@@ -56,9 +51,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
     updatedUser.newPassword = _newPassword;
 
     try {
-      HttpResponse<User> response = await api.updateUser(updatedUser, Provider.of<AppState>(context, listen: false).getCurrentUser().id);
+      HttpResponse<User> response = await api.updateUser(updatedUser,
+          Provider.of<AppState>(context, listen: false).getCurrentUser().id);
       if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false).setCurrentUser(response.data);
+        Provider.of<AppState>(context, listen: false)
+            .setCurrentUser(response.data);
         Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
         navService.goBack();
         Fluttertoast.showToast(msg: "Settings saved");
@@ -70,12 +67,12 @@ class _EditAccountPageState extends State<EditAccountPage> {
           } else {
             loginPassword = _newPassword;
           }
-          await api.login("$_email", "$loginPassword", "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
+          await api.login("$_email", "$loginPassword",
+              "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
         } catch (w) {
           logger.w('Login failed', w);
           Fluttertoast.showToast(msg: "Login failed, please try again");
         }
-
       }
     } catch (e) {
       logger.e("Failed to save account", e);
@@ -106,7 +103,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
         actions: <Widget>[
           FlatButton(
             child: Text('No, cancel'),
-            onPressed: () { navService.goBack(); },
+            onPressed: () {
+              navService.goBack();
+            },
           ),
           FlatButton(
             child: Text('Yes, logout'),
@@ -161,9 +160,17 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     decoration: InputDecoration(labelText: "Email"),
                     controller: emailController,
                     validator: (value) {
-                      if (value.isEmpty) { return 'Please enter a valid email address'; }
-                      if (RegExp(r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$').hasMatch(value)) { return 'Please enter a valid email address'; }
-                      if (value.length > 50) { return 'Max. 50 characters allowed'; }
+                      if (value.isEmpty) {
+                        return 'Please enter a valid email address';
+                      }
+                      if (RegExp(
+                              r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      if (value.length > 50) {
+                        return 'Max. 50 characters allowed';
+                      }
                       return null;
                     },
                   ),
@@ -179,26 +186,38 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     },
                   ),
                   SizedBox(height: 30.0),
-                  Text("Change password", style: TextStyle(fontSize: 20),),
+                  Text(
+                    "Change password",
+                    style: TextStyle(fontSize: 20),
+                  ),
                   SizedBox(height: 10.0),
-                  Text("Leave empty if you don't want to change your current password."),
+                  Text(
+                      "Leave empty if you don't want to change your current password."),
                   SizedBox(height: 15.0),
                   TextFormField(
                     onSaved: (value) => _newPassword = value,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "New password (optional)"),
+                    decoration:
+                        InputDecoration(labelText: "New password (optional)"),
                     validator: (value) {
-                      if (value.length > 100) { return 'Max. 100 characters allowed'; }
-                      if (value.length < 8 && value.length != 0) { return 'Min. 8 characters required'; }
+                      if (value.length > 100) {
+                        return 'Max. 100 characters allowed';
+                      }
+                      if (value.length < 8 && value.length != 0) {
+                        return 'Min. 8 characters required';
+                      }
                       return null;
                     },
                   ),
                   TextFormField(
                     onSaved: (value) => _newPasswordVerification = value,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "New password verification (optional)"),
+                    decoration: InputDecoration(
+                        labelText: "New password verification (optional)"),
                     validator: (value) {
-                      if (value != _newPassword) { return 'Passwords do not match'; }
+                      if (value != _newPassword) {
+                        return 'Passwords do not match';
+                      }
                       return null;
                     },
                   ),

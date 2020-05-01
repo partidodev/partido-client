@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:retrofit/dio.dart';
@@ -10,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
+import '../navigation_service.dart';
 
 class SignupPage extends StatefulWidget {
 

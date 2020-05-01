@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:partido_client/pages/create_bill_page.dart';
 import 'package:partido_client/pages/create_group_page.dart';
@@ -15,6 +14,7 @@ import 'package:logger/logger.dart';
 import 'api/api_service.dart';
 import 'app_state.dart';
 import 'model/user.dart';
+import 'navigation_service.dart';
 
 void main() async {
 

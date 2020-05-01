@@ -16,9 +16,9 @@ abstract class Api {
   @POST("/login")
   @MultiPart()
   Future<HttpResponse<String>> login(
-      @Part("username") String username,
-      @Part("password") String password,
-      @Part("remember-me") String rememberMe);
+      @Part(name: "username") String username,
+      @Part(name: "password") String password,
+      @Part(name: "remember-me") String rememberMe);
 
   @POST("/logout")
   Future<HttpResponse<String>> logout();

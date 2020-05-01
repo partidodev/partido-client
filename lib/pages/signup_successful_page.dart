@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
+
+import '../navigation_service.dart';
 
 class SignupSuccessfulPage extends StatelessWidget {
 
