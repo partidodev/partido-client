@@ -132,7 +132,7 @@ class _SignupPageState extends State<SignupPage> {
                                         TextSpan(
                                             text: 'Privacy Policy',
                                             recognizer: new TapGestureRecognizer()..onTap = () {
-                                              launch('https://partido.fosforito.net/privacy/');
+                                              launch('https://partido.rocks/privacy/');
                                             },
                                             style: TextStyle(color: Theme.of(context).primaryColor)),
                                         TextSpan(text: ' of Partido', style: Theme.of(context).textTheme.body1),

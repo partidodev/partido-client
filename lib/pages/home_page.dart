@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchImprintUrl() async {
-    const url = 'https://partido.fosforito.net/imprint/';
+    const url = 'https://partido.rocks/imprint/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchPrivacyPolicyUrl() async {
-    const url = 'https://partido.fosforito.net/privacy/';
+    const url = 'https://partido.rocks/privacy/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
