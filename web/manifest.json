@@ -1,11 +1,11 @@
 {
-    "name": "partido_client",
-    "short_name": "partido_client",
+    "name": "Partido",
+    "short_name": "Partido",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Splitting costs in groups made easy",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
