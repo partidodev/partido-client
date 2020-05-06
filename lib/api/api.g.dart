@@ -9,7 +9,7 @@ part of 'api.dart';
 class _Api implements Api {
   _Api(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'https://partido.rocks:8090/';
+    this.baseUrl ??= 'https://partido.rocks/api/';
   }
 
   final Dio _dio;

@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:partido_client/api/api.dart';
@@ -9,9 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../navigation_service.dart';
 
 class ApiService {
-
   static InterceptorsWrapper interceptors =
-  InterceptorsWrapper(onRequest: (RequestOptions options) async {
+      InterceptorsWrapper(onRequest: (RequestOptions options) async {
     // Do something before request is sent
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -32,7 +28,8 @@ class ApiService {
       // Open login page if 401 unauthorized status is returned from server
       navService.pushNamedAndRemoveUntil("/login");
     }
-    if (response.headers['Set-Cookie'] != null && response.headers['Set-Cookie'].isNotEmpty) {
+    if (response.headers['Set-Cookie'] != null &&
+        response.headers['Set-Cookie'].isNotEmpty) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       List<String> cookies = preferences.getStringList('COOKIES');
 
@@ -44,14 +41,14 @@ class ApiService {
       var toAdd = [];
       for (String header in response.headers['Set-Cookie']) {
         if (header.contains("remember-me")) {
-          cookies.forEach( (cookie) {
+          cookies.forEach((cookie) {
             if (cookie.contains("remember-me")) {
               toRemove.add(cookie);
             }
           });
         }
         if (header.contains("JSESSIONID")) {
-          cookies.forEach( (cookie) {
+          cookies.forEach((cookie) {
             if (cookie.contains("JSESSIONID")) {
               toRemove.add(cookie);
             }
@@ -67,7 +64,6 @@ class ApiService {
 
       await preferences.setStringList("COOKIES", cookies);
     }
-
     return response;
   });
 

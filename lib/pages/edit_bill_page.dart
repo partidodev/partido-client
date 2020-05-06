@@ -15,7 +15,6 @@ import '../navigation_service.dart';
 import 'bill_details_page.dart';
 
 class EditBillPage extends StatefulWidget {
-
   final Bill bill;
 
   EditBillPage({Key key, @required this.bill}) : super(key: key);
@@ -44,8 +43,10 @@ class _EditBillPageState extends State<EditBillPage> {
   void initState() {
     billDescriptionController.text = widget.bill.description;
     billAmountController.text = widget.bill.totalAmount.toStringAsFixed(2);
-    billDateController.text =  "${DateTime.parse(widget.bill.billingDate).toLocal()}".split(' ')[0];
-    _selectedDate = DateTime.parse(widget.bill.billingDate); //widget.bill.billingDate
+    billDateController.text =
+        "${DateTime.parse(widget.bill.billingDate).toLocal()}".split(' ')[0];
+    _selectedDate =
+        DateTime.parse(widget.bill.billingDate); //widget.bill.billingDate
     return super.initState();
   }
 
@@ -64,13 +65,18 @@ class _EditBillPageState extends State<EditBillPage> {
   }
 
   void _updateBill() async {
-    double normalizedAmount = double.parse(_amount.toString().replaceAll(",", "."));
+    double normalizedAmount =
+        double.parse(_amount.toString().replaceAll(",", "."));
 
     Bill updatedBill = new Bill();
     updatedBill.description = _description;
     updatedBill.totalAmount = normalizedAmount;
-    updatedBill.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    updatedBill.parts = Provider.of<AppState>(context, listen: false).getSelectedGroup().users.length; // Every user pays the same amout but current user pays everything at first
+    updatedBill.billingDate =
+        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
+    updatedBill.parts = Provider.of<AppState>(context, listen: false)
+        .getSelectedGroup()
+        .users
+        .length; // Every user pays the same amout but current user pays everything at first
     List<Split> splits = [];
 
     for (User user in Provider.of<AppState>(context, listen: false)
@@ -90,12 +96,16 @@ class _EditBillPageState extends State<EditBillPage> {
     updatedBill.splits = splits;
 
     try {
-      HttpResponse<Bill> response = await api.updateBill(updatedBill, Provider.of<AppState>(context, listen: false).getSelectedGroupId(), widget.bill.id);
+      HttpResponse<Bill> response = await api.updateBill(
+          updatedBill,
+          Provider.of<AppState>(context, listen: false).getSelectedGroupId(),
+          widget.bill.id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack(); // close bill editing screen
         navService.goBack(); // close outdated bill details screen
-        navService.push(MaterialPageRoute(builder: (context) => BillDetailsPage(bill: response.data)));
+        navService.push(MaterialPageRoute(
+            builder: (context) => BillDetailsPage(bill: response.data)));
         Fluttertoast.showToast(msg: "Bill updated");
       }
     } catch (e) {
@@ -116,7 +126,8 @@ class _EditBillPageState extends State<EditBillPage> {
       }
     } catch (e) {
       logger.e("Failed to delete bill", e);
-      Fluttertoast.showToast(msg: "An error occurred trying to delete the bill");
+      Fluttertoast.showToast(
+          msg: "An error occurred trying to delete the bill");
     }
   }
 
@@ -129,7 +140,9 @@ class _EditBillPageState extends State<EditBillPage> {
         actions: <Widget>[
           FlatButton(
             child: Text('No, cancel'),
-            onPressed: () { navService.goBack(); },
+            onPressed: () {
+              navService.goBack();
+            },
           ),
           FlatButton(
             child: Text('Yes, delete'),
@@ -142,7 +155,8 @@ class _EditBillPageState extends State<EditBillPage> {
 
   @override
   Widget build(BuildContext context) {
-    _fromUserId = _fromUserId ?? Provider.of<AppState>(context, listen: false).getCurrentUser().id;
+    _fromUserId = _fromUserId ??
+        Provider.of<AppState>(context, listen: false).getCurrentUser().id;
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit bill'),
@@ -164,7 +178,8 @@ class _EditBillPageState extends State<EditBillPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
+                  Text(
+                      "NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
                   SizedBox(height: 15.0),
                   DropdownButtonFormField<int>(
                     isDense: true,
@@ -208,7 +223,7 @@ class _EditBillPageState extends State<EditBillPage> {
                         child: TextFormField(
                           onSaved: (value) => _amount = value,
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                           decoration: InputDecoration(labelText: "Amount"),
                           textAlign: TextAlign.end,
                           controller: billAmountController,
@@ -216,11 +231,15 @@ class _EditBillPageState extends State<EditBillPage> {
                             if (value.isEmpty) {
                               return 'Please enter the total amount';
                             }
+                            if (double.parse(value) <= 0) {
+                              return 'Please enter a positive amount greater than 0';
+                            }
                             return null;
                           },
                         ),
                       ),
-                      Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
+                      Text(
+                        "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
                         style: TextStyle(height: 3.2),
                       ),
                     ],

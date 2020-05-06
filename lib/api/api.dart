@@ -9,7 +9,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: "https://partido.rocks:8090/")
+@RestApi(baseUrl: "https://partido.rocks/api/")
 abstract class Api {
   factory Api(Dio dio) = _Api;
 
@@ -27,7 +27,8 @@ abstract class Api {
   Future<HttpResponse<User>> register(@Body() NewUser data);
 
   @PUT("/users/{userId}")
-  Future<HttpResponse<User>> updateUser(@Body() NewUser user, @Path("userId") int userId);
+  Future<HttpResponse<User>> updateUser(
+      @Body() NewUser user, @Path("userId") int userId);
 
   @GET("/currentuser")
   Future<User> getCurrentUser();
@@ -42,22 +43,26 @@ abstract class Api {
   Future<HttpResponse<Group>> createGroup(@Body() Group group);
 
   @PUT("/groups/{groupId}")
-  Future<HttpResponse<Group>> updateGroup(@Path("groupId") int groupId, @Body() Group group);
+  Future<HttpResponse<Group>> updateGroup(
+      @Path("groupId") int groupId, @Body() Group group);
 
   @GET("/groups/{groupId}")
   Future<Group> getGroup(@Path("groupId") int groupId);
 
   @POST("/groups/{groupId}/join")
-  Future<HttpResponse<String>> joinGroup(@Path("groupId") int groupId, @Body() GroupJoinBody groupJoinBody);
+  Future<HttpResponse<String>> joinGroup(
+      @Path("groupId") int groupId, @Body() GroupJoinBody groupJoinBody);
 
   @GET("/groups/{groupId}/bills")
   Future<List<Bill>> getBillsForGroup(@Path("groupId") int groupId);
 
   @POST("/groups/{groupId}/bills")
-  Future<HttpResponse<Bill>> createBill(@Body() Bill bill, @Path("groupId") int groupId);
+  Future<HttpResponse<Bill>> createBill(
+      @Body() Bill bill, @Path("groupId") int groupId);
 
   @PUT("/groups/{groupId}/bills/{billId}")
-  Future<HttpResponse<Bill>> updateBill(@Body() Bill bill, @Path("groupId") int groupId, @Path("billId") int billId);
+  Future<HttpResponse<Bill>> updateBill(@Body() Bill bill,
+      @Path("groupId") int groupId, @Path("billId") int billId);
 
   @DELETE("/bills/{billId}")
   Future<HttpResponse<String>> deleteBill(@Path("billId") int billId);

@@ -96,7 +96,8 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
   @override
   Widget build(BuildContext context) {
-    _fromUserId = _fromUserId ?? Provider.of<AppState>(context, listen: false).getCurrentUser().id;
+    _fromUserId = _fromUserId ??
+        Provider.of<AppState>(context, listen: false).getCurrentUser().id;
     return Scaffold(
       appBar: AppBar(
         title: Text('Create bill'),
@@ -111,7 +112,8 @@ class _CreateBillPageState extends State<CreateBillPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
+                  Text(
+                      "NOTICE: Currently all users in the group will have to pay the same amount. There will be the possibility to customize this behavior in a future release."),
                   SizedBox(height: 15.0),
                   DropdownButtonFormField<int>(
                     isDense: true,
@@ -162,11 +164,15 @@ class _CreateBillPageState extends State<CreateBillPage> {
                             if (value.isEmpty) {
                               return 'Please enter the total amount';
                             }
+                            if (double.parse(value) <= 0) {
+                              return 'Please enter a positive amount greater than 0';
+                            }
                             return null;
                           },
                         ),
                       ),
-                      Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
+                      Text(
+                        "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
                         style: TextStyle(height: 3.2),
                       ),
                     ],
