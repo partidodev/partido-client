@@ -3,6 +3,7 @@ pipeline:
     image: cirrusci/flutter:stable
     commands:
       - sudo chmod -R 755 .
+      - sudo chown -R cirrus:cirrus .
       #- flutter doctor
       #- flutter test
       - flutter build appbundle
