@@ -1,4 +1,6 @@
 # Partido Client
+[![Build Status](https://ci.fosforito.net/api/badges/Fosforito/partido-client/status.svg)](https://ci.fosforito.net/Fosforito/partido-client)
+
 Client App for Partido written in Flutter/Dart.
 
 ## Developer information
