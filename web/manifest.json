@@ -1,8 +1,8 @@
 {
   "name": "Partido - Share group expenses",
   "short_name": "Partido",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/webapp/",
+  "scope": "/webapp/",
   "display": "standalone",
   "background_color": "#4CAF50",
   "theme_color": "#4CAF50",

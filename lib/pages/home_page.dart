@@ -163,6 +163,13 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               ListTile(
                 contentPadding: EdgeInsets.only(left: 24),
+                title: Text("Homepage"),
+                onTap: () {
+                  _launchHomepageUrl();
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 24),
                 title: Text("Imprint"),
                 onTap: () {
                   _launchImprintUrl();
@@ -199,6 +206,15 @@ class _HomePageState extends State<HomePage> {
       } else {
         return Color.fromRGBO(255, 99, 71, 1); // Color for dark theme
       }
+    }
+  }
+
+  _launchHomepageUrl() async {
+    const url = 'https://partido.rocks/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -390,7 +406,7 @@ class _HomePageState extends State<HomePage> {
                                       icon: Icon(Icons.share),
                                       onPressed: () {
                                         Share.share(
-                                            'Download the Partido app from Google Play Store https://play.google.com/apps/testing/net.fosforito.partido and join my group with the following code: ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                                            'Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code: ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
                                             subject:
                                                 'Join my group on Partido!');
                                       },

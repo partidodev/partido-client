@@ -64,9 +64,12 @@ class _EditBillPageState extends State<EditBillPage> {
     billDateController.text = "${_selectedDate.toLocal()}".split(' ')[0];
   }
 
+  double _normalizeDouble(String _doubleString) {
+    return double.parse(_doubleString.toString().replaceAll(",", "."));
+  }
+
   void _updateBill() async {
-    double normalizedAmount =
-        double.parse(_amount.toString().replaceAll(",", "."));
+    double normalizedAmount = _normalizeDouble(_amount);
 
     Bill updatedBill = new Bill();
     updatedBill.description = _description;
@@ -231,7 +234,7 @@ class _EditBillPageState extends State<EditBillPage> {
                             if (value.isEmpty) {
                               return 'Please enter the total amount';
                             }
-                            if (double.parse(value) <= 0) {
+                            if (_normalizeDouble(value) <= 0) {
                               return 'Please enter a positive amount greater than 0';
                             }
                             return null;
