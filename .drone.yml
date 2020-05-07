@@ -6,5 +6,5 @@ pipeline:
       - sudo chown -R cirrus:cirrus .
       #- flutter doctor
       #- flutter test
-      - flutter build appbundle
-      - flutter build web
+      #- flutter build appbundle
+      #- flutter build web
