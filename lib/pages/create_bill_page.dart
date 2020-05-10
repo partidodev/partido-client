@@ -69,7 +69,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
   }
 
   double _normalizeDouble(String _doubleString) {
-    return double.parse(_doubleString.toString().replaceAll(",", "."));
+    return double.parse(_doubleString.replaceAll(",", "."));
   }
 
   void _createBill() async {

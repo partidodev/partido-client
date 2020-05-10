@@ -32,7 +32,6 @@ class _EditBillPageState extends State<EditBillPage> {
   String _description;
   String _amount;
   DateTime _selectedDate;
-  int _fromUserId;
 
   TextEditingController billDescriptionController = new TextEditingController();
   TextEditingController billAmountController = new TextEditingController();
@@ -94,7 +93,7 @@ class _EditBillPageState extends State<EditBillPage> {
   }
 
   double _normalizeDouble(String _doubleString) {
-    return double.parse(_doubleString.toString().replaceAll(",", "."));
+    return double.parse(_doubleString.replaceAll(",", "."));
   }
 
   void _updateBill() async {
