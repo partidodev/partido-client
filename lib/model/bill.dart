@@ -10,7 +10,7 @@ class Bill {
   double totalAmount;
   String billingDate;
   String creationDate;
-  int parts;
+  double parts;
   int creator;
   List<Split> splits = null;
 

@@ -13,7 +13,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) {
     totalAmount: (json['totalAmount'] as num)?.toDouble(),
     billingDate: json['billingDate'] as String,
     creationDate: json['creationDate'] as String,
-    parts: json['parts'] as int,
+    parts: (json['parts'] as num)?.toDouble(),
     creator: json['creator'] as int,
     splits: (json['splits'] as List)
         ?.map(

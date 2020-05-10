@@ -87,7 +87,7 @@ class BillDetailsPage extends StatelessWidget {
                           return ListTile(
                             leading: Icon(Icons.person),
                             title: Text('${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
-                            subtitle: Text('Parts: ${(bill.splits[index].partsOfBill.toStringAsFixed(0))}/${(bill.parts)} · Paid: ${(bill.splits[index].paid).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                            subtitle: Text('Parts: ${(bill.splits[index].partsOfBill)}/${(bill.parts)} · Paid: ${(bill.splits[index].paid).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                             trailing: Text('${(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                           );
                         },
