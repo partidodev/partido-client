@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (w) {
       logger.w('Login failed', w);
-      Fluttertoast.showToast(msg: "Login failed, please try again");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "login.toast_login_failed"));
     }
   }
 
@@ -77,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Login',
+                        FlutterI18n.translate(context, "login.login_title"),
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ],
@@ -96,10 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                                 onSaved: (value) => _email = value,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration:
-                                    InputDecoration(labelText: "Email Address"),
+                                    InputDecoration(labelText: FlutterI18n.translate(context, "login.email")),
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return 'Please enter your email address';
+                                    return FlutterI18n.translate(context, "login.email_empty_validation_error");
                                   }
                                   return null;
                                 },
@@ -108,16 +109,16 @@ class _LoginPageState extends State<LoginPage> {
                                 onSaved: (value) => _password = value,
                                 obscureText: true,
                                 decoration:
-                                    InputDecoration(labelText: "Password"),
+                                    InputDecoration(labelText: FlutterI18n.translate(context, "login.password")),
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return 'Please enter your password';
+                                    return FlutterI18n.translate(context, "login.password_empty_validation_error");
                                   }
                                   return null;
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text("Remember me"),
+                                title: I18nText("login.remember"),
                                 value: _rememberMe,
                                 onChanged: _onRememberMeChanged,
                                 controlAffinity:
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                                   minWidth: double.infinity,
                                   color: Theme.of(context).primaryColor,
                                   textColor: Colors.white,
-                                  child: Text("Login"),
+                                  child: I18nText("login.login_button"),
                                   onPressed: () {
                                     final form = _formKey.currentState;
                                     form.save();
@@ -139,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(
                                 width: double.infinity,
                                 child: FlatButton(
-                                  child: Text('Sign up'),
+                                  child: I18nText("login.signup_button"),
                                   onPressed: () {
                                     navService.pushNamed('/signup');
                                   },
