@@ -142,11 +142,11 @@ class _BillFormPageState extends State<BillFormPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
-        Fluttertoast.showToast(msg: "New bill created");
+        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "bill_form.toast_bill_created"));
       }
     } catch (e) {
       logger.e("Failed to save bill", e);
-      Fluttertoast.showToast(msg: "An error occurred creating the bill");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "bill_form.toast_failed_to_save_bill"));
     }
   }
 
@@ -181,11 +181,11 @@ class _BillFormPageState extends State<BillFormPage> {
         navService.goBack(); // close outdated bill details screen
         navService.push(MaterialPageRoute(
             builder: (context) => BillDetailsPage(bill: response.data)));
-        Fluttertoast.showToast(msg: "Bill updated");
+        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "bill_form.toast_bill_updated"));
       }
     } catch (e) {
       logger.e("Failed to save bill", e);
-      Fluttertoast.showToast(msg: "An error occurred updating the bill");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "bill_form.toast_failed_to_update_bill"));
     }
   }
 
@@ -197,12 +197,11 @@ class _BillFormPageState extends State<BillFormPage> {
         navService.goBack(); // close bill deleting dialog
         navService.goBack(); // close bill editing screen
         navService.goBack(); // close bill details screen
-        Fluttertoast.showToast(msg: "Bill deleted");
+        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "bill_form.toast_bill_deleted"));
       }
     } catch (e) {
       logger.e("Failed to delete bill", e);
-      Fluttertoast.showToast(
-          msg: "An error occurred trying to delete the bill");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "bill_form.toast_failed_to_delete_bill"));
     }
   }
 
@@ -210,17 +209,17 @@ class _BillFormPageState extends State<BillFormPage> {
     await showDialog(
       context: context,
       child: AlertDialog(
-        title: Text("Delete Bill"),
-        content: Text("Are you sure, that you want to delete this bill?"),
+        title: I18nText("bill_form.delete_bill_dialog.title"),
+        content: I18nText("bill_form.delete_bill_dialog.question"),
         actions: <Widget>[
           FlatButton(
-            child: Text('No, cancel'),
+            child: I18nText("bill_form.delete_bill_dialog.answer_no"),
             onPressed: () {
               navService.goBack();
             },
           ),
           FlatButton(
-            child: Text('Yes, delete'),
+            child: I18nText("bill_form.delete_bill_dialog.answer_yes"),
             onPressed: _deleteBill,
           ),
         ],
@@ -259,7 +258,7 @@ class _BillFormPageState extends State<BillFormPage> {
                 child: TextFormField(
                   controller: splitPartsControllers[user.id],
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(labelText: "Parts"),
+                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bill_form.parts")),
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -268,7 +267,7 @@ class _BillFormPageState extends State<BillFormPage> {
                 child: TextFormField(
                   controller: splitPaidControllers[user.id],
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(labelText: "Paid"),
+                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bill_form.paid")),
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -283,12 +282,12 @@ class _BillFormPageState extends State<BillFormPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: (createNewBillMode) ? Text('Create bill') :  Text('Edit bill'),
+        title: (createNewBillMode) ? I18nText('bill_form.create_bill_title') :  I18nText('bill_form.edit_bill_title'),
         actions: (createNewBillMode) ? null : <Widget>[
            IconButton(
             icon: Icon(Icons.delete),
             onPressed: _openDeleteBillDialog,
-            tooltip: 'Delete bill',
+            tooltip: FlutterI18n.translate(context, "bill_form.delete_bill_tooltip"),
           ),
         ],
       ),
@@ -305,14 +304,14 @@ class _BillFormPageState extends State<BillFormPage> {
                   TextFormField(
                     onSaved: (value) => _description = value,
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(labelText: "Description"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bill_form.description")),
                     controller: billDescriptionController,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter a description';
+                        return FlutterI18n.translate(context, "bill_form.description_empty_validation_error");
                       }
                       if (value.length > 255) {
-                        return 'Max. 255 characters allowed';
+                        return FlutterI18n.translate(context, "bill_form.description_too_long_validation_error");
                       }
                       return null;
                     },
@@ -332,15 +331,15 @@ class _BillFormPageState extends State<BillFormPage> {
                             }
                           },
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
-                          decoration: InputDecoration(labelText: "Amount"),
+                          decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bill_form.amount")),
                           textAlign: TextAlign.end,
                           controller: billAmountController,
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter the total amount';
+                              return FlutterI18n.translate(context, "bill_form.amount_empty_validation_error");
                             }
                             if (_normalizeDouble(value) <= 0) {
-                              return 'Please enter a positive amount greater than 0';
+                              return FlutterI18n.translate(context, "bill_form.amount_not_positive_validation_error");
                             }
                             return null;
                           },
@@ -355,7 +354,7 @@ class _BillFormPageState extends State<BillFormPage> {
                     children: splitEditingRows,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: "Date"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bill_form.date")),
                     controller: billDateController,
                     readOnly: true,
                     onTap: () => _selectDate(context),
@@ -365,7 +364,7 @@ class _BillFormPageState extends State<BillFormPage> {
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: (createNewBillMode) ? Text("Create bill") : Text("Update bill"),
+                      child: (createNewBillMode) ? I18nText("bill_form.create_bill_button") : I18nText("bill_form.update_bill_button"),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;
