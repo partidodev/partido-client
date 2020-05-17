@@ -4,9 +4,9 @@ import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:partido_client/api/api.dart';
-import 'package:partido_client/pages/create_group_page.dart';
 import 'package:partido_client/pages/edit_account_page.dart';
 import 'package:partido_client/pages/bill_form_page.dart';
+import 'package:partido_client/pages/group_form_page.dart';
 import 'package:partido_client/pages/home_page.dart';
 import 'package:partido_client/pages/login_page.dart';
 import 'package:partido_client/pages/signup_page.dart';
@@ -72,7 +72,7 @@ void main() async {
           '/signup': (_) => SignupPage(),
           '/signup-successful': (_) => SignupSuccessfulPage(),
           '/create-bill': (_) => BillFormPage(bill: null),
-          '/create-group': (_) => CreateGroupPage(),
+          '/create-group': (_) => GroupFormPage(group: null),
           '/account': (_) => EditAccountPage(),
         },
         localizationsDelegates: [

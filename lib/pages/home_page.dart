@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
-import 'package:partido_client/pages/edit_group_page.dart';
+import 'package:partido_client/pages/group_form_page.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
@@ -322,7 +322,7 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () {
                                     navService.push(
                                       MaterialPageRoute(
-                                        builder: (context) => EditGroupPage(
+                                        builder: (context) => GroupFormPage(
                                             group: appState.getSelectedGroup()),
                                       ),
                                     );

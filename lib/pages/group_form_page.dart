@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group.dart';
@@ -12,26 +13,28 @@ import '../api/api_service.dart';
 import '../app_state.dart';
 import '../navigation_service.dart';
 
-class EditGroupPage extends StatefulWidget {
+class GroupFormPage extends StatefulWidget {
 
   final Group group;
 
-  EditGroupPage({Key key, @required this.group}) : super(key: key);
+  GroupFormPage({Key key, this.group}) : super(key: key);
 
   @override
-  _EditGroupPageState createState() => _EditGroupPageState();
+  _GroupFormPageState createState() => _GroupFormPageState();
 }
 
-class _EditGroupPageState extends State<EditGroupPage> {
+class _GroupFormPageState extends State<GroupFormPage> {
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
+  bool createNewGroupMode = true;
+
   String _name;
   String _description;
   String _currency;
-  bool _joinModeActive;
+  bool _joinModeActive = false;
   String _joinKey;
 
   TextEditingController groupNameController = new TextEditingController();
@@ -40,12 +43,31 @@ class _EditGroupPageState extends State<EditGroupPage> {
 
   @override
   void initState() {
-    groupNameController.text = widget.group.name;
-    groupDescriptionController.text = widget.group.status;
-    groupCurrencyController.text = widget.group.currency;
-    _joinModeActive = widget.group.joinModeActive;
-    _joinKey = widget.group.joinKey;
+    if (widget.group != null) { // edit existing group
+      createNewGroupMode = false;
+      groupNameController.text = widget.group.name;
+      groupDescriptionController.text = widget.group.status;
+      groupCurrencyController.text = widget.group.currency;
+      _joinModeActive = widget.group.joinModeActive;
+      _joinKey = widget.group.joinKey;
+    }
+    // else: create new group
     return super.initState();
+  }
+
+  void _createGroup() async {
+    Group group = new Group(name: _name, status: _description, currency: _currency, joinModeActive: _joinModeActive, joinKey: _joinKey);
+    try {
+      HttpResponse<Group> response = await api.createGroup(group);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).changeSelectedGroup(response.data.id);
+        navService.goBack();
+        Fluttertoast.showToast(msg: "New group created");
+      }
+    } catch (e) {
+      logger.e('Group creation failed', e);
+      Fluttertoast.showToast(msg: "Group creation failed");
+    }
   }
 
   void _updateGroup() async {
@@ -82,7 +104,9 @@ class _EditGroupPageState extends State<EditGroupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Group settings'),
+        title: (createNewGroupMode)
+            ? Text('Create group')
+            : Text('Group settings'),
       ),
       body: ListView(
         children: <Widget>[
@@ -139,19 +163,24 @@ class _EditGroupPageState extends State<EditGroupPage> {
                     title: Text("Let other users join the group with a key"),
                     value: _joinModeActive,
                     onChanged: _onJoinModeActiveChanged,
-                    //controlAffinity: ListTileControlAffinity.leading,
                   ),
                   SizedBox(height: 15.0),
                   MaterialButton(
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: Text("Save changes"),
+                      child: (createNewGroupMode)
+                          ? Text('Create group')
+                          : Text("Save changes"),
                       onPressed: () {
                         final form = _formKey.currentState;
                         form.save();
                         if (form.validate()) {
-                          _updateGroup();
+                          if (createNewGroupMode) {
+                            _createGroup();
+                          } else {
+                            _updateGroup();
+                          }
                         }
                       }),
                 ],
