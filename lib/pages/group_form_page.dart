@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
@@ -62,11 +63,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).changeSelectedGroup(response.data.id);
         navService.goBack();
-        Fluttertoast.showToast(msg: "New group created");
+        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_created"));
       }
     } catch (e) {
       logger.e('Group creation failed', e);
-      Fluttertoast.showToast(msg: "Group creation failed");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_creation_failed"));
     }
   }
 
@@ -77,11 +78,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
-        Fluttertoast.showToast(msg: "Group settings saved");
+        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_settings_saved"));
       }
     } catch (e) {
       logger.e('Saving group settings failed', e);
-      Fluttertoast.showToast(msg: "Saving group settings failed");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_settings_saving_failed"));
     }
   }
 
@@ -105,8 +106,8 @@ class _GroupFormPageState extends State<GroupFormPage> {
     return new Scaffold(
       appBar: AppBar(
         title: (createNewGroupMode)
-            ? Text('Create group')
-            : Text('Group settings'),
+            ? I18nText("group_form.create_group_title")
+            : I18nText("group_form.group_settings_title"),
       ),
       body: ListView(
         children: <Widget>[
@@ -120,14 +121,14 @@ class _GroupFormPageState extends State<GroupFormPage> {
                   TextFormField(
                     controller: groupNameController,
                     onSaved: (value) => _name = value,
-                    decoration: InputDecoration(labelText: "Group name"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "group_form.group_name")),
                     textCapitalization: TextCapitalization.sentences,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter a group name';
+                        return FlutterI18n.translate(context, "group_form.group_name_empty_validation_error");
                       }
                       if (value.length > 255) {
-                        return 'Max. 255 characters allowed';
+                        return FlutterI18n.translate(context, "group_form.group_name_too_long_validation_error");
                       }
                       return null;
                     },
@@ -135,11 +136,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
                   TextFormField(
                     controller: groupDescriptionController,
                     onSaved: (value) => _description = value,
-                    decoration: InputDecoration(labelText: "Description (optional)"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "group_form.group_description")),
                     textCapitalization: TextCapitalization.sentences,
                     validator: (value) {
                       if (value.length > 255) {
-                        return 'Max. 255 characters allowed';
+                        return FlutterI18n.translate(context, "group_form.group_description_too_long_validation_error");
                       }
                       return null;
                     },
@@ -147,20 +148,20 @@ class _GroupFormPageState extends State<GroupFormPage> {
                   TextFormField(
                     controller: groupCurrencyController,
                     onSaved: (value) => _currency = value,
-                    decoration: InputDecoration(labelText: "Currency"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "group_form.currency")),
                     textCapitalization: TextCapitalization.sentences,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter a currency';
+                        return FlutterI18n.translate(context, "group_form.currency_empty_validation_error");
                       }
                       if (value.length > 255) {
-                        return 'Max. 255 characters allowed';
+                        return FlutterI18n.translate(context, "group_form.currency_too_long_validation_error");
                       }
                       return null;
                     },
                   ),
                   CheckboxListTile(
-                    title: Text("Let other users join the group with a key"),
+                    title: I18nText("group_form.activate_join_mode"),
                     value: _joinModeActive,
                     onChanged: _onJoinModeActiveChanged,
                   ),
@@ -170,8 +171,8 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: (createNewGroupMode)
-                          ? Text('Create group')
-                          : Text("Save changes"),
+                          ? I18nText("group_form.create_group_button")
+                          : I18nText("group_form.save_changes_button"),
                       onPressed: () {
                         final form = _formKey.currentState;
                         form.save();
