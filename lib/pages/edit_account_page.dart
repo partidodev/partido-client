@@ -149,7 +149,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       if (value.isEmpty) {
                         return FlutterI18n.translate(context, "account.username_empty_validation_error");
                       }
-                      if (value.length > 255) {
+                      if (value.length > 50) {
                         return FlutterI18n.translate(context, "account.username_too_long_validation_error");
                       }
                       return null;
@@ -208,10 +208,10 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
-                        labelText: FlutterI18n.translate(context, "account.change_password.new_password_verification")),
+                        labelText: FlutterI18n.translate(context, "account.change_password.new_password_confirmation")),
                     validator: (value) {
                       if (value != _newPassword) {
-                        return FlutterI18n.translate(context, "account.change_password.new_password_verification_not_matching_validation_error");
+                        return FlutterI18n.translate(context, "account.change_password.new_password_confirmation_not_matching_validation_error");
                       }
                       return null;
                     },

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/widgets/I18nText.dart';
 
 import '../navigation_service.dart';
 
@@ -10,29 +12,28 @@ class SignupSuccessfulPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sign up'),
+          title: I18nText('signup.success.title'),
         ),
         body: ListView(
           padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
           children: <Widget>[
             Column(
-             // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Sign up',
+                  FlutterI18n.translate(context, "signup.success.title"),
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 15.0),
-                Text("You have been signed up successfully!"),
+                I18nText("signup.success.success_notice"),
                 SizedBox(height: 15.0),
-                Text("You can now start by logging in and creating a new group or joining an existing group if you recieved a join key."),
+                I18nText("signup.success.additional_info"),
                 SizedBox(height: 15.0),
                 MaterialButton(
                     minWidth: double.infinity,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    child: Text("Login"),
+                    child: I18nText("login.login_button"),
                     onPressed: () {
                       navService.pushNamedAndRemoveUntil("/login");
                     }),

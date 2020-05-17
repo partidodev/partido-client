@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         child: Consumer<AppState>(builder: (context, appState, child) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: Text("My Groups"),
+            title: I18nText("home.groups_dialog.title"),
             content: Container(
               width: double.maxFinite,
               child: ListView.builder(
@@ -81,14 +81,14 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Join existing'),
+                child: I18nText('home.groups_dialog.join_existing_button'),
                 onPressed: () {
                   navService.goBack();
                   _openJoinGroupDialog();
                 },
               ),
               FlatButton(
-                child: Text('Create new'),
+                child: I18nText('home.groups_dialog.create_button'),
                 onPressed: () {
                   navService.pushReplacementNamed('/create-group');
                 },
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
         child: Consumer<AppState>(builder: (context, appState, child) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: Text("Join Group"),
+            title: I18nText("home.join_group_dialog.title"),
             content: Container(
               padding: EdgeInsets.only(left: 20, right: 20),
               width: double.maxFinite,
@@ -117,10 +117,10 @@ class _HomePageState extends State<HomePage> {
                     child: TextFormField(
                       onSaved: (value) => _groupJoinKey = value,
                       keyboardType: TextInputType.text,
-                      decoration: InputDecoration(labelText: "Join code"),
+                      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "home.join_group_dialog.join_code")),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter the join code you recieved';
+                          return FlutterI18n.translate(context, "home.join_group_dialog.join_code_empty_validation_error");
                         }
                         return null;
                       },
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               FlatButton(
-                child: I18nText('home.join_dialog.button_join'),
+                child: I18nText('home.join_group_dialog.button_join'),
                 onPressed: () {
                   final form = _formKey.currentState;
                   form.save();
@@ -167,21 +167,21 @@ class _HomePageState extends State<HomePage> {
                 contentPadding: EdgeInsets.only(left: 24),
                 title: I18nText("home.about_dialog.homepage"),
                 onTap: () {
-                  _launchHomepageUrl();
+                  _launchHomepageUrl(context);
                 },
               ),
               ListTile(
                 contentPadding: EdgeInsets.only(left: 24),
                 title: I18nText("home.about_dialog.imprint"),
                 onTap: () {
-                  _launchImprintUrl();
+                  _launchImprintUrl(context);
                 },
               ),
               ListTile(
                 contentPadding: EdgeInsets.only(left: 24),
                 title: I18nText("home.about_dialog.privacy_policy"),
                 onTap: () {
-                  _launchPrivacyPolicyUrl();
+                  _launchPrivacyPolicyUrl(context);
                 },
               ),
             ],
@@ -211,8 +211,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _launchHomepageUrl() async {
-    const url = 'https://partido.rocks/';
+  _launchHomepageUrl(BuildContext context) async {
+    String url = FlutterI18n.translate(context, "home.about_dialog.homepage_url");
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -220,8 +220,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _launchImprintUrl() async {
-    const url = 'https://partido.rocks/imprint/';
+  _launchImprintUrl(BuildContext context) async {
+    String url = FlutterI18n.translate(context, "home.about_dialog.imprint_url");
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -229,8 +229,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _launchPrivacyPolicyUrl() async {
-    const url = 'https://partido.rocks/privacy/';
+  _launchPrivacyPolicyUrl(BuildContext context) async {
+    String url = FlutterI18n.translate(context, "home.about_dialog.privacy_policy_url");
     if (await canLaunch(url)) {
       await launch(url);
     } else {

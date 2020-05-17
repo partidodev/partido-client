@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:retrofit/dio.dart';
@@ -69,7 +70,7 @@ class _SignupPageState extends State<SignupPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Sign up',
+                        FlutterI18n.translate(context, "signup.title"),
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ],
@@ -86,41 +87,41 @@ class _SignupPageState extends State<SignupPage> {
                               children: <Widget>[
                                 TextFormField(
                                   onSaved: (value) => _username = value,
-                                  decoration: InputDecoration(labelText: "Username"),
+                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.username")),
                                   validator: (value) {
-                                    if (value.isEmpty) { return 'Please enter an username'; }
-                                    if (value.length > 50) { return 'Max. 50 characters allowed'; }
+                                    if (value.isEmpty) { return FlutterI18n.translate(context, "account.username_empty_validation_error"); }
+                                    if (value.length > 50) { return FlutterI18n.translate(context, "account.username_too_long_validation_error"); }
                                     return null;
                                   },
                                 ),
                                 TextFormField(
                                   onSaved: (value) => _email = value,
                                   keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(labelText: "Email Address"),
+                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.email")),
                                   validator: (value) {
-                                    if (value.isEmpty) { return 'Please enter your email address'; }
-                                    if (RegExp(r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$').hasMatch(value)) { return 'Please enter a valid email address'; }
-                                    if (value.length > 50) { return 'Max. 50 characters allowed'; }
+                                    if (value.isEmpty) { return FlutterI18n.translate(context, "account.email_empty_validation_error"); }
+                                    if (RegExp(r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$').hasMatch(value)) { return FlutterI18n.translate(context, "account.email_invalid_validation_error"); }
+                                    if (value.length > 50) { return FlutterI18n.translate(context, "account.email_too_long_validation_error"); }
                                     return null;
                                   },
                                 ),
                                 TextFormField(
                                   onSaved: (value) => _password = value,
                                   obscureText: true,
-                                  decoration: InputDecoration(labelText: "Password"),
+                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.password")),
                                   validator: (value) {
-                                    if (value.isEmpty) { return 'Please enter a password'; }
-                                    if (value.length > 100) { return 'Max. 100 characters allowed'; }
-                                    if (value.length < 8) { return 'Min. 8 characters required'; }
+                                    if (value.isEmpty) { return FlutterI18n.translate(context, "signup.password_empty_validation_error"); }
+                                    if (value.length > 100) { return FlutterI18n.translate(context, "signup.password_too_long_validation_error"); }
+                                    if (value.length < 8) { return FlutterI18n.translate(context, "signup.password_too_short_validation_error"); }
                                     return null;
                                   },
                                 ),
                                 TextFormField(
                                   obscureText: true,
-                                  decoration: InputDecoration(labelText: "Password confirmation"),
+                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "signup.password_confirmation")),
                                   validator: (value) {
-                                    if (value.isEmpty) { return 'Please enter a password'; }
-                                    if (value != _password) { return 'Passwords do not match'; }
+                                    if (value.isEmpty) { return FlutterI18n.translate(context, "signup.password_empty_validation_error"); }
+                                    if (value != _password) { return FlutterI18n.translate(context, "signup.password_confirmation_not_matching_validation_error"); }
                                     return null;
                                   },
                                 ),
@@ -128,21 +129,21 @@ class _SignupPageState extends State<SignupPage> {
                                   title: RichText(
                                     text: TextSpan(
                                       children: <TextSpan>[
-                                        TextSpan(text: 'I have read and accept the ', style: Theme.of(context).textTheme.body1),
+                                        TextSpan(text: FlutterI18n.translate(context, "signup.accept_privacy_text_before_link"), style: Theme.of(context).textTheme.body1),
                                         TextSpan(
-                                            text: 'Privacy Policy',
+                                            text: FlutterI18n.translate(context, "signup.privacy_policy_link_text"),
                                             recognizer: new TapGestureRecognizer()..onTap = () {
-                                              launch('https://partido.rocks/privacy/');
+                                              launch(FlutterI18n.translate(context, "signup.privacy_policy_link_url"));
                                             },
                                             style: TextStyle(color: Theme.of(context).primaryColor)),
-                                        TextSpan(text: ' of Partido', style: Theme.of(context).textTheme.body1),
+                                        TextSpan(text: FlutterI18n.translate(context, "signup.accept_privacy_text_after_link"), style: Theme.of(context).textTheme.body1),
                                       ],
                                     ),
                                   ),
                                   value: _acceptTerms,
                                   subtitle: (!_acceptTerms && formSaved) ? Padding(
                                       padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                      child: Text('You can use Partido only if you accept', style: TextStyle(color: Color(0xFFe53935), fontSize: 12))
+                                      child: Text(FlutterI18n.translate(context, "signup.privacy_policy_not_accepted_error"), style: TextStyle(color: Color(0xFFe53935), fontSize: 12))
                                   ) : null,
                                   onChanged: (bool value) => setState(() => _acceptTerms = value),
                                   controlAffinity: ListTileControlAffinity.leading,
@@ -152,7 +153,7 @@ class _SignupPageState extends State<SignupPage> {
                                     minWidth: double.infinity,
                                     color: Theme.of(context).primaryColor,
                                     textColor: Colors.white,
-                                    child: Text("Sign up"),
+                                    child: I18nText("login.signup_button"),
                                     onPressed: () {
                                       final form = _formKey.currentState;
                                       form.save();
@@ -165,7 +166,7 @@ class _SignupPageState extends State<SignupPage> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: FlatButton(
-                                    child: Text('Log in'),
+                                    child: I18nText('login.login_button'),
                                     onPressed: () {
                                       navService.goBack();
                                     },
