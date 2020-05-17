@@ -119,15 +119,18 @@ class _EditAccountPageState extends State<EditAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My account'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: _openLogoutDialog,
-            tooltip: 'Logout',
-          ),
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(45.0),
+        child: AppBar(
+          title: Text('My account'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: _openLogoutDialog,
+              tooltip: 'Logout',
+            ),
+          ],
+        ),
       ),
       body: ListView(
         children: <Widget>[

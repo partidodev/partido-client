@@ -281,15 +281,18 @@ class _BillFormPageState extends State<BillFormPage> {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: (createNewBillMode) ? I18nText('bill_form.create_bill_title') :  I18nText('bill_form.edit_bill_title'),
-        actions: (createNewBillMode) ? null : <Widget>[
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(45.0),
+         child: AppBar(
+         title: (createNewBillMode) ? I18nText('bill_form.create_bill_title') :  I18nText('bill_form.edit_bill_title'),
+         actions: (createNewBillMode) ? null : <Widget>[
            IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: _openDeleteBillDialog,
-            tooltip: FlutterI18n.translate(context, "bill_form.delete_bill_tooltip"),
-          ),
-        ],
+             icon: Icon(Icons.delete),
+             onPressed: _openDeleteBillDialog,
+             tooltip: FlutterI18n.translate(context, "bill_form.delete_bill_tooltip"),
+           ),
+         ],
+         ),
       ),
       body: ListView(
         children: <Widget>[

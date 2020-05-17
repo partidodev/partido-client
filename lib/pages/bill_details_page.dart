@@ -18,13 +18,13 @@ class BillDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Bill Details'),
-          actions: Provider.of<AppState>(context, listen: false)
-                      .getCurrentUser()
-                      .id ==
-                  bill.creator
-              ? <Widget>[
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(45.0),
+          child: AppBar(
+            title: Text('Bill Details'),
+            actions: Provider.of<AppState>(context, listen: false)
+                .getCurrentUser()
+                .id == bill.creator ? <Widget>[
                   IconButton(icon: Icon(Icons.edit), onPressed: () {
                     navService.push(
                       MaterialPageRoute(
@@ -32,8 +32,8 @@ class BillDetailsPage extends StatelessWidget {
                       ),
                     );
                   }),
-                ]
-              : null,
+            ] : null,
+          ),
         ),
         body: ListView(
           children: <Widget>[
