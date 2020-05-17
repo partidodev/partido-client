@@ -5,6 +5,8 @@ Client App for Partido written in Flutter/Dart.
 
 ## Developer information
 
+### Generated code
+
 (Re-)Compile generated code (API, Domain model) with the following command:
 
 ```flutter pub run build_runner build```
@@ -77,3 +79,11 @@ The command to re-generate all icons, using the image files specified in the pre
 **Note:** the icons are generated for the android or iOS Apps only. To change WebApp's icons, look at the
 corresponding configuration in `<partido-project>/web/manifest.json` and the icon files in
 `<partido-project>/web/icons/`.
+
+## Translating Partido
+
+To translate Partido to another language not available yet in the `<partido-project>/assets/` folder, 
+copy the file `<partido-project>/assets/en.yaml` and rename it according to the new language like
+`<partido-project>/assets/<language>.yaml`. The file `en.yaml` always contains the latest and up to
+date default strings. If a specific other language file does not contain a certain translation, the
+default string from `en.yaml` is shown to the user.
