@@ -165,7 +165,6 @@ class _SignupPageState extends State<SignupPage> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: FlatButton(
-                                    padding: EdgeInsets.only(left: 14, right: 14),
                                     child: Text('Log in'),
                                     onPressed: () {
                                       navService.goBack();

@@ -139,7 +139,6 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(
                                 width: double.infinity,
                                 child: FlatButton(
-                                  padding: EdgeInsets.only(left: 14, right: 14),
                                   child: Text('Sign up'),
                                   onPressed: () {
                                     navService.pushNamed('/signup');
