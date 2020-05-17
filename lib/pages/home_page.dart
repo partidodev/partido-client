@@ -255,58 +255,47 @@ class _HomePageState extends State<HomePage> {
       length: 2,
       child: Consumer<AppState>(builder: (context, appState, child) {
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(85.0),
-            child: AppBar(
-                title: I18nText('global.partido_title'),
-                bottom: TabBar(
-                  tabs: [
-                    new Container(
-                      height: 40.0,
-                      child: new Tab(icon: Icon(Icons.assessment)),
-                    ),
-                    new Container(
-                      height: 40.0,
-                      child: new Tab(icon: Icon(Icons.format_list_bulleted)),
-                    ),
-//                    Tab(icon: Icon(Icons.assessment)),
-//                    Tab(icon: Icon(Icons.format_list_bulleted)),
-                  ],
-                ),
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.group),
-                    tooltip: FlutterI18n.translate(context, "home.groups_tooltip"),
-                    onPressed: _openGroupsDialog,
-                  ),
-                  PopupMenuButton<HomeMenuItem>(
-                    onSelected: (HomeMenuItem result) {
-                      if (result == HomeMenuItem.account) {
-                        navService.pushNamed('/account');
-                      } else if (result == HomeMenuItem.about) {
-                        _openAboutDialog();
-                      } else if (result == HomeMenuItem.feedback) {
-                        _launchFeedbackUrl();
-                      }
-                    },
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<HomeMenuItem>>[
-                      PopupMenuItem<HomeMenuItem>(
-                        value: HomeMenuItem.account,
-                        child: I18nText("home.menu.account"),
-                      ),
-                      PopupMenuItem<HomeMenuItem>(
-                        value: HomeMenuItem.about,
-                        child: I18nText('home.menu.about'),
-                      ),
-                      PopupMenuItem<HomeMenuItem>(
-                        value: HomeMenuItem.feedback,
-                        child: I18nText('home.menu.feedback'),
-                      ),
-                    ],
-                  )
-                ],
+          appBar: AppBar(
+            title: I18nText('global.partido_title'),
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.assessment)),
+                Tab(icon: Icon(Icons.format_list_bulleted)),
+              ],
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.group),
+                tooltip: FlutterI18n.translate(context, "home.groups_tooltip"),
+                onPressed: _openGroupsDialog,
               ),
+              PopupMenuButton<HomeMenuItem>(
+                onSelected: (HomeMenuItem result) {
+                  if (result == HomeMenuItem.account) {
+                    navService.pushNamed('/account');
+                  } else if (result == HomeMenuItem.about) {
+                    _openAboutDialog();
+                  } else if (result == HomeMenuItem.feedback) {
+                    _launchFeedbackUrl();
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<HomeMenuItem>>[
+                  PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.account,
+                    child: I18nText("home.menu.account"),
+                  ),
+                  PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.about,
+                    child: I18nText('home.menu.about'),
+                  ),
+                  PopupMenuItem<HomeMenuItem>(
+                    value: HomeMenuItem.feedback,
+                    child: I18nText('home.menu.feedback'),
+                  ),
+                ],
+              )
+            ],
           ),
           body: TabBarView(
             children: [
@@ -328,7 +317,8 @@ class _HomePageState extends State<HomePage> {
                           trailing: appState.getSelectedGroup().status != null
                               ? IconButton(
                                   icon: Icon(Icons.chevron_right),
-                                  tooltip: FlutterI18n.translate(context, "home.welcome.group_settings_tooltip"),
+                                  tooltip: FlutterI18n.translate(context,
+                                      "home.welcome.group_settings_tooltip"),
                                   onPressed: () {
                                     navService.push(
                                       MaterialPageRoute(
@@ -350,8 +340,11 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text(FlutterI18n.translate(context, "home.balances.title"),
-                                    style: TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text(
+                                    FlutterI18n.translate(
+                                        context, "home.balances.title"),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
                                     Icon(Icons.equalizer, color: Colors.green),
                               ),
@@ -389,14 +382,21 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text(FlutterI18n.translate(context, "home.join_mode.title_enabled"), style: TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text(
+                                    FlutterI18n.translate(context,
+                                        "home.join_mode.title_enabled"),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
                                     Icon(Icons.group_add, color: Colors.green),
                               ),
                               Divider(),
-                              ListTile(title: I18nText("home.join_mode.security_notice")),
                               ListTile(
-                                title: SelectableText("${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
+                                  title: I18nText(
+                                      "home.join_mode.security_notice")),
+                              ListTile(
+                                title: SelectableText(
+                                    "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -405,14 +405,20 @@ class _HomePageState extends State<HomePage> {
                                         icon: Icon(Icons.content_copy),
                                         onPressed: () {
                                           Clipboard.setData(ClipboardData(
-                                              text: "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"));
-                                          Fluttertoast.showToast(msg: FlutterI18n.translate(context, "global.copied"));
+                                              text:
+                                                  "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"));
+                                          Fluttertoast.showToast(
+                                              msg: FlutterI18n.translate(
+                                                  context, "global.copied"));
                                         }),
                                     IconButton(
                                       icon: Icon(Icons.share),
                                       onPressed: () {
-                                        Share.share('${I18nText("home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
-                                            subject: FlutterI18n.translate(context, "home.join_mode.share.subject"));
+                                        Share.share(
+                                            '${I18nText("home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                                            subject: FlutterI18n.translate(
+                                                context,
+                                                "home.join_mode.share.subject"));
                                       },
                                     ),
                                   ],

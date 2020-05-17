@@ -18,22 +18,24 @@ class BillDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(45.0),
-          child: AppBar(
-            title: Text('Bill Details'),
-            actions: Provider.of<AppState>(context, listen: false)
-                .getCurrentUser()
-                .id == bill.creator ? <Widget>[
-                  IconButton(icon: Icon(Icons.edit), onPressed: () {
-                    navService.push(
-                      MaterialPageRoute(
-                        builder: (context) => BillFormPage(bill: bill),
-                      ),
-                    );
-                  }),
-            ] : null,
-          ),
+        appBar: AppBar(
+          title: Text('Bill Details'),
+          actions: Provider.of<AppState>(context, listen: false)
+                      .getCurrentUser()
+                      .id ==
+                  bill.creator
+              ? <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        navService.push(
+                          MaterialPageRoute(
+                            builder: (context) => BillFormPage(bill: bill),
+                          ),
+                        );
+                      }),
+                ]
+              : null,
         ),
         body: ListView(
           children: <Widget>[
@@ -47,10 +49,13 @@ class BillDetailsPage extends StatelessWidget {
                       ListTile(
                         title: Text(
                           '${bill.description}',
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18),
                         ),
-                        subtitle: Text('Created by ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
-                        leading: Icon(Icons.description, size: 40, color: Colors.green),
+                        subtitle: Text(
+                            'Created by ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
+                        leading: Icon(Icons.description,
+                            size: 40, color: Colors.green),
                       ),
                     ],
                   ),
@@ -60,11 +65,13 @@ class BillDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ListTile(
-                        title: Text('${bill.totalAmount.toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                        title: Text(
+                            '${bill.totalAmount.toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                         leading: Icon(Icons.attach_money),
                       ),
                       ListTile(
-                        title: Text('${new DateFormat("yyyy-MM-dd").format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
+                        title: Text(
+                            '${new DateFormat("yyyy-MM-dd").format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
                         leading: Icon(Icons.date_range),
                       ),
                     ],
@@ -75,7 +82,8 @@ class BillDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ListTile(
-                        title: Text('Splits', style: TextStyle(fontWeight: FontWeight.w500)),
+                        title: Text('Splits',
+                            style: TextStyle(fontWeight: FontWeight.w500)),
                         leading: Icon(Icons.call_split, color: Colors.green),
                       ),
                       Divider(),
@@ -86,9 +94,12 @@ class BillDetailsPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return ListTile(
                             leading: Icon(Icons.person),
-                            title: Text('${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
-                            subtitle: Text('Parts: ${(bill.splits[index].partsOfBill)}/${(bill.parts)} · Paid: ${(bill.splits[index].paid).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
-                            trailing: Text('${(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                            title: Text(
+                                '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
+                            subtitle: Text(
+                                'Parts: ${(bill.splits[index].partsOfBill)}/${(bill.parts)} · Paid: ${(bill.splits[index].paid).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                            trailing: Text(
+                                '${(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                           );
                         },
                       ),
@@ -98,7 +109,6 @@ class BillDetailsPage extends StatelessWidget {
               ],
             ),
           ],
-        )
-    );
+        ));
   }
 }
