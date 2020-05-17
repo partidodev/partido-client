@@ -5,11 +5,11 @@ Client App for Partido written in Flutter/Dart.
 
 ## Developer information
 
-Recompile generated code (API, Domain model) with following command:
+(Re-)Compile generated code (API, Domain model) with the following command:
 
 ```flutter pub run build_runner build```
 
-Or use this command to continuously regenerate the code if files are changed:
+Or use this command to continuously regenerate the code if the relevant files are changed:
 
 ```flutter pub run build_runner watch```
 
@@ -73,3 +73,7 @@ The configuration of the plugin can be found in the `pubspec.yaml` file and the 
 The command to re-generate all icons, using the image files specified in the previous configuration, is:
 
 ```flutter pub run flutter_launcher_icons:main```
+
+**Note:** the icons are generated for the android or iOS Apps only. To change WebApp's icons, look at the
+corresponding configuration in `<partido-project>/web/manifest.json` and the icon files in
+`<partido-project>/web/icons/`.
