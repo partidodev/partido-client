@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +16,18 @@ class BillDetailsPage extends StatelessWidget {
   // Constructor needs an bill object to show it's details page
   BillDetailsPage({Key key, @required this.bill}) : super(key: key);
 
+  NumberFormat currencyFormatter;
+  NumberFormat partFormatter;
+  DateFormat dateFormatter;
+
   @override
   Widget build(BuildContext context) {
+    dateFormatter = new DateFormat(FlutterI18n.translate(context, "global.date_format"));
+    currencyFormatter = new NumberFormat(FlutterI18n.translate(context, "global.currency_format"), FlutterI18n.translate(context, "global.locale"));
+    partFormatter = new NumberFormat(FlutterI18n.translate(context, "global.part_format"), FlutterI18n.translate(context, "global.locale"));
     return Scaffold(
         appBar: AppBar(
-          title: Text('Bill Details'),
+          title: I18nText('bill_details.title'),
           actions: Provider.of<AppState>(context, listen: false)
                       .getCurrentUser()
                       .id ==
@@ -53,7 +61,7 @@ class BillDetailsPage extends StatelessWidget {
                               fontWeight: FontWeight.w600, fontSize: 18),
                         ),
                         subtitle: Text(
-                            'Created by ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
+                            '${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
                         leading: Icon(Icons.description,
                             size: 40, color: Colors.green),
                       ),
@@ -71,7 +79,7 @@ class BillDetailsPage extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text(
-                            '${new DateFormat("yyyy-MM-dd").format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
+                            '${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
                         leading: Icon(Icons.date_range),
                       ),
                     ],
@@ -82,7 +90,7 @@ class BillDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ListTile(
-                        title: Text('Splits',
+                        title: Text(FlutterI18n.translate(context, "bill_details.splits"),
                             style: TextStyle(fontWeight: FontWeight.w500)),
                         leading: Icon(Icons.call_split, color: Colors.green),
                       ),
@@ -97,9 +105,9 @@ class BillDetailsPage extends StatelessWidget {
                             title: Text(
                                 '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
                             subtitle: Text(
-                                'Parts: ${(bill.splits[index].partsOfBill)}/${(bill.parts)} · Paid: ${(bill.splits[index].paid).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                                '${FlutterI18n.translate(context, "bill_details.parts")} ${partFormatter.format(bill.splits[index].partsOfBill)}/${partFormatter.format(bill.parts)} · ${FlutterI18n.translate(context, "bill_details.paid")} ${currencyFormatter.format(bill.splits[index].paid)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                             trailing: Text(
-                                '${(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill).toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                                '${currencyFormatter.format(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                           );
                         },
                       ),

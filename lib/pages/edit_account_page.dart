@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/new_user.dart';
@@ -30,7 +32,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
   String _email;
   String _oldPassword;
   String _newPassword;
-  String _newPasswordVerification;
 
   TextEditingController usernameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
@@ -58,7 +59,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
             .setCurrentUser(response.data);
         Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
         navService.goBack();
-        Fluttertoast.showToast(msg: "Settings saved");
+        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "account.toast_account_settings_saved"));
 
         try {
           var loginPassword;
@@ -69,14 +70,14 @@ class _EditAccountPageState extends State<EditAccountPage> {
           }
           await api.login("$_email", "$loginPassword",
               "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
-        } catch (w) {
-          logger.w('Login failed', w);
-          Fluttertoast.showToast(msg: "Login failed, please try again");
+        } catch (e) {
+          logger.e('Login failed', e);
+          Fluttertoast.showToast(msg: FlutterI18n.translate(context, "account.toast_login_failed"));
         }
       }
     } catch (e) {
       logger.e("Failed to save account", e);
-      Fluttertoast.showToast(msg: "An error occurred updating the account");
+      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "account.toast_error_updating_account"));
     }
   }
 
@@ -98,17 +99,17 @@ class _EditAccountPageState extends State<EditAccountPage> {
     await showDialog(
       context: context,
       child: AlertDialog(
-        title: Text("Logout"),
-        content: Text("Do you want to log out?"),
+        title: I18nText("account.logout_dialog.title"),
+        content: I18nText("account.logout_dialog.question"),
         actions: <Widget>[
           FlatButton(
-            child: Text('No, cancel'),
+            child: I18nText("account.logout_dialog.answer_no"),
             onPressed: () {
               navService.goBack();
             },
           ),
           FlatButton(
-            child: Text('Yes, logout'),
+            child: I18nText("account.logout_dialog.answer_yes"),
             onPressed: _logout,
           ),
         ],
@@ -120,12 +121,12 @@ class _EditAccountPageState extends State<EditAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My account'),
+        title: I18nText("account.title"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: _openLogoutDialog,
-            tooltip: 'Logout',
+            tooltip: FlutterI18n.translate(context, "account.logout_tooltip"),
           ),
         ],
       ),
@@ -142,14 +143,14 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   TextFormField(
                     onSaved: (value) => _username = value,
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(labelText: "Username"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.username")),
                     controller: usernameController,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter an username';
+                        return FlutterI18n.translate(context, "account.username_empty_validation_error");
                       }
                       if (value.length > 255) {
-                        return 'Max. 255 characters allowed';
+                        return FlutterI18n.translate(context, "account.username_too_long_validation_error");
                       }
                       return null;
                     },
@@ -157,19 +158,17 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   TextFormField(
                     onSaved: (value) => _email = value,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(labelText: "Email"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.email")),
                     controller: emailController,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter a valid email address';
+                        return FlutterI18n.translate(context, "account.email_empty_validation_error");
                       }
-                      if (RegExp(
-                              r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$')
-                          .hasMatch(value)) {
-                        return 'Please enter a valid email address';
+                      if (RegExp(r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$').hasMatch(value)) {
+                        return FlutterI18n.translate(context, "account.email_invalid_validation_error");
                       }
                       if (value.length > 50) {
-                        return 'Max. 50 characters allowed';
+                        return FlutterI18n.translate(context, "account.email_too_long_validation_error");
                       }
                       return null;
                     },
@@ -177,46 +176,42 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   TextFormField(
                     onSaved: (value) => _oldPassword = value,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "Password"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.password")),
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter your current password';
+                        return FlutterI18n.translate(context, "account.current_password_input_required");
                       }
                       return null;
                     },
                   ),
                   SizedBox(height: 30.0),
-                  Text(
-                    "Change password",
+                  Text(FlutterI18n.translate(context, "account.change_password.title"),
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(height: 10.0),
-                  Text(
-                      "Leave empty if you don't want to change your current password."),
+                  I18nText("account.change_password.description"),
                   SizedBox(height: 15.0),
                   TextFormField(
                     onSaved: (value) => _newPassword = value,
                     obscureText: true,
-                    decoration:
-                        InputDecoration(labelText: "New password (optional)"),
+                    decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.change_password.new_password")),
                     validator: (value) {
                       if (value.length > 100) {
-                        return 'Max. 100 characters allowed';
+                        return FlutterI18n.translate(context, "account.change_password.new_password_too_long_validation_error");
                       }
                       if (value.length < 8 && value.length != 0) {
-                        return 'Min. 8 characters required';
+                        return FlutterI18n.translate(context, "account.change_password.new_password_too_short_validation_error");
                       }
                       return null;
                     },
                   ),
                   TextFormField(
-                    onSaved: (value) => _newPasswordVerification = value,
                     obscureText: true,
                     decoration: InputDecoration(
-                        labelText: "New password verification (optional)"),
+                        labelText: FlutterI18n.translate(context, "account.change_password.new_password_verification")),
                     validator: (value) {
                       if (value != _newPassword) {
-                        return 'Passwords do not match';
+                        return FlutterI18n.translate(context, "account.change_password.new_password_verification_not_matching_validation_error");
                       }
                       return null;
                     },
@@ -226,7 +221,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: Text("Save changes"),
+                      child: I18nText("account.save_button"),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;
