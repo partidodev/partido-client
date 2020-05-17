@@ -26,6 +26,10 @@ home:
   groups_tooltip: "Groups"
 global:
   partido_title: "Partido"
+  locale: "en"
   copied: "Copied"
   close: "Close"
   cancel: "Cancel"
+  date_format: "yyyy-MM-dd"
+  currency_format: "#,##0.00"
+  part_format: "#,##0.###"

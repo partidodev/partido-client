@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../app_state.dart';
 import '../navigation_service.dart';
-import 'edit_bill_page.dart';
+import 'bill_form_page.dart';
 
 class BillDetailsPage extends StatelessWidget {
   final Bill bill;
@@ -28,7 +28,7 @@ class BillDetailsPage extends StatelessWidget {
                   IconButton(icon: Icon(Icons.edit), onPressed: () {
                     navService.push(
                       MaterialPageRoute(
-                        builder: (context) => EditBillPage(bill: bill),
+                        builder: (context) => BillFormPage(bill: bill),
                       ),
                     );
                   }),

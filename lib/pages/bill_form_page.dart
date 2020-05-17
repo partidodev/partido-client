@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -14,21 +15,27 @@ import '../app_state.dart';
 import '../navigation_service.dart';
 import 'bill_details_page.dart';
 
-class EditBillPage extends StatefulWidget {
+class BillFormPage extends StatefulWidget {
   final Bill bill;
 
-  EditBillPage({Key key, @required this.bill}) : super(key: key);
+  BillFormPage({Key key, @required this.bill}) : super(key: key);
 
   @override
-  _EditBillPageState createState() => _EditBillPageState();
+  _BillFormPageState createState() => _BillFormPageState();
 }
 
-class _EditBillPageState extends State<EditBillPage> {
+class _BillFormPageState extends State<BillFormPage> {
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
 
+  NumberFormat currencyFormatter;
+  NumberFormat partFormatter;
+  DateFormat dateFormatter;
+
   final _formKey = GlobalKey<FormState>();
+  bool createNewBillMode = true;
+
   String _description;
   String _amount;
   DateTime _selectedDate;
@@ -36,46 +43,59 @@ class _EditBillPageState extends State<EditBillPage> {
   TextEditingController billDescriptionController = new TextEditingController();
   TextEditingController billAmountController = new TextEditingController();
   TextEditingController billDateController = new TextEditingController();
-  TextEditingController billFromUserIdController = new TextEditingController();
 
   Map<int, bool> splitUsers = {};
   Map<int, TextEditingController> splitPaidControllers = {};
   Map<int, TextEditingController> splitPartsControllers = {};
 
-  /// Initialize the split configuration for new bills.
-  /// As default, all users in the group have to pay the same amount
-  /// (1 part for every person) and the person creating the bill is as
-  /// default the person who paid the bill.
-  @override
-  void initState() {
-    billDescriptionController.text = widget.bill.description;
-    billAmountController.text = widget.bill.totalAmount.toStringAsFixed(2);
-    billDateController.text = "${DateTime.parse(widget.bill.billingDate).toLocal()}".split(' ')[0];
-    _selectedDate = DateTime.parse(widget.bill.billingDate);
+  void init(BuildContext context) {
+    dateFormatter = new DateFormat(FlutterI18n.translate(context, "global.date_format"));
+    currencyFormatter = new NumberFormat(FlutterI18n.translate(context, "global.currency_format"), FlutterI18n.translate(context, "global.locale"));
+    partFormatter = new NumberFormat(FlutterI18n.translate(context, "global.part_format"), FlutterI18n.translate(context, "global.locale"));
 
-    Provider.of<AppState>(context, listen: false).getSelectedGroup().users.forEach((user) {
-      bool splitFound = false;
-      for(Split split in widget.bill.splits) {
-        if (split.debtor == user.id) {
-          splitFound = true;
-          splitUsers.putIfAbsent(user.id, () => true);
-          var splitPartsController = new TextEditingController(text: split.partsOfBill.toStringAsFixed(2));
-          splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
-          var splitPaidController = new TextEditingController(text: split.paid.toStringAsFixed(2));
-          splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
-          break;
-        }
-      }
-      // if no split exists for an user, create defaults with zero-values
-      if (!splitFound) {
-        splitUsers.putIfAbsent(user.id, () => false);
-        var splitPartsController = new TextEditingController(text: "0");
-        splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
-        var splitPaidController = new TextEditingController(text: "0.00");
+    if (widget.bill == null) { // create new bill
+      Provider.of<AppState>(context, listen: false).getSelectedGroup().users.forEach((user) {
+        splitUsers.putIfAbsent(user.id, () => true);
+        var splitPaidController = new TextEditingController(text: currencyFormatter.format(0.00));
         splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
-      }
-    });
-    return super.initState();
+        var splitPartsController = new TextEditingController(text: "1");
+        splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
+      });
+      _selectedDate = DateTime.now();
+    } else { // edit existing bill
+      createNewBillMode = false;
+      billDescriptionController.text = widget.bill.description;
+      billAmountController.text = currencyFormatter.format(widget.bill.totalAmount);
+      _selectedDate = DateTime.parse(widget.bill.billingDate);
+
+      Provider
+          .of<AppState>(context, listen: false)
+          .getSelectedGroup()
+          .users
+          .forEach((user) {
+        bool splitFound = false;
+        for (Split split in widget.bill.splits) {
+          if (split.debtor == user.id) {
+            splitFound = true;
+            splitUsers.putIfAbsent(user.id, () => true);
+            var splitPartsController = new TextEditingController(text: partFormatter.format(split.partsOfBill));
+            splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
+            var splitPaidController = new TextEditingController(text: currencyFormatter.format(split.paid));
+            splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
+            break;
+          }
+        }
+        // if no split exists for an user, create defaults with zero-values
+        if (!splitFound) {
+          splitUsers.putIfAbsent(user.id, () => false);
+          var splitPartsController = new TextEditingController(text: "0");
+          splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
+          var splitPaidController = new TextEditingController(text: currencyFormatter.format(0.00));
+          splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
+        }
+      });
+    }
+    billDateController.text = dateFormatter.format(_selectedDate);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -89,11 +109,45 @@ class _EditBillPageState extends State<EditBillPage> {
         _selectedDate = picked;
       });
     }
-    billDateController.text = "${_selectedDate.toLocal()}".split(' ')[0];
+    billDateController.text = dateFormatter.format(_selectedDate);
   }
 
   double _normalizeDouble(String _doubleString) {
     return double.parse(_doubleString.replaceAll(",", "."));
+  }
+
+  void _createBill() async {
+    Bill bill = new Bill();
+    bill.description = _description;
+    bill.totalAmount = _normalizeDouble(_amount);
+    bill.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
+    bill.parts = 0;
+
+    List<Split> splits = [];
+    for (User user in Provider.of<AppState>(context, listen: false).getSelectedGroup().users) {
+      if (splitUsers[user.id]) { // create splits for users only if they are involved in the bill
+        bill.parts += _normalizeDouble(splitPartsControllers[user.id].text);
+        Split split = new Split();
+        split.debtor = user.id;
+        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
+        split.partsOfBill = _normalizeDouble(splitPartsControllers[user.id].text);
+        splits.add(split);
+      }
+    }
+    bill.splits = splits;
+
+    try {
+      HttpResponse<Bill> response = await api.createBill(bill,
+          Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack();
+        Fluttertoast.showToast(msg: "New bill created");
+      }
+    } catch (e) {
+      logger.e("Failed to save bill", e);
+      Fluttertoast.showToast(msg: "An error occurred creating the bill");
+    }
   }
 
   void _updateBill() async {
@@ -180,6 +234,8 @@ class _EditBillPageState extends State<EditBillPage> {
 
   @override
   Widget build(BuildContext context) {
+    init(context);
+
     List<Widget> splitEditingRows = new List();
     Provider.of<AppState>(context, listen: false)
         .getSelectedGroup()
@@ -227,9 +283,9 @@ class _EditBillPageState extends State<EditBillPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit bill'),
-        actions: <Widget>[
-          IconButton(
+        title: (createNewBillMode) ? Text('Create bill') :  Text('Edit bill'),
+        actions: (createNewBillMode) ? null : <Widget>[
+           IconButton(
             icon: Icon(Icons.delete),
             onPressed: _openDeleteBillDialog,
             tooltip: 'Delete bill',
@@ -267,8 +323,15 @@ class _EditBillPageState extends State<EditBillPage> {
                       Flexible(
                         child: TextFormField(
                           onSaved: (value) => _amount = value,
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          onChanged: (value) {
+                            if (createNewBillMode) {
+                              splitPaidControllers[Provider.of<AppState>(context, listen: false).getCurrentUser().id].text = currencyFormatter.format(_normalizeDouble(value));
+                              setState(() {
+                                _amount = value;
+                              });
+                            }
+                          },
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                           decoration: InputDecoration(labelText: "Amount"),
                           textAlign: TextAlign.end,
                           controller: billAmountController,
@@ -283,8 +346,7 @@ class _EditBillPageState extends State<EditBillPage> {
                           },
                         ),
                       ),
-                      Text(
-                        "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
+                      Text("${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
                         style: TextStyle(height: 3.2),
                       ),
                     ],
@@ -303,13 +365,17 @@ class _EditBillPageState extends State<EditBillPage> {
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: Text("Update bill"),
+                      child: (createNewBillMode) ? Text("Create bill") : Text("Update bill"),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;
                         form.save();
                         if (form.validate()) {
-                          _updateBill();
+                          if (createNewBillMode) {
+                            _createBill();
+                          } else {
+                            _updateBill();
+                          }
                         }
                       }),
                 ],
