@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group_join_body.dart';
@@ -129,13 +131,13 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Cancel'),
+                child: I18nText('global.cancel'),
                 onPressed: () {
                   navService.goBack();
                 },
               ),
               FlatButton(
-                child: Text('Join'),
+                child: I18nText('home.join_dialog.button_join'),
                 onPressed: () {
                   final form = _formKey.currentState;
                   form.save();
@@ -154,7 +156,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       child: AlertDialog(
         contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-        title: Text("About Partido"),
+        title: I18nText("home.about_dialog.title"),
         content: Container(
           width: double.maxFinite,
           child: ListView(
@@ -163,21 +165,21 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               ListTile(
                 contentPadding: EdgeInsets.only(left: 24),
-                title: Text("Homepage"),
+                title: I18nText("home.about_dialog.homepage"),
                 onTap: () {
                   _launchHomepageUrl();
                 },
               ),
               ListTile(
                 contentPadding: EdgeInsets.only(left: 24),
-                title: Text("Imprint"),
+                title: I18nText("home.about_dialog.imprint"),
                 onTap: () {
                   _launchImprintUrl();
                 },
               ),
               ListTile(
                 contentPadding: EdgeInsets.only(left: 24),
-                title: Text("Privacy Policy"),
+                title: I18nText("home.about_dialog.privacy_policy"),
                 onTap: () {
                   _launchPrivacyPolicyUrl();
                 },
@@ -187,7 +189,7 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Close'),
+            child: I18nText('global.close'),
             onPressed: () {
               navService.goBack();
             },
@@ -254,7 +256,7 @@ class _HomePageState extends State<HomePage> {
       child: Consumer<AppState>(builder: (context, appState, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Partido'),
+            title: I18nText('global.partido_title'),
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.assessment)),
@@ -264,7 +266,7 @@ class _HomePageState extends State<HomePage> {
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.group),
-                tooltip: "Groups",
+                tooltip: FlutterI18n.translate(context, "home.groups_tooltip"),
                 onPressed: _openGroupsDialog,
               ),
               PopupMenuButton<HomeMenuItem>(
@@ -279,17 +281,17 @@ class _HomePageState extends State<HomePage> {
                 },
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<HomeMenuItem>>[
-                  const PopupMenuItem<HomeMenuItem>(
+                  PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.account,
-                    child: Text('My Account'),
+                    child: I18nText("home.menu.account"),
                   ),
-                  const PopupMenuItem<HomeMenuItem>(
+                  PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.about,
-                    child: Text('About Partido'),
+                    child: I18nText('home.menu.about'),
                   ),
-                  const PopupMenuItem<HomeMenuItem>(
+                  PopupMenuItem<HomeMenuItem>(
                     value: HomeMenuItem.feedback,
-                    child: Text('Send Feedback'),
+                    child: I18nText('home.menu.feedback'),
                   ),
                 ],
               )
@@ -308,14 +310,14 @@ class _HomePageState extends State<HomePage> {
                           //leading: Icon(Icons.group, size: 30),
                           title: appState.getSelectedGroup().name != null
                               ? Text('${appState.getSelectedGroup().name}')
-                              : Text('Welcome to Partido!'),
+                              : I18nText("home.welcome.title"),
                           subtitle: appState.getSelectedGroup().status != null
                               ? Text('${appState.getSelectedGroup().status}')
-                              : Text('Select or create a group to start!'),
+                              : I18nText("home.welcome.subtitle"),
                           trailing: appState.getSelectedGroup().status != null
                               ? IconButton(
                                   icon: Icon(Icons.chevron_right),
-                                  tooltip: 'Group settings',
+                                  tooltip: FlutterI18n.translate(context, "home.welcome.group_settings_tooltip"),
                                   onPressed: () {
                                     navService.push(
                                       MaterialPageRoute(
@@ -337,9 +339,8 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text('Balances',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text(FlutterI18n.translate(context, "home.balances.title"),
+                                    style: TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
                                     Icon(Icons.equalizer, color: Colors.green),
                               ),
@@ -377,19 +378,14 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
-                                title: Text('Join mode active',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500)),
+                                title: Text(FlutterI18n.translate(context, "home.join_mode.title_enabled"), style: TextStyle(fontWeight: FontWeight.w500)),
                                 leading:
                                     Icon(Icons.group_add, color: Colors.green),
                               ),
                               Divider(),
+                              ListTile(title: I18nText("home.join_mode.security_notice")),
                               ListTile(
-                                  title: Text(
-                                      'For security reasons, disable the group join mode when all users joined the group.')),
-                              ListTile(
-                                title: SelectableText(
-                                    "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
+                                title: SelectableText("${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -398,17 +394,14 @@ class _HomePageState extends State<HomePage> {
                                         icon: Icon(Icons.content_copy),
                                         onPressed: () {
                                           Clipboard.setData(ClipboardData(
-                                              text:
-                                                  "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"));
-                                          Fluttertoast.showToast(msg: "Copied");
+                                              text: "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"));
+                                          Fluttertoast.showToast(msg: FlutterI18n.translate(context, "global.copied"));
                                         }),
                                     IconButton(
                                       icon: Icon(Icons.share),
                                       onPressed: () {
-                                        Share.share(
-                                            'Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code: ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
-                                            subject:
-                                                'Join my group on Partido!');
+                                        Share.share('${I18nText("home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                                            subject: FlutterI18n.translate(context, "home.join_mode.share.subject"));
                                       },
                                     ),
                                   ],
@@ -452,7 +445,7 @@ class _HomePageState extends State<HomePage> {
                 navService.pushNamed('/create-bill');
               }
             },
-            tooltip: 'Create bill',
+            tooltip: FlutterI18n.translate(context, "home.create_bill_tooltip"),
             child: Icon(Icons.add),
           ),
         );

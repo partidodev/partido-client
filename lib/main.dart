@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/file_translation_loader.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:partido_client/api/api.dart';
 import 'package:partido_client/pages/create_bill_page.dart';
 import 'package:partido_client/pages/create_group_page.dart';
@@ -43,6 +47,11 @@ void main() async {
       child: new MaterialApp(
         title: 'Partido',
         theme: ThemeData(
+          buttonTheme: ButtonThemeData(
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20.0)
+              ),
+          ),
           primarySwatch: Colors.green,
           brightness: Brightness.light,
         ),
@@ -66,6 +75,16 @@ void main() async {
           '/create-group': (_) => CreateGroupPage(),
           '/account': (_) => EditAccountPage(),
         },
+        localizationsDelegates: [
+          FlutterI18nDelegate(translationLoader: FileTranslationLoader(
+              useCountryCode: false,
+              fallbackFile: 'en',
+              basePath: 'assets/i18n',
+              decodeStrategies: [YamlDecodeStrategy()],
+          )),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
       )
     )
   );

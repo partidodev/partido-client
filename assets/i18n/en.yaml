@@ -1,0 +1,31 @@
+home:
+  welcome:
+    title: "Welcome to Partido!"
+    subtitle: "Select or create a group to start!"
+    group_settings_tooltip: "Group settings"
+  balances:
+    title: "Balances"
+  join_mode:
+    security_notice: "For security reasons, disable the group join mode when all users joined the group."
+    title_enabled: "Join mode active"
+    share:
+      text: "Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code:"
+      subject: "Join my group on Partido!"
+  menu:
+    account: "My Account"
+    about: "About Partido"
+    feedback: "Send Feedback"
+  about_dialog:
+    title: "About Partido"
+    homepage: "Homepage"
+    imprint: "Imprint"
+    privacy_policy: "Privacy Policy"
+  join_dialog:
+    button_join: "Join"
+  create_bill_tooltip: "Create bill"
+  groups_tooltip: "Groups"
+global:
+  partido_title: "Partido"
+  copied: "Copied"
+  close: "Close"
+  cancel: "Cancel"
