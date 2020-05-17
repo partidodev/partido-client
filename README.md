@@ -90,9 +90,9 @@ corresponding configuration in `<partido-project>/web/manifest.json` and the ico
 
 ### General information
 
-To translate Partido to another language not available yet in the `<partido-project>/assets/` folder, 
-copy the file `<partido-project>/assets/en.yaml` and rename it according to the new language like
-`<partido-project>/assets/<language>.yaml`. The file `en.yaml` always contains the latest and up to
+To translate Partido to another language not available yet in the `<partido-project>/assets/i18n/` folder, 
+copy the file `<partido-project>/assets/i18n/en.yaml` and rename it according to the new language like
+`<partido-project>/assets/i18n/<language>.yaml`. The file `en.yaml` always contains the latest and up to
 date default strings. If a specific other language file does not contain a certain translation, the
 default string from `en.yaml` is shown to the user.
 
