@@ -3,7 +3,7 @@ global:
   locale: de
   copied: Kopiert
   close: Schließen
-  cancel: Löschen
+  cancel: Abbrechen
   date_format: dd-MM-yyyy
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
@@ -21,7 +21,7 @@ home:
       text: >-
         Lade die Partido App aus dem Google Play Store
         https://play.google.com/store/apps/details?id=net.fosforito.partido
-        und tritt meiner Gruppe mit diesem Code bei:
+        herunter und tritt meiner Gruppe mit diesem Code bei:
       subject: Tritt meiner Gruppe auf Partido bei!
   menu:
     account: Mein Profil
@@ -32,7 +32,7 @@ home:
     homepage: Homepage
     homepage_url: 'https://partido.rocks/de'
     imprint: Impressum
-    imprint_url: 'https://partido.rocks/de/imprint/'
+    imprint_url: 'https://partido.rocks/de/impressum/'
     privacy_policy: Datenschutzerklärung
     privacy_policy_url: 'https://partido.rocks/de/datenschutz'
   groups_dialog:
@@ -122,7 +122,7 @@ group_form:
   currency: Währung
   currency_empty_validation_error: Bitte gib eine Währung ein
   currency_too_long_validation_error: Max. 255 Zeichen erlaubt
-  activate_join_mode: Lass andere Benutzer mit einem Code beiteten
+  activate_join_mode: Andere Nutzer können der Gruppe mit einem Code beitreten
   create_group_button: Gruppe erstellen
   save_changes_button: Änderungen speichern
 login:
