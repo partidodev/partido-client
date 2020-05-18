@@ -145,9 +145,9 @@ signup:
   password_too_short_validation_error: Min. 8 caracteres necesarios
   password_confirmation: Confirmar contraseña
   password_confirmation_not_matching_validation_error: Las contraseñas no coinciden
-  accept_privacy_text_before_link: He leído y acepto la
-  accept_privacy_text_after_link: de Partido
-  privacy_policy_link_text: política de privacidad
+  accept_privacy_text_before_link: "He leído y acepto la "
+  accept_privacy_text_after_link: " de Partido"
+  privacy_policy_link_text: "política de privacidad"
   privacy_policy_link_url: 'https://partido.rocks/privacy/'
   privacy_policy_not_accepted_error: Puedes usar Partido solo si aceptas
   success:
