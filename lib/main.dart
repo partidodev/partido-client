@@ -100,6 +100,7 @@ void main() async {
               useCountryCode: false,
               fallbackFile: 'en',
               basePath: 'assets/i18n',
+              //forcedLocale: Locale('es'), // for locale testing
               decodeStrategies: [YamlDecodeStrategy()],
           )),
           GlobalMaterialLocalizations.delegate,
