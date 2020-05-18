@@ -1,0 +1,158 @@
+global:
+  partido_title: Partido
+  locale: es
+  copied: Copiado
+  close: Cerrar
+  cancel: Cancelar
+  date_format: dd-MM-yyyy
+  currency_format: '#,##0.00'
+  part_format: '#,##0.###'
+home:
+  welcome:
+    title: Bienvenido a Partido!
+    subtitle: Selecciona o crea un grupo para empezar!
+    group_settings_tooltip: Configuración de grupo
+  balances:
+    title: Saldos
+  join_mode:
+    security_notice: >-
+      Por razones de seguridad, desactiva el modo de unión de grupo cuando
+      todos los usuarios se unieron al grupo.
+    title_enabled: Modo de unión activo
+    share:
+      text: >-
+        Descarga la aplicación Partido del Google Play Store
+        https://play.google.com/store/apps/details?id=net.fosforito.partido
+        y únete a mi grupo con éste código:
+      subject: Únete a mi grupo en Partido!
+  menu:
+    account: Mi cuenta
+    about: Acerca de
+    feedback: Enviar Feedback
+  about_dialog:
+    title: Acerca de
+    homepage: Página de inicio
+    homepage_url: 'https://partido.rocks/es/'
+    imprint: Imprenta
+    imprint_url: 'https://partido.rocks/imprint/'
+    privacy_policy: Política de privacidad
+    privacy_policy_url: 'https://partido.rocks/privacy/'
+  groups_dialog:
+    title: Mis grupos
+    join_existing_button: Unirse con
+    create_button: Crear nuevo
+  join_group_dialog:
+    title: Unirse al grupo
+    join_code: Código de unión
+    join_code_empty_validation_error: Ingresa el código de unión que recibiste
+    button_join: Unirse
+  create_bill_tooltip: Crear cuenta
+  groups_tooltip: Grupos
+bill_form:
+  toast_bill_created: Nueva cuenta creada
+  toast_failed_to_save_bill: Se produjo un error al crear la cuenta
+  toast_bill_updated: Cuenta actualizada
+  toast_failed_to_update_bill: Se produjo un error al actualizar la cuenta
+  toast_bill_deleted: Cuenta eliminada
+  toast_failed_to_delete_bill: Se produjo un error al intentar eliminar la cuenta
+  delete_bill_dialog:
+    title: Eliminar cuenta
+    question: ¿Estás seguro de que quieres eliminar esta cuenta?
+    answer_no: 'No, cancelar'
+    answer_yes: 'Sí, eliminar'
+  parts: Partes
+  paid: Pagado
+  create_bill_title: Crear cuenta
+  edit_bill_title: Editar cuenta
+  delete_bill_tooltip: Eliminar cuenta
+  description: Descripción
+  description_empty_validation_error: 'Por favor, ingresa una descripción'
+  description_too_long_validation_error: Max. 255 caracteres permitidos
+  amount: Monto
+  amount_empty_validation_error: 'Por favor, ingresa el monto total'
+  amount_not_positive_validation_error: 'Por favor, ingresa un valor mayor que 0'
+  date: Fecha
+  create_bill_button: Crear cuenta
+  update_bill_button: Actualizar cuenta
+bill_details:
+  title: Detalles de cuenta
+  created_by: Creado por
+  splits: Divisiones
+  parts: 'Partes:'
+  paid: 'Pagado:'
+account:
+  title: Mi cuenta
+  logout_tooltip: Logout
+  username: Nombre de usuario
+  username_empty_validation_error: 'Por favor, ingresa un nombre de usuario'
+  username_too_long_validation_error: Max. 50 caracteres permitidos
+  email: Email
+  email_empty_validation_error: 'Por favor, ingresa tu email'
+  email_invalid_validation_error: 'Por favor, ingresa un email válido'
+  email_too_long_validation_error: Max. 50 caracteres permitidos
+  password: Contraseña
+  current_password_input_required: 'Por favor, ingresa tu contraseña actual'
+  change_password:
+    title: Cambiar contraseña
+    description: Deja en blanco si no deseas cambiar tu contraseña actual.
+    new_password: Nueva contraseña (opcional)
+    new_password_too_long_validation_error: Max. 100 caracteres permitidos
+    new_password_too_short_validation_error: Min. 8 caracteres necesarios
+    new_password_confirmation: Confirmar nueva contraseña
+    new_password_confirmation_not_matching_validation_error: Contraseñas no coinciden
+  save_button: Guardar cambios
+  logout_dialog:
+    title: Logout
+    question: ¿Quieres cerrar sesión?
+    answer_no: 'No, cancelar'
+    answer_yes: 'Sí, logout'
+  toast_account_settings_saved: Cambios guardados
+  toast_error_updating_account: Se produjo un error al actualizar la cuenta
+  toast_login_failed: Acceso fallido. Por favor intenta nuevamente
+group_form:
+  toast_group_created: Nuevo grupo creado
+  toast_group_creation_failed: Creación de grupo fallida
+  toast_group_settings_saved: Cambios guardados
+  toast_group_settings_saving_failed: Se produjo un error al actualizar el grupo
+  create_group_title: Crear grupo
+  group_settings_title: Ajustes del grupo
+  group_name: Nombre del grupo
+  group_name_empty_validation_error: 'Por favor, ingresa un nombre de grupo'
+  group_name_too_long_validation_error: Max. 255 caracteres permitidos
+  group_description: Descripción (opcional)
+  group_description_too_long_validation_error: Max. 255 caracteres permitidos
+  currency: Moneda
+  currency_empty_validation_error: 'Por favor, ingresa una moneda'
+  currency_too_long_validation_error: Max. 255 caracteres permitidos
+  activate_join_mode: Dejar que otros usuarios se unan al grupo con un código
+  create_group_button: Crear grupo
+  save_changes_button: Guardar cambios
+login:
+  toast_login_failed: Acceso fallido. Por favor intenta nuevamente
+  login_title: Login
+  email: Email
+  email_empty_validation_error: 'Por favor, ingresa tu email'
+  password: Contraseña
+  password_empty_validation_error: 'Por favor, ingresa tu contraseña'
+  remember: Recuérdame
+  login_button: Login
+  signup_button: Crear nueva cuenta
+signup:
+  title: Crear nueva cuenta
+  username: Nombre de usuario
+  password_empty_validation_error: 'Por favor, ingresa una contraseña'
+  password_too_long_validation_error: Max. 100 caracteres permitidos
+  password_too_short_validation_error: Min. 8 caracteres necesarios
+  password_confirmation: Confirmar contraseña
+  password_confirmation_not_matching_validation_error: Las contraseñas no coinciden
+  accept_privacy_text_before_link: He leído y acepto la
+  accept_privacy_text_after_link: de Partido
+  privacy_policy_link_text: política de privacidad
+  privacy_policy_link_url: 'https://partido.rocks/privacy/'
+  privacy_policy_not_accepted_error: Puedes usar Partido solo si aceptas
+  success:
+    title: Crear nueva cuenta
+    success_notice: ¡Te has registrado con éxito!
+    additional_info: >-
+      Ahora puedes comenzar iniciando sesión y creando un nuevo grupo o
+      uniéndote a un grupo existente si recibiste un código de unión.
