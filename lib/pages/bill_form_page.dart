@@ -308,16 +308,15 @@ class _BillFormPageState extends State<BillFormPage> {
               controller: splitPaidControllers[user.id],
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                  labelText: FlutterI18n.translate(context, "bill_form.paid")),
+                  suffixText: Provider.of<AppState>(context, listen: false).getSelectedGroup().currency,
+                  labelText: FlutterI18n.translate(context, "bill_form.paid")
+              ),
               textAlign: TextAlign.end,
             ),
           ),
-          Text(
-            "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
-            style: TextStyle(height: 3.2),
-          ),
         ],
       ));
+      splitEditingRows.add(SizedBox(height: 10.0));
     });
 
     return Scaffold(
@@ -365,53 +364,45 @@ class _BillFormPageState extends State<BillFormPage> {
                       return null;
                     },
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: TextFormField(
-                          onSaved: (value) => _amount = value,
-                          onChanged: (value) {
-                            if (createNewBillMode) {
-                              splitPaidControllers[Provider.of<AppState>(
-                                              context,
-                                              listen: false)
-                                          .getCurrentUser()
-                                          .id]
-                                      .text =
-                                  currencyFormatter
-                                      .format(_normalizeDouble(value));
-                              setState(() {
-                                _amount = value;
-                              });
-                            }
-                          },
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          decoration: InputDecoration(
-                              labelText: FlutterI18n.translate(
-                                  context, "bill_form.amount")),
-                          textAlign: TextAlign.end,
-                          controller: billAmountController,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return FlutterI18n.translate(context,
-                                  "bill_form.amount_empty_validation_error");
-                            }
-                            if (_normalizeDouble(value) <= 0) {
-                              return FlutterI18n.translate(context,
-                                  "bill_form.amount_not_positive_validation_error");
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Text(
-                        "${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}",
-                        style: TextStyle(height: 3.2),
-                      ),
-                    ],
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    onSaved: (value) => _amount = value,
+                    onChanged: (value) {
+                      if (createNewBillMode) {
+                        splitPaidControllers[Provider.of<AppState>(
+                                        context,
+                                        listen: false)
+                                    .getCurrentUser()
+                                    .id]
+                                .text =
+                            currencyFormatter
+                                .format(_normalizeDouble(value));
+                        setState(() {
+                          _amount = value;
+                        });
+                      }
+                    },
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    decoration: InputDecoration(
+                        labelText: FlutterI18n.translate(context, "bill_form.amount"),
+                        suffixText: Provider.of<AppState>(context, listen: false).getSelectedGroup().currency,
+                    ),
+                    textAlign: TextAlign.end,
+                    controller: billAmountController,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return FlutterI18n.translate(context,
+                            "bill_form.amount_empty_validation_error");
+                      }
+                      if (_normalizeDouble(value) <= 0) {
+                        return FlutterI18n.translate(context,
+                            "bill_form.amount_not_positive_validation_error");
+                      }
+                      return null;
+                    },
                   ),
+                  SizedBox(height: 10.0),
                   Column(
                     children: splitEditingRows,
                   ),
@@ -423,7 +414,7 @@ class _BillFormPageState extends State<BillFormPage> {
                     readOnly: true,
                     onTap: () => _selectDate(context),
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 10.0),
                   MaterialButton(
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,

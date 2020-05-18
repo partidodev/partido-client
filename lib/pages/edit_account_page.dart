@@ -155,6 +155,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     onSaved: (value) => _email = value,
                     keyboardType: TextInputType.emailAddress,
@@ -173,6 +174,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     onSaved: (value) => _oldPassword = value,
                     obscureText: true,
@@ -190,7 +192,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   ),
                   SizedBox(height: 10.0),
                   I18nText("account.change_password.description"),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 20.0),
                   TextFormField(
                     onSaved: (value) => _newPassword = value,
                     obscureText: true,
@@ -205,6 +207,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -216,7 +219,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 10.0),
                   MaterialButton(
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,

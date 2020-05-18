@@ -112,7 +112,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -133,6 +133,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     controller: groupDescriptionController,
                     onSaved: (value) => _description = value,
@@ -145,6 +146,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     controller: groupCurrencyController,
                     onSaved: (value) => _currency = value,
@@ -160,12 +162,13 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0),
                   CheckboxListTile(
                     title: I18nText("group_form.activate_join_mode"),
                     value: _joinModeActive,
                     onChanged: _onJoinModeActiveChanged,
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 10.0),
                   MaterialButton(
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,

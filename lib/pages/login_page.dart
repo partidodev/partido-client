@@ -105,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                   return null;
                                 },
                               ),
+                              SizedBox(height: 10.0),
                               TextFormField(
                                 onSaved: (value) => _password = value,
                                 obscureText: true,
@@ -117,6 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                                   return null;
                                 },
                               ),
+                              SizedBox(height: 10.0),
                               CheckboxListTile(
                                 title: I18nText("login.remember"),
                                 value: _rememberMe,
@@ -124,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
                               ),
-                              SizedBox(height: 15.0),
+                              SizedBox(height: 10.0),
                               MaterialButton(
                                   minWidth: double.infinity,
                                   color: Theme.of(context).primaryColor,

@@ -94,6 +94,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
+                                SizedBox(height: 10.0),
                                 TextFormField(
                                   onSaved: (value) => _email = value,
                                   keyboardType: TextInputType.emailAddress,
@@ -105,6 +106,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
+                                SizedBox(height: 10.0),
                                 TextFormField(
                                   onSaved: (value) => _password = value,
                                   obscureText: true,
@@ -116,6 +118,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
+                                SizedBox(height: 10.0),
                                 TextFormField(
                                   obscureText: true,
                                   decoration: InputDecoration(labelText: FlutterI18n.translate(context, "signup.password_confirmation")),
@@ -125,6 +128,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
+                                SizedBox(height: 10.0),
                                 CheckboxListTile(
                                   title: RichText(
                                     text: TextSpan(
@@ -148,7 +152,7 @@ class _SignupPageState extends State<SignupPage> {
                                   onChanged: (bool value) => setState(() => _acceptTerms = value),
                                   controlAffinity: ListTileControlAffinity.leading,
                                 ),
-                                SizedBox(height: 15.0),
+                                SizedBox(height: 10.0),
                                 MaterialButton(
                                     minWidth: double.infinity,
                                     color: Theme.of(context).primaryColor,

@@ -47,22 +47,42 @@ void main() async {
       child: new MaterialApp(
         title: 'Partido',
         theme: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.green,
           buttonTheme: ButtonThemeData(
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(20.0)
               ),
           ),
-          primarySwatch: Colors.green,
-          brightness: Brightness.light,
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: InputBorder.none,
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFFe53935))
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFe53935))
+            ),
+          ),
         ),
         darkTheme: ThemeData(
+          brightness: Brightness.dark,
           primarySwatch: Colors.green,
           accentColor: Colors.green,
           textSelectionHandleColor: Colors.green,
           toggleableActiveColor: Colors.green,
           highlightColor: Colors.green,
           indicatorColor: Colors.green,
-          brightness: Brightness.dark,
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: InputBorder.none,
+            errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFe53935))
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFe53935))
+            ),
+          ),
         ),
         navigatorKey: NavigationService.navigationKey,
         routes: {
