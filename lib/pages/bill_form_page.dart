@@ -292,7 +292,9 @@ class _BillFormPageState extends State<BillFormPage> {
               value: splitUsers[user.id],
               controlAffinity: ListTileControlAffinity.leading,
             ),
+            flex: 3,
           ),
+          SizedBox(width: 10.0),
           Flexible(
             child: TextFormField(
               controller: splitPartsControllers[user.id],
@@ -301,6 +303,7 @@ class _BillFormPageState extends State<BillFormPage> {
                   labelText: FlutterI18n.translate(context, "bill_form.parts")),
               textAlign: TextAlign.end,
             ),
+            flex: 2,
           ),
           SizedBox(width: 10.0),
           Flexible(
@@ -313,6 +316,7 @@ class _BillFormPageState extends State<BillFormPage> {
               ),
               textAlign: TextAlign.end,
             ),
+            flex: 2,
           ),
         ],
       ));
