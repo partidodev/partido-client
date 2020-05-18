@@ -49,54 +49,41 @@ class _BillFormPageState extends State<BillFormPage> {
   Map<int, TextEditingController> splitPartsControllers = {};
 
   void init(BuildContext context) {
-    dateFormatter =
-        new DateFormat(FlutterI18n.translate(context, "global.date_format"));
-    currencyFormatter = new NumberFormat(
-        FlutterI18n.translate(context, "global.currency_format"),
-        FlutterI18n.translate(context, "global.locale"));
-    partFormatter = new NumberFormat(
-        FlutterI18n.translate(context, "global.part_format"),
-        FlutterI18n.translate(context, "global.locale"));
+    dateFormatter = new DateFormat(FlutterI18n.translate(context, "global.date_format"));
+    currencyFormatter = new NumberFormat(FlutterI18n.translate(context, "global.currency_format"), FlutterI18n.translate(context, "global.locale"));
+    partFormatter = new NumberFormat(FlutterI18n.translate(context, "global.part_format"), FlutterI18n.translate(context, "global.locale"));
 
     if (widget.bill == null) {
       // create new bill
-      Provider.of<AppState>(context, listen: false)
-          .getSelectedGroup()
-          .users
-          .forEach((user) {
+      Provider.of<AppState>(context, listen: false).getSelectedGroup().users.forEach((user) {
         splitUsers.putIfAbsent(user.id, () => true);
-        var splitPaidController =
-            new TextEditingController(text: currencyFormatter.format(0.00));
+        var splitPaidController = new TextEditingController(text: currencyFormatter.format(0.00));
         splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
         var splitPartsController = new TextEditingController(text: "1");
         splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
       });
-      _selectedDate = DateTime.now();
+      if (_selectedDate == null) {
+        _selectedDate = DateTime.now();
+      }
     } else {
       // edit existing bill
       createNewBillMode = false;
       billDescriptionController.text = widget.bill.description;
-      billAmountController.text =
-          currencyFormatter.format(widget.bill.totalAmount);
-      _selectedDate = DateTime.parse(widget.bill.billingDate);
+      billAmountController.text = currencyFormatter.format(widget.bill.totalAmount);
+      if (_selectedDate == null) {
+        _selectedDate = DateTime.parse(widget.bill.billingDate);
+      }
 
-      Provider.of<AppState>(context, listen: false)
-          .getSelectedGroup()
-          .users
-          .forEach((user) {
+      Provider.of<AppState>(context, listen: false).getSelectedGroup().users.forEach((user) {
         bool splitFound = false;
         for (Split split in widget.bill.splits) {
           if (split.debtor == user.id) {
             splitFound = true;
             splitUsers.putIfAbsent(user.id, () => true);
-            var splitPartsController = new TextEditingController(
-                text: partFormatter.format(split.partsOfBill));
-            splitPartsControllers.putIfAbsent(
-                user.id, () => splitPartsController);
-            var splitPaidController = new TextEditingController(
-                text: currencyFormatter.format(split.paid));
-            splitPaidControllers.putIfAbsent(
-                user.id, () => splitPaidController);
+            var splitPartsController = new TextEditingController(text: partFormatter.format(split.partsOfBill));
+            splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
+            var splitPaidController = new TextEditingController(text: currencyFormatter.format(split.paid));
+            splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
             break;
           }
         }
@@ -104,10 +91,8 @@ class _BillFormPageState extends State<BillFormPage> {
         if (!splitFound) {
           splitUsers.putIfAbsent(user.id, () => false);
           var splitPartsController = new TextEditingController(text: "0");
-          splitPartsControllers.putIfAbsent(
-              user.id, () => splitPartsController);
-          var splitPaidController =
-              new TextEditingController(text: currencyFormatter.format(0.00));
+          splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
+          var splitPaidController = new TextEditingController(text: currencyFormatter.format(0.00));
           splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
         }
       });
@@ -120,7 +105,8 @@ class _BillFormPageState extends State<BillFormPage> {
         context: context,
         initialDate: _selectedDate,
         firstDate: DateTime(2000, 1),
-        lastDate: DateTime(2100, 12));
+        lastDate: DateTime(2100, 12)
+    );
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
@@ -292,7 +278,7 @@ class _BillFormPageState extends State<BillFormPage> {
               value: splitUsers[user.id],
               controlAffinity: ListTileControlAffinity.leading,
             ),
-            flex: 3,
+            flex: 44, // %
           ),
           SizedBox(width: 10.0),
           Flexible(
@@ -303,7 +289,7 @@ class _BillFormPageState extends State<BillFormPage> {
                   labelText: FlutterI18n.translate(context, "bill_form.parts")),
               textAlign: TextAlign.end,
             ),
-            flex: 2,
+            flex: 28, // %
           ),
           SizedBox(width: 10.0),
           Flexible(
@@ -316,7 +302,7 @@ class _BillFormPageState extends State<BillFormPage> {
               ),
               textAlign: TextAlign.end,
             ),
-            flex: 2,
+            flex: 28, // %
           ),
         ],
       ));

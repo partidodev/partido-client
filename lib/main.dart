@@ -73,6 +73,12 @@ void main() async {
           toggleableActiveColor: Colors.green,
           highlightColor: Colors.green,
           indicatorColor: Colors.green,
+          buttonTheme: ButtonThemeData(
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(20.0)
+            ),
+            buttonColor: Colors.green,
+          ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             border: InputBorder.none,
