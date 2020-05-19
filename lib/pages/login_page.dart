@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       Provider.of<AppState>(context, listen: false)
           .setRememberLoginStatus("$rememberMeNumber");
       if (response.response.statusCode == 200) {
-        navService.pushReplacementNamed("/home");
+        navService.pushReplacementNamed("/");
       }
     } catch (w) {
       logger.w('Login failed', w);

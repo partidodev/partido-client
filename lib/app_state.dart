@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:partido_client/model/bill.dart';
+import 'package:retrofit/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
@@ -20,22 +21,25 @@ class AppState extends ChangeNotifier {
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    _currentUser = await api.getCurrentUser();
-    _myGroups = await api.getMyGroups();
-    notifyListeners();
-    // Get current user and his groups first. Then check if user logged
-    // in has a preferred group to see and if he can get it's details.
-    // (the user may have logged in with an other account, where he cannot
-    // see the same groups as before)
-    if (_selectedGroupId == -1) {
-      int preferredGroupId = preferences.getInt('SELECTEDGROUP');
-      for (Group group in _myGroups) {
-        if (group.id == preferredGroupId) {
-          _selectedGroupId = preferredGroupId;
-          reloadReport();
-          reloadSelectedGroup();
-          reloadBillList();
-          break;
+    HttpResponse<User> _loginStatusResponse = await api.getLoginStatus();
+    if (_loginStatusResponse.response.statusCode == 200) {
+      _currentUser = _loginStatusResponse.data;
+      _myGroups = await api.getMyGroups();
+      notifyListeners();
+      // Get current user and his groups first. Then check if user logged
+      // in has a preferred group to see and if he can get it's details.
+      // (the user may have logged in with an other account, where he cannot
+      // see the same groups as before)
+      if (_selectedGroupId == -1) {
+        int preferredGroupId = preferences.getInt('SELECTEDGROUP');
+        for (Group group in _myGroups) {
+          if (group.id == preferredGroupId) {
+            _selectedGroupId = preferredGroupId;
+            reloadReport();
+            _selectedGroup = group;
+            reloadBillList();
+            break;
+          }
         }
       }
     }

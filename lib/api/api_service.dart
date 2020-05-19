@@ -70,6 +70,7 @@ class ApiService {
   static Api getApi() {
     Dio dio = new Dio();
     dio.interceptors.add(interceptors);
+    dio.options.validateStatus = (status) { return status < 500; };
     return new Api(dio);
   }
 }

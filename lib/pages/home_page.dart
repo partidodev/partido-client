@@ -249,8 +249,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     Provider.of<AppState>(context, listen: false).initAppState();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Consumer<AppState>(builder: (context, appState, child) {
