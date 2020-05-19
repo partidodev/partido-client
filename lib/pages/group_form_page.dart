@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group.dart';
+import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 
@@ -63,11 +63,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).changeSelectedGroup(response.data.id);
         navService.goBack();
-        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_created"));
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_created"));
       }
     } catch (e) {
       logger.e('Group creation failed', e);
-      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_creation_failed"));
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_creation_failed"));
     }
   }
 
@@ -78,11 +78,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
-        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_settings_saved"));
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_settings_saved"));
       }
     } catch (e) {
       logger.e('Saving group settings failed', e);
-      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_settings_saving_failed"));
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.toast_group_settings_saving_failed"));
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 
@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (w) {
       logger.w('Login failed', w);
-      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "login.toast_login_failed"));
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "login.toast_login_failed"));
     }
   }
 

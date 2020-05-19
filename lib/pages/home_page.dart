@@ -1,11 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:partido_client/pages/group_form_page.dart';
+import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
@@ -407,7 +407,7 @@ class _HomePageState extends State<HomePage> {
                                           Clipboard.setData(ClipboardData(
                                               text:
                                                   "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"));
-                                          Fluttertoast.showToast(
+                                          PartidoToast.showToast(
                                               msg: FlutterI18n.translate(
                                                   context, "global.copied"));
                                         }),

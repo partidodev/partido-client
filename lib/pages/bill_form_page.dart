@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:partido_client/model/split.dart';
 import 'package:partido_client/model/user.dart';
+import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 
@@ -150,13 +150,13 @@ class _BillFormPageState extends State<BillFormPage> {
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
-        Fluttertoast.showToast(
+        PartidoToast.showToast(
             msg:
                 FlutterI18n.translate(context, "bill_form.toast_bill_created"));
       }
     } catch (e) {
       logger.e("Failed to save bill", e);
-      Fluttertoast.showToast(
+      PartidoToast.showToast(
           msg: FlutterI18n.translate(
               context, "bill_form.toast_failed_to_save_bill"));
     }
@@ -199,13 +199,13 @@ class _BillFormPageState extends State<BillFormPage> {
         navService.goBack(); // close outdated bill details screen
         navService.push(MaterialPageRoute(
             builder: (context) => BillDetailsPage(bill: response.data)));
-        Fluttertoast.showToast(
+        PartidoToast.showToast(
             msg:
                 FlutterI18n.translate(context, "bill_form.toast_bill_updated"));
       }
     } catch (e) {
       logger.e("Failed to save bill", e);
-      Fluttertoast.showToast(
+      PartidoToast.showToast(
           msg: FlutterI18n.translate(
               context, "bill_form.toast_failed_to_update_bill"));
     }
@@ -219,13 +219,13 @@ class _BillFormPageState extends State<BillFormPage> {
         navService.goBack(); // close bill deleting dialog
         navService.goBack(); // close bill editing screen
         navService.goBack(); // close bill details screen
-        Fluttertoast.showToast(
+        PartidoToast.showToast(
             msg:
                 FlutterI18n.translate(context, "bill_form.toast_bill_deleted"));
       }
     } catch (e) {
       logger.e("Failed to delete bill", e);
-      Fluttertoast.showToast(
+      PartidoToast.showToast(
           msg: FlutterI18n.translate(
               context, "bill_form.toast_failed_to_delete_bill"));
     }

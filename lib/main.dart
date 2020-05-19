@@ -77,7 +77,6 @@ void main() async {
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(20.0)
             ),
-            buttonColor: Colors.green,
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,

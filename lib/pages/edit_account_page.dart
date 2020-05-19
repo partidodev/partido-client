@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/user.dart';
+import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,7 +59,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
             .setCurrentUser(response.data);
         Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
         navService.goBack();
-        Fluttertoast.showToast(msg: FlutterI18n.translate(context, "account.toast_account_settings_saved"));
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_account_settings_saved"));
 
         try {
           var loginPassword;
@@ -72,12 +72,12 @@ class _EditAccountPageState extends State<EditAccountPage> {
               "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
         } catch (e) {
           logger.e('Login failed', e);
-          Fluttertoast.showToast(msg: FlutterI18n.translate(context, "account.toast_login_failed"));
+          PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_login_failed"));
         }
       }
     } catch (e) {
       logger.e("Failed to save account", e);
-      Fluttertoast.showToast(msg: FlutterI18n.translate(context, "account.toast_error_updating_account"));
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_error_updating_account"));
     }
   }
 
