@@ -280,7 +280,7 @@ class _BillFormPageState extends State<BillFormPage> {
             ),
             flex: 44, // %
           ),
-          SizedBox(width: 10.0),
+          SizedBox(width: 8),
           Flexible(
             child: TextFormField(
               controller: splitPartsControllers[user.id],
@@ -291,7 +291,7 @@ class _BillFormPageState extends State<BillFormPage> {
             ),
             flex: 28, // %
           ),
-          SizedBox(width: 10.0),
+          SizedBox(width: 8),
           Flexible(
             child: TextFormField(
               controller: splitPaidControllers[user.id],
@@ -306,7 +306,7 @@ class _BillFormPageState extends State<BillFormPage> {
           ),
         ],
       ));
-      splitEditingRows.add(SizedBox(height: 10.0));
+      splitEditingRows.add(SizedBox(height: 8));
     });
 
     return Scaffold(
@@ -328,7 +328,7 @@ class _BillFormPageState extends State<BillFormPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
@@ -354,7 +354,7 @@ class _BillFormPageState extends State<BillFormPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   TextFormField(
                     onSaved: (value) => _amount = value,
                     onChanged: (value) {
@@ -392,7 +392,7 @@ class _BillFormPageState extends State<BillFormPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   Column(
                     children: splitEditingRows,
                   ),
@@ -404,7 +404,7 @@ class _BillFormPageState extends State<BillFormPage> {
                     readOnly: true,
                     onTap: () => _selectDate(context),
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   MaterialButton(
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,

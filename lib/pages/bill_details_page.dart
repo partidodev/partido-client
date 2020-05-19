@@ -46,6 +46,7 @@ class BillDetailsPage extends StatelessWidget {
               : null,
         ),
         body: ListView(
+          padding: EdgeInsets.all(4),
           children: <Widget>[
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

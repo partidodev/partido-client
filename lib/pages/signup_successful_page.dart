@@ -15,7 +15,7 @@ class SignupSuccessfulPage extends StatelessWidget {
           title: I18nText('signup.success.title'),
         ),
         body: ListView(
-          padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
+          padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
           children: <Widget>[
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,11 +24,11 @@ class SignupSuccessfulPage extends StatelessWidget {
                   FlutterI18n.translate(context, "signup.success.title"),
                   style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 16),
                 I18nText("signup.success.success_notice"),
-                SizedBox(height: 15.0),
+                SizedBox(height: 16),
                 I18nText("signup.success.additional_info"),
-                SizedBox(height: 15.0),
+                SizedBox(height: 16),
                 MaterialButton(
                     minWidth: double.infinity,
                     color: Theme.of(context).primaryColor,

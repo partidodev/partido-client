@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 40,
                     ),
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -84,10 +84,10 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    padding: EdgeInsets.all(16),
                     child: Card(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        padding: EdgeInsets.all(16),
                         child: Form(
                           key: _formKey,
                           child: Column(
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                   return null;
                                 },
                               ),
-                              SizedBox(height: 10.0),
+                              SizedBox(height: 8),
                               TextFormField(
                                 onSaved: (value) => _password = value,
                                 obscureText: true,
@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                                   return null;
                                 },
                               ),
-                              SizedBox(height: 10.0),
+                              SizedBox(height: 8),
                               CheckboxListTile(
                                 title: I18nText("login.remember"),
                                 value: _rememberMe,
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
                               ),
-                              SizedBox(height: 10.0),
+                              SizedBox(height: 8),
                               MaterialButton(
                                   minWidth: double.infinity,
                                   color: Theme.of(context).primaryColor,

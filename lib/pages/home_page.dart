@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
           body: TabBarView(
             children: [
               ListView(
-                padding: EdgeInsets.only(bottom: 70),
+                padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
                 children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

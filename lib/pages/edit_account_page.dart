@@ -82,17 +82,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
   }
 
   void _logout() async {
-    try {
-      await api.logout();
-    } catch (e) {
-      // Logout causes always a 401 (unauthorized) or 302 (redirect to /login).
-      // That's why we just catch the error and open login page.
-      navService.pushNamedAndRemoveUntil("/login");
-    } finally {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.remove("COOKIES");
-      Provider.of<AppState>(context, listen: false).clearAppState();
-    }
+    await api.logout();
+    navService.pushNamedAndRemoveUntil("/login");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("COOKIES");
+    Provider.of<AppState>(context, listen: false).clearAppState();
   }
 
   Future _openLogoutDialog() async {
@@ -133,7 +127,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
@@ -155,7 +149,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   TextFormField(
                     onSaved: (value) => _email = value,
                     keyboardType: TextInputType.emailAddress,
@@ -174,7 +168,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   TextFormField(
                     onSaved: (value) => _oldPassword = value,
                     obscureText: true,
@@ -186,13 +180,13 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30.0),
+                  SizedBox(height: 24),
                   Text(FlutterI18n.translate(context, "account.change_password.title"),
                     style: TextStyle(fontSize: 20),
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   I18nText("account.change_password.description"),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 16),
                   TextFormField(
                     onSaved: (value) => _newPassword = value,
                     obscureText: true,
@@ -207,7 +201,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -219,7 +213,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 8),
                   MaterialButton(
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,

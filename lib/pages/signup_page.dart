@@ -65,7 +65,7 @@ class _SignupPageState extends State<SignupPage> {
                       height: 40,
                     ),
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -76,10 +76,10 @@ class _SignupPageState extends State<SignupPage> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                     child: Card(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                         child: Form(
                             key: _formKey,
                             child: Column(
@@ -94,7 +94,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 10.0),
+                                SizedBox(height: 8),
                                 TextFormField(
                                   onSaved: (value) => _email = value,
                                   keyboardType: TextInputType.emailAddress,
@@ -106,7 +106,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 10.0),
+                                SizedBox(height: 8),
                                 TextFormField(
                                   onSaved: (value) => _password = value,
                                   obscureText: true,
@@ -118,7 +118,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 10.0),
+                                SizedBox(height: 8),
                                 TextFormField(
                                   obscureText: true,
                                   decoration: InputDecoration(labelText: FlutterI18n.translate(context, "signup.password_confirmation")),
@@ -128,7 +128,7 @@ class _SignupPageState extends State<SignupPage> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 10.0),
+                                SizedBox(height: 8),
                                 CheckboxListTile(
                                   title: RichText(
                                     text: TextSpan(
@@ -152,7 +152,7 @@ class _SignupPageState extends State<SignupPage> {
                                   onChanged: (bool value) => setState(() => _acceptTerms = value),
                                   controlAffinity: ListTileControlAffinity.leading,
                                 ),
-                                SizedBox(height: 10.0),
+                                SizedBox(height: 8),
                                 MaterialButton(
                                     minWidth: double.infinity,
                                     color: Theme.of(context).primaryColor,
