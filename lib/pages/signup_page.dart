@@ -146,7 +146,7 @@ class _SignupPageState extends State<SignupPage> {
                                   ),
                                   value: _acceptTerms,
                                   subtitle: (!_acceptTerms && formSaved) ? Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                      padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                       child: Text(FlutterI18n.translate(context, "signup.privacy_policy_not_accepted_error"), style: TextStyle(color: Color(0xFFe53935), fontSize: 12))
                                   ) : null,
                                   onChanged: (bool value) => setState(() => _acceptTerms = value),

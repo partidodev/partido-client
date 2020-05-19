@@ -28,17 +28,29 @@ void main() async {
           primarySwatch: Colors.green,
           buttonTheme: ButtonThemeData(
               shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                  borderRadius: new BorderRadius.circular(20)
               ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFFe53935))
+                borderRadius: BorderRadius.all(Radius.circular(0)),
+                borderSide: BorderSide(color: Color(0xFFe53935))
             ),
             focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(0)),
                 borderSide: BorderSide(color: Color(0xFFe53935))
+            ),
+          ),
+          cardTheme: CardTheme(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              side: BorderSide(
+                color: Color(0x1F000000),
+                width: 0,
+              ),
             ),
           ),
         ),
@@ -52,17 +64,29 @@ void main() async {
           indicatorColor: Colors.green,
           buttonTheme: ButtonThemeData(
             shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(20.0)
+                borderRadius: new BorderRadius.circular(20)
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(0)),
                 borderSide: BorderSide(color: Color(0xFFe53935))
             ),
             focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(0)),
                 borderSide: BorderSide(color: Color(0xFFe53935))
+            ),
+          ),
+          cardTheme: CardTheme(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              side: BorderSide(
+                color: Color(0x1F000000),
+                width: 0,
+              ),
             ),
           ),
         ),
@@ -81,7 +105,6 @@ void main() async {
               useCountryCode: false,
               fallbackFile: 'en',
               basePath: 'assets/i18n',
-              //forcedLocale: Locale('es'), // for locale testing
               decodeStrategies: [YamlDecodeStrategy()],
           )),
           GlobalMaterialLocalizations.delegate,
