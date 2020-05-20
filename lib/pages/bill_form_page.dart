@@ -35,6 +35,7 @@ class _BillFormPageState extends State<BillFormPage> {
 
   final _formKey = GlobalKey<FormState>();
   bool createNewBillMode = true;
+  bool initDone = false;
 
   String _description;
   String _amount;
@@ -48,7 +49,13 @@ class _BillFormPageState extends State<BillFormPage> {
   Map<int, TextEditingController> splitPaidControllers = {};
   Map<int, TextEditingController> splitPartsControllers = {};
 
+  /// we use a custom init method here instead of overriding the
+  /// initState method because localization of currency and date formats
+  /// does not work correctly in it.
   void init(BuildContext context) {
+    if (initDone) {
+      return;
+    }
     dateFormatter = new DateFormat(FlutterI18n.translate(context, "global.date_format"));
     currencyFormatter = new NumberFormat(FlutterI18n.translate(context, "global.currency_format"), FlutterI18n.translate(context, "global.locale"));
     partFormatter = new NumberFormat(FlutterI18n.translate(context, "global.part_format"), FlutterI18n.translate(context, "global.locale"));
@@ -98,6 +105,7 @@ class _BillFormPageState extends State<BillFormPage> {
       });
     }
     billDateController.text = dateFormatter.format(_selectedDate);
+    initDone = true;
   }
 
   Future<Null> _selectDate(BuildContext context) async {
