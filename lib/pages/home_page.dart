@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:logger/logger.dart';
+import 'package:partido_client/model/group.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/pages/bill_details_page.dart';
 import 'package:partido_client/pages/group_form_page.dart';
@@ -315,10 +316,8 @@ class _HomePageState extends State<HomePage> {
                           title: appState.getSelectedGroup().name != null
                               ? Text('${appState.getSelectedGroup().name}')
                               : I18nText("home.welcome.title"),
-                          subtitle: appState.getSelectedGroup().status != null
-                              ? Text('${appState.getSelectedGroup().status}')
-                              : I18nText("home.welcome.subtitle"),
-                          trailing: appState.getSelectedGroup().status != null
+                          subtitle: groupCardSubtitle(context, appState.getSelectedGroup()),
+                          trailing: appState.getSelectedGroup().name != null
                               ? IconButton(
                                   icon: Icon(Icons.chevron_right),
                                   tooltip: FlutterI18n.translate(context,
@@ -472,6 +471,17 @@ class _HomePageState extends State<HomePage> {
         );
       }),
     );
+  }
+
+  Text groupCardSubtitle(BuildContext context, Group selectedGroup) {
+    if (selectedGroup.name != null) {
+      if (selectedGroup.status == "") {
+        return null;
+      }
+      return Text('${selectedGroup.status}');
+    } else {
+      return Text('${FlutterI18n.translate(context, "home.welcome.subtitle")}');
+    }
   }
 }
 
