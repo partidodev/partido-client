@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class EditAccountPage extends StatefulWidget {
@@ -118,7 +119,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
         title: I18nText("account.title"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: Icon(LinearIcons.exit),
             onPressed: _openLogoutDialog,
             tooltip: FlutterI18n.translate(context, "account.logout_tooltip"),
           ),

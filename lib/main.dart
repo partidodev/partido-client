@@ -26,6 +26,8 @@ void main() async {
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.green,
+          fontFamily: 'Roboto',
+          textTheme: defaultTextTheme(),
           buttonTheme: ButtonThemeData(
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(20)
@@ -56,7 +58,8 @@ void main() async {
           dividerTheme: DividerThemeData(
             thickness: 1,
             color: Color(0x0F000000),
-          )
+            space: 0,
+          ),
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
@@ -66,6 +69,8 @@ void main() async {
           toggleableActiveColor: Colors.green,
           highlightColor: Colors.green,
           indicatorColor: Colors.green,
+          fontFamily: 'Roboto',
+          textTheme: defaultTextTheme(),
           buttonTheme: ButtonThemeData(
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(20)
@@ -93,10 +98,12 @@ void main() async {
               ),
             ),
           ),
-            dividerTheme: DividerThemeData(
-              thickness: 1,
-              color: Color(0x0F000000),
-            )
+          dividerTheme: DividerThemeData(
+            thickness: 1,
+            color: Color(0x0F000000),
+            space: 0,
+          ),
+
         ),
         navigatorKey: NavigationService.navigationKey,
         routes: {
@@ -120,5 +127,20 @@ void main() async {
         ],
       )
     )
+  );
+}
+
+TextTheme defaultTextTheme() {
+  return TextTheme(
+    headline1: TextStyle(fontWeight: FontWeight.w400),
+    headline2: TextStyle(fontWeight: FontWeight.w400),
+    headline3: TextStyle(fontWeight: FontWeight.w400),
+    headline4: TextStyle(fontWeight: FontWeight.w400),
+    headline5: TextStyle(fontWeight: FontWeight.w400),
+    headline6: TextStyle(fontWeight: FontWeight.w400),
+    subtitle1: TextStyle(fontWeight: FontWeight.w300),
+    subtitle2: TextStyle(fontWeight: FontWeight.w300),
+    bodyText1: TextStyle(fontWeight: FontWeight.w300),
+    bodyText2: TextStyle(fontWeight: FontWeight.w300),
   );
 }

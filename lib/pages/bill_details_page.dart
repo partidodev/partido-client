@@ -7,6 +7,7 @@ import 'package:partido_client/model/bill.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 import 'bill_form_page.dart';
 
@@ -29,21 +30,17 @@ class BillDetailsPage extends StatelessWidget {
         appBar: AppBar(
           title: I18nText('bill_details.title'),
           actions: Provider.of<AppState>(context, listen: false)
-                      .getCurrentUser()
-                      .id ==
-                  bill.creator
-              ? <Widget>[
-                  IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        navService.push(
-                          MaterialPageRoute(
-                            builder: (context) => BillFormPage(bill: bill),
-                          ),
-                        );
-                      }),
-                ]
-              : null,
+                      .getCurrentUser().id == bill.creator ? <Widget>[
+                        IconButton(
+                            icon: Icon(LinearIcons.pencil_line),
+                            onPressed: () {
+                              navService.push(
+                                MaterialPageRoute(
+                                  builder: (context) => BillFormPage(bill: bill),
+                                ),
+                              );
+                            }),
+                ] : null,
         ),
         body: ListView(
           padding: EdgeInsets.all(4),
@@ -58,13 +55,28 @@ class BillDetailsPage extends StatelessWidget {
                       ListTile(
                         title: Text(
                           '${bill.description}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
+                          style: TextStyle(fontSize: 20),
                         ),
-                        subtitle: Text(
-                            '${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
-                        leading: Icon(Icons.description,
-                            size: 40, color: Colors.green),
+                        subtitle: Text('${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
+                        leading: Icon(
+                            LinearIcons.clipboard_check,
+                            size: 40, color: Colors.green
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('${bill.totalAmount.toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                        leading: Icon(LinearIcons.bag_dollar),
+                      ),
+                      ListTile(
+                        title: Text('${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
+                        leading: Icon(LinearIcons.calendar_31),
                       ),
                     ],
                   ),
@@ -75,25 +87,10 @@ class BillDetailsPage extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         title: Text(
-                            '${bill.totalAmount.toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
-                        leading: Icon(Icons.attach_money),
-                      ),
-                      ListTile(
-                        title: Text(
-                            '${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
-                        leading: Icon(Icons.date_range),
-                      ),
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(FlutterI18n.translate(context, "bill_details.splits"),
-                            style: TextStyle(fontWeight: FontWeight.w500)),
-                        leading: Icon(Icons.call_split, color: Colors.green),
+                          FlutterI18n.translate(context, "bill_details.splits"),
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        leading: Icon(LinearIcons.pie_chart, color: Colors.green),
                       ),
                       Divider(),
                       ListView.builder(
@@ -102,7 +99,7 @@ class BillDetailsPage extends StatelessWidget {
                         itemCount: bill.splits.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            leading: Icon(Icons.person),
+                            leading: Icon(LinearIcons.user),
                             title: Text(
                                 '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
                             subtitle: Text(

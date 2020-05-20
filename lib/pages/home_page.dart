@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -265,13 +266,13 @@ class _HomePageState extends State<HomePage> {
             title: I18nText('global.partido_title'),
             bottom: TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.bubble_chart)),
-                Tab(icon: Icon(Icons.format_list_bulleted)),
+                Tab(icon: Icon(LinearIcons.home4)),
+                Tab(icon: Icon(LinearIcons.list)),
               ],
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.group),
+                icon: Icon(LinearIcons.users2),
                 tooltip: FlutterI18n.translate(context, "home.groups_tooltip"),
                 onPressed: _openGroupsDialog,
               ),
@@ -314,12 +315,12 @@ class _HomePageState extends State<HomePage> {
                       Card(
                         child: ListTile(
                           title: appState.getSelectedGroup().name != null
-                              ? Text('${appState.getSelectedGroup().name}')
+                              ? Text('${appState.getSelectedGroup().name}', style: TextStyle(fontSize: 18),)
                               : I18nText("home.welcome.title"),
                           subtitle: groupCardSubtitle(context, appState.getSelectedGroup()),
                           trailing: appState.getSelectedGroup().name != null
                               ? IconButton(
-                                  icon: Icon(Icons.chevron_right),
+                                  icon: Icon(LinearIcons.chevron_right),
                                   tooltip: FlutterI18n.translate(context,
                                       "home.welcome.group_settings_tooltip"),
                                   onPressed: () {
@@ -332,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                                   },
                                 )
                               : IconButton(
-                                  icon: Icon(Icons.chevron_right),
+                                  icon: Icon(LinearIcons.chevron_right),
                                   onPressed: _openGroupsDialog,
                                 ),
                         ),
@@ -344,12 +345,10 @@ class _HomePageState extends State<HomePage> {
                             children: <Widget>[
                               ListTile(
                                 title: Text(
-                                    FlutterI18n.translate(
-                                        context, "home.balances.title"),
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500)),
-                                leading:
-                                    Icon(Icons.equalizer, color: Colors.green),
+                                  FlutterI18n.translate(context, "home.balances.title"),
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                leading: Icon(LinearIcons.balance, color: Colors.green),
                               ),
                               Divider(),
                               ListView.builder(
@@ -358,7 +357,7 @@ class _HomePageState extends State<HomePage> {
                                 itemCount: appState.getReport().balances.length,
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    leading: Icon(Icons.person),
+                                    leading: Icon(LinearIcons.user),
                                     title: Text(
                                         '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
                                     trailing: Text(
@@ -386,17 +385,16 @@ class _HomePageState extends State<HomePage> {
                             children: <Widget>[
                               ListTile(
                                 title: Text(
-                                    FlutterI18n.translate(context,
-                                        "home.join_mode.title_enabled"),
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500)),
-                                leading:
-                                    Icon(Icons.group_add, color: Colors.green),
+                                  FlutterI18n.translate(context, "home.join_mode.title_enabled"),
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                leading: Icon(LinearIcons.users_plus, color: Colors.green),
                               ),
                               Divider(),
                               ListTile(
-                                  title: I18nText(
-                                      "home.join_mode.security_notice")),
+                                  contentPadding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+                                  title: I18nText("home.join_mode.security_notice")
+                              ),
                               ListTile(
                                 title: SelectableText(
                                     "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
@@ -405,7 +403,7 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(
-                                        icon: Icon(Icons.content_copy),
+                                        icon: Icon(LinearIcons.copy),
                                         onPressed: () {
                                           Clipboard.setData(ClipboardData(
                                               text:
@@ -415,7 +413,7 @@ class _HomePageState extends State<HomePage> {
                                                   context, "global.copied"));
                                         }),
                                     IconButton(
-                                      icon: Icon(Icons.share),
+                                      icon: Icon(LinearIcons.share2),
                                       onPressed: () {
                                         Share.share(
                                             '${FlutterI18n.translate(context, "home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
@@ -436,11 +434,11 @@ class _HomePageState extends State<HomePage> {
               ),
               ListView.separated(
                 padding: EdgeInsets.only(bottom: 70),
-                separatorBuilder: (context, index) => Divider(height: 0),
+                separatorBuilder: (context, index) => Divider(),
                 itemCount: appState.getBills().length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Icon(Icons.shopping_cart),
+                    leading: Icon(LinearIcons.cart),
                     title: Text('${appState.getBills()[index].description}'),
                     subtitle: Text(
                         '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
@@ -466,7 +464,7 @@ class _HomePageState extends State<HomePage> {
               }
             },
             tooltip: FlutterI18n.translate(context, "home.create_bill_tooltip"),
-            child: Icon(Icons.add),
+            child: Icon(LinearIcons.plus),
           ),
         );
       }),

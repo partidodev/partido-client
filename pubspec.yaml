@@ -61,6 +61,10 @@ flutter:
   # included with the application, so that we can use the icons in
   # the material Icons class.
   uses-material-design: true
+  fonts:
+   - family:  LinearIcons
+     fonts:
+      - asset: assets/fonts/LinearIcons.ttf
 
   # Application assets
   assets:

@@ -12,6 +12,7 @@ import 'package:retrofit/dio.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 import 'bill_details_page.dart';
 
@@ -326,7 +327,7 @@ class _BillFormPageState extends State<BillFormPage> {
             ? null
             : <Widget>[
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Icon(LinearIcons.trash2),
                   onPressed: _openDeleteBillDialog,
                   tooltip: FlutterI18n.translate(
                       context, "bill_form.delete_bill_tooltip"),
