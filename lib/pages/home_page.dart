@@ -312,7 +312,6 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       Card(
                         child: ListTile(
-                          //leading: Icon(Icons.group, size: 30),
                           title: appState.getSelectedGroup().name != null
                               ? Text('${appState.getSelectedGroup().name}')
                               : I18nText("home.welcome.title"),
@@ -420,7 +419,7 @@ class _HomePageState extends State<HomePage> {
                                       icon: Icon(Icons.share),
                                       onPressed: () {
                                         Share.share(
-                                            '${I18nText("home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                                            '${FlutterI18n.translate(context, "home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
                                             subject: FlutterI18n.translate(
                                                 context,
                                                 "home.join_mode.share.subject"));
@@ -438,7 +437,7 @@ class _HomePageState extends State<HomePage> {
               ),
               ListView.separated(
                 padding: EdgeInsets.only(bottom: 70),
-                separatorBuilder: (context, index) => Divider(height: 0.0),
+                separatorBuilder: (context, index) => Divider(height: 0),
                 itemCount: appState.getBills().length,
                 itemBuilder: (context, index) {
                   return ListTile(

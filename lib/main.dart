@@ -48,11 +48,15 @@ void main() async {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(0)),
               side: BorderSide(
-                color: Color(0x1F000000),
-                width: 0,
+                color: Color(0x0F000000),
+                width: 1,
               ),
             ),
           ),
+          dividerTheme: DividerThemeData(
+            thickness: 1,
+            color: Color(0x0F000000),
+          )
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
@@ -84,11 +88,15 @@ void main() async {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(0)),
               side: BorderSide(
-                color: Color(0x1F000000),
-                width: 0,
+                color: Color(0x0F000000),
+                width: 1,
               ),
             ),
           ),
+            dividerTheme: DividerThemeData(
+              thickness: 1,
+              color: Color(0x0F000000),
+            )
         ),
         navigatorKey: NavigationService.navigationKey,
         routes: {
