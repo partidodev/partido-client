@@ -336,7 +336,7 @@ class _BillFormPageState extends State<BillFormPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(8),
             child: Form(
               key: _formKey,
               child: Column(

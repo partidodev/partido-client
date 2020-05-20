@@ -112,7 +112,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(8),
             child: Form(
               key: _formKey,
               child: Column(

@@ -76,10 +76,10 @@ class _SignupPageState extends State<SignupPage> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    padding: EdgeInsets.all(16),
                     child: Card(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                        padding: EdgeInsets.all(16),
                         child: Form(
                             key: _formKey,
                             child: Column(

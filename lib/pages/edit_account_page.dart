@@ -127,7 +127,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
       body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(8),
             child: Form(
               key: _formKey,
               child: Column(
@@ -180,13 +180,16 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24),
-                  Text(FlutterI18n.translate(context, "account.change_password.title"),
-                    style: TextStyle(fontSize: 20),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8, 24, 8, 0),
+                    child: Text(FlutterI18n.translate(context, "account.change_password.title"),
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                  SizedBox(height: 8),
-                  I18nText("account.change_password.description"),
-                  SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8, 8, 8, 16),
+                    child: I18nText("account.change_password.description"),
+                  ),
                   TextFormField(
                     onSaved: (value) => _newPassword = value,
                     obscureText: true,
