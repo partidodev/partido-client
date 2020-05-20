@@ -265,7 +265,7 @@ class _HomePageState extends State<HomePage> {
             title: I18nText('global.partido_title'),
             bottom: TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.assessment)),
+                Tab(icon: Icon(Icons.bubble_chart)),
                 Tab(icon: Icon(Icons.format_list_bulleted)),
               ],
             ),
