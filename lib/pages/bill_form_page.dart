@@ -248,13 +248,13 @@ class _BillFormPageState extends State<BillFormPage> {
         content: I18nText("bill_form.delete_bill_dialog.question"),
         actions: <Widget>[
           FlatButton(
-            child: I18nText("bill_form.delete_bill_dialog.answer_no"),
+            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w300)),
             onPressed: () {
               navService.goBack();
             },
           ),
           FlatButton(
-            child: I18nText("bill_form.delete_bill_dialog.answer_yes"),
+            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w300)),
             onPressed: _deleteBill,
           ),
         ],
@@ -320,6 +320,11 @@ class _BillFormPageState extends State<BillFormPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(LinearIcons.arrow_left),
+          onPressed: () { navService.goBack(); },
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        ),
         title: (createNewBillMode)
             ? I18nText('bill_form.create_bill_title')
             : I18nText('bill_form.edit_bill_title'),
@@ -419,8 +424,8 @@ class _BillFormPageState extends State<BillFormPage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: (createNewBillMode)
-                          ? I18nText("bill_form.create_bill_button")
-                          : I18nText("bill_form.update_bill_button"),
+                          ? Text(FlutterI18n.translate(context, "bill_form.create_bill_button"), style: TextStyle(fontWeight: FontWeight.w300))
+                          : Text(FlutterI18n.translate(context, "bill_form.update_bill_button"), style: TextStyle(fontWeight: FontWeight.w300)),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;

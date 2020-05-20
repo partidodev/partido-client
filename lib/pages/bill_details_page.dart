@@ -28,6 +28,11 @@ class BillDetailsPage extends StatelessWidget {
     partFormatter = new NumberFormat(FlutterI18n.translate(context, "global.part_format"), FlutterI18n.translate(context, "global.locale"));
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(LinearIcons.arrow_left),
+            onPressed: () { navService.goBack(); },
+            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+          ),
           title: I18nText('bill_details.title'),
           actions: Provider.of<AppState>(context, listen: false)
                       .getCurrentUser().id == bill.creator ? <Widget>[

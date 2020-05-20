@@ -12,6 +12,7 @@ import 'package:retrofit/dio.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class GroupFormPage extends StatefulWidget {
@@ -105,6 +106,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(LinearIcons.arrow_left),
+          onPressed: () { navService.goBack(); },
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        ),
         title: (createNewGroupMode)
             ? I18nText("group_form.create_group_title")
             : I18nText("group_form.group_settings_title"),
@@ -174,8 +180,8 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: (createNewGroupMode)
-                          ? I18nText("group_form.create_group_button")
-                          : I18nText("group_form.save_changes_button"),
+                          ? Text(FlutterI18n.translate(context, "group_form.create_group_button"), style: TextStyle(fontWeight: FontWeight.w300))
+                          : Text(FlutterI18n.translate(context, "group_form.save_changes_button"), style: TextStyle(fontWeight: FontWeight.w300)),
                       onPressed: () {
                         final form = _formKey.currentState;
                         form.save();

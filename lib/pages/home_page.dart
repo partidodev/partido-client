@@ -83,14 +83,14 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: I18nText('home.groups_dialog.join_existing_button'),
+                child: Text(FlutterI18n.translate(context, "home.groups_dialog.join_existing_button"), style: TextStyle(fontWeight: FontWeight.w300)),
                 onPressed: () {
                   navService.goBack();
                   _openJoinGroupDialog();
                 },
               ),
               FlatButton(
-                child: I18nText('home.groups_dialog.create_button'),
+                child: Text(FlutterI18n.translate(context, "home.groups_dialog.create_button"), style: TextStyle(fontWeight: FontWeight.w300)),
                 onPressed: () {
                   navService.pushReplacementNamed('/create-group');
                 },
@@ -133,13 +133,13 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: I18nText('global.cancel'),
+                child: Text(FlutterI18n.translate(context, "global.cancel"), style: TextStyle(fontWeight: FontWeight.w300)),
                 onPressed: () {
                   navService.goBack();
                 },
               ),
               FlatButton(
-                child: I18nText('home.join_group_dialog.button_join'),
+                child: Text(FlutterI18n.translate(context, "home.join_group_dialog.button_join"), style: TextStyle(fontWeight: FontWeight.w300)),
                 onPressed: () {
                   final form = _formKey.currentState;
                   form.save();
@@ -276,32 +276,36 @@ class _HomePageState extends State<HomePage> {
                 tooltip: FlutterI18n.translate(context, "home.groups_tooltip"),
                 onPressed: _openGroupsDialog,
               ),
-              PopupMenuButton<HomeMenuItem>(
-                onSelected: (HomeMenuItem result) {
-                  if (result == HomeMenuItem.account) {
-                    navService.pushNamed('/account');
-                  } else if (result == HomeMenuItem.about) {
-                    _openAboutDialog();
-                  } else if (result == HomeMenuItem.feedback) {
-                    _launchFeedbackUrl();
-                  }
-                },
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuEntry<HomeMenuItem>>[
-                  PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.account,
-                    child: I18nText("home.menu.account"),
-                  ),
-                  PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.about,
-                    child: I18nText('home.menu.about'),
-                  ),
-                  PopupMenuItem<HomeMenuItem>(
-                    value: HomeMenuItem.feedback,
-                    child: I18nText('home.menu.feedback'),
-                  ),
-                ],
-              )
+              Transform.rotate(
+                angle: 90 * 3.14159265359 / 180,
+                child: PopupMenuButton<HomeMenuItem>(
+                  icon: Icon(LinearIcons.ellipsis),
+                  onSelected: (HomeMenuItem result) {
+                    if (result == HomeMenuItem.account) {
+                      navService.pushNamed('/account');
+                    } else if (result == HomeMenuItem.about) {
+                      _openAboutDialog();
+                    } else if (result == HomeMenuItem.feedback) {
+                      _launchFeedbackUrl();
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                  <PopupMenuEntry<HomeMenuItem>>[
+                    PopupMenuItem<HomeMenuItem>(
+                      value: HomeMenuItem.account,
+                      child: I18nText("home.menu.account"),
+                    ),
+                    PopupMenuItem<HomeMenuItem>(
+                      value: HomeMenuItem.about,
+                      child: I18nText('home.menu.about'),
+                    ),
+                    PopupMenuItem<HomeMenuItem>(
+                      value: HomeMenuItem.feedback,
+                      child: I18nText('home.menu.feedback'),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           body: TabBarView(

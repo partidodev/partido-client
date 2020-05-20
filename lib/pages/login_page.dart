@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                                   minWidth: double.infinity,
                                   color: Theme.of(context).primaryColor,
                                   textColor: Colors.white,
-                                  child: I18nText("login.login_button"),
+                                  child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w300)),
                                   onPressed: () {
                                     final form = _formKey.currentState;
                                     form.save();
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(
                                 width: double.infinity,
                                 child: FlatButton(
-                                  child: I18nText("login.signup_button"),
+                                  child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w300)),
                                   onPressed: () {
                                     navService.pushNamed('/signup');
                                   },
