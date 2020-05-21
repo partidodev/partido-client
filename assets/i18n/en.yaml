@@ -15,8 +15,9 @@ home:
   balances:
     title: "Balances"
   join_mode:
-    security_notice: "For security reasons, disable the group join mode when all users joined the group."
     title_enabled: "Join mode active"
+    info: "Share the following join code with your friends to let them enter your group."
+    security_notice: "For security reasons, disable the group join mode when all users joined the group."
     share:
       text: "Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code:"
       subject: "Join my group on Partido!"
@@ -82,6 +83,7 @@ account:
   username_empty_validation_error: "Please enter an username"
   username_too_long_validation_error: "Max. 50 characters allowed"
   email: "Email"
+  email_already_in_use_validation_error: "Email already registered"
   email_empty_validation_error: "Please enter your email address"
   email_invalid_validation_error: "Please enter a valid email address"
   email_too_long_validation_error: "Max. 50 characters allowed"

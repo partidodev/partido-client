@@ -143,10 +143,10 @@ TextTheme defaultTextTheme() {
     headline3: TextStyle(fontSize: 48, fontWeight: FontWeight.w400),
     headline4: TextStyle(fontSize: 34, fontWeight: FontWeight.w400),
     headline5: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-    headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-    subtitle1: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+    headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.w400), // AppBar title, Dialog title, etc
+    subtitle1: TextStyle(fontSize: 16, fontWeight: FontWeight.w300), // List tile titles
     subtitle2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-    bodyText1: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-    bodyText2: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+    bodyText1: TextStyle(fontSize: 14, fontWeight: FontWeight.w400), // Emphasized text
+    bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300), // List leading/trailing, etc
   );
 }

@@ -33,7 +33,7 @@ class SignupSuccessfulPage extends StatelessWidget {
                     minWidth: double.infinity,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w300)),
+                    child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                     onPressed: () {
                       navService.pushNamedAndRemoveUntil("/login");
                     }),

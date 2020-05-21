@@ -98,13 +98,13 @@ class _EditAccountPageState extends State<EditAccountPage> {
         content: I18nText("account.logout_dialog.question"),
         actions: <Widget>[
           FlatButton(
-            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w300)),
+            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: () {
               navService.goBack();
             },
           ),
           FlatButton(
-            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w300)),
+            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: _logout,
           ),
         ],
@@ -227,7 +227,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       minWidth: double.infinity,
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      child: Text(FlutterI18n.translate(context, "account.save_button"), style: TextStyle(fontWeight: FontWeight.w300)),
+                      child: Text(FlutterI18n.translate(context, "account.save_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;

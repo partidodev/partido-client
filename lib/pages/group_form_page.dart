@@ -180,8 +180,8 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: (createNewGroupMode)
-                          ? Text(FlutterI18n.translate(context, "group_form.create_group_button"), style: TextStyle(fontWeight: FontWeight.w300))
-                          : Text(FlutterI18n.translate(context, "group_form.save_changes_button"), style: TextStyle(fontWeight: FontWeight.w300)),
+                          ? Text(FlutterI18n.translate(context, "group_form.create_group_button"), style: TextStyle(fontWeight: FontWeight.w400))
+                          : Text(FlutterI18n.translate(context, "group_form.save_changes_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                       onPressed: () {
                         final form = _formKey.currentState;
                         form.save();

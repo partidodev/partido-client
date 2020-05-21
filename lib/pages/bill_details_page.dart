@@ -76,7 +76,7 @@ class BillDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ListTile(
-                        title: Text('${bill.totalAmount.toStringAsFixed(2)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                        title: Text('${currencyFormatter.format(bill.totalAmount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                         leading: Icon(LinearIcons.bag_dollar),
                       ),
                       ListTile(
@@ -95,7 +95,7 @@ class BillDetailsPage extends StatelessWidget {
                           FlutterI18n.translate(context, "bill_details.splits"),
                           style: TextStyle(fontSize: 18),
                         ),
-                        leading: Icon(LinearIcons.pie_chart, color: Colors.green),
+                        leading: Icon(LinearIcons.arrows_split, color: Colors.green),
                       ),
                       Divider(),
                       ListView.builder(
@@ -109,8 +109,9 @@ class BillDetailsPage extends StatelessWidget {
                                 '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
                             subtitle: Text(
                                 '${FlutterI18n.translate(context, "bill_details.parts")} ${partFormatter.format(bill.splits[index].partsOfBill)}/${partFormatter.format(bill.parts)} · ${FlutterI18n.translate(context, "bill_details.paid")} ${currencyFormatter.format(bill.splits[index].paid)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
-                            trailing: Text(
-                                '${currencyFormatter.format(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                            trailing: Text('${currencyFormatter.format(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}',
+                                style: TextStyle(fontSize: 16),
+                            ),
                           );
                         },
                       ),

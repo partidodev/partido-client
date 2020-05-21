@@ -19,6 +19,9 @@ import '../app_state.dart';
 import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
+import 'dart:ui';
+import 'package:intl/intl.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -33,222 +36,7 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   String _groupJoinKey;
 
-  void _joinGroup() async {
-    String groupKey = _groupJoinKey.split("@")[0];
-    int groupId = int.parse(_groupJoinKey.split("@")[1]);
-
-    GroupJoinBody groupJoinBody = new GroupJoinBody(
-        userId:
-            Provider.of<AppState>(context, listen: false).getCurrentUser().id,
-        joinKey: groupKey);
-
-    try {
-      HttpResponse<String> response =
-          await api.joinGroup(groupId, groupJoinBody);
-      if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false)
-            .changeSelectedGroup(groupId);
-        Provider.of<AppState>(context, listen: false).refreshAppState();
-        navService.goBack();
-      }
-    } catch (e) {
-      logger.e("Failed to join grop", e);
-    }
-  }
-
-  Future _openGroupsDialog() async {
-    await showDialog(
-        context: context,
-        child: Consumer<AppState>(builder: (context, appState, child) {
-          return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: I18nText("home.groups_dialog.title"),
-            content: Container(
-              width: double.maxFinite,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: appState.getMyGroups().length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.only(left: 24),
-                    title: Text(appState.getMyGroups()[index].name),
-                    onTap: () => {
-                      appState.changeSelectedGroup(
-                          appState.getMyGroups()[index].id),
-                      navService.goBack()
-                    },
-                  );
-                },
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(FlutterI18n.translate(context, "home.groups_dialog.join_existing_button"), style: TextStyle(fontWeight: FontWeight.w300)),
-                onPressed: () {
-                  navService.goBack();
-                  _openJoinGroupDialog();
-                },
-              ),
-              FlatButton(
-                child: Text(FlutterI18n.translate(context, "home.groups_dialog.create_button"), style: TextStyle(fontWeight: FontWeight.w300)),
-                onPressed: () {
-                  navService.pushReplacementNamed('/create-group');
-                },
-              ),
-            ],
-          );
-        }));
-  }
-
-  Future _openJoinGroupDialog() async {
-    await showDialog(
-        context: context,
-        child: Consumer<AppState>(builder: (context, appState, child) {
-          return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: I18nText("home.join_group_dialog.title"),
-            content: Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              width: double.maxFinite,
-              child: ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  Form(
-                    key: _formKey,
-                    child: TextFormField(
-                      onSaved: (value) => _groupJoinKey = value,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "home.join_group_dialog.join_code")),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return FlutterI18n.translate(context, "home.join_group_dialog.join_code_empty_validation_error");
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(FlutterI18n.translate(context, "global.cancel"), style: TextStyle(fontWeight: FontWeight.w300)),
-                onPressed: () {
-                  navService.goBack();
-                },
-              ),
-              FlatButton(
-                child: Text(FlutterI18n.translate(context, "home.join_group_dialog.button_join"), style: TextStyle(fontWeight: FontWeight.w300)),
-                onPressed: () {
-                  final form = _formKey.currentState;
-                  form.save();
-                  if (form.validate()) {
-                    _joinGroup();
-                  }
-                },
-              ),
-            ],
-          );
-        }));
-  }
-
-  Future _openAboutDialog() async {
-    await showDialog(
-      context: context,
-      child: AlertDialog(
-        contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-        title: I18nText("home.about_dialog.title"),
-        content: Container(
-          width: double.maxFinite,
-          child: ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 24),
-                title: I18nText("home.about_dialog.homepage"),
-                onTap: () {
-                  _launchHomepageUrl(context);
-                },
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 24),
-                title: I18nText("home.about_dialog.imprint"),
-                onTap: () {
-                  _launchImprintUrl(context);
-                },
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 24),
-                title: I18nText("home.about_dialog.privacy_policy"),
-                onTap: () {
-                  _launchPrivacyPolicyUrl(context);
-                },
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: I18nText('global.close'),
-            onPressed: () {
-              navService.goBack();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Color _getColorForNumberBalance(String number) {
-    if (double.parse(number) >= 0) {
-      return null; // Use default text color
-    } else {
-      if (MediaQuery.of(context).platformBrightness == Brightness.light) {
-        return Color.fromRGBO(235, 64, 52, 1); // Color for dark theme
-      } else {
-        return Color.fromRGBO(255, 99, 71, 1); // Color for dark theme
-      }
-    }
-  }
-
-  _launchHomepageUrl(BuildContext context) async {
-    String url = FlutterI18n.translate(context, "home.about_dialog.homepage_url");
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _launchImprintUrl(BuildContext context) async {
-    String url = FlutterI18n.translate(context, "home.about_dialog.imprint_url");
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _launchPrivacyPolicyUrl(BuildContext context) async {
-    String url = FlutterI18n.translate(context, "home.about_dialog.privacy_policy_url");
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _launchFeedbackUrl() async {
-    const url =
-        'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  NumberFormat currencyFormatter;
 
   @override
   void initState() {
@@ -258,12 +46,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    currencyFormatter = new NumberFormat(FlutterI18n.translate(context, "global.currency_format"), FlutterI18n.translate(context, "global.locale"));
     return DefaultTabController(
       length: 2,
       child: Consumer<AppState>(builder: (context, appState, child) {
         return Scaffold(
           appBar: AppBar(
-            title: I18nText('global.partido_title'),
+            title: Image(
+              image: AssetImage('assets/images/logo-small.png'),
+              height: 20,
+            ), //I18nText('global.partido_title'),
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(LinearIcons.home4)),
@@ -365,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                                     title: Text(
                                         '${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
                                     trailing: Text(
-                                      '${appState.getReport().balances[index].balance.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}',
+                                      '${currencyFormatter.format(appState.getReport().balances[index].balance)} ${appState.getSelectedGroup().currency}',
                                       style: TextStyle(
                                         color: _getColorForNumberBalance(
                                             appState
@@ -373,6 +165,7 @@ class _HomePageState extends State<HomePage> {
                                                 .balances[index]
                                                 .balance
                                                 .toStringAsFixed(2)),
+                                        fontSize: 16,
                                       ),
                                     ),
                                   );
@@ -397,6 +190,10 @@ class _HomePageState extends State<HomePage> {
                               Divider(),
                               ListTile(
                                   contentPadding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+                                  title: I18nText("home.join_mode.info")
+                              ),
+                              ListTile(
+                                  contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                                   title: I18nText("home.join_mode.security_notice")
                               ),
                               ListTile(
@@ -446,8 +243,9 @@ class _HomePageState extends State<HomePage> {
                     title: Text('${appState.getBills()[index].description}'),
                     subtitle: Text(
                         '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                    trailing: Text(
-                        '${appState.getBills()[index].totalAmount.toStringAsFixed(2)} ${appState.getSelectedGroup().currency}'),
+                    trailing: Text('${currencyFormatter.format(appState.getBills()[index].totalAmount)} ${appState.getSelectedGroup().currency}',
+                        style: TextStyle(fontSize: 16),
+                    ),
                     onTap: () {
                       navService.push(
                         MaterialPageRoute(
@@ -473,6 +271,223 @@ class _HomePageState extends State<HomePage> {
         );
       }),
     );
+  }
+
+  void _joinGroup() async {
+    String groupKey = _groupJoinKey.split("@")[0];
+    int groupId = int.parse(_groupJoinKey.split("@")[1]);
+
+    GroupJoinBody groupJoinBody = new GroupJoinBody(
+        userId:
+        Provider.of<AppState>(context, listen: false).getCurrentUser().id,
+        joinKey: groupKey);
+
+    try {
+      HttpResponse<String> response =
+      await api.joinGroup(groupId, groupJoinBody);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false)
+            .changeSelectedGroup(groupId);
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack();
+      }
+    } catch (e) {
+      logger.e("Failed to join grop", e);
+    }
+  }
+
+  Future _openGroupsDialog() async {
+    await showDialog(
+        context: context,
+        child: Consumer<AppState>(builder: (context, appState, child) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+            title: I18nText("home.groups_dialog.title"),
+            content: Container(
+              width: double.maxFinite,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: appState.getMyGroups().length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.only(left: 24),
+                    title: Text(appState.getMyGroups()[index].name),
+                    onTap: () => {
+                      appState.changeSelectedGroup(
+                          appState.getMyGroups()[index].id),
+                      navService.goBack()
+                    },
+                  );
+                },
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(FlutterI18n.translate(context, "home.groups_dialog.join_existing_button"), style: TextStyle(fontWeight: FontWeight.w400)),
+                onPressed: () {
+                  navService.goBack();
+                  _openJoinGroupDialog();
+                },
+              ),
+              FlatButton(
+                child: Text(FlutterI18n.translate(context, "home.groups_dialog.create_button"), style: TextStyle(fontWeight: FontWeight.w400)),
+                onPressed: () {
+                  navService.pushReplacementNamed('/create-group');
+                },
+              ),
+            ],
+          );
+        }));
+  }
+
+  Future _openJoinGroupDialog() async {
+    await showDialog(
+        context: context,
+        child: Consumer<AppState>(builder: (context, appState, child) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+            title: I18nText("home.join_group_dialog.title"),
+            content: Container(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              width: double.maxFinite,
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      onSaved: (value) => _groupJoinKey = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "home.join_group_dialog.join_code")),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return FlutterI18n.translate(context, "home.join_group_dialog.join_code_empty_validation_error");
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(FlutterI18n.translate(context, "global.cancel"), style: TextStyle(fontWeight: FontWeight.w400)),
+                onPressed: () {
+                  navService.goBack();
+                },
+              ),
+              FlatButton(
+                child: Text(FlutterI18n.translate(context, "home.join_group_dialog.button_join"), style: TextStyle(fontWeight: FontWeight.w400)),
+                onPressed: () {
+                  final form = _formKey.currentState;
+                  form.save();
+                  if (form.validate()) {
+                    _joinGroup();
+                  }
+                },
+              ),
+            ],
+          );
+        }));
+  }
+
+  Future _openAboutDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+        title: I18nText("home.about_dialog.title"),
+        content: Container(
+          width: double.maxFinite,
+          child: ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 24),
+                title: I18nText("home.about_dialog.homepage"),
+                onTap: () {
+                  _launchHomepageUrl(context);
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 24),
+                title: I18nText("home.about_dialog.imprint"),
+                onTap: () {
+                  _launchImprintUrl(context);
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 24),
+                title: I18nText("home.about_dialog.privacy_policy"),
+                onTap: () {
+                  _launchPrivacyPolicyUrl(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(FlutterI18n.translate(context, 'global.close'), style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: () {
+              navService.goBack();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Color _getColorForNumberBalance(String number) {
+    if (double.parse(number) >= 0) {
+      return null; // Use default text color
+    } else {
+      if (MediaQuery.of(context).platformBrightness == Brightness.light) {
+        return Color.fromRGBO(235, 64, 52, 1); // Color for dark theme
+      } else {
+        return Color.fromRGBO(255, 99, 71, 1); // Color for dark theme
+      }
+    }
+  }
+
+  _launchHomepageUrl(BuildContext context) async {
+    String url = FlutterI18n.translate(context, "home.about_dialog.homepage_url");
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchImprintUrl(BuildContext context) async {
+    String url = FlutterI18n.translate(context, "home.about_dialog.imprint_url");
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchPrivacyPolicyUrl(BuildContext context) async {
+    String url = FlutterI18n.translate(context, "home.about_dialog.privacy_policy_url");
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchFeedbackUrl() async {
+    const url =
+        'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Text groupCardSubtitle(BuildContext context, Group selectedGroup) {

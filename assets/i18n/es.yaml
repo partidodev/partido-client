@@ -15,10 +15,9 @@ home:
   balances:
     title: Saldos
   join_mode:
-    security_notice: >-
-      Por razones de seguridad, desactiva el modo de unión de grupo cuando
-      todos los usuarios se unieron al grupo.
     title_enabled: Modo de unión activo
+    info: "Comparte el código de unión con tus amigos para que puedan unirse a tu grupo."
+    security_notice: "Por razones de seguridad, desactiva el modo de unión de grupo cuando todos los usuarios se unieron al grupo."
     share:
       text: >-
         Descarga la aplicación Partido del Google Play Store
@@ -87,6 +86,7 @@ account:
   username_empty_validation_error: 'Por favor, ingresa un nombre de usuario'
   username_too_long_validation_error: Max. 50 caracteres permitidos
   email: Email
+  email_already_in_use_validation_error: "Email ya en uso"
   email_empty_validation_error: 'Por favor, ingresa tu email'
   email_invalid_validation_error: 'Por favor, ingresa un email válido'
   email_too_long_validation_error: Max. 50 caracteres permitidos

@@ -15,8 +15,9 @@ home:
   balances:
     title: Guthaben
   join_mode:
-    security_notice: Deaktiviere aus Sicherheitsgründen den Beitrittsmodus, sobald alle Nutzer der Gruppe beigetreten sind.
     title_enabled: Beitrittsmodus aktiviert
+    info: "Teile folgenden Code mit deinen Freunden, damit diese deiner Gruppe beitreten können."
+    security_notice: Deaktiviere aus Sicherheitsgründen den Beitrittsmodus, sobald alle Nutzer der Gruppe beigetreten sind.
     share:
       text: >-
         Lade die Partido App aus dem Google Play Store
@@ -85,6 +86,7 @@ account:
   username_empty_validation_error: Bitte gib einen Nutzernamen ein
   username_too_long_validation_error: Max. 50 Zeichen erlaubt
   email: Email
+  email_already_in_use_validation_error: "Diese Email ist bereits registriert"
   email_empty_validation_error: Bitte gib deine Email-Adresse ein
   email_invalid_validation_error: Bitte gib eine gültige Email-Adresse ein
   email_too_long_validation_error: Max. 50 Zeichen erlaubt

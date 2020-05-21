@@ -248,13 +248,13 @@ class _BillFormPageState extends State<BillFormPage> {
         content: I18nText("bill_form.delete_bill_dialog.question"),
         actions: <Widget>[
           FlatButton(
-            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w300)),
+            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: () {
               navService.goBack();
             },
           ),
           FlatButton(
-            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w300)),
+            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: _deleteBill,
           ),
         ],
@@ -424,8 +424,8 @@ class _BillFormPageState extends State<BillFormPage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: (createNewBillMode)
-                          ? Text(FlutterI18n.translate(context, "bill_form.create_bill_button"), style: TextStyle(fontWeight: FontWeight.w300))
-                          : Text(FlutterI18n.translate(context, "bill_form.update_bill_button"), style: TextStyle(fontWeight: FontWeight.w300)),
+                          ? Text(FlutterI18n.translate(context, "bill_form.create_bill_button"), style: TextStyle(fontWeight: FontWeight.w400))
+                          : Text(FlutterI18n.translate(context, "bill_form.update_bill_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                       onPressed: () {
                         // save the fields..
                         final form = _formKey.currentState;

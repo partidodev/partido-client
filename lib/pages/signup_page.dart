@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:partido_client/model/new_user.dart';
 import 'package:partido_client/model/user.dart';
+import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:retrofit/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,6 +32,8 @@ class _SignupPageState extends State<SignupPage> {
   String _email;
   bool _acceptTerms = false;
 
+  bool emailAlreadyRegistered = false;
+
   void _signup() async {
 
     NewUser newUser = new NewUser();
@@ -41,6 +44,10 @@ class _SignupPageState extends State<SignupPage> {
     HttpResponse<User> response = await api.register(newUser);
     if (response.response.statusCode == 200) {
       navService.pushReplacementNamed("/signup-successful");
+    } else if (response.response.statusCode == 412) {
+      // HTTP status "precondition failed"; email is already registered
+      emailAlreadyRegistered = true;
+      _formKey.currentState.validate();
     }
   }
 
@@ -100,6 +107,7 @@ class _SignupPageState extends State<SignupPage> {
                                   keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.email")),
                                   validator: (value) {
+                                    if (emailAlreadyRegistered) { return FlutterI18n.translate(context, "account.email_already_in_use_validation_error"); }
                                     if (value.isEmpty) { return FlutterI18n.translate(context, "account.email_empty_validation_error"); }
                                     if (RegExp(r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$').hasMatch(value)) { return FlutterI18n.translate(context, "account.email_invalid_validation_error"); }
                                     if (value.length > 50) { return FlutterI18n.translate(context, "account.email_too_long_validation_error"); }
@@ -157,8 +165,9 @@ class _SignupPageState extends State<SignupPage> {
                                     minWidth: double.infinity,
                                     color: Theme.of(context).primaryColor,
                                     textColor: Colors.white,
-                                    child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w300)),
+                                    child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                                     onPressed: () {
+                                      emailAlreadyRegistered = false;
                                       final form = _formKey.currentState;
                                       form.save();
                                       setState(() => formSaved = true);
@@ -170,7 +179,7 @@ class _SignupPageState extends State<SignupPage> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: FlatButton(
-                                    child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w300)),
+                                    child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                                     onPressed: () {
                                       navService.goBack();
                                     },
