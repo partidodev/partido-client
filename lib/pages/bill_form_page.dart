@@ -303,11 +303,12 @@ class _BillFormPageState extends State<BillFormPage> {
     double sum = 0;
     splitUsers.forEach((key, value) {
       if (value) {
-        sum += double.parse(splitPaidControllers[key].text);
+        print(_normalizeDouble(splitPaidControllers[key].text));
+        sum += _normalizeDouble(splitPaidControllers[key].text);
       }
     });
     if (_amount == "") {
-      return false;
+      return true;
     }
     return sum == double.parse(_amount);
   }
