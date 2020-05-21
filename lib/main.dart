@@ -23,6 +23,7 @@ void main() async {
       create: (context) => AppState(),
       child: new MaterialApp(
         title: 'Partido',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.green,

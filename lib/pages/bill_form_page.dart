@@ -310,7 +310,7 @@ class _BillFormPageState extends State<BillFormPage> {
     if (_amount == "") {
       return true;
     }
-    return sum == double.parse(_amount);
+    return sum == _normalizeDouble(_amount);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
