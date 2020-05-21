@@ -34,6 +34,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
   String _oldPassword;
   String _newPassword;
 
+  bool emailAlreadyRegistered = false;
+
   TextEditingController usernameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
 
@@ -43,73 +45,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
     usernameController.text = user.username;
     emailController.text = user.email;
     return super.initState();
-  }
-
-  void _updateAccount() async {
-    NewUser updatedUser = new NewUser();
-    updatedUser.username = _username;
-    updatedUser.email = _email;
-    updatedUser.password = _oldPassword;
-    updatedUser.newPassword = _newPassword;
-
-    try {
-      HttpResponse<User> response = await api.updateUser(updatedUser,
-          Provider.of<AppState>(context, listen: false).getCurrentUser().id);
-      if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false)
-            .setCurrentUser(response.data);
-        Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
-        navService.goBack();
-        PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_account_settings_saved"));
-
-        try {
-          var loginPassword;
-          if (_newPassword.length == 0) {
-            loginPassword = _oldPassword;
-          } else {
-            loginPassword = _newPassword;
-          }
-          await api.login("$_email", "$loginPassword",
-              "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
-        } catch (e) {
-          logger.e('Login failed', e);
-          PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_login_failed"));
-        }
-      }
-    } catch (e) {
-      logger.e("Failed to save account", e);
-      PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_error_updating_account"));
-    }
-  }
-
-  void _logout() async {
-    await api.logout();
-    navService.pushNamedAndRemoveUntil("/login");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove("COOKIES");
-    Provider.of<AppState>(context, listen: false).clearAppState();
-  }
-
-  Future _openLogoutDialog() async {
-    await showDialog(
-      context: context,
-      child: AlertDialog(
-        title: I18nText("account.logout_dialog.title"),
-        content: I18nText("account.logout_dialog.question"),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w400)),
-            onPressed: () {
-              navService.goBack();
-            },
-          ),
-          FlatButton(
-            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w400)),
-            onPressed: _logout,
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -162,6 +97,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.email")),
                     controller: emailController,
                     validator: (value) {
+                      if (emailAlreadyRegistered) {
+                        return FlutterI18n.translate(context, "account.email_already_in_use_validation_error");
+                      }
                       if (value.isEmpty) {
                         return FlutterI18n.translate(context, "account.email_empty_validation_error");
                       }
@@ -229,7 +167,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       textColor: Colors.white,
                       child: Text(FlutterI18n.translate(context, "account.save_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                       onPressed: () {
-                        // save the fields..
+                        emailAlreadyRegistered = false;
                         final form = _formKey.currentState;
                         form.save();
                         if (form.validate()) {
@@ -239,6 +177,77 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _updateAccount() async {
+    NewUser updatedUser = new NewUser();
+    updatedUser.username = _username;
+    updatedUser.email = _email;
+    updatedUser.password = _oldPassword;
+    updatedUser.newPassword = _newPassword;
+
+    try {
+      HttpResponse<User> response = await api.updateUser(updatedUser,
+          Provider.of<AppState>(context, listen: false).getCurrentUser().id);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false)
+            .setCurrentUser(response.data);
+        Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
+        navService.goBack();
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_account_settings_saved"));
+
+        try {
+          var loginPassword;
+          if (_newPassword.length == 0) {
+            loginPassword = _oldPassword;
+          } else {
+            loginPassword = _newPassword;
+          }
+          await api.login("$_email", "$loginPassword",
+              "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
+        } catch (e) {
+          logger.e('Login failed', e);
+          PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_login_failed"));
+        }
+      } else if (response.response.statusCode == 412) {
+        // HTTP status "precondition failed"; email is already in use
+        emailAlreadyRegistered = true;
+        _formKey.currentState.validate();
+      }
+    } catch (e) {
+      logger.e("Failed to save account", e);
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.toast_error_updating_account"));
+    }
+  }
+
+  void _logout() async {
+    await api.logout();
+    navService.pushNamedAndRemoveUntil("/login");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("COOKIES");
+    Provider.of<AppState>(context, listen: false).clearAppState();
+  }
+
+  Future _openLogoutDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        title: I18nText("account.logout_dialog.title"),
+        content: I18nText("account.logout_dialog.question"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: () {
+              navService.goBack();
+            },
+          ),
+          FlatButton(
+            child: Text(FlutterI18n.translate(context, "account.logout_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: _logout,
           ),
         ],
       ),
