@@ -47,6 +47,7 @@ void main() async {
                 borderRadius: BorderRadius.all(Radius.circular(0)),
                 borderSide: BorderSide(color: Color(0xFFe53935))
             ),
+            errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
           cardTheme: CardTheme(
             elevation: 0,
@@ -93,6 +94,7 @@ void main() async {
                 borderRadius: BorderRadius.all(Radius.circular(0)),
                 borderSide: BorderSide(color: Color(0xFFe53935))
             ),
+            errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
           cardTheme: CardTheme(
             elevation: 0,

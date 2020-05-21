@@ -73,6 +73,7 @@ bill_form:
   date: Fecha
   create_bill_button: Crear cuenta
   update_bill_button: Actualizar cuenta
+  amount_of_splits_sum_not_total_validation_error: "La suma de los montos pagados debe coincidir con el monto total"
 bill_details:
   title: Detalles de cuenta
   created_by: Creado por

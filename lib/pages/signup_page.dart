@@ -141,21 +141,24 @@ class _SignupPageState extends State<SignupPage> {
                                   title: RichText(
                                     text: TextSpan(
                                       children: <TextSpan>[
-                                        TextSpan(text: FlutterI18n.translate(context, "signup.accept_privacy_text_before_link"), style: Theme.of(context).textTheme.body1),
+                                        TextSpan(text: FlutterI18n.translate(context, "signup.accept_privacy_text_before_link"), style: Theme.of(context).textTheme.bodyText2),
                                         TextSpan(
                                             text: FlutterI18n.translate(context, "signup.privacy_policy_link_text"),
                                             recognizer: new TapGestureRecognizer()..onTap = () {
                                               launch(FlutterI18n.translate(context, "signup.privacy_policy_link_url"));
                                             },
                                             style: TextStyle(color: Theme.of(context).primaryColor)),
-                                        TextSpan(text: FlutterI18n.translate(context, "signup.accept_privacy_text_after_link"), style: Theme.of(context).textTheme.body1),
+                                        TextSpan(text: FlutterI18n.translate(context, "signup.accept_privacy_text_after_link"), style: Theme.of(context).textTheme.bodyText2),
                                       ],
                                     ),
                                   ),
                                   value: _acceptTerms,
                                   subtitle: (!_acceptTerms && formSaved) ? Padding(
                                       padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                      child: Text(FlutterI18n.translate(context, "signup.privacy_policy_not_accepted_error"), style: TextStyle(color: Color(0xFFe53935), fontSize: 12))
+                                      child: Text(
+                                          FlutterI18n.translate(context, "signup.privacy_policy_not_accepted_error"),
+                                        style: TextStyle(color: Color(0xFFe53935), fontSize: 12, fontWeight: FontWeight.w400),
+                                      ),
                                   ) : null,
                                   onChanged: (bool value) => setState(() => _acceptTerms = value),
                                   controlAffinity: ListTileControlAffinity.leading,

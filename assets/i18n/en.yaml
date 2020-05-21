@@ -70,6 +70,7 @@ bill_form:
   date: "Date"
   create_bill_button: "Create bill"
   update_bill_button: "Update bill"
+  amount_of_splits_sum_not_total_validation_error: "The paid amounts sum must match the total amount of the bill"
 bill_details:
   title: "Bill Details"
   created_by: "Created by"

@@ -37,6 +37,7 @@ class _BillFormPageState extends State<BillFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool createNewBillMode = true;
   bool initDone = false;
+  bool formSaved = false;
 
   String _description;
   String _amount;
@@ -108,163 +109,6 @@ class _BillFormPageState extends State<BillFormPage> {
     billDateController.text = dateFormatter.format(_selectedDate);
     initDone = true;
   }
-
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        firstDate: DateTime(2000, 1),
-        lastDate: DateTime(2100, 12)
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-    billDateController.text = dateFormatter.format(_selectedDate);
-  }
-
-  double _normalizeDouble(String _doubleString) {
-    return double.parse(_doubleString.replaceAll(",", "."));
-  }
-
-  void _createBill() async {
-    Bill bill = new Bill();
-    bill.description = _description;
-    bill.totalAmount = _normalizeDouble(_amount);
-    bill.billingDate =
-        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    bill.parts = 0;
-
-    List<Split> splits = [];
-    for (User user in Provider.of<AppState>(context, listen: false)
-        .getSelectedGroup()
-        .users) {
-      if (splitUsers[user.id]) {
-        // create splits for users only if they are involved in the bill
-        bill.parts += _normalizeDouble(splitPartsControllers[user.id].text);
-        Split split = new Split();
-        split.debtor = user.id;
-        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
-        split.partsOfBill =
-            _normalizeDouble(splitPartsControllers[user.id].text);
-        splits.add(split);
-      }
-    }
-    bill.splits = splits;
-
-    try {
-      HttpResponse<Bill> response = await api.createBill(bill,
-          Provider.of<AppState>(context, listen: false).getSelectedGroupId());
-      if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false).refreshAppState();
-        navService.goBack();
-        PartidoToast.showToast(
-            msg:
-                FlutterI18n.translate(context, "bill_form.toast_bill_created"));
-      }
-    } catch (e) {
-      logger.e("Failed to save bill", e);
-      PartidoToast.showToast(
-          msg: FlutterI18n.translate(
-              context, "bill_form.toast_failed_to_save_bill"));
-    }
-  }
-
-  void _updateBill() async {
-    Bill updatedBill = new Bill();
-    updatedBill.description = _description;
-    updatedBill.totalAmount = _normalizeDouble(_amount);
-    updatedBill.billingDate =
-        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    updatedBill.parts = 0;
-
-    List<Split> splits = [];
-    for (User user in Provider.of<AppState>(context, listen: false)
-        .getSelectedGroup()
-        .users) {
-      if (splitUsers[user.id]) {
-        // create splits for users only if they are involved in the bill
-        updatedBill.parts +=
-            _normalizeDouble(splitPartsControllers[user.id].text);
-        Split split = new Split();
-        split.debtor = user.id;
-        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
-        split.partsOfBill =
-            _normalizeDouble(splitPartsControllers[user.id].text);
-        splits.add(split);
-      }
-    }
-    updatedBill.splits = splits;
-
-    try {
-      HttpResponse<Bill> response = await api.updateBill(
-          updatedBill,
-          Provider.of<AppState>(context, listen: false).getSelectedGroupId(),
-          widget.bill.id);
-      if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false).refreshAppState();
-        navService.goBack(); // close bill editing screen
-        navService.goBack(); // close outdated bill details screen
-        navService.push(MaterialPageRoute(
-            builder: (context) => BillDetailsPage(bill: response.data)));
-        PartidoToast.showToast(
-            msg:
-                FlutterI18n.translate(context, "bill_form.toast_bill_updated"));
-      }
-    } catch (e) {
-      logger.e("Failed to save bill", e);
-      PartidoToast.showToast(
-          msg: FlutterI18n.translate(
-              context, "bill_form.toast_failed_to_update_bill"));
-    }
-  }
-
-  void _deleteBill() async {
-    try {
-      HttpResponse<String> response = await api.deleteBill(widget.bill.id);
-      if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false).refreshAppState();
-        navService.goBack(); // close bill deleting dialog
-        navService.goBack(); // close bill editing screen
-        navService.goBack(); // close bill details screen
-        PartidoToast.showToast(
-            msg:
-                FlutterI18n.translate(context, "bill_form.toast_bill_deleted"));
-      }
-    } catch (e) {
-      logger.e("Failed to delete bill", e);
-      PartidoToast.showToast(
-          msg: FlutterI18n.translate(
-              context, "bill_form.toast_failed_to_delete_bill"));
-    }
-  }
-
-  Future _openDeleteBillDialog() async {
-    await showDialog(
-      context: context,
-      child: AlertDialog(
-        title: I18nText("bill_form.delete_bill_dialog.title"),
-        content: I18nText("bill_form.delete_bill_dialog.question"),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w400)),
-            onPressed: () {
-              navService.goBack();
-            },
-          ),
-          FlatButton(
-            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w400)),
-            onPressed: _deleteBill,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _splitUserChanged(int userId, bool newValue) => setState(() {
-        splitUsers[userId] = newValue;
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -410,6 +254,13 @@ class _BillFormPageState extends State<BillFormPage> {
                   Column(
                     children: splitEditingRows,
                   ),
+                  (formSaved && !sumOfActiveSplitsEqualsAmount()) ? Padding(
+                      padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                      child: Text(
+                          FlutterI18n.translate(context, "bill_form.amount_of_splits_sum_not_total_validation_error"),
+                          style: TextStyle(color: Color(0xFFe53935), fontSize: 12, fontWeight: FontWeight.w400),
+                      ),
+                  ) : SizedBox(height: 0),
                   TextFormField(
                     decoration: InputDecoration(
                         labelText:
@@ -430,6 +281,7 @@ class _BillFormPageState extends State<BillFormPage> {
                         // save the fields..
                         final form = _formKey.currentState;
                         form.save();
+                        setState(() => formSaved = true);
                         if (form.validate()) {
                           if (createNewBillMode) {
                             _createBill();
@@ -446,4 +298,174 @@ class _BillFormPageState extends State<BillFormPage> {
       ),
     );
   }
+
+  bool sumOfActiveSplitsEqualsAmount() {
+    double sum = 0;
+    splitUsers.forEach((key, value) {
+      if (value) {
+        sum += double.parse(splitPaidControllers[key].text);
+      }
+    });
+    if (_amount == "") {
+      return false;
+    }
+    return sum == double.parse(_amount);
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2000, 1),
+        lastDate: DateTime(2100, 12)
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+    billDateController.text = dateFormatter.format(_selectedDate);
+  }
+
+  double _normalizeDouble(String _doubleString) {
+    return double.parse(_doubleString.replaceAll(",", "."));
+  }
+
+  void _createBill() async {
+    Bill bill = new Bill();
+    bill.description = _description;
+    bill.totalAmount = _normalizeDouble(_amount);
+    bill.billingDate =
+        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
+    bill.parts = 0;
+
+    List<Split> splits = [];
+    for (User user in Provider.of<AppState>(context, listen: false)
+        .getSelectedGroup()
+        .users) {
+      if (splitUsers[user.id]) {
+        // create splits for users only if they are involved in the bill
+        bill.parts += _normalizeDouble(splitPartsControllers[user.id].text);
+        Split split = new Split();
+        split.debtor = user.id;
+        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
+        split.partsOfBill =
+            _normalizeDouble(splitPartsControllers[user.id].text);
+        splits.add(split);
+      }
+    }
+    bill.splits = splits;
+
+    try {
+      HttpResponse<Bill> response = await api.createBill(bill,
+          Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack();
+        PartidoToast.showToast(
+            msg:
+            FlutterI18n.translate(context, "bill_form.toast_bill_created"));
+      }
+    } catch (e) {
+      logger.e("Failed to save bill", e);
+      PartidoToast.showToast(
+          msg: FlutterI18n.translate(
+              context, "bill_form.toast_failed_to_save_bill"));
+    }
+  }
+
+  void _updateBill() async {
+    Bill updatedBill = new Bill();
+    updatedBill.description = _description;
+    updatedBill.totalAmount = _normalizeDouble(_amount);
+    updatedBill.billingDate =
+        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
+    updatedBill.parts = 0;
+
+    List<Split> splits = [];
+    for (User user in Provider.of<AppState>(context, listen: false)
+        .getSelectedGroup()
+        .users) {
+      if (splitUsers[user.id]) {
+        // create splits for users only if they are involved in the bill
+        updatedBill.parts +=
+            _normalizeDouble(splitPartsControllers[user.id].text);
+        Split split = new Split();
+        split.debtor = user.id;
+        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
+        split.partsOfBill =
+            _normalizeDouble(splitPartsControllers[user.id].text);
+        splits.add(split);
+      }
+    }
+    updatedBill.splits = splits;
+
+    try {
+      HttpResponse<Bill> response = await api.updateBill(
+          updatedBill,
+          Provider.of<AppState>(context, listen: false).getSelectedGroupId(),
+          widget.bill.id);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack(); // close bill editing screen
+        navService.goBack(); // close outdated bill details screen
+        navService.push(MaterialPageRoute(
+            builder: (context) => BillDetailsPage(bill: response.data)));
+        PartidoToast.showToast(
+            msg:
+            FlutterI18n.translate(context, "bill_form.toast_bill_updated"));
+      }
+    } catch (e) {
+      logger.e("Failed to save bill", e);
+      PartidoToast.showToast(
+          msg: FlutterI18n.translate(
+              context, "bill_form.toast_failed_to_update_bill"));
+    }
+  }
+
+  void _deleteBill() async {
+    try {
+      HttpResponse<String> response = await api.deleteBill(widget.bill.id);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack(); // close bill deleting dialog
+        navService.goBack(); // close bill editing screen
+        navService.goBack(); // close bill details screen
+        PartidoToast.showToast(
+            msg:
+            FlutterI18n.translate(context, "bill_form.toast_bill_deleted"));
+      }
+    } catch (e) {
+      logger.e("Failed to delete bill", e);
+      PartidoToast.showToast(
+          msg: FlutterI18n.translate(
+              context, "bill_form.toast_failed_to_delete_bill"));
+    }
+  }
+
+  Future _openDeleteBillDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        title: I18nText("bill_form.delete_bill_dialog.title"),
+        content: I18nText("bill_form.delete_bill_dialog.question"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_no"), style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: () {
+              navService.goBack();
+            },
+          ),
+          FlatButton(
+            child: Text(FlutterI18n.translate(context, "bill_form.delete_bill_dialog.answer_yes"), style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: _deleteBill,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _splitUserChanged(int userId, bool newValue) => setState(() {
+    splitUsers[userId] = newValue;
+  });
 }

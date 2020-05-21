@@ -73,6 +73,7 @@ bill_form:
   date: Datum
   create_bill_button: Rechnung erstellen
   update_bill_button: Rechnung aktualisieren
+  amount_of_splits_sum_not_total_validation_error: "Die Summe der gezahlten Beträge muss dem Gesamtbetrag entsprechen"
 bill_details:
   title: Rechnungsdetails
   created_by: Erstellt von
