@@ -282,7 +282,7 @@ class _BillFormPageState extends State<BillFormPage> {
                         final form = _formKey.currentState;
                         form.save();
                         setState(() => formSaved = true);
-                        if (form.validate()) {
+                        if (form.validate() && sumOfActiveSplitsEqualsAmount()) {
                           if (createNewBillMode) {
                             _createBill();
                           } else {
@@ -303,7 +303,6 @@ class _BillFormPageState extends State<BillFormPage> {
     double sum = 0;
     splitUsers.forEach((key, value) {
       if (value) {
-        print(_normalizeDouble(splitPaidControllers[key].text));
         sum += _normalizeDouble(splitPaidControllers[key].text);
       }
     });
