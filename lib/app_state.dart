@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:partido_client/linear_icons_icons.dart';
 import 'package:partido_client/model/bill.dart';
 import 'package:retrofit/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -147,4 +149,31 @@ class AppState extends ChangeNotifier {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString("REMEMBERLOGIN");
   }
+
+  List<BillCategory> getAvailableBillCategories() {
+    List<BillCategory> availableBillCategories = new List();
+    availableBillCategories.add(new BillCategory(1, "Abos & Spenden", LinearIcons.calendar_check));
+    availableBillCategories.add(new BillCategory(2, "Bars & Restaurants", LinearIcons.glass_cocktail));
+    availableBillCategories.add(new BillCategory(3, "Bildung", LinearIcons.graduation_hat));
+    availableBillCategories.add(new BillCategory(4, "Essen & Lebensmittel", LinearIcons.apple));
+    availableBillCategories.add(new BillCategory(5, "Familie & Freunde", LinearIcons.users2));
+    availableBillCategories.add(new BillCategory(6, "Freizeit & Unterhaltung", LinearIcons.ticket));
+    availableBillCategories.add(new BillCategory(7, "Gesundheit & Drogerien", LinearIcons.heart_pulse));
+    availableBillCategories.add(new BillCategory(8, "Haushalt & Nebenkosten", LinearIcons.couch));
+    availableBillCategories.add(new BillCategory(9, "Medien & Elektronik", LinearIcons.laptop));
+    availableBillCategories.add(new BillCategory(10, "Reisen & Urlaub", LinearIcons.earth));
+    availableBillCategories.add(new BillCategory(11, "Shopping", LinearIcons.bag));
+    availableBillCategories.add(new BillCategory(12, "Sonstiges", LinearIcons.leaf));
+    availableBillCategories.add(new BillCategory(13, "Steuern & Abgaben", LinearIcons.calculator2));
+    availableBillCategories.add(new BillCategory(14, "Transport & Auto", LinearIcons.bus2));
+    availableBillCategories.add(new BillCategory(15, "Versicherungen & Finanzen", LinearIcons.apartment));
+    return availableBillCategories;
+  }
+}
+
+class BillCategory {
+  int id;
+  String name;
+  IconData icon;
+  BillCategory(this.id, this.name, this.icon);
 }
