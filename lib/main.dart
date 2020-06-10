@@ -42,11 +42,11 @@ void main() async {
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935))
+                borderSide: BorderSide(color: Color(0xFFe53935)),
             ),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935))
+                borderSide: BorderSide(color: Color(0xFFe53935)),
             ),
             errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
@@ -89,11 +89,11 @@ void main() async {
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935))
+                borderSide: BorderSide(color: Color(0xFFe53935)),
             ),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935))
+                borderSide: BorderSide(color: Color(0xFFe53935)),
             ),
             errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),

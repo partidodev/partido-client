@@ -7,6 +7,7 @@ part 'bill.g.dart';
 class Bill {
   int id;
   String description;
+  String category;
   double totalAmount;
   String billingDate;
   String creationDate;
@@ -14,15 +15,17 @@ class Bill {
   int creator;
   List<Split> splits = null;
 
-  Bill(
-      {this.id,
-      this.description,
-      this.totalAmount,
-      this.billingDate,
-      this.creationDate,
-      this.parts,
-      this.creator,
-      this.splits});
+  Bill({
+    this.id,
+    this.description,
+    this.category,
+    this.totalAmount,
+    this.billingDate,
+    this.creationDate,
+    this.parts,
+    this.creator,
+    this.splits
+  });
 
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
   Map<String, dynamic> toJson() => _$BillToJson(this);

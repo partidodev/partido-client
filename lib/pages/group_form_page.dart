@@ -162,7 +162,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       if (value.isEmpty) {
                         return FlutterI18n.translate(context, "group_form.currency_empty_validation_error");
                       }
-                      if (value.length > 255) {
+                      if (value.length > 3) {
                         return FlutterI18n.translate(context, "group_form.currency_too_long_validation_error");
                       }
                       return null;

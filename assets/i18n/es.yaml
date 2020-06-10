@@ -124,7 +124,7 @@ group_form:
   group_description_too_long_validation_error: Max. 255 caracteres permitidos
   currency: Moneda
   currency_empty_validation_error: 'Por favor, ingresa una moneda'
-  currency_too_long_validation_error: Max. 255 caracteres permitidos
+  currency_too_long_validation_error: Max. 3 caracteres permitidos
   activate_join_mode: Dejar a otros usuarios unirse al grupo con un código
   create_group_button: Crear grupo
   save_changes_button: Guardar cambios
