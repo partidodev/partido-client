@@ -74,6 +74,12 @@ bill_form:
   create_bill_button: Crear cuenta
   update_bill_button: Actualizar cuenta
   amount_of_splits_sum_not_total_validation_error: "La suma de los montos pagados debe coincidir con el monto total"
+  details_title: "Detalles"
+  category: "Categoría"
+  select_category_dialog:
+    title: "Seleccionar categoría"
+  split_faq_tooltip: "Abrir FAQ de divisiones"
+  split_faq_link: "https://partido.rocks/faq"
 bill_details:
   title: Detalles de cuenta
   created_by: Creado por
@@ -138,6 +144,7 @@ login:
   remember: Recuérdame
   login_button: Login
   signup_button: Crear nueva cuenta
+  login_failed_unauthorized: "Acceso fallido. Por favor verifica tus datos ingesados"
 signup:
   title: Crear nueva cuenta
   username: Nombre de usuario
@@ -157,3 +164,21 @@ signup:
     additional_info: >-
       Ahora puedes comenzar iniciando sesión y creando un nuevo grupo o
       uniéndote a un grupo existente si recibiste un código de unión.
+bill:
+  categories:
+    SUBSCRIPTIONS_DONATIONS: "Suscripciones & Donaciones"
+    BARS_RESTAURANTS: "Bares & Restaurantes"
+    EDUCATION: "Educación"
+    FOOD_GROCERIES: "Alimentos & Comestibles"
+    FAMILY_FRIENDS: "Familia & Amigos"
+    LEISURE_ENTERTAINMENT: "Ocio & Entretenimiento"
+    HEALTH_DRUGSTORES: "Salud & Drogerías"
+    HOUSEHOLD_UTILITIES: "Hogar & Utilidades"
+    MEDIA_ELECTRONICS: "Medios & Electrónica"
+    TRAVEL_VACATION: "Viajes & Vacaciones"
+    SHOPPING: "Shopping"
+    MISCELLANEOUS: "Diversos"
+    TAXES_DUTIES: "Impuestos & Deberes"
+    TRANSPORT_CAR: "Transporte & Auto"
+    UNCATEGORIZED: "Sin categoría"
+    INSURANCE_FINANCE: "Seguros & Finanzas"

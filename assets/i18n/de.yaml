@@ -74,6 +74,12 @@ bill_form:
   create_bill_button: Rechnung erstellen
   update_bill_button: Rechnung aktualisieren
   amount_of_splits_sum_not_total_validation_error: "Die Summe der gezahlten Beträge muss dem Gesamtbetrag entsprechen"
+  details_title: "Details"
+  category: "Kategorie"
+  select_category_dialog:
+    title: "Kategorie ändern"
+  split_faq_tooltip: "FAQ für Aufteilungen öffnen"
+  split_faq_link: "https://partido.rocks/faq"
 bill_details:
   title: Rechnungsdetails
   created_by: Erstellt von
@@ -109,7 +115,7 @@ account:
     answer_yes: 'Ja, ausloggen'
   toast_account_settings_saved: Einstellungen gespeichert
   toast_error_updating_account: Beim Aktualisieren des Profils ist ein Fehler aufgetreten
-  toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
+  toast_login_failed: 'Login fehlgeschlagen, bitte versuche es später erneut'
 group_form:
   toast_group_created: Neue Gruppe erstellt
   toast_group_creation_failed: Erstellen der Gruppe fehlgeschlagen
@@ -138,6 +144,7 @@ login:
   remember: Eingeloggt bleiben
   login_button: Login
   signup_button: Registrieren
+  login_failed_unauthorized: "Login fehlgeschlagen, bitte überprüfe deine Eingaben"
 signup:
   title: Registrieren
   username: Nutzername
@@ -158,3 +165,21 @@ signup:
       Du kannst jetzt starten, indem du dich einloggst, eine neue Gruppe
       erstellst oder einer existierenden Gruppe beitritst, wenn du einen
       Beitrittscode erhalten hast.
+bill:
+  categories:
+    SUBSCRIPTIONS_DONATIONS: "Abos & Spenden"
+    BARS_RESTAURANTS: "Bars & Restaurants"
+    EDUCATION: "Bildung"
+    FOOD_GROCERIES: "Essen & Lebensmittel"
+    FAMILY_FRIENDS: "Familie & Freunde"
+    LEISURE_ENTERTAINMENT: "Freizeit & Unterhaltung"
+    HEALTH_DRUGSTORES: "Gesundheit & Drogerien"
+    HOUSEHOLD_UTILITIES: "Haushalt & Nebenkosten"
+    MEDIA_ELECTRONICS: "Medien & Elektronik"
+    TRAVEL_VACATION: "Reisen & Urlaub"
+    SHOPPING: "Shopping"
+    MISCELLANEOUS: "Sonstiges"
+    TAXES_DUTIES: "Steuern & Abgaben"
+    TRANSPORT_CAR: "Transport & Auto"
+    UNCATEGORIZED: "Unkategorisiert"
+    INSURANCE_FINANCE: "Versicherungen & Finanzen"

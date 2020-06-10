@@ -71,6 +71,12 @@ bill_form:
   create_bill_button: "Create bill"
   update_bill_button: "Update bill"
   amount_of_splits_sum_not_total_validation_error: "The paid amounts sum must match the total amount of the bill"
+  details_title: "Details"
+  category: "Category"
+  select_category_dialog:
+    title: "Select Category"
+  split_faq_tooltip: "Open Split FAQ"
+  split_faq_link: "https://partido.rocks/faq"
 bill_details:
   title: "Bill Details"
   created_by: "Created by"
@@ -106,7 +112,7 @@ account:
     answer_yes: "Yes, logout"
   toast_account_settings_saved: "Settings saved"
   toast_error_updating_account: "An error occurred updating the account"
-  toast_login_failed: "Login failed, please try again"
+  toast_login_failed: "Login failed, please try again later"
 group_form:
   toast_group_created: "New group created"
   toast_group_creation_failed: "Group creation failed"
@@ -135,6 +141,7 @@ login:
   remember: "Remember me"
   login_button: "Login"
   signup_button: "Sign up"
+  login_failed_unauthorized: "Login failed, please verify your credentials"
 signup:
   title: "Sign up"
   username: "Username"
@@ -152,3 +159,21 @@ signup:
     title: "Sign up"
     success_notice: "You have been signed up successfully!"
     additional_info: "You can now start by logging in and creating a new group or joining an existing group if you recieved a join key."
+bill:
+  categories:
+    SUBSCRIPTIONS_DONATIONS: "Subscriptions & Donations"
+    BARS_RESTAURANTS: "Bars & Restaurants"
+    EDUCATION: "Education"
+    FOOD_GROCERIES: "Food & Groceries"
+    FAMILY_FRIENDS: "Family & Friends"
+    LEISURE_ENTERTAINMENT: "Leisure & Entertainment"
+    HEALTH_DRUGSTORES: "Health & Drug stores"
+    HOUSEHOLD_UTILITIES: "Household & Utilities"
+    MEDIA_ELECTRONICS: "Media & Electronics"
+    TRAVEL_VACATION: "Travel & Vacation"
+    SHOPPING: "Shopping"
+    MISCELLANEOUS: "Miscellaneous"
+    TAXES_DUTIES: "Taxes & Duties"
+    TRANSPORT_CAR: "Transport & Car"
+    UNCATEGORIZED: "Uncategorized"
+    INSURANCE_FINANCE: "Insurances & Finances"
