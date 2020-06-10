@@ -23,29 +23,40 @@ class BillDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dateFormatter = new DateFormat(FlutterI18n.translate(context, "global.date_format"));
-    currencyFormatter = new NumberFormat(FlutterI18n.translate(context, "global.currency_format"), FlutterI18n.translate(context, "global.locale"));
-    partFormatter = new NumberFormat(FlutterI18n.translate(context, "global.part_format"), FlutterI18n.translate(context, "global.locale"));
+    dateFormatter =
+        new DateFormat(FlutterI18n.translate(context, "global.date_format"));
+    currencyFormatter = new NumberFormat(
+        FlutterI18n.translate(context, "global.currency_format"),
+        FlutterI18n.translate(context, "global.locale"));
+    partFormatter = new NumberFormat(
+        FlutterI18n.translate(context, "global.part_format"),
+        FlutterI18n.translate(context, "global.locale"));
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(LinearIcons.arrow_left),
-            onPressed: () { navService.goBack(); },
+            onPressed: () {
+              navService.goBack();
+            },
             tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           ),
           title: I18nText('bill_details.title'),
           actions: Provider.of<AppState>(context, listen: false)
-                      .getCurrentUser().id == bill.creator ? <Widget>[
-                        IconButton(
-                            icon: Icon(LinearIcons.pencil_line),
-                            onPressed: () {
-                              navService.push(
-                                MaterialPageRoute(
-                                  builder: (context) => BillFormPage(bill: bill),
-                                ),
-                              );
-                            }),
-                ] : null,
+                      .getCurrentUser()
+                      .id ==
+                  bill.creator
+              ? <Widget>[
+                  IconButton(
+                      icon: Icon(LinearIcons.pencil_line),
+                      onPressed: () {
+                        navService.push(
+                          MaterialPageRoute(
+                            builder: (context) => BillFormPage(bill: bill),
+                          ),
+                        );
+                      }),
+                ]
+              : null,
         ),
         body: ListView(
           padding: EdgeInsets.all(4),
@@ -54,33 +65,49 @@ class BillDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          '${bill.description}',
-                          style: TextStyle(fontSize: 20),
+                  child: Consumer<AppState>(builder: (context, appState, child) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ListTile(
+                          title: Text(
+                            '${bill.description}',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          subtitle: Text(
+                              '${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
+                          // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
+                          leading: bill.category!= null ? Icon(
+                              appState.getAvailableBillCategories()[bill.category],
+                              size: 40,
+                              color: Colors.green) : Icon(
+                              LinearIcons.cart,
+                              size: 40,
+                              color: Colors.green),
                         ),
-                        subtitle: Text('${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
-                        leading: Icon(
-                            LinearIcons.clipboard_check,
-                            size: 40, color: Colors.green
-                        ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    );
+                  }),
                 ),
                 Card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ListTile(
-                        title: Text('${currencyFormatter.format(bill.totalAmount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                        // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
+                        title: bill.category!= null ?
+                        I18nText('bill.categories.${bill.category}') :
+                        I18nText('bill.categories.UNCATEGORIZED'),
+                        leading: Icon(LinearIcons.tag),
+                      ),
+                      ListTile(
+                        title: Text(
+                            '${currencyFormatter.format(bill.totalAmount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                         leading: Icon(LinearIcons.bag_dollar),
                       ),
                       ListTile(
-                        title: Text('${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
+                        title: Text(
+                            '${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(bill.billingDate))}'),
                         leading: Icon(LinearIcons.calendar_31),
                       ),
                     ],
@@ -95,7 +122,8 @@ class BillDetailsPage extends StatelessWidget {
                           FlutterI18n.translate(context, "bill_details.splits"),
                           style: TextStyle(fontSize: 18),
                         ),
-                        leading: Icon(LinearIcons.arrows_split, color: Colors.green),
+                        leading:
+                            Icon(LinearIcons.arrows_split, color: Colors.green),
                       ),
                       Divider(),
                       ListView.builder(
@@ -109,8 +137,9 @@ class BillDetailsPage extends StatelessWidget {
                                 '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
                             subtitle: Text(
                                 '${FlutterI18n.translate(context, "bill_details.parts")} ${partFormatter.format(bill.splits[index].partsOfBill)}/${partFormatter.format(bill.parts)} · ${FlutterI18n.translate(context, "bill_details.paid")} ${currencyFormatter.format(bill.splits[index].paid)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
-                            trailing: Text('${currencyFormatter.format(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}',
-                                style: TextStyle(fontSize: 16),
+                            trailing: Text(
+                              '${currencyFormatter.format(bill.totalAmount / bill.parts * bill.splits[index].partsOfBill)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}',
+                              style: TextStyle(fontSize: 16),
                             ),
                           );
                         },

@@ -41,6 +41,7 @@ class _BillFormPageState extends State<BillFormPage> {
   bool formSaved = false;
 
   String _category;
+  static String DEFAULT_CATEGORY = "UNCATEGORIZED";
   String _description;
   String _amount;
   DateTime _selectedDate;
@@ -71,7 +72,7 @@ class _BillFormPageState extends State<BillFormPage> {
         FlutterI18n.translate(context, "global.locale"));
 
     if (widget.bill == null) {
-      _category = "Unkategorisiert";
+      _category = DEFAULT_CATEGORY;
       // create new bill
       Provider.of<AppState>(context, listen: false)
           .getSelectedGroup()
@@ -94,7 +95,7 @@ class _BillFormPageState extends State<BillFormPage> {
       if (widget.bill.category != null) {
         _category = widget.bill.category;
       } else {
-        _category = "Unkategorisiert";
+        _category = DEFAULT_CATEGORY;
       }
       billAmountController.text =
           currencyFormatter.format(widget.bill.totalAmount);
@@ -135,7 +136,7 @@ class _BillFormPageState extends State<BillFormPage> {
       });
     }
     billDateController.text = dateFormatter.format(_selectedDate);
-    billCategoryController.text = _category;
+    billCategoryController.text = FlutterI18n.translate(context, 'bill.categories.' + _category);
     initDone = true;
   }
 
@@ -468,16 +469,17 @@ class _BillFormPageState extends State<BillFormPage> {
                 shrinkWrap: true,
                 itemCount: appState.getAvailableBillCategories().length,
                 itemBuilder: (BuildContext context, int index) {
+                  String key = appState.getAvailableBillCategories().keys.elementAt(index);
                   return ListTile(
                     contentPadding: EdgeInsets.only(left: 24),
-                    title: Text(appState.getAvailableBillCategories()[index].name),
-                    leading: Icon(appState.getAvailableBillCategories()[index].icon),
+                    title: I18nText('bill.categories.' + key),
+                    leading: Icon(appState.getAvailableBillCategories()[key]),
                     onTap: () => {
                       setState(() {
-                        _category = appState.getAvailableBillCategories()[index].name;
+                        _category = key;
                       }),
                       navService.goBack(),
-                      billCategoryController.text = appState.getAvailableBillCategories()[index].name
+                      billCategoryController.text = FlutterI18n.translate(context, 'bill.categories.' + key)
                     },
                   );
                 },

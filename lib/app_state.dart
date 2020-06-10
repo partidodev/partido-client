@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
 import 'api/api_service.dart';
-import 'model/bill_category.dart';
 import 'model/group.dart';
 import 'model/report.dart';
 import 'model/user.dart';
@@ -21,7 +20,7 @@ class AppState extends ChangeNotifier {
   List<Bill> _bills = [];
   Report _report = new Report(balances: []);
   int _selectedGroupId = -1; // initial value to check if id must be loaded or not
-  List<BillCategory> _availableBillCategories = new List();
+  Map _availableBillCategories = new Map();
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -153,28 +152,28 @@ class AppState extends ChangeNotifier {
     return preferences.getString("REMEMBERLOGIN");
   }
 
-  List<BillCategory> loadAvailableBillCategories() {
-    List<BillCategory> billCategories = [];
-    billCategories.add(new BillCategory("Abos & Spenden", LinearIcons.calendar_check));
-    billCategories.add(new BillCategory("Bars & Restaurants", LinearIcons.glass_cocktail));
-    billCategories.add(new BillCategory("Bildung", LinearIcons.graduation_hat));
-    billCategories.add(new BillCategory("Essen & Lebensmittel", LinearIcons.apple));
-    billCategories.add(new BillCategory("Familie & Freunde", LinearIcons.users2));
-    billCategories.add(new BillCategory("Freizeit & Unterhaltung", LinearIcons.ticket));
-    billCategories.add(new BillCategory("Gesundheit & Drogerien", LinearIcons.heart_pulse));
-    billCategories.add(new BillCategory("Haushalt & Nebenkosten", LinearIcons.couch));
-    billCategories.add(new BillCategory("Medien & Elektronik", LinearIcons.laptop));
-    billCategories.add(new BillCategory("Reisen & Urlaub", LinearIcons.earth));
-    billCategories.add(new BillCategory("Shopping", LinearIcons.bag));
-    billCategories.add(new BillCategory("Sonstiges", LinearIcons.leaf));
-    billCategories.add(new BillCategory("Steuern & Abgaben", LinearIcons.calculator2));
-    billCategories.add(new BillCategory("Transport & Auto", LinearIcons.bus2));
-    billCategories.add(new BillCategory("Unkategorisiert", LinearIcons.cart));
-    billCategories.add(new BillCategory("Versicherungen & Finanzen", LinearIcons.apartment));
+  Map loadAvailableBillCategories() {
+    Map billCategories = new Map();
+    billCategories["SUBSCRIPTIONS_DONATIONS"] = LinearIcons.calendar_check;
+    billCategories["BARS_RESTAURANTS"] = LinearIcons.glass_cocktail;
+    billCategories["EDUCATION"] = LinearIcons.graduation_hat;
+    billCategories["FOOD_GROCERIES"] = LinearIcons.bread;
+    billCategories["FAMILY_FRIENDS"] = LinearIcons.users2;
+    billCategories["LEISURE_ENTERTAINMENT"] = LinearIcons.ticket;
+    billCategories["HEALTH_DRUGSTORES"] = LinearIcons.heart_pulse;
+    billCategories["HOUSEHOLD_UTILITIES"] = LinearIcons.couch;
+    billCategories["MEDIA_ELECTRONICS"] = LinearIcons.laptop;
+    billCategories["TRAVEL_VACATION"] = LinearIcons.earth;
+    billCategories["SHOPPING"] = LinearIcons.bag;
+    billCategories["MISCELLANEOUS"] = LinearIcons.leaf;
+    billCategories["TAXES_DUTIES"] = LinearIcons.calculator2;
+    billCategories["TRANSPORT_CAR"] = LinearIcons.bus2;
+    billCategories["UNCATEGORIZED"] = LinearIcons.cart;
+    billCategories["INSURANCE_FINANCE"] = LinearIcons.apartment;
     return billCategories;
   }
 
-  List<BillCategory> getAvailableBillCategories() {
+  Map getAvailableBillCategories() {
     return _availableBillCategories;
   }
 }
