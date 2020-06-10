@@ -249,7 +249,7 @@ class _BillFormPageState extends State<BillFormPage> {
                     children: <Widget>[
                       ListTile(
                         title: Text(
-                          "Details",
+                          FlutterI18n.translate(context, "bill_form.details_title"),
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -284,7 +284,7 @@ class _BillFormPageState extends State<BillFormPage> {
                               decoration: InputDecoration(
                                   prefixIcon: Icon(LinearIcons.tag),
                                   suffixIcon: Icon(LinearIcons.chevron_down, size: 20,),
-                                  labelText: "Category"),
+                                  labelText: FlutterI18n.translate(context, "bill_form.category")),
                               controller: billCategoryController,
                               readOnly: true,
                               onTap: () => _selectCategory(context),
@@ -366,7 +366,7 @@ class _BillFormPageState extends State<BillFormPage> {
                       ListTile(
                         contentPadding: EdgeInsets.only(left: 16, right: 0),
                         title: Text(
-                          "Splits",
+                          FlutterI18n.translate(context, "bill_details.splits"),
                           style: TextStyle(fontSize: 20),
                         ),
                         trailing: IconButton(
@@ -374,7 +374,7 @@ class _BillFormPageState extends State<BillFormPage> {
                             LinearIcons.bubble_question,
                             size: 20,
                           ),
-                          tooltip: "Open Split FAQ",
+                          tooltip: FlutterI18n.translate(context, "bill_form.split_faq_tooltip"),
                           onPressed: () {
                             _launchFaqUrl(context);
                           },
@@ -462,7 +462,7 @@ class _BillFormPageState extends State<BillFormPage> {
         child: Consumer<AppState>(builder: (context, appState, child) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: Text("Select Category"),
+            title: I18nText('bill_form.select_category_dialog.title'),
             content: Container(
               width: double.maxFinite,
               child: ListView.builder(
@@ -487,7 +487,7 @@ class _BillFormPageState extends State<BillFormPage> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text("Cancel",
+                child: Text(FlutterI18n.translate(context, "global.cancel"),
                     style: TextStyle(fontWeight: FontWeight.w400)),
                 onPressed: () {
                   navService.goBack();
@@ -649,8 +649,7 @@ class _BillFormPageState extends State<BillFormPage> {
       });
 
   _launchFaqUrl(BuildContext context) async {
-    String url =
-        "https://partido.rocks/faq"; //FlutterI18n.translate(context, "bill_form.split_help.faq_url");
+    String url =  FlutterI18n.translate(context, "bill_form.split_faq_link");
     if (await canLaunch(url)) {
       await launch(url);
     } else {

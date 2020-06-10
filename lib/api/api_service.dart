@@ -24,9 +24,11 @@ class ApiService {
     }
     return options; //continue
   }, onResponse: (Response response) async {
-    if (response.statusCode == 401) {
+    if (response.statusCode == 401 && response.request.path != "/login") {
       // Open login page if 401 unauthorized status is returned from server
+      // but only if user is not already on /login page
       navService.pushNamedAndRemoveUntil("/login");
+      print("redirected!");
     }
     if (response.headers['Set-Cookie'] != null &&
         response.headers['Set-Cookie'].isNotEmpty) {

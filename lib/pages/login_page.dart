@@ -23,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
+  bool formSaved = false;
+  bool loginFailed = false;
   String _password;
   String _email;
   bool _rememberMe = false;
@@ -36,6 +38,10 @@ class _LoginPageState extends State<LoginPage> {
           .setRememberLoginStatus("$rememberMeNumber");
       if (response.response.statusCode == 200) {
         navService.pushReplacementNamed("/");
+      } else if (response.response.statusCode == 401) {
+        setState(() {
+          loginFailed = true;
+        });
       }
     } catch (w) {
       logger.w('Login failed', w);
@@ -119,6 +125,19 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                               ),
                               SizedBox(height: 8),
+                              (formSaved && loginFailed) ? Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                child: Text(
+                                  FlutterI18n.translate(context,
+                                      "login.login_failed_unauthorized"),
+                                  style: TextStyle(
+                                      color: Color(0xFFe53935),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              )) : SizedBox(height: 0),
                               CheckboxListTile(
                                 title: I18nText("login.remember"),
                                 value: _rememberMe,
@@ -135,6 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () {
                                     final form = _formKey.currentState;
                                     form.save();
+                                    setState(() => formSaved = true);
                                     if (form.validate()) {
                                       _login();
                                     }
