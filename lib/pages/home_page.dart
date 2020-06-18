@@ -461,7 +461,7 @@ class _HomePageState extends State<HomePage> {
       return null; // Use default text color
     } else {
       if (MediaQuery.of(context).platformBrightness == Brightness.light) {
-        return Color.fromRGBO(235, 64, 52, 1); // Color for dark theme
+        return Color.fromRGBO(235, 64, 52, 1); // Color for light theme
       } else {
         return Color.fromRGBO(255, 99, 71, 1); // Color for dark theme
       }

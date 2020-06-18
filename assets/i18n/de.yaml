@@ -87,6 +87,7 @@ bill_details:
   parts: 'Anteile:'
   paid: 'Gezahlt:'
 account:
+  details: Details
   title: Mein Profil
   logout_tooltip: Ausloggen
   username: Nutzername

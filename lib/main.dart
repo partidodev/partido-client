@@ -42,13 +42,17 @@ void main() async {
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935)),
+                borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
             ),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935)),
+                borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
             ),
-            errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+            errorStyle: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color.fromRGBO(235, 64, 52, 1),
+            ),
           ),
           cardTheme: CardTheme(
             elevation: 0,
@@ -89,13 +93,17 @@ void main() async {
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935)),
+                borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
             ),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color(0xFFe53935)),
+                borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
             ),
-            errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+            errorStyle: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: Color.fromRGBO(255, 99, 71, 1),
+            ),
           ),
           cardTheme: CardTheme(
             elevation: 0,

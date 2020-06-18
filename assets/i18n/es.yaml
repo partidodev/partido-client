@@ -87,6 +87,7 @@ bill_details:
   parts: 'Partes:'
   paid: 'Pagado:'
 account:
+  details: Detalles
   title: Mi cuenta
   logout_tooltip: Logout
   username: Nombre de usuario

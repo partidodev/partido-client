@@ -235,7 +235,7 @@ class _BillFormPageState extends State<BillFormPage> {
               ],
       ),
       body: ListView(
-        padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
+        padding: EdgeInsets.all(4),
         children: <Widget>[
           Form(
             key: _formKey,
@@ -321,8 +321,9 @@ class _BillFormPageState extends State<BillFormPage> {
                                           listen: false)
                                           .getSelectedGroup()
                                           .currency,
+                                      errorMaxLines: 2,
                                     ),
-                                    textAlign: TextAlign.end,
+                                    textAlign: TextAlign.right,
                                     controller: billAmountController,
                                     validator: (value) {
                                       if (value.isEmpty) {
@@ -414,7 +415,9 @@ class _BillFormPageState extends State<BillFormPage> {
                     padding: EdgeInsets.all(8),
                     child: MaterialButton(
                         minWidth: double.infinity,
-                        textColor: Colors.red,
+                        textColor: MediaQuery.of(context).platformBrightness == Brightness.light
+                            ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                            : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                         child: Text(
                             FlutterI18n.translate(
                                 context, "bill_form.delete_bill_tooltip"),

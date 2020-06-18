@@ -84,6 +84,7 @@ bill_details:
   parts: "Parts:"
   paid: "Paid:"
 account:
+  details: Details
   title: "My account"
   logout_tooltip: "Logout"
   username: "Username"
