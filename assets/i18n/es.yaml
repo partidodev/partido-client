@@ -135,6 +135,8 @@ group_form:
   activate_join_mode: Dejar a otros usuarios unirse al grupo con un código
   create_group_button: Crear grupo
   save_changes_button: Guardar cambios
+  join_mode: Modo de unión
+  details: Detalles
 login:
   toast_login_failed: Acceso fallido. Por favor intenta nuevamente
   login_title: Login

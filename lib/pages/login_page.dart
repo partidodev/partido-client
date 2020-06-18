@@ -8,6 +8,7 @@ import 'package:retrofit/dio.dart';
 import '../api/api.dart';
 import '../api/api_service.dart';
 import '../app_state.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -102,8 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                               TextFormField(
                                 onSaved: (value) => _email = value,
                                 keyboardType: TextInputType.emailAddress,
-                                decoration:
-                                    InputDecoration(labelText: FlutterI18n.translate(context, "login.email")),
+                                decoration: InputDecoration(
+                                  labelText: FlutterI18n.translate(context, "login.email"),
+                                  prefixIcon: Icon(LinearIcons.at_sign),
+                                ),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return FlutterI18n.translate(context, "login.email_empty_validation_error");
@@ -116,7 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                                 onSaved: (value) => _password = value,
                                 obscureText: true,
                                 decoration:
-                                    InputDecoration(labelText: FlutterI18n.translate(context, "login.password")),
+                                InputDecoration(
+                                  labelText: FlutterI18n.translate(context, "login.password"),
+                                  prefixIcon: Icon(LinearIcons.key),
+                                ),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return FlutterI18n.translate(context, "login.password_empty_validation_error");

@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
+import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class SignupPage extends StatefulWidget {
@@ -94,7 +95,10 @@ class _SignupPageState extends State<SignupPage> {
                               children: <Widget>[
                                 TextFormField(
                                   onSaved: (value) => _username = value,
-                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.username")),
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "account.username"),
+                                    prefixIcon: Icon(LinearIcons.user),
+                                  ),
                                   validator: (value) {
                                     if (value.isEmpty) { return FlutterI18n.translate(context, "account.username_empty_validation_error"); }
                                     if (value.length > 50) { return FlutterI18n.translate(context, "account.username_too_long_validation_error"); }
@@ -105,7 +109,10 @@ class _SignupPageState extends State<SignupPage> {
                                 TextFormField(
                                   onSaved: (value) => _email = value,
                                   keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.email")),
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "account.email"),
+                                    prefixIcon: Icon(LinearIcons.at_sign),
+                                  ),
                                   validator: (value) {
                                     if (emailAlreadyRegistered) { return FlutterI18n.translate(context, "account.email_already_in_use_validation_error"); }
                                     if (value.isEmpty) { return FlutterI18n.translate(context, "account.email_empty_validation_error"); }
@@ -118,7 +125,10 @@ class _SignupPageState extends State<SignupPage> {
                                 TextFormField(
                                   onSaved: (value) => _password = value,
                                   obscureText: true,
-                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "account.password")),
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "account.password"),
+                                    prefixIcon: Icon(LinearIcons.lock),
+                                  ),
                                   validator: (value) {
                                     if (value.isEmpty) { return FlutterI18n.translate(context, "signup.password_empty_validation_error"); }
                                     if (value.length > 100) { return FlutterI18n.translate(context, "signup.password_too_long_validation_error"); }
@@ -129,7 +139,10 @@ class _SignupPageState extends State<SignupPage> {
                                 SizedBox(height: 8),
                                 TextFormField(
                                   obscureText: true,
-                                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "signup.password_confirmation")),
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "signup.password_confirmation"),
+                                    prefixIcon: Icon(LinearIcons.rotation_lock),
+                                  ),
                                   validator: (value) {
                                     if (value.isEmpty) { return FlutterI18n.translate(context, "signup.password_empty_validation_error"); }
                                     if (value != _password) { return FlutterI18n.translate(context, "signup.password_confirmation_not_matching_validation_error"); }

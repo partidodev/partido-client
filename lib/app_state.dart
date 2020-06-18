@@ -155,10 +155,10 @@ class AppState extends ChangeNotifier {
   Map loadAvailableBillCategories() {
     Map billCategories = new Map();
     billCategories["SUBSCRIPTIONS_DONATIONS"] = LinearIcons.calendar_check;
-    billCategories["BARS_RESTAURANTS"] = LinearIcons.glass_cocktail;
+    billCategories["BARS_RESTAURANTS"] = LinearIcons.glass2;
     billCategories["EDUCATION"] = LinearIcons.graduation_hat;
     billCategories["FOOD_GROCERIES"] = LinearIcons.bread;
-    billCategories["FAMILY_FRIENDS"] = LinearIcons.users2;
+    billCategories["FAMILY_FRIENDS"] = LinearIcons.group_work;
     billCategories["LEISURE_ENTERTAINMENT"] = LinearIcons.ticket;
     billCategories["HEALTH_DRUGSTORES"] = LinearIcons.heart_pulse;
     billCategories["HOUSEHOLD_UTILITIES"] = LinearIcons.couch;

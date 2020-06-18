@@ -132,6 +132,8 @@ group_form:
   activate_join_mode: "Let other users join the group with a key"
   create_group_button: "Create group"
   save_changes_button: "Save changes"
+  join_mode: Join mode
+  details: Details
 login:
   toast_login_failed: "Login failed, please try again"
   login_title: "Login"

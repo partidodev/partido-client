@@ -70,7 +70,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 if (form.validate()) {
                   _updateAccount();
                 }
-              })
+              }),
         ],
       ),
       body: ListView(
@@ -95,9 +95,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                           ),
                         ),
                         Divider(),
-                        SizedBox(height: 8),
                         Container(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
+                          padding: EdgeInsets.all(8),
                           child: Column(
                             children: <Widget>[
                               TextFormField(
@@ -106,7 +105,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                     TextCapitalization.sentences,
                                 decoration: InputDecoration(
                                     labelText: FlutterI18n.translate(
-                                        context, "account.username")),
+                                        context, "account.username"),
+                                  prefixIcon: Icon(LinearIcons.user),
+                                ),
                                 controller: usernameController,
                                 validator: (value) {
                                   if (value.isEmpty) {
@@ -125,8 +126,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 onSaved: (value) => _email = value,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                    labelText: FlutterI18n.translate(
-                                        context, "account.email")),
+                                  labelText: FlutterI18n.translate(context, "account.email"),
+                                  prefixIcon: Icon(LinearIcons.at_sign),
+                                ),
                                 controller: emailController,
                                 validator: (value) {
                                   if (emailAlreadyRegistered) {
@@ -155,8 +157,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 onSaved: (value) => _oldPassword = value,
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                    labelText: FlutterI18n.translate(
-                                        context, "account.password")),
+                                  labelText: FlutterI18n.translate(context, "account.password"),
+                                  prefixIcon: Icon(LinearIcons.key),
+                                ),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return FlutterI18n.translate(context,
@@ -193,17 +196,17 @@ class _EditAccountPageState extends State<EditAccountPage> {
                           ),
                         ),
                         Divider(),
-                        SizedBox(height: 8),
                         Container(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
+                          padding: EdgeInsets.all(8),
                           child: Column(
                             children: <Widget>[
                               TextFormField(
                                 onSaved: (value) => _newPassword = value,
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                    labelText: FlutterI18n.translate(context,
-                                        "account.change_password.new_password")),
+                                  labelText: FlutterI18n.translate(context, "account.change_password.new_password"),
+                                  prefixIcon: Icon(LinearIcons.lock),
+                                ),
                                 validator: (value) {
                                   if (value.length > 100) {
                                     return FlutterI18n.translate(context,
@@ -220,8 +223,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               TextFormField(
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                    labelText: FlutterI18n.translate(context,
-                                        "account.change_password.new_password_confirmation")),
+                                  labelText: FlutterI18n.translate(context, "account.change_password.new_password_confirmation"),
+                                  prefixIcon: Icon(LinearIcons.rotation_lock),
+                                ),
                                 validator: (value) {
                                   if (value != _newPassword) {
                                     return FlutterI18n.translate(context,

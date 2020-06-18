@@ -135,6 +135,8 @@ group_form:
   activate_join_mode: Andere Nutzer können der Gruppe mit einem Code beitreten
   create_group_button: Gruppe erstellen
   save_changes_button: Änderungen speichern
+  join_mode: Beitrittsmodus
+  details: Details
 login:
   toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
   login_title: Login
