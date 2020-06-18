@@ -218,9 +218,7 @@ class _HomePageState extends State<HomePage> {
                                       onPressed: () {
                                         Share.share(
                                             '${FlutterI18n.translate(context, "home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
-                                            subject: FlutterI18n.translate(
-                                                context,
-                                                "home.join_mode.share.subject"));
+                                            subject: FlutterI18n.translate(context, "home.join_mode.share.subject"));
                                       },
                                     ),
                                   ],
