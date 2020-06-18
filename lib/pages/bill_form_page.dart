@@ -383,17 +383,15 @@ class _BillFormPageState extends State<BillFormPage> {
                       ),
                       Divider(),
                       Container(
-                        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        padding: EdgeInsets.all(8),
                         child: Column(
                           children: <Widget>[
-                            SizedBox(height: 8),
                             Column(
                               children: splitEditingRows,
                             ),
-                            SizedBox(height: 8),
                             (formSaved && !sumOfActiveSplitsEqualsAmount())
                                 ? Padding(
-                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                    padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
                                     child: Text(
                                       FlutterI18n.translate(context,
                                           "bill_form.amount_of_splits_sum_not_total_validation_error"),
