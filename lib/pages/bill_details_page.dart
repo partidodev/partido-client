@@ -65,7 +65,8 @@ class BillDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Card(
-                  child: Consumer<AppState>(builder: (context, appState, child) {
+                  child:
+                      Consumer<AppState>(builder: (context, appState, child) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -77,13 +78,19 @@ class BillDetailsPage extends StatelessWidget {
                           subtitle: Text(
                               '${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
                           // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
-                          leading: bill.category!= null ? Icon(
-                              appState.getAvailableBillCategories()[bill.category],
-                              size: 40,
-                              color: Colors.green) : Icon(
-                              LinearIcons.cart,
-                              size: 40,
-                              color: Colors.green),
+                          leading: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              bill.category != null
+                                  ? Icon(
+                                      appState.getAvailableBillCategories()[
+                                          bill.category],
+                                      size: 30,
+                                      color: Colors.green)
+                                  : Icon(LinearIcons.cart,
+                                      size: 30, color: Colors.green),
+                            ],
+                          ),
                         ),
                       ],
                     );
@@ -95,9 +102,9 @@ class BillDetailsPage extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
-                        title: bill.category!= null ?
-                        I18nText('bill.categories.${bill.category}') :
-                        I18nText('bill.categories.UNCATEGORIZED'),
+                        title: bill.category != null
+                            ? I18nText('bill.categories.${bill.category}')
+                            : I18nText('bill.categories.UNCATEGORIZED'),
                         leading: Icon(LinearIcons.tag),
                       ),
                       ListTile(
@@ -132,7 +139,12 @@ class BillDetailsPage extends StatelessWidget {
                         itemCount: bill.splits.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            leading: Icon(LinearIcons.user),
+                            leading: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(LinearIcons.user)
+                              ],
+                            ),
                             title: Text(
                                 '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.splits[index].debtor).username}'),
                             subtitle: Text(

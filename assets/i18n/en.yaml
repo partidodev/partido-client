@@ -10,8 +10,11 @@ global:
 home:
   welcome:
     title: "Welcome to Partido!"
-    subtitle: "Select or create a group to start!"
+    subtitle: "Select an option to start"
     group_settings_tooltip: "Group settings"
+    open_my_groups: Open my groups
+    create_new_group: Create a new group
+    join_existing_group: Join a friend's group
   balances:
     title: "Balances"
   join_mode:

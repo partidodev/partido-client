@@ -10,8 +10,11 @@ global:
 home:
   welcome:
     title: Bienvenido a Partido!
-    subtitle: Selecciona o crea un grupo para empezar!
+    subtitle: Selecciona una opción para empezar
     group_settings_tooltip: Configuración de grupo
+    open_my_groups: Abrir mis grupos
+    create_new_group: Crear un nuevo grupo
+    join_existing_group: Unir al grupo de un amigo
   balances:
     title: Saldos
   join_mode:
