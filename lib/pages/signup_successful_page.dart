@@ -29,6 +29,8 @@ class SignupSuccessfulPage extends StatelessWidget {
                 SizedBox(height: 16),
                 I18nText("signup.success.additional_info"),
                 SizedBox(height: 16),
+                I18nText("signup.success.additional_info_2"),
+                SizedBox(height: 16),
                 MaterialButton(
                     minWidth: double.infinity,
                     color: Theme.of(context).primaryColor,

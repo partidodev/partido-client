@@ -142,6 +142,8 @@ group_form:
   details: Detalles
 login:
   toast_login_failed: Acceso fallido. Por favor intenta nuevamente
+  login_failed_too_many_attempts: "Demasiados intentos fallidos. Intenta nuevamente en 5 minutos."
+  login_failed_not_verified: "Cuenta no verificada. Por favor revisa tus correos electrónicos."
   login_title: Login
   email: Email
   email_empty_validation_error: 'Por favor, ingresa tu email'
@@ -167,9 +169,8 @@ signup:
   success:
     title: Crear nueva cuenta
     success_notice: ¡Te has registrado con éxito!
-    additional_info: >-
-      Ahora puedes comenzar iniciando sesión y creando un nuevo grupo o
-      uniéndote a un grupo existente si recibiste un código de unión.
+    additional_info: Antes de comenzar usando la Partido App, por favor verifica tu dirección de email mediante el enlace que te enviamos por email.
+    additional_info_2: El email debería llegar en breve. No olvides examinar la carpeta de spam, si necesario.
 bill:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Suscripciones & Donaciones"

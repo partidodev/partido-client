@@ -26,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool formSaved = false;
   bool loginFailed = false;
+  bool tooManyLoginAttempts = false;
+  bool accountNotVerified = false;
   String _password;
   String _email;
   bool _rememberMe = false;
@@ -39,7 +41,18 @@ class _LoginPageState extends State<LoginPage> {
           .setRememberLoginStatus("$rememberMeNumber");
       if (response.response.statusCode == 200) {
         navService.pushReplacementNamed("/");
+      } else if (response.response.statusCode == 429) {
+        // HTTP status "too many requests"; blocked for 5 minutes
+        setState(() {
+          tooManyLoginAttempts = true;
+        });
+      } else if (response.response.statusCode == 423) {
+        // HTTP status "locked"; account still not verified
+        setState(() {
+          accountNotVerified = true;
+        });
       } else if (response.response.statusCode == 401) {
+        // HTTP status "unauthorized"; invalid login credentials
         setState(() {
           loginFailed = true;
         });
@@ -132,18 +145,44 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               SizedBox(height: 8),
                               (formSaved && loginFailed) ? Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
-                                child: Text(
-                                  FlutterI18n.translate(context,
-                                      "login.login_failed_unauthorized"),
-                                  style: TextStyle(
-                                      color: Color(0xFFe53935),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              )) : SizedBox(height: 0),
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                    child: Text(
+                                      FlutterI18n.translate(context,
+                                          "login.login_failed_unauthorized"),
+                                      style: TextStyle(
+                                          color: Color(0xFFe53935),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  )) : SizedBox(height: 0),
+                              (formSaved && tooManyLoginAttempts) ? Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                    child: Text(
+                                      FlutterI18n.translate(context,
+                                          "login.login_failed_too_many_attempts"),
+                                      style: TextStyle(
+                                          color: Color(0xFFe53935),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  )) : SizedBox(height: 0),
+                              (formSaved && accountNotVerified) ? Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                    child: Text(
+                                      FlutterI18n.translate(context,
+                                          "login.login_failed_not_verified"),
+                                      style: TextStyle(
+                                          color: Color(0xFFe53935),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  )) : SizedBox(height: 0),
                               CheckboxListTile(
                                 title: I18nText("login.remember"),
                                 value: _rememberMe,
@@ -158,6 +197,9 @@ class _LoginPageState extends State<LoginPage> {
                                   textColor: Colors.white,
                                   child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                                   onPressed: () {
+                                    loginFailed = false;
+                                    tooManyLoginAttempts = false;
+                                    accountNotVerified = false;
                                     final form = _formKey.currentState;
                                     form.save();
                                     setState(() => formSaved = true);

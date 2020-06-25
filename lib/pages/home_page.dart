@@ -130,20 +130,15 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     contentPadding: EdgeInsets.fromLTRB(24, 0, 16, 0),
-                    // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
                     leading: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        appState.getBills()[index].category != null
-                            ? Icon(
-                                appState.getAvailableBillCategories()[
-                                    appState.getBills()[index].category],
-                                size: 27,
-                              )
-                            : Icon(
-                                LinearIcons.cart,
-                                size: 27,
-                              ),
+                        Icon(
+                          appState.getAvailableBillCategories()[
+                            appState.getBills()[index].category
+                          ],
+                          size: 27,
+                        ),
                       ],
                     ),
                     title: Text('${appState.getBills()[index].description}'),

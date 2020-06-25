@@ -77,18 +77,14 @@ class BillDetailsPage extends StatelessWidget {
                           ),
                           subtitle: Text(
                               '${FlutterI18n.translate(context, "bill_details.created_by")} ${Provider.of<AppState>(context, listen: false).getUserFromGroupById(bill.creator).username}'),
-                          // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
                           leading: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              bill.category != null
-                                  ? Icon(
-                                      appState.getAvailableBillCategories()[
-                                          bill.category],
-                                      size: 30,
-                                      color: Colors.green)
-                                  : Icon(LinearIcons.cart,
-                                      size: 30, color: Colors.green),
+                              Icon(
+                                  appState.getAvailableBillCategories()[bill.category],
+                                  size: 30,
+                                  color: Colors.green
+                              ),
                             ],
                           ),
                         ),
@@ -101,10 +97,7 @@ class BillDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ListTile(
-                        // TODO: null check can be removed when nobody uses App Version 2.0.0+29 anymore
-                        title: bill.category != null
-                            ? I18nText('bill.categories.${bill.category}')
-                            : I18nText('bill.categories.UNCATEGORIZED'),
+                        title: I18nText('bill.categories.${bill.category}'),
                         leading: Icon(LinearIcons.tag),
                       ),
                       ListTile(

@@ -142,6 +142,8 @@ group_form:
   details: Details
 login:
   toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
+  login_failed_too_many_attempts: "Zu viele fehlgeschlagene Anmeldeversuche. Versuche es in 5 Minuten erneut."
+  login_failed_not_verified: "Account nicht verifiziert. Bitte überprüfe deine E-Mails."
   login_title: Login
   email: Email-Addresse
   email_empty_validation_error: Bitte gib deine Email-Adresse eine
@@ -167,10 +169,8 @@ signup:
   success:
     title: Registrieren
     success_notice: Du wurdest erfolgreich registriert!
-    additional_info: >-
-      Du kannst jetzt starten, indem du dich einloggst, eine neue Gruppe
-      erstellst oder einer existierenden Gruppe beitritst, wenn du einen
-      Beitrittscode erhalten hast.
+    additional_info: Before du nun starten kannst Partido zu nutzen, verifiziere bitte deine Email-Adresse über den Link, den wir dir per Email zugesendet haben.
+    additional_info_2: Die Mail sollte innerhalb der nächsten paar Minuten bei dir ankommen. Bitte überprüfe auch deinen Spam-Ordner.
 bill:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Abos & Spenden"

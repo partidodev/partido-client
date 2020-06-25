@@ -139,6 +139,8 @@ group_form:
   details: Details
 login:
   toast_login_failed: "Login failed, please try again"
+  login_failed_too_many_attempts: "Too many failed login attempts. Try again in 5 minutes."
+  login_failed_not_verified: "Account not verified. Please check your emails."
   login_title: "Login"
   email: "Email Address"
   email_empty_validation_error: "Please enter your email address"
@@ -164,7 +166,8 @@ signup:
   success:
     title: "Sign up"
     success_notice: "You have been signed up successfully!"
-    additional_info: "You can now start by logging in and creating a new group or joining an existing group if you recieved a join key."
+    additional_info: "Before you can start using Partido, please verify your email address by clicking on the link we sent you per email."
+    additional_info_2: "You should receive the verification mail in the next few minutes. Also check your spam folder if needed."
 bill:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Subscriptions & Donations"
