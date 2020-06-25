@@ -116,7 +116,7 @@ class _SignupPageState extends State<SignupPage> {
                                   validator: (value) {
                                     if (emailAlreadyRegistered) { return FlutterI18n.translate(context, "account.email_already_in_use_validation_error"); }
                                     if (value.isEmpty) { return FlutterI18n.translate(context, "account.email_empty_validation_error"); }
-                                    if (RegExp(r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$').hasMatch(value)) { return FlutterI18n.translate(context, "account.email_invalid_validation_error"); }
+                                    if (!RegExp(r'^[a-zA-Z0-9\.]+@[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}$').hasMatch(value)) { return FlutterI18n.translate(context, "account.email_invalid_validation_error"); }
                                     if (value.length > 50) { return FlutterI18n.translate(context, "account.email_too_long_validation_error"); }
                                     return null;
                                   },

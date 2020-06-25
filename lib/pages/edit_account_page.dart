@@ -139,9 +139,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                     return FlutterI18n.translate(context,
                                         "account.email_empty_validation_error");
                                   }
-                                  if (RegExp(
-                                          r'^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,}$')
-                                      .hasMatch(value)) {
+                                  if (!RegExp(r'^[a-zA-Z0-9\.]+@[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
                                     return FlutterI18n.translate(context,
                                         "account.email_invalid_validation_error");
                                   }
