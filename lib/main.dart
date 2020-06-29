@@ -16,10 +16,8 @@ import 'app_state.dart';
 import 'navigation_service.dart';
 
 void main() async {
-
   // Run the app!
-  runApp(
-    ChangeNotifierProvider(
+  runApp(ChangeNotifierProvider(
       create: (context) => AppState(),
       child: new MaterialApp(
         title: 'Partido',
@@ -30,23 +28,23 @@ void main() async {
           fontFamily: 'Roboto',
           textTheme: defaultTextTheme(),
           appBarTheme: AppBarTheme(
-            textTheme: defaultTextTheme(),
+            textTheme: defaultAppBarTextTheme(),
           ),
           buttonTheme: ButtonThemeData(
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20),
-              ),
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(20),
+            ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
             ),
             focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
             ),
             errorStyle: TextStyle(
               fontSize: 12,
@@ -81,28 +79,28 @@ void main() async {
           fontFamily: 'Roboto',
           textTheme: defaultTextTheme(),
           appBarTheme: AppBarTheme(
-            textTheme: defaultTextTheme(),
+            textTheme: defaultAppBarTextTheme(),
           ),
           buttonTheme: ButtonThemeData(
             shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(20),
+              borderRadius: new BorderRadius.circular(20),
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             border: InputBorder.none,
             errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
             ),
             focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(0)),
-                borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
             ),
             errorStyle: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: Color.fromRGBO(255, 99, 71, 1),
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color.fromRGBO(255, 99, 71, 1),
             ),
           ),
           cardTheme: CardTheme(
@@ -120,7 +118,6 @@ void main() async {
             color: Color(0x0F000000),
             space: 0,
           ),
-
         ),
         navigatorKey: NavigationService.navigationKey,
         routes: {
@@ -133,18 +130,17 @@ void main() async {
           '/account': (_) => EditAccountPage(),
         },
         localizationsDelegates: [
-          FlutterI18nDelegate(translationLoader: FileTranslationLoader(
-              useCountryCode: false,
-              fallbackFile: 'en',
-              basePath: 'assets/i18n',
-              decodeStrategies: [YamlDecodeStrategy()],
+          FlutterI18nDelegate(
+              translationLoader: FileTranslationLoader(
+            useCountryCode: false,
+            fallbackFile: 'en',
+            basePath: 'assets/i18n',
+            decodeStrategies: [YamlDecodeStrategy()],
           )),
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-      )
-    )
-  );
+      )));
 }
 
 TextTheme defaultTextTheme() {
@@ -158,6 +154,18 @@ TextTheme defaultTextTheme() {
     subtitle1: TextStyle(fontSize: 16, fontWeight: FontWeight.w300), // List tile titles
     subtitle2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
     bodyText1: TextStyle(fontSize: 14, fontWeight: FontWeight.w400), // Emphasized text
-    bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300), // List leading/trailing, etc
+    bodyText2: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w300), // List leading/trailing, etc
+  );
+}
+
+TextTheme defaultAppBarTextTheme() {
+  return TextTheme(
+    headline6: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+        color: Colors.white
+    ), // AppBar title, Dialog title, etc
   );
 }
