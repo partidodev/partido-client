@@ -55,7 +55,7 @@ void main() async {
           cardTheme: CardTheme(
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderRadius: BorderRadius.zero,
               side: BorderSide(
                 color: Color(0x0F000000),
                 width: 1,
@@ -82,8 +82,8 @@ void main() async {
             textTheme: defaultAppBarTextTheme(),
           ),
           buttonTheme: ButtonThemeData(
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
