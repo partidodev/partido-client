@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   tooltip: FlutterI18n.translate(
-                      context, "home.create_bill_tooltip"),
+                      context, "home.create_entry_tooltip"),
                   child: Icon(LinearIcons.plus),
                 )
               : Container(),
