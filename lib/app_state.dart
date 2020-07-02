@@ -190,19 +190,27 @@ class AppState extends ChangeNotifier {
     Map<int, String> processBillListTitles = new Map();
     Map<String, String> titleUsed = new Map();
     for (int i=0; i < list.length; i++) {
-      if (isToday(list[i]) && titleUsed['TODAY'] == null) {
-        processBillListTitles[i] = 'TODAY';
-        titleUsed['TODAY'] = "true";
-      } else if (isYesterday(list[i]) && titleUsed['YESTERDAY'] == null) {
-        processBillListTitles[i] = 'YESTERDAY';
-        titleUsed['YESTERDAY'] = "true";
-      } else if (isThisWeek(list[i]) && !isYesterday(list[i]) && !isToday(list[i]) && titleUsed['THIS_WEEK'] == null) {
-        processBillListTitles[i] = 'THIS_WEEK';
-        titleUsed['THIS_WEEK'] = "true";
-      } else if (isThisMonth(list[i]) && !isThisWeek(list[i]) && !isYesterday(list[i]) && !isToday(list[i]) && titleUsed['THIS_MONTH'] == null) {
-        processBillListTitles[i] = 'THIS_MONTH';
-        titleUsed['THIS_MONTH'] = "true";
-      } else if (!isThisMonth(list[i])) {
+      if (isToday(list[i])) {
+        if (titleUsed['TODAY'] == null) {
+          processBillListTitles[i] = 'TODAY';
+          titleUsed['TODAY'] = "true";
+        }
+      } else if (isYesterday(list[i])) {
+        if (titleUsed['YESTERDAY'] == null) {
+          processBillListTitles[i] = 'YESTERDAY';
+          titleUsed['YESTERDAY'] = "true";
+        }
+      } else if (isThisWeek(list[i])) {
+        if (titleUsed['THIS_WEEK'] == null) {
+          processBillListTitles[i] = 'THIS_WEEK';
+          titleUsed['THIS_WEEK'] = "true";
+        }
+      } else if (isThisMonth(list[i])) {
+        if (titleUsed['THIS_MONTH'] == null) {
+          processBillListTitles[i] = 'THIS_MONTH';
+          titleUsed['THIS_MONTH'] = "true";
+        }
+      } else {
         int month = DateTime.parse(list[i].creationDate).month;
         int year = DateTime.parse(list[i].creationDate).year;
         if (titleUsed["MONTH_${month}#${year}"] == null) {
@@ -233,7 +241,7 @@ class AppState extends ChangeNotifier {
 
   bool isThisWeek(Bill bill) {
     if (DateTime.parse(bill.creationDate).isAfter(startOfThisWeek()) &&
-        DateTime.parse(bill.creationDate).isBefore(endOfToday())) {
+        DateTime.parse(bill.creationDate).isBefore(startOfYesterday())) {
       return true;
     }
     return false;
@@ -241,7 +249,7 @@ class AppState extends ChangeNotifier {
 
   bool isThisMonth(Bill bill) {
     if (DateTime.parse(bill.creationDate).isAfter(startOfThisMonth()) &&
-        DateTime.parse(bill.creationDate).isBefore(endOfToday())) {
+        DateTime.parse(bill.creationDate).isBefore(startOfThisWeek())) {
       return true;
     }
     return false;
@@ -256,11 +264,11 @@ class AppState extends ChangeNotifier {
   }
 
   DateTime startOfThisWeek() {
-    return startOfToday().subtract(Duration(days: now.weekday));
+    return startOfToday().subtract(Duration(days: now.weekday - 1));
   }
 
   DateTime startOfThisMonth() {
-    return startOfToday().subtract(Duration(days: now.day));
+    return startOfToday().subtract(Duration(days: now.day - 1));
   }
 
   DateTime endOfToday() {
