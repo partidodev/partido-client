@@ -144,10 +144,16 @@ class _HomePageState extends State<HomePage> {
                         appState.getProcessedBillListTitles()[index] != null
                             ? Column(
                                 children: [
-                                  ListTile(title: Text(
-                                    appState.getProcessedBillListTitles()[index],
-                                    style: TextStyle(fontSize: 18),
-                                  )),
+                                  appState.getProcessedBillListTitles()[index].contains("#")
+                                  ? ListTile(title: Text(
+                                      FlutterI18n.translate(context, "date." + appState.getProcessedBillListTitles()[index].split("#")[0])
+                                          + " " + appState.getProcessedBillListTitles()[index].split("#")[1],
+                                      style: TextStyle(fontSize: 18),
+                                    ))
+                                  : ListTile(title: Text(
+                                      FlutterI18n.translate(context, "date." + appState.getProcessedBillListTitles()[index]),
+                                      style: TextStyle(fontSize: 18),
+                                    )),
                                   Divider(),
                                 ],
                               )

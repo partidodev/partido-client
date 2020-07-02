@@ -164,7 +164,7 @@ signup:
   privacy_policy_link_url: "https://partido.rocks/privacy/"
   privacy_policy_not_accepted_error: "You can use Partido only if you accept"
   success:
-    title: "Sign up"
+    title: "Email verification required"
     success_notice: "You have been signed up successfully!"
     additional_info: "Before you can start using Partido, please verify your email address by clicking on the link we sent you per email."
     additional_info_2: "You should receive the verification mail in the next few minutes. Also check your spam folder if needed."
@@ -186,3 +186,20 @@ bill:
     TRANSPORT_CAR: "Transport & Car"
     UNCATEGORIZED: "Uncategorized"
     INSURANCE_FINANCE: "Insurances & Finances"
+date:
+  TODAY: Today
+  YESTERDAY: Yesterday
+  THIS_WEEK: This week
+  THIS_MONTH: This month
+  MONTH_1: January
+  MONTH_2: February
+  MONTH_3: March
+  MONTH_4: April
+  MONTH_5: May
+  MONTH_6: June
+  MONTH_7: July
+  MONTH_8: August
+  MONTH_9: September
+  MONTH_10: October
+  MONTH_11: November
+  MONTH_12: December

@@ -196,14 +196,19 @@ class AppState extends ChangeNotifier {
       } else if (isYesterday(list[i]) && titleUsed['YESTERDAY'] == null) {
         processBillListTitles[i] = 'YESTERDAY';
         titleUsed['YESTERDAY'] = "true";
-      } else if (isThisWeek(list[i]) && titleUsed['THIS_WEEK'] == null) {
+      } else if (isThisWeek(list[i]) && !isYesterday(list[i]) && !isToday(list[i]) && titleUsed['THIS_WEEK'] == null) {
         processBillListTitles[i] = 'THIS_WEEK';
         titleUsed['THIS_WEEK'] = "true";
-      } else if (isThisMonth(list[i]) && titleUsed['THIS_MONTH'] == null) {
+      } else if (isThisMonth(list[i]) && !isThisWeek(list[i]) && !isYesterday(list[i]) && !isToday(list[i]) && titleUsed['THIS_MONTH'] == null) {
         processBillListTitles[i] = 'THIS_MONTH';
         titleUsed['THIS_MONTH'] = "true";
-      } else {
-        //TODO: handle all months...
+      } else if (!isThisMonth(list[i])) {
+        int month = DateTime.parse(list[i].creationDate).month;
+        int year = DateTime.parse(list[i].creationDate).year;
+        if (titleUsed["MONTH_${month}#${year}"] == null) {
+          processBillListTitles[i] = 'MONTH_${month}#${year}';
+          titleUsed['MONTH_${month}#${year}'] = "true";
+        }
       }
     }
     print(processBillListTitles);//TODO: remove print
@@ -228,7 +233,7 @@ class AppState extends ChangeNotifier {
 
   bool isThisWeek(Bill bill) {
     if (DateTime.parse(bill.creationDate).isAfter(startOfThisWeek()) &&
-        DateTime.parse(bill.creationDate).isBefore(startOfYesterday())) {
+        DateTime.parse(bill.creationDate).isBefore(endOfToday())) {
       return true;
     }
     return false;
@@ -236,7 +241,7 @@ class AppState extends ChangeNotifier {
 
   bool isThisMonth(Bill bill) {
     if (DateTime.parse(bill.creationDate).isAfter(startOfThisMonth()) &&
-        DateTime.parse(bill.creationDate).isBefore(startOfThisWeek())) {
+        DateTime.parse(bill.creationDate).isBefore(endOfToday())) {
       return true;
     }
     return false;

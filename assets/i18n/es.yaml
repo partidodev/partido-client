@@ -167,7 +167,7 @@ signup:
   privacy_policy_link_url: 'https://partido.rocks/privacy/'
   privacy_policy_not_accepted_error: Puedes usar Partido solo si aceptas
   success:
-    title: Crear nueva cuenta
+    title: Verificación de email necesaria
     success_notice: ¡Te has registrado con éxito!
     additional_info: Antes de comenzar usando la Partido App, por favor verifica tu dirección de email mediante el enlace que te enviamos por email.
     additional_info_2: El email debería llegar en breve. No olvides examinar la carpeta de spam, si necesario.
@@ -189,3 +189,20 @@ bill:
     TRANSPORT_CAR: "Transporte & Auto"
     UNCATEGORIZED: "Sin categoría"
     INSURANCE_FINANCE: "Seguros & Finanzas"
+date:
+  TODAY: Hoy
+  YESTERDAY: Ayer
+  THIS_WEEK: Ésta semana
+  THIS_MONTH: Éste mes
+  MONTH_1: Enero
+  MONTH_2: Febrero
+  MONTH_3: Marzo
+  MONTH_4: Abril
+  MONTH_5: Mayo
+  MONTH_6: Junio
+  MONTH_7: Julio
+  MONTH_8: Agosto
+  MONTH_9: Septiembre
+  MONTH_10: Octubre
+  MONTH_11: Noviembre
+  MONTH_12: Diciembre
