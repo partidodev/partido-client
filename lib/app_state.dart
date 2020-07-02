@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:partido_client/linear_icons_icons.dart';
 import 'package:partido_client/model/bill.dart';
@@ -21,6 +22,8 @@ class AppState extends ChangeNotifier {
   Report _report = new Report(balances: []);
   int _selectedGroupId = -1; // initial value to check if id must be loaded or not
   Map _availableBillCategories = new Map();
+  DateTime now = DateTime.now();
+  Map<int, String> _processedBillListTitles;
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -59,6 +62,7 @@ class AppState extends ChangeNotifier {
   void refreshAppState() async {
     _selectedGroup = await api.getGroup(_selectedGroupId);
     _bills = await api.getBillsForGroup(_selectedGroupId);
+    _processedBillListTitles = processBillListTitles(_bills);
     _report = await api.getReportForGroup(_selectedGroupId);
     _myGroups = await api.getMyGroups();
     notifyListeners();
@@ -76,6 +80,10 @@ class AppState extends ChangeNotifier {
 
   List<Bill> getBills() {
     return _bills;
+  }
+
+  Map<int, String> getProcessedBillListTitles() {
+    return _processedBillListTitles;
   }
 
   Report getReport() {
@@ -98,6 +106,7 @@ class AppState extends ChangeNotifier {
 
   void reloadBillList() async {
     _bills = await api.getBillsForGroup(_selectedGroupId);
+    _processedBillListTitles = processBillListTitles(_bills);
     notifyListeners();
   }
 
@@ -175,5 +184,81 @@ class AppState extends ChangeNotifier {
 
   Map getAvailableBillCategories() {
     return _availableBillCategories;
+  }
+
+  Map<int, String> processBillListTitles(List<Bill> list) {
+    Map<int, String> processBillListTitles = new Map();
+    Map<String, String> titleUsed = new Map();
+    for (int i=0; i < list.length; i++) {
+      if (isToday(list[i]) && titleUsed['TODAY'] == null) {
+        processBillListTitles[i] = 'TODAY';
+        titleUsed['TODAY'] = "true";
+      } else if (isYesterday(list[i]) && titleUsed['YESTERDAY'] == null) {
+        processBillListTitles[i] = 'YESTERDAY';
+        titleUsed['YESTERDAY'] = "true";
+      } else if (isThisWeek(list[i]) && titleUsed['THIS_WEEK'] == null) {
+        processBillListTitles[i] = 'THIS_WEEK';
+        titleUsed['THIS_WEEK'] = "true";
+      } else if (isThisMonth(list[i]) && titleUsed['THIS_MONTH'] == null) {
+        processBillListTitles[i] = 'THIS_MONTH';
+        titleUsed['THIS_MONTH'] = "true";
+      } else {
+        //TODO: handle all months...
+      }
+    }
+    print(processBillListTitles);//TODO: remove print
+    return processBillListTitles;
+  }
+
+  bool isToday(Bill bill) {
+    if (DateTime.parse(bill.creationDate).isAfter(startOfToday())
+        && DateTime.parse(bill.creationDate).isBefore(endOfToday())) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isYesterday(Bill bill) {
+    if (DateTime.parse(bill.creationDate).isAfter(startOfYesterday()) &&
+        DateTime.parse(bill.creationDate).isBefore(startOfToday())) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isThisWeek(Bill bill) {
+    if (DateTime.parse(bill.creationDate).isAfter(startOfThisWeek()) &&
+        DateTime.parse(bill.creationDate).isBefore(startOfYesterday())) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isThisMonth(Bill bill) {
+    if (DateTime.parse(bill.creationDate).isAfter(startOfThisMonth()) &&
+        DateTime.parse(bill.creationDate).isBefore(startOfThisWeek())) {
+      return true;
+    }
+    return false;
+  }
+
+  DateTime startOfToday() {
+    return DateTime(now.year, now.month, now.day);
+  }
+
+  DateTime startOfYesterday() {
+    return startOfToday().subtract(Duration(days: 1));
+  }
+
+  DateTime startOfThisWeek() {
+    return startOfToday().subtract(Duration(days: now.weekday));
+  }
+
+  DateTime startOfThisMonth() {
+    return startOfToday().subtract(Duration(days: now.day));
+  }
+
+  DateTime endOfToday() {
+    return DateTime(now.year, now.month, now.day, 23, 59, 59, 999, 999);
   }
 }

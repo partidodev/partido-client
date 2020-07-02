@@ -129,42 +129,60 @@ class _HomePageState extends State<HomePage> {
                 itemCount: appState.getBills().length,
                 itemBuilder: (context, index) {
                   return Card(
-                    margin: EdgeInsets.zero,
-                      shape: Border(
-                        left: BorderSide(color: Color(0x0F000000), width: 1),
-                        top: BorderSide(color: Color(0x0F000000), width: 1),
-                        right: BorderSide(color: Color(0x0F000000), width: 1),
-                        bottom: index == appState.getBills().length - 1
-                            ? BorderSide(color: Color(0x0F000000), width: 1)
-                              : BorderSide(color: Color(0x0F000000), width: 0),
-                      ),
-                    child: ListTile(
-                    leading: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    margin: appState.getProcessedBillListTitles()[index+1] != null ? EdgeInsets.only(bottom: 8) : EdgeInsets.zero,
+                    shape: Border(
+                      left: BorderSide(color: Color(0x0F000000), width: 1),
+                      top: BorderSide(color: Color(0x0F000000), width: 1),
+                      right: BorderSide(color: Color(0x0F000000), width: 1),
+                      bottom: index == appState.getBills().length - 1
+                          || appState.getProcessedBillListTitles()[index+1] != null
+                          ? BorderSide(color: Color(0x0F000000), width: 1)
+                          : BorderSide(color: Color(0x0F000000), width: 0),
+                    ),
+                    child: Column(
                       children: <Widget>[
-                        Icon(
-                          appState.getAvailableBillCategories()[
-                              appState.getBills()[index].category],
-                          size: 27,
+                        appState.getProcessedBillListTitles()[index] != null
+                            ? Column(
+                                children: [
+                                  ListTile(title: Text(
+                                    appState.getProcessedBillListTitles()[index],
+                                    style: TextStyle(fontSize: 18),
+                                  )),
+                                  Divider(),
+                                ],
+                              )
+                            : SizedBox(height: 0),
+                        ListTile(
+                          leading: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                appState.getAvailableBillCategories()[
+                                    appState.getBills()[index].category],
+                                size: 27,
+                              ),
+                            ],
+                          ),
+                          title:
+                              Text('${appState.getBills()[index].description}'),
+                          subtitle: Text(
+                              '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                          trailing: Text(
+                            '${currencyFormatter.format(appState.getBills()[index].totalAmount)} ${appState.getSelectedGroup().currency}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          onTap: () {
+                            navService.push(
+                              MaterialPageRoute(
+                                builder: (context) => BillDetailsPage(
+                                    bill: appState.getBills()[index]),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
-                    title: Text('${appState.getBills()[index].description}'),
-                    subtitle: Text(
-                        '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
-                    trailing: Text(
-                      '${currencyFormatter.format(appState.getBills()[index].totalAmount)} ${appState.getSelectedGroup().currency}',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    onTap: () {
-                      navService.push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              BillDetailsPage(bill: appState.getBills()[index]),
-                        ),
-                      );
-                    },
-                  ),);
+                  );
                 },
               ),
             ],
