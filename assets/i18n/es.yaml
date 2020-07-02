@@ -171,6 +171,7 @@ signup:
     success_notice: ¡Te has registrado con éxito!
     additional_info: Antes de comenzar usando la Partido App, por favor verifica tu dirección de email mediante el enlace que te enviamos por email.
     additional_info_2: El email debería llegar en breve. No olvides examinar la carpeta de spam, si necesario.
+    login_button: Listo, continuar con login!
 bill:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Suscripciones & Donaciones"

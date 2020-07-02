@@ -168,6 +168,7 @@ signup:
     success_notice: "You have been signed up successfully!"
     additional_info: "Before you can start using Partido, please verify your email address by clicking on the link we sent you per email."
     additional_info_2: "You should receive the verification mail in the next few minutes. Also check your spam folder if needed."
+    login_button: Done, proceed to login!
 bill:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Subscriptions & Donations"
