@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:partido_client/model/bill.dart';
+import 'package:partido_client/model/entry.dart';
 import 'package:partido_client/model/split.dart';
 import 'package:partido_client/model/user.dart';
 import 'package:partido_client/widgets/partido_toast.dart';
@@ -15,18 +15,18 @@ import '../api/api_service.dart';
 import '../app_state.dart';
 import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
-import 'bill_details_page.dart';
+import 'entry_details_page.dart';
 
-class BillFormPage extends StatefulWidget {
-  final Bill bill;
+class EntryFormPage extends StatefulWidget {
+  final Entry entry;
 
-  BillFormPage({Key key, @required this.bill}) : super(key: key);
+  EntryFormPage({Key key, @required this.entry}) : super(key: key);
 
   @override
-  _BillFormPageState createState() => _BillFormPageState();
+  _EntryFormPageState createState() => _EntryFormPageState();
 }
 
-class _BillFormPageState extends State<BillFormPage> {
+class _EntryFormPageState extends State<EntryFormPage> {
   var logger = Logger(printer: PrettyPrinter());
 
   Api api = ApiService.getApi();
@@ -36,7 +36,7 @@ class _BillFormPageState extends State<BillFormPage> {
   DateFormat dateFormatter;
 
   final _formKey = GlobalKey<FormState>();
-  bool createNewBillMode = true;
+  bool createNewEntryMode = true;
   bool initDone = false;
   bool formSaved = false;
 
@@ -46,10 +46,10 @@ class _BillFormPageState extends State<BillFormPage> {
   String _amount;
   DateTime _selectedDate;
 
-  TextEditingController billDescriptionController = new TextEditingController();
-  TextEditingController billAmountController = new TextEditingController();
-  TextEditingController billDateController = new TextEditingController();
-  TextEditingController billCategoryController = new TextEditingController();
+  TextEditingController entryDescriptionController = new TextEditingController();
+  TextEditingController entryAmountController = new TextEditingController();
+  TextEditingController entryDateController = new TextEditingController();
+  TextEditingController entryCategoryController = new TextEditingController();
 
   Map<int, bool> splitUsers = {};
   Map<int, TextEditingController> splitPaidControllers = {};
@@ -71,9 +71,9 @@ class _BillFormPageState extends State<BillFormPage> {
         FlutterI18n.translate(context, "global.part_format"),
         FlutterI18n.translate(context, "global.locale"));
 
-    if (widget.bill == null) {
+    if (widget.entry == null) {
       _category = DEFAULT_CATEGORY;
-      // create new bill
+      // create new entry
       Provider.of<AppState>(context, listen: false)
           .getSelectedGroup()
           .users
@@ -89,18 +89,18 @@ class _BillFormPageState extends State<BillFormPage> {
         _selectedDate = DateTime.now();
       }
     } else {
-      // edit existing bill
-      createNewBillMode = false;
-      billDescriptionController.text = widget.bill.description;
-      if (widget.bill.category != null) {
-        _category = widget.bill.category;
+      // edit existing entry
+      createNewEntryMode = false;
+      entryDescriptionController.text = widget.entry.description;
+      if (widget.entry.category != null) {
+        _category = widget.entry.category;
       } else {
         _category = DEFAULT_CATEGORY;
       }
-      billAmountController.text =
-          currencyFormatter.format(widget.bill.totalAmount);
+      entryAmountController.text =
+          currencyFormatter.format(widget.entry.totalAmount);
       if (_selectedDate == null) {
-        _selectedDate = DateTime.parse(widget.bill.billingDate);
+        _selectedDate = DateTime.parse(widget.entry.billingDate);
       }
 
       Provider.of<AppState>(context, listen: false)
@@ -108,7 +108,7 @@ class _BillFormPageState extends State<BillFormPage> {
           .users
           .forEach((user) {
         bool splitFound = false;
-        for (Split split in widget.bill.splits) {
+        for (Split split in widget.entry.splits) {
           if (split.debtor == user.id) {
             splitFound = true;
             splitUsers.putIfAbsent(user.id, () => true);
@@ -135,8 +135,8 @@ class _BillFormPageState extends State<BillFormPage> {
         }
       });
     }
-    billDateController.text = dateFormatter.format(_selectedDate);
-    billCategoryController.text = FlutterI18n.translate(context, 'bill.categories.' + _category);
+    entryDateController.text = dateFormatter.format(_selectedDate);
+    entryCategoryController.text = FlutterI18n.translate(context, 'entry.categories.' + _category);
     initDone = true;
   }
 
@@ -167,7 +167,7 @@ class _BillFormPageState extends State<BillFormPage> {
               controller: splitPartsControllers[user.id],
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                  labelText: FlutterI18n.translate(context, "bill_form.parts")),
+                  labelText: FlutterI18n.translate(context, "entry_form.parts")),
               textAlign: TextAlign.end,
             ),
             flex: 28, // %
@@ -181,7 +181,7 @@ class _BillFormPageState extends State<BillFormPage> {
                   suffixText: Provider.of<AppState>(context, listen: false)
                       .getSelectedGroup()
                       .currency,
-                  labelText: FlutterI18n.translate(context, "bill_form.paid")),
+                  labelText: FlutterI18n.translate(context, "entry_form.paid")),
               textAlign: TextAlign.end,
             ),
             flex: 28, // %
@@ -200,36 +200,36 @@ class _BillFormPageState extends State<BillFormPage> {
           },
           tooltip: MaterialLocalizations.of(context).backButtonTooltip,
         ),
-        title: (createNewBillMode)
-            ? I18nText('bill_form.create_bill_title')
-            : I18nText('bill_form.edit_bill_title'),
-        actions: (createNewBillMode)
+        title: (createNewEntryMode)
+            ? I18nText('entry_form.create_entry_title')
+            : I18nText('entry_form.edit_entry_title'),
+        actions: (createNewEntryMode)
             ? <Widget>[
                 IconButton(
                     icon: Icon(LinearIcons.check),
                     tooltip: FlutterI18n.translate(
-                        context, "bill_form.create_bill_button"),
+                        context, "entry_form.create_entry_button"),
                     onPressed: () {
                       // save the fields..
                       final form = _formKey.currentState;
                       form.save();
                       setState(() => formSaved = true);
                       if (form.validate() && sumOfActiveSplitsEqualsAmount()) {
-                        _createBill();
+                        _createEntry();
                       }
                     })
               ] : <Widget>[
                 IconButton(
                     icon: Icon(LinearIcons.check),
                     tooltip: FlutterI18n.translate(
-                        context, "bill_form.update_bill_button"),
+                        context, "entry_form.update_entry_button"),
                     onPressed: () {
                       // save the fields..
                       final form = _formKey.currentState;
                       form.save();
                       setState(() => formSaved = true);
                       if (form.validate() && sumOfActiveSplitsEqualsAmount()) {
-                        _updateBill();
+                        _updateEntry();
                       }
                     })
               ],
@@ -249,7 +249,7 @@ class _BillFormPageState extends State<BillFormPage> {
                     children: <Widget>[
                       ListTile(
                         title: Text(
-                          FlutterI18n.translate(context, "bill_form.details_title"),
+                          FlutterI18n.translate(context, "entry_form.details_title"),
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -265,16 +265,16 @@ class _BillFormPageState extends State<BillFormPage> {
                               decoration: InputDecoration(
                                   prefixIcon: Icon(LinearIcons.pen3),
                                   labelText: FlutterI18n.translate(
-                                      context, "bill_form.description")),
-                              controller: billDescriptionController,
+                                      context, "entry_form.description")),
+                              controller: entryDescriptionController,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return FlutterI18n.translate(context,
-                                      "bill_form.description_empty_validation_error");
+                                      "entry_form.description_empty_validation_error");
                                 }
                                 if (value.length > 255) {
                                   return FlutterI18n.translate(context,
-                                      "bill_form.description_too_long_validation_error");
+                                      "entry_form.description_too_long_validation_error");
                                 }
                                 return null;
                               },
@@ -284,8 +284,8 @@ class _BillFormPageState extends State<BillFormPage> {
                               decoration: InputDecoration(
                                   prefixIcon: Icon(LinearIcons.tag),
                                   suffixIcon: Icon(LinearIcons.chevron_down, size: 20,),
-                                  labelText: FlutterI18n.translate(context, "bill_form.category")),
-                              controller: billCategoryController,
+                                  labelText: FlutterI18n.translate(context, "entry_form.category")),
+                              controller: entryCategoryController,
                               readOnly: true,
                               onTap: () => _selectCategory(context),
                             ),
@@ -297,7 +297,7 @@ class _BillFormPageState extends State<BillFormPage> {
                                   child: TextFormField(
                                     onSaved: (value) => _amount = value,
                                     onChanged: (value) {
-                                      if (createNewBillMode) {
+                                      if (createNewEntryMode) {
                                         splitPaidControllers[Provider.of<AppState>(
                                             context,
                                             listen: false)
@@ -316,7 +316,7 @@ class _BillFormPageState extends State<BillFormPage> {
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(LinearIcons.bag_dollar),
                                       labelText: FlutterI18n.translate(
-                                          context, "bill_form.amount"),
+                                          context, "entry_form.amount"),
                                       suffixText: Provider.of<AppState>(context,
                                           listen: false)
                                           .getSelectedGroup()
@@ -324,15 +324,15 @@ class _BillFormPageState extends State<BillFormPage> {
                                       errorMaxLines: 2,
                                     ),
                                     textAlign: TextAlign.right,
-                                    controller: billAmountController,
+                                    controller: entryAmountController,
                                     validator: (value) {
                                       if (value.isEmpty) {
                                         return FlutterI18n.translate(context,
-                                            "bill_form.amount_empty_validation_error");
+                                            "entry_form.amount_empty_validation_error");
                                       }
                                       if (_normalizeDouble(value) <= 0) {
                                         return FlutterI18n.translate(context,
-                                            "bill_form.amount_not_positive_validation_error");
+                                            "entry_form.amount_not_positive_validation_error");
                                       }
                                       return null;
                                     },
@@ -345,8 +345,8 @@ class _BillFormPageState extends State<BillFormPage> {
                                     decoration: InputDecoration(
                                         prefixIcon: Icon(LinearIcons.calendar_31),
                                         labelText: FlutterI18n.translate(
-                                            context, "bill_form.date")),
-                                    controller: billDateController,
+                                            context, "entry_form.date")),
+                                    controller: entryDateController,
                                     readOnly: true,
                                     onTap: () => _selectDate(context),
                                   ),
@@ -367,7 +367,7 @@ class _BillFormPageState extends State<BillFormPage> {
                       ListTile(
                         contentPadding: EdgeInsets.only(left: 16, right: 0),
                         title: Text(
-                          FlutterI18n.translate(context, "bill_details.splits"),
+                          FlutterI18n.translate(context, "entry_details.splits"),
                           style: TextStyle(fontSize: 20),
                         ),
                         trailing: IconButton(
@@ -375,7 +375,7 @@ class _BillFormPageState extends State<BillFormPage> {
                             LinearIcons.bubble_question,
                             size: 20,
                           ),
-                          tooltip: FlutterI18n.translate(context, "bill_form.split_faq_tooltip"),
+                          tooltip: FlutterI18n.translate(context, "entry_form.split_faq_tooltip"),
                           onPressed: () {
                             _launchFaqUrl(context);
                           },
@@ -394,7 +394,7 @@ class _BillFormPageState extends State<BillFormPage> {
                                     padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
                                     child: Text(
                                       FlutterI18n.translate(context,
-                                          "bill_form.amount_of_splits_sum_not_total_validation_error"),
+                                          "entry_form.amount_of_splits_sum_not_total_validation_error"),
                                       style: TextStyle(
                                           color: Color(0xFFe53935),
                                           fontSize: 12,
@@ -408,7 +408,7 @@ class _BillFormPageState extends State<BillFormPage> {
                     ],
                   ),
                 ),
-                if (!createNewBillMode)
+                if (!createNewEntryMode)
                   Container(
                     padding: EdgeInsets.all(8),
                     child: MaterialButton(
@@ -418,9 +418,9 @@ class _BillFormPageState extends State<BillFormPage> {
                             : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                         child: Text(
                             FlutterI18n.translate(
-                                context, "bill_form.delete_bill_tooltip"),
+                                context, "entry_form.delete_entry_tooltip"),
                             style: TextStyle(fontWeight: FontWeight.w400)),
-                        onPressed: _openDeleteBillDialog),
+                        onPressed: _openDeleteEntryDialog),
                   ),
               ],
             ),
@@ -454,7 +454,7 @@ class _BillFormPageState extends State<BillFormPage> {
         _selectedDate = picked;
       });
     }
-    billDateController.text = dateFormatter.format(_selectedDate);
+    entryDateController.text = dateFormatter.format(_selectedDate);
   }
 
   Future _selectCategory(BuildContext context) async {
@@ -463,24 +463,24 @@ class _BillFormPageState extends State<BillFormPage> {
         child: Consumer<AppState>(builder: (context, appState, child) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-            title: I18nText('bill_form.select_category_dialog.title'),
+            title: I18nText('entry_form.select_category_dialog.title'),
             content: Container(
               width: double.maxFinite,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: appState.getAvailableBillCategories().length,
+                itemCount: appState.getAvailableEntryCategories().length,
                 itemBuilder: (BuildContext context, int index) {
-                  String key = appState.getAvailableBillCategories().keys.elementAt(index);
+                  String key = appState.getAvailableEntryCategories().keys.elementAt(index);
                   return ListTile(
                     contentPadding: EdgeInsets.only(left: 24),
-                    title: I18nText('bill.categories.' + key),
-                    leading: Icon(appState.getAvailableBillCategories()[key]),
+                    title: I18nText('entry.categories.' + key),
+                    leading: Icon(appState.getAvailableEntryCategories()[key]),
                     onTap: () => {
                       setState(() {
                         _category = key;
                       }),
                       navService.goBack(),
-                      billCategoryController.text = FlutterI18n.translate(context, 'bill.categories.' + key)
+                      entryCategoryController.text = FlutterI18n.translate(context, 'entry.categories.' + key)
                     },
                   );
                 },
@@ -503,22 +503,22 @@ class _BillFormPageState extends State<BillFormPage> {
     return double.parse(_doubleString.replaceAll(",", "."));
   }
 
-  void _createBill() async {
-    Bill bill = new Bill();
-    bill.description = _description;
-    bill.category = _category;
-    bill.totalAmount = _normalizeDouble(_amount);
-    bill.billingDate =
+  void _createEntry() async {
+    Entry entry = new Entry();
+    entry.description = _description;
+    entry.category = _category;
+    entry.totalAmount = _normalizeDouble(_amount);
+    entry.billingDate =
         DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    bill.parts = 0;
+    entry.parts = 0;
 
     List<Split> splits = [];
     for (User user in Provider.of<AppState>(context, listen: false)
         .getSelectedGroup()
         .users) {
       if (splitUsers[user.id]) {
-        // create splits for users only if they are involved in the bill
-        bill.parts += _normalizeDouble(splitPartsControllers[user.id].text);
+        // create splits for users only if they are involved in the entry
+        entry.parts += _normalizeDouble(splitPartsControllers[user.id].text);
         Split split = new Split();
         split.debtor = user.id;
         split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
@@ -527,42 +527,42 @@ class _BillFormPageState extends State<BillFormPage> {
         splits.add(split);
       }
     }
-    bill.splits = splits;
+    entry.splits = splits;
 
     try {
-      HttpResponse<Bill> response = await api.createBill(bill,
+      HttpResponse<Entry> response = await api.createEntry(entry,
           Provider.of<AppState>(context, listen: false).getSelectedGroupId());
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
         PartidoToast.showToast(
             msg:
-                FlutterI18n.translate(context, "bill_form.toast_bill_created"));
+                FlutterI18n.translate(context, "entry_form.toast_entry_created"));
       }
     } catch (e) {
-      logger.e("Failed to save bill", e);
+      logger.e("Failed to save entry", e);
       PartidoToast.showToast(
           msg: FlutterI18n.translate(
-              context, "bill_form.toast_failed_to_save_bill"));
+              context, "entry_form.toast_failed_to_save_entry"));
     }
   }
 
-  void _updateBill() async {
-    Bill updatedBill = new Bill();
-    updatedBill.description = _description;
-    updatedBill.category = _category;
-    updatedBill.totalAmount = _normalizeDouble(_amount);
-    updatedBill.billingDate =
+  void _updateEntry() async {
+    Entry updatedEntry = new Entry();
+    updatedEntry.description = _description;
+    updatedEntry.category = _category;
+    updatedEntry.totalAmount = _normalizeDouble(_amount);
+    updatedEntry.billingDate =
         DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    updatedBill.parts = 0;
+    updatedEntry.parts = 0;
 
     List<Split> splits = [];
     for (User user in Provider.of<AppState>(context, listen: false)
         .getSelectedGroup()
         .users) {
       if (splitUsers[user.id]) {
-        // create splits for users only if they are involved in the bill
-        updatedBill.parts +=
+        // create splits for users only if they are involved in the entry
+        updatedEntry.parts +=
             _normalizeDouble(splitPartsControllers[user.id].text);
         Split split = new Split();
         split.debtor = user.id;
@@ -572,62 +572,62 @@ class _BillFormPageState extends State<BillFormPage> {
         splits.add(split);
       }
     }
-    updatedBill.splits = splits;
+    updatedEntry.splits = splits;
 
     try {
-      HttpResponse<Bill> response = await api.updateBill(
-          updatedBill,
+      HttpResponse<Entry> response = await api.updateEntry(
+          updatedEntry,
           Provider.of<AppState>(context, listen: false).getSelectedGroupId(),
-          widget.bill.id);
+          widget.entry.id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        navService.goBack(); // close bill editing screen
-        navService.goBack(); // close outdated bill details screen
+        navService.goBack(); // close entry editing screen
+        navService.goBack(); // close outdated entry details screen
         navService.push(MaterialPageRoute(
-            builder: (context) => BillDetailsPage(bill: response.data)));
+            builder: (context) => EntryDetailsPage(entry: response.data)));
         PartidoToast.showToast(
             msg:
-                FlutterI18n.translate(context, "bill_form.toast_bill_updated"));
+                FlutterI18n.translate(context, "entry_form.toast_entry_updated"));
       }
     } catch (e) {
-      logger.e("Failed to save bill", e);
+      logger.e("Failed to save entry", e);
       PartidoToast.showToast(
           msg: FlutterI18n.translate(
-              context, "bill_form.toast_failed_to_update_bill"));
+              context, "entry_form.toast_failed_to_update_entry"));
     }
   }
 
-  void _deleteBill() async {
+  void _deleteEntry() async {
     try {
-      HttpResponse<String> response = await api.deleteBill(widget.bill.id);
+      HttpResponse<String> response = await api.deleteEntry(widget.entry.id);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
-        navService.goBack(); // close bill deleting dialog
-        navService.goBack(); // close bill editing screen
-        navService.goBack(); // close bill details screen
+        navService.goBack(); // close entry deleting dialog
+        navService.goBack(); // close entry editing screen
+        navService.goBack(); // close entry details screen
         PartidoToast.showToast(
             msg:
-                FlutterI18n.translate(context, "bill_form.toast_bill_deleted"));
+                FlutterI18n.translate(context, "entry_form.toast_entry_deleted"));
       }
     } catch (e) {
-      logger.e("Failed to delete bill", e);
+      logger.e("Failed to delete entry", e);
       PartidoToast.showToast(
           msg: FlutterI18n.translate(
-              context, "bill_form.toast_failed_to_delete_bill"));
+              context, "entry_form.toast_failed_to_delete_entry"));
     }
   }
 
-  Future _openDeleteBillDialog() async {
+  Future _openDeleteEntryDialog() async {
     await showDialog(
       context: context,
       child: AlertDialog(
-        title: I18nText("bill_form.delete_bill_dialog.title"),
-        content: I18nText("bill_form.delete_bill_dialog.question"),
+        title: I18nText("entry_form.delete_entry_dialog.title"),
+        content: I18nText("entry_form.delete_entry_dialog.question"),
         actions: <Widget>[
           FlatButton(
             child: Text(
                 FlutterI18n.translate(
-                    context, "bill_form.delete_bill_dialog.answer_no"),
+                    context, "entry_form.delete_entry_dialog.answer_no"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: () {
               navService.goBack();
@@ -636,9 +636,9 @@ class _BillFormPageState extends State<BillFormPage> {
           FlatButton(
             child: Text(
                 FlutterI18n.translate(
-                    context, "bill_form.delete_bill_dialog.answer_yes"),
+                    context, "entry_form.delete_entry_dialog.answer_yes"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
-            onPressed: _deleteBill,
+            onPressed: _deleteEntry,
           ),
         ],
       ),
@@ -650,7 +650,7 @@ class _BillFormPageState extends State<BillFormPage> {
       });
 
   _launchFaqUrl(BuildContext context) async {
-    String url =  FlutterI18n.translate(context, "bill_form.split_faq_link");
+    String url =  FlutterI18n.translate(context, "entry_form.split_faq_link");
     if (await canLaunch(url)) {
       await launch(url);
     } else {

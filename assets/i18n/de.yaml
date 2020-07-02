@@ -48,25 +48,25 @@ home:
     join_code: Beitrittscode
     join_code_empty_validation_error: Bitte gib den erhaltenen Beitrittscode ein
     button_join: Beitreten
-  create_bill_tooltip: Rechnung erstellen
+  create_entry_tooltip: Eintrag erstellen
   groups_tooltip: Gruppen
-bill_form:
-  toast_bill_created: Neue Rechnung erstellt
-  toast_failed_to_save_bill: Beim Erstellen der Rechnung ist ein Fehler aufgetreten
-  toast_bill_updated: Rechnung aktualisiert
-  toast_failed_to_update_bill: Beim Aktualisieren der Rechnung ist ein Fehler aufgetreten
-  toast_bill_deleted: Rechnung gelöscht
-  toast_failed_to_delete_bill: Beim Löschen der Rechnung ist ein Fehler aufgetreten
-  delete_bill_dialog:
-    title: Rechnung löschen
-    question: 'Bist du sicher, dass du diese Rechnung löschen willst?'
+entry_form:
+  toast_entry_created: Neuen Eintrag erstellt
+  toast_failed_to_save_entry: Beim Erstellen des Eintrages ist ein Fehler aufgetreten
+  toast_entry_updated: Eintrag aktualisiert
+  toast_failed_to_update_entry: Beim Aktualisieren des Eintrages ist ein Fehler aufgetreten
+  toast_entry_deleted: Eintrag gelöscht
+  toast_failed_to_delete_entry: Beim Löschen des Eintrages ist ein Fehler aufgetreten
+  delete_entry_dialog:
+    title: Eintrag löschen
+    question: 'Bist du sicher, dass du diesen Eintrag löschen willst?'
     answer_no: 'Nein, abbrechen'
     answer_yes: 'Ja, löschen'
   parts: Anteile
   paid: Gezahlt
-  create_bill_title: Rechnung erstellen
-  edit_bill_title: Rechnung bearbeiten
-  delete_bill_tooltip: Rechnung löschen
+  create_entry_title: Eintrag erstellen
+  edit_entry_title: Eintrag bearbeiten
+  delete_entry_tooltip: Eintrag löschen
   description: Beschreibung
   description_empty_validation_error: Bitte gib eine Beschreibung ein
   description_too_long_validation_error: Max. 255 Zeichen erlaubt
@@ -74,8 +74,8 @@ bill_form:
   amount_empty_validation_error: Bitte gib den Gesamtbetrag ein
   amount_not_positive_validation_error: 'Bitte gib eine positive Zahl, größer als 0 ein'
   date: Datum
-  create_bill_button: Rechnung erstellen
-  update_bill_button: Rechnung aktualisieren
+  create_entry_button: Eintrag erstellen
+  update_entry_button: Eintrag aktualisieren
   amount_of_splits_sum_not_total_validation_error: "Die Summe der gezahlten Beträge muss dem Gesamtbetrag entsprechen"
   details_title: "Details"
   category: "Kategorie"
@@ -83,8 +83,8 @@ bill_form:
     title: "Kategorie ändern"
   split_faq_tooltip: "FAQ für Aufteilungen öffnen"
   split_faq_link: "https://partido.rocks/faq"
-bill_details:
-  title: Rechnungsdetails
+entry_details:
+  title: Details
   created_by: Erstellt von
   splits: Aufteilung
   parts: 'Anteile:'
@@ -172,7 +172,7 @@ signup:
     additional_info: Bevor du nun starten kannst Partido zu nutzen, verifiziere bitte deine Email-Adresse über den Link, den wir dir per Email zugesendet haben.
     additional_info_2: Die Mail sollte innerhalb der nächsten paar Minuten bei dir ankommen. Bitte überprüfe auch deinen Spam-Ordner.
     login_button: Erledigt, jetzt einloggen!
-bill:
+entry:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Abos & Spenden"
     BARS_RESTAURANTS: "Bars & Restaurants"

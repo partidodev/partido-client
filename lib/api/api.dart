@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:partido_client/model/bill.dart';
+import 'package:partido_client/model/entry.dart';
 import 'package:partido_client/model/group.dart';
 import 'package:partido_client/model/group_join_body.dart';
 import 'package:partido_client/model/new_user.dart';
@@ -54,18 +54,18 @@ abstract class Api {
       @Path("groupId") int groupId, @Body() GroupJoinBody groupJoinBody);
 
   @GET("/groups/{groupId}/bills")
-  Future<List<Bill>> getBillsForGroup(@Path("groupId") int groupId);
+  Future<List<Entry>> getEntriesForGroup(@Path("groupId") int groupId);
 
   @POST("/groups/{groupId}/bills")
-  Future<HttpResponse<Bill>> createBill(
-      @Body() Bill bill, @Path("groupId") int groupId);
+  Future<HttpResponse<Entry>> createEntry(
+      @Body() Entry entry, @Path("groupId") int groupId);
 
   @PUT("/groups/{groupId}/bills/{billId}")
-  Future<HttpResponse<Bill>> updateBill(@Body() Bill bill,
+  Future<HttpResponse<Entry>> updateEntry(@Body() Entry entry,
       @Path("groupId") int groupId, @Path("billId") int billId);
 
   @DELETE("/bills/{billId}")
-  Future<HttpResponse<String>> deleteBill(@Path("billId") int billId);
+  Future<HttpResponse<String>> deleteEntry(@Path("billId") int billId);
 
   @GET("/groups/{groupId}/report")
   Future<Report> getReportForGroup(@Path("groupId") int groupId);

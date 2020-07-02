@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:partido_client/model/split.dart';
 
-part 'bill.g.dart';
+part 'entry.g.dart';
 
 @JsonSerializable()
-class Bill {
+class Entry {
   int id;
   String description;
   String category;
@@ -15,7 +15,7 @@ class Bill {
   int creator;
   List<Split> splits = null;
 
-  Bill({
+  Entry({
     this.id,
     this.description,
     this.category,
@@ -27,6 +27,6 @@ class Bill {
     this.splits
   });
 
-  factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
-  Map<String, dynamic> toJson() => _$BillToJson(this);
+  factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
+  Map<String, dynamic> toJson() => _$EntryToJson(this);
 }

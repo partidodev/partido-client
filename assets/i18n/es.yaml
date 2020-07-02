@@ -48,25 +48,25 @@ home:
     join_code: Código de unión
     join_code_empty_validation_error: Ingresa el código de unión que recibiste
     button_join: Unirse
-  create_bill_tooltip: Crear cuenta
+  create_entry_tooltip: Crear entrada
   groups_tooltip: Grupos
-bill_form:
-  toast_bill_created: Nueva cuenta creada
-  toast_failed_to_save_bill: Se produjo un error al crear la cuenta
-  toast_bill_updated: Cuenta actualizada
-  toast_failed_to_update_bill: Se produjo un error al actualizar la cuenta
-  toast_bill_deleted: Cuenta eliminada
-  toast_failed_to_delete_bill: Se produjo un error al intentar eliminar la cuenta
-  delete_bill_dialog:
-    title: Eliminar cuenta
-    question: ¿Estás seguro de que quieres eliminar esta cuenta?
+entry_form:
+  toast_entry_created: Nueva entrada creada
+  toast_failed_to_save_entry: Se produjo un error al crear la entrada
+  toast_entry_updated: Cuenta actualizada
+  toast_failed_to_update_entry: Se produjo un error al actualizar la entrada
+  toast_entry_deleted: Cuenta eliminada
+  toast_failed_to_delete_entry: Se produjo un error al intentar eliminar la entrada
+  delete_entry_dialog:
+    title: Eliminar entrada
+    question: ¿Estás seguro de que quieres eliminar esta entrada?
     answer_no: 'No, cancelar'
     answer_yes: 'Sí, eliminar'
   parts: Partes
   paid: Pagado
-  create_bill_title: Crear cuenta
-  edit_bill_title: Editar cuenta
-  delete_bill_tooltip: Eliminar cuenta
+  create_entry_title: Crear entrada
+  edit_entry_title: Editar entrada
+  delete_entry_tooltip: Eliminar entrada
   description: Descripción
   description_empty_validation_error: 'Por favor, ingresa una descripción'
   description_too_long_validation_error: Max. 255 caracteres permitidos
@@ -74,8 +74,8 @@ bill_form:
   amount_empty_validation_error: 'Por favor, ingresa el monto total'
   amount_not_positive_validation_error: 'Por favor, ingresa un valor mayor que 0'
   date: Fecha
-  create_bill_button: Crear cuenta
-  update_bill_button: Actualizar cuenta
+  create_entry_button: Crear entrada
+  update_entry_button: Actualizar entrada
   amount_of_splits_sum_not_total_validation_error: "La suma de los montos pagados debe coincidir con el monto total"
   details_title: "Detalles"
   category: "Categoría"
@@ -83,8 +83,8 @@ bill_form:
     title: "Seleccionar categoría"
   split_faq_tooltip: "Abrir FAQ de divisiones"
   split_faq_link: "https://partido.rocks/faq"
-bill_details:
-  title: Detalles de cuenta
+entry_details:
+  title: Detalles
   created_by: Creado por
   splits: Divisiones
   parts: 'Partes:'
@@ -172,7 +172,7 @@ signup:
     additional_info: Antes de comenzar usando la Partido App, por favor verifica tu dirección de email mediante el enlace que te enviamos por email.
     additional_info_2: El email debería llegar en breve. No olvides examinar la carpeta de spam, si necesario.
     login_button: Listo, continuar con login!
-bill:
+entry:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Suscripciones & Donaciones"
     BARS_RESTAURANTS: "Bares & Restaurantes"

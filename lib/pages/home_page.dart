@@ -4,7 +4,7 @@ import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/group.dart';
 import 'package:partido_client/model/group_join_body.dart';
-import 'package:partido_client/pages/bill_details_page.dart';
+import 'package:partido_client/pages/entry_details_page.dart';
 import 'package:partido_client/pages/group_form_page.dart';
 import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
@@ -126,32 +126,32 @@ class _HomePageState extends State<HomePage> {
               ListView.builder(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
                 //separatorBuilder: (context, index) => Divider(),
-                itemCount: appState.getBills().length,
+                itemCount: appState.getEntries().length,
                 itemBuilder: (context, index) {
                   return Card(
-                    margin: appState.getProcessedBillListTitles()[index+1] != null ? EdgeInsets.only(bottom: 8) : EdgeInsets.zero,
+                    margin: appState.getProcessedEntryListTitles()[index+1] != null ? EdgeInsets.only(bottom: 8) : EdgeInsets.zero,
                     shape: Border(
                       left: BorderSide(color: Color(0x0F000000), width: 1),
                       top: BorderSide(color: Color(0x0F000000), width: 1),
                       right: BorderSide(color: Color(0x0F000000), width: 1),
-                      bottom: index == appState.getBills().length - 1
-                          || appState.getProcessedBillListTitles()[index+1] != null
+                      bottom: index == appState.getEntries().length - 1
+                          || appState.getProcessedEntryListTitles()[index+1] != null
                           ? BorderSide(color: Color(0x0F000000), width: 1)
                           : BorderSide(color: Color(0x0F000000), width: 0),
                     ),
                     child: Column(
                       children: <Widget>[
-                        appState.getProcessedBillListTitles()[index] != null
+                        appState.getProcessedEntryListTitles()[index] != null
                             ? Column(
                                 children: [
-                                  appState.getProcessedBillListTitles()[index].contains("#")
+                                  appState.getProcessedEntryListTitles()[index].contains("#")
                                   ? ListTile(title: Text(
-                                      FlutterI18n.translate(context, "date." + appState.getProcessedBillListTitles()[index].split("#")[0])
-                                          + " " + appState.getProcessedBillListTitles()[index].split("#")[1],
+                                      FlutterI18n.translate(context, "date." + appState.getProcessedEntryListTitles()[index].split("#")[0])
+                                          + " " + appState.getProcessedEntryListTitles()[index].split("#")[1],
                                       style: TextStyle(fontSize: 18),
                                     ))
                                   : ListTile(title: Text(
-                                      FlutterI18n.translate(context, "date." + appState.getProcessedBillListTitles()[index]),
+                                      FlutterI18n.translate(context, "date." + appState.getProcessedEntryListTitles()[index]),
                                       style: TextStyle(fontSize: 18),
                                     )),
                                   Divider(),
@@ -163,25 +163,25 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(
-                                appState.getAvailableBillCategories()[
-                                    appState.getBills()[index].category],
+                                appState.getAvailableEntryCategories()[
+                                    appState.getEntries()[index].category],
                                 size: 27,
                               ),
                             ],
                           ),
                           title:
-                              Text('${appState.getBills()[index].description}'),
+                              Text('${appState.getEntries()[index].description}'),
                           subtitle: Text(
-                              '${appState.getUserFromGroupById(appState.getBills()[index].creator).username}'),
+                              '${appState.getUserFromGroupById(appState.getEntries()[index].creator).username}'),
                           trailing: Text(
-                            '${currencyFormatter.format(appState.getBills()[index].totalAmount)} ${appState.getSelectedGroup().currency}',
+                            '${currencyFormatter.format(appState.getEntries()[index].totalAmount)} ${appState.getSelectedGroup().currency}',
                             style: TextStyle(fontSize: 16),
                           ),
                           onTap: () {
                             navService.push(
                               MaterialPageRoute(
-                                builder: (context) => BillDetailsPage(
-                                    bill: appState.getBills()[index]),
+                                builder: (context) => EntryDetailsPage(
+                                    entry: appState.getEntries()[index]),
                               ),
                             );
                           },
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               ? FloatingActionButton(
                   onPressed: () {
                     if (appState.getSelectedGroup().name != null) {
-                      navService.pushNamed('/create-bill');
+                      navService.pushNamed('/create-entry');
                     }
                   },
                   tooltip: FlutterI18n.translate(

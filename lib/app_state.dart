@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:partido_client/linear_icons_icons.dart';
-import 'package:partido_client/model/bill.dart';
+import 'package:partido_client/model/entry.dart';
 import 'package:retrofit/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,12 +18,12 @@ class AppState extends ChangeNotifier {
   User _currentUser = new User();
   Group _selectedGroup = new Group(users: []);
   List<Group> _myGroups = [];
-  List<Bill> _bills = [];
+  List<Entry> _entries = [];
   Report _report = new Report(balances: []);
   int _selectedGroupId = -1; // initial value to check if id must be loaded or not
-  Map _availableBillCategories = new Map();
+  Map _availableEntryCategories = new Map();
   DateTime now = DateTime.now();
-  Map<int, String> _processedBillListTitles;
+  Map<int, String> _processedEntryListTitles;
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -43,47 +43,47 @@ class AppState extends ChangeNotifier {
             _selectedGroupId = preferredGroupId;
             reloadReport();
             _selectedGroup = group;
-            reloadBillList();
+            reloadEntryList();
             break;
           }
         }
       }
     }
-    _availableBillCategories = loadAvailableBillCategories();
+    _availableEntryCategories = loadAvailableEntryCategories();
   }
 
   void clearAppState() async {
     _selectedGroupId = -1;
     _selectedGroup = new Group(users: []);
-    _bills = [];
+    _entries = [];
     _report = new Report(balances: []);
   }
 
   void refreshAppState() async {
     _selectedGroup = await api.getGroup(_selectedGroupId);
-    _bills = await api.getBillsForGroup(_selectedGroupId);
-    _processedBillListTitles = processBillListTitles(_bills);
+    _entries = await api.getEntriesForGroup(_selectedGroupId);
+    _processedEntryListTitles = processEntryListTitles(_entries);
     _report = await api.getReportForGroup(_selectedGroupId);
     _myGroups = await api.getMyGroups();
     notifyListeners();
   }
 
-  void addBill(Bill bill) {
-    _bills.add(bill);
+  void addEntry(Entry entry) {
+    _entries.add(entry);
     notifyListeners();
   }
 
-  void replaceBillList(List<Bill> billList) {
-    _bills = billList;
+  void replaceEntryList(List<Entry> entryList) {
+    _entries = entryList;
     notifyListeners();
   }
 
-  List<Bill> getBills() {
-    return _bills;
+  List<Entry> getEntries() {
+    return _entries;
   }
 
-  Map<int, String> getProcessedBillListTitles() {
-    return _processedBillListTitles;
+  Map<int, String> getProcessedEntryListTitles() {
+    return _processedEntryListTitles;
   }
 
   Report getReport() {
@@ -95,7 +95,7 @@ class AppState extends ChangeNotifier {
     await preferences.setInt("SELECTEDGROUP", groupId);
     _selectedGroupId = groupId;
     reloadSelectedGroup();
-    reloadBillList();
+    reloadEntryList();
     reloadReport();
   }
 
@@ -104,9 +104,9 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void reloadBillList() async {
-    _bills = await api.getBillsForGroup(_selectedGroupId);
-    _processedBillListTitles = processBillListTitles(_bills);
+  void reloadEntryList() async {
+    _entries = await api.getEntriesForGroup(_selectedGroupId);
+    _processedEntryListTitles = processEntryListTitles(_entries);
     notifyListeners();
   }
 
@@ -161,95 +161,94 @@ class AppState extends ChangeNotifier {
     return preferences.getString("REMEMBERLOGIN");
   }
 
-  Map loadAvailableBillCategories() {
-    Map billCategories = new Map();
-    billCategories["SUBSCRIPTIONS_DONATIONS"] = LinearIcons.calendar_check;
-    billCategories["BARS_RESTAURANTS"] = LinearIcons.glass2;
-    billCategories["EDUCATION"] = LinearIcons.graduation_hat;
-    billCategories["FOOD_GROCERIES"] = LinearIcons.bread;
-    billCategories["FAMILY_FRIENDS"] = LinearIcons.group_work;
-    billCategories["LEISURE_ENTERTAINMENT"] = LinearIcons.ticket;
-    billCategories["HEALTH_DRUGSTORES"] = LinearIcons.heart_pulse;
-    billCategories["HOUSEHOLD_UTILITIES"] = LinearIcons.couch;
-    billCategories["MEDIA_ELECTRONICS"] = LinearIcons.laptop;
-    billCategories["TRAVEL_VACATION"] = LinearIcons.earth;
-    billCategories["SHOPPING"] = LinearIcons.bag;
-    billCategories["MISCELLANEOUS"] = LinearIcons.leaf;
-    billCategories["TAXES_DUTIES"] = LinearIcons.calculator2;
-    billCategories["TRANSPORT_CAR"] = LinearIcons.bus2;
-    billCategories["UNCATEGORIZED"] = LinearIcons.cart;
-    billCategories["INSURANCE_FINANCE"] = LinearIcons.apartment;
-    return billCategories;
+  Map loadAvailableEntryCategories() {
+    Map entryCategories = new Map();
+    entryCategories["SUBSCRIPTIONS_DONATIONS"] = LinearIcons.calendar_check;
+    entryCategories["BARS_RESTAURANTS"] = LinearIcons.glass2;
+    entryCategories["EDUCATION"] = LinearIcons.graduation_hat;
+    entryCategories["FOOD_GROCERIES"] = LinearIcons.bread;
+    entryCategories["FAMILY_FRIENDS"] = LinearIcons.group_work;
+    entryCategories["LEISURE_ENTERTAINMENT"] = LinearIcons.ticket;
+    entryCategories["HEALTH_DRUGSTORES"] = LinearIcons.heart_pulse;
+    entryCategories["HOUSEHOLD_UTILITIES"] = LinearIcons.couch;
+    entryCategories["MEDIA_ELECTRONICS"] = LinearIcons.laptop;
+    entryCategories["TRAVEL_VACATION"] = LinearIcons.earth;
+    entryCategories["SHOPPING"] = LinearIcons.bag;
+    entryCategories["MISCELLANEOUS"] = LinearIcons.leaf;
+    entryCategories["TAXES_DUTIES"] = LinearIcons.calculator2;
+    entryCategories["TRANSPORT_CAR"] = LinearIcons.bus2;
+    entryCategories["UNCATEGORIZED"] = LinearIcons.cart;
+    entryCategories["INSURANCE_FINANCE"] = LinearIcons.apartment;
+    return entryCategories;
   }
 
-  Map getAvailableBillCategories() {
-    return _availableBillCategories;
+  Map getAvailableEntryCategories() {
+    return _availableEntryCategories;
   }
 
-  Map<int, String> processBillListTitles(List<Bill> list) {
-    Map<int, String> processBillListTitles = new Map();
+  Map<int, String> processEntryListTitles(List<Entry> entries) {
+    Map<int, String> processEntryListTitles = new Map();
     Map<String, String> titleUsed = new Map();
-    for (int i=0; i < list.length; i++) {
-      if (isToday(list[i])) {
+    for (int i=0; i < entries.length; i++) {
+      if (isToday(entries[i])) {
         if (titleUsed['TODAY'] == null) {
-          processBillListTitles[i] = 'TODAY';
+          processEntryListTitles[i] = 'TODAY';
           titleUsed['TODAY'] = "true";
         }
-      } else if (isYesterday(list[i])) {
+      } else if (isYesterday(entries[i])) {
         if (titleUsed['YESTERDAY'] == null) {
-          processBillListTitles[i] = 'YESTERDAY';
+          processEntryListTitles[i] = 'YESTERDAY';
           titleUsed['YESTERDAY'] = "true";
         }
-      } else if (isThisWeek(list[i])) {
+      } else if (isThisWeek(entries[i])) {
         if (titleUsed['THIS_WEEK'] == null) {
-          processBillListTitles[i] = 'THIS_WEEK';
+          processEntryListTitles[i] = 'THIS_WEEK';
           titleUsed['THIS_WEEK'] = "true";
         }
-      } else if (isThisMonth(list[i])) {
+      } else if (isThisMonth(entries[i])) {
         if (titleUsed['THIS_MONTH'] == null) {
-          processBillListTitles[i] = 'THIS_MONTH';
+          processEntryListTitles[i] = 'THIS_MONTH';
           titleUsed['THIS_MONTH'] = "true";
         }
       } else {
-        int month = DateTime.parse(list[i].creationDate).month;
-        int year = DateTime.parse(list[i].creationDate).year;
+        int month = DateTime.parse(entries[i].creationDate).month;
+        int year = DateTime.parse(entries[i].creationDate).year;
         if (titleUsed["MONTH_${month}#${year}"] == null) {
-          processBillListTitles[i] = 'MONTH_${month}#${year}';
+          processEntryListTitles[i] = 'MONTH_${month}#${year}';
           titleUsed['MONTH_${month}#${year}'] = "true";
         }
       }
     }
-    print(processBillListTitles);//TODO: remove print
-    return processBillListTitles;
+    return processEntryListTitles;
   }
 
-  bool isToday(Bill bill) {
-    if (DateTime.parse(bill.creationDate).isAfter(startOfToday())
-        && DateTime.parse(bill.creationDate).isBefore(endOfToday())) {
+  bool isToday(Entry entry) {
+    if (DateTime.parse(entry.creationDate).isAfter(startOfToday())
+        && DateTime.parse(entry.creationDate).isBefore(endOfToday())) {
       return true;
     }
     return false;
   }
 
-  bool isYesterday(Bill bill) {
-    if (DateTime.parse(bill.creationDate).isAfter(startOfYesterday()) &&
-        DateTime.parse(bill.creationDate).isBefore(startOfToday())) {
+  bool isYesterday(Entry entry) {
+    if (DateTime.parse(entry.creationDate).isAfter(startOfYesterday()) &&
+        DateTime.parse(entry.creationDate).isBefore(startOfToday())) {
       return true;
     }
     return false;
   }
 
-  bool isThisWeek(Bill bill) {
-    if (DateTime.parse(bill.creationDate).isAfter(startOfThisWeek()) &&
-        DateTime.parse(bill.creationDate).isBefore(startOfYesterday())) {
+  bool isThisWeek(Entry entry) {
+    if (DateTime.parse(entry.creationDate).isAfter(startOfThisWeek()) &&
+        DateTime.parse(entry.creationDate).isBefore(startOfYesterday())) {
       return true;
     }
     return false;
   }
 
-  bool isThisMonth(Bill bill) {
-    if (DateTime.parse(bill.creationDate).isAfter(startOfThisMonth()) &&
-        DateTime.parse(bill.creationDate).isBefore(startOfThisWeek())) {
+  bool isThisMonth(Entry entry) {
+    if (DateTime.parse(entry.creationDate).isAfter(startOfThisMonth()) &&
+        DateTime.parse(entry.creationDate).isBefore(startOfThisWeek())) {
       return true;
     }
     return false;

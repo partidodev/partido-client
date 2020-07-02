@@ -45,25 +45,25 @@ home:
     join_code: "Join code"
     join_code_empty_validation_error: "Please enter the join code you recieved"
     button_join: "Join"
-  create_bill_tooltip: "Create bill"
+  create_entry_tooltip: "Create entry"
   groups_tooltip: "Groups"
-bill_form:
-  toast_bill_created: "New bill created"
-  toast_failed_to_save_bill: "An error occurred creating the bill"
-  toast_bill_updated: "Bill updated"
-  toast_failed_to_update_bill: "An error occurred updating the bill"
-  toast_bill_deleted: "Bill deleted"
-  toast_failed_to_delete_bill: "An error occurred trying to delete the bill"
-  delete_bill_dialog:
-    title: "Delete Bill"
-    question: "Are you sure, that you want to delete this bill?"
+entry_form:
+  toast_entry_created: "New entry created"
+  toast_failed_to_save_entry: "An error occurred creating the entry"
+  toast_entry_updated: "Entry updated"
+  toast_failed_to_update_entry: "An error occurred updating the entry"
+  toast_entry_deleted: "Entry deleted"
+  toast_failed_to_delete_entry: "An error occurred trying to delete the entry"
+  delete_entry_dialog:
+    title: "Delete Entry"
+    question: "Are you sure, that you want to delete this entry?"
     answer_no: "No, cancel"
     answer_yes: "Yes, delete"
   parts: "Parts"
   paid: "Paid"
-  create_bill_title: "Create bill"
-  edit_bill_title: "Edit bill"
-  delete_bill_tooltip: "Delete bill"
+  create_entry_title: "Create entry"
+  edit_entry_title: "Edit entry"
+  delete_entry_tooltip: "Delete entry"
   description: "Description"
   description_empty_validation_error: "Please enter a description"
   description_too_long_validation_error: "Max. 255 characters allowed"
@@ -71,17 +71,17 @@ bill_form:
   amount_empty_validation_error: "Please enter the total amount"
   amount_not_positive_validation_error: "Please enter a positive amount greater than 0"
   date: "Date"
-  create_bill_button: "Create bill"
-  update_bill_button: "Update bill"
-  amount_of_splits_sum_not_total_validation_error: "The paid amounts sum must match the total amount of the bill"
+  create_entry_button: "Create entry"
+  update_entry_button: "Update entry"
+  amount_of_splits_sum_not_total_validation_error: "The paid amounts sum must match the total amount of the entry"
   details_title: "Details"
   category: "Category"
   select_category_dialog:
     title: "Select Category"
   split_faq_tooltip: "Open Split FAQ"
   split_faq_link: "https://partido.rocks/faq"
-bill_details:
-  title: "Bill Details"
+entry_details:
+  title: "Details"
   created_by: "Created by"
   splits: "Splits"
   parts: "Parts:"
@@ -169,7 +169,7 @@ signup:
     additional_info: "Before you can start using Partido, please verify your email address by clicking on the link we sent you per email."
     additional_info_2: "You should receive the verification mail in the next few minutes. Also check your spam folder if needed."
     login_button: Done, proceed to login!
-bill:
+entry:
   categories:
     SUBSCRIPTIONS_DONATIONS: "Subscriptions & Donations"
     BARS_RESTAURANTS: "Bars & Restaurants"
