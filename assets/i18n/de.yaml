@@ -120,6 +120,10 @@ account:
   toast_account_settings_saved: Einstellungen gespeichert
   toast_error_updating_account: Beim Aktualisieren des Profils ist ein Fehler aufgetreten
   toast_login_failed: 'Login fehlgeschlagen, bitte versuche es später erneut'
+  verification_required_dialog:
+    title: Verifizierung erforderlich
+    info: Um Partido weiter zu nutzen, verifiziere bitte deine Email-Adresse, indem du auf den Link klickst, den wir dir per Email gesendet haben. Vergiss nicht, auch im Spam-Ordner nachzuschauen.
+    ok: Ok
 group_form:
   toast_group_created: Neue Gruppe erstellt
   toast_group_creation_failed: Erstellen der Gruppe fehlgeschlagen

@@ -30,6 +30,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
   final _formKey = GlobalKey<FormState>();
 
   String _username;
+  String _oldEmail;
   String _email;
   String _oldPassword;
   String _newPassword;
@@ -44,6 +45,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
     User user = Provider.of<AppState>(context, listen: false).getCurrentUser();
     usernameController.text = user.username;
     emailController.text = user.email;
+    _oldEmail = user.email;
     return super.initState();
   }
 
@@ -89,8 +91,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       children: <Widget>[
                         ListTile(
                           title: Text(
-                            FlutterI18n.translate(
-                                context, "account.details"),
+                            FlutterI18n.translate(context, "account.details"),
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
@@ -104,8 +105,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 decoration: InputDecoration(
-                                    labelText: FlutterI18n.translate(
-                                        context, "account.username"),
+                                  labelText: FlutterI18n.translate(
+                                      context, "account.username"),
                                   prefixIcon: Icon(LinearIcons.user),
                                 ),
                                 controller: usernameController,
@@ -126,7 +127,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 onSaved: (value) => _email = value,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "account.email"),
+                                  labelText: FlutterI18n.translate(
+                                      context, "account.email"),
                                   prefixIcon: Icon(LinearIcons.at_sign),
                                 ),
                                 controller: emailController,
@@ -139,7 +141,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                     return FlutterI18n.translate(context,
                                         "account.email_empty_validation_error");
                                   }
-                                  if (!RegExp(r'^[a-zA-Z0-9\.]+@[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
+                                  if (!RegExp(
+                                          r'^[a-zA-Z0-9\.]+@[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}$')
+                                      .hasMatch(value)) {
                                     return FlutterI18n.translate(context,
                                         "account.email_invalid_validation_error");
                                   }
@@ -155,7 +159,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 onSaved: (value) => _oldPassword = value,
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "account.password"),
+                                  labelText: FlutterI18n.translate(
+                                      context, "account.password"),
                                   prefixIcon: Icon(LinearIcons.key),
                                 ),
                                 validator: (value) {
@@ -189,7 +194,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               size: 20,
                             ),
                             onPressed: () {
-                              PartidoToast.showToast(msg: FlutterI18n.translate(context, "account.change_password.description"));
+                              PartidoToast.showToast(
+                                  msg: FlutterI18n.translate(context,
+                                      "account.change_password.description"));
                             },
                           ),
                         ),
@@ -202,7 +209,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 onSaved: (value) => _newPassword = value,
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "account.change_password.new_password"),
+                                  labelText: FlutterI18n.translate(context,
+                                      "account.change_password.new_password"),
                                   prefixIcon: Icon(LinearIcons.lock),
                                 ),
                                 validator: (value) {
@@ -221,7 +229,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               TextFormField(
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "account.change_password.new_password_confirmation"),
+                                  labelText: FlutterI18n.translate(context,
+                                      "account.change_password.new_password_confirmation"),
                                   prefixIcon: Icon(LinearIcons.rotation_lock),
                                 ),
                                 validator: (value) {
@@ -242,9 +251,12 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     padding: EdgeInsets.all(8),
                     child: MaterialButton(
                         minWidth: double.infinity,
-                        textColor: MediaQuery.of(context).platformBrightness == Brightness.light
-                            ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-                            : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                        textColor: MediaQuery.of(context).platformBrightness ==
+                                Brightness.light
+                            ? Color.fromRGBO(
+                                235, 64, 52, 1) // Color for light theme
+                            : Color.fromRGBO(255, 99, 71, 1),
+                        // Color for dark theme
                         child: Text(
                             FlutterI18n.translate(
                                 context, "account.logout_tooltip"),
@@ -271,28 +283,33 @@ class _EditAccountPageState extends State<EditAccountPage> {
       HttpResponse<User> response = await api.updateUser(updatedUser,
           Provider.of<AppState>(context, listen: false).getCurrentUser().id);
       if (response.response.statusCode == 200) {
-        Provider.of<AppState>(context, listen: false)
-            .setCurrentUser(response.data);
-        Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
-        navService.goBack();
-        PartidoToast.showToast(
-            msg: FlutterI18n.translate(
-                context, "account.toast_account_settings_saved"));
-
-        try {
-          var loginPassword;
-          if (_newPassword.length == 0) {
-            loginPassword = _oldPassword;
-          } else {
-            loginPassword = _newPassword;
-          }
-          await api.login("$_email", "$loginPassword",
-              "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
-        } catch (e) {
-          logger.e('Login failed', e);
+        if (_oldEmail != _email) {
+          _openVerificationRequiredDialog();
+        } else {
+          Provider.of<AppState>(context, listen: false)
+              .setCurrentUser(response.data);
+          Provider.of<AppState>(context, listen: false).reloadSelectedGroup();
+          navService.goBack();
           PartidoToast.showToast(
-              msg:
-                  FlutterI18n.translate(context, "account.toast_login_failed"));
+              msg: FlutterI18n.translate(
+                  context, "account.toast_account_settings_saved"));
+
+          // Automatically re-login after changing account's settings
+          try {
+            var loginPassword;
+            if (_newPassword.length == 0) {
+              loginPassword = _oldPassword;
+            } else {
+              loginPassword = _newPassword;
+            }
+            await api.login("$_email", "$loginPassword",
+                "${await Provider.of<AppState>(context, listen: false).getRememberLoginStatus()}");
+          } catch (e) {
+            logger.e('Login failed', e);
+            PartidoToast.showToast(
+                msg: FlutterI18n.translate(
+                    context, "account.toast_login_failed"));
+          }
         }
       } else if (response.response.statusCode == 412) {
         // HTTP status "precondition failed"; email is already in use
@@ -335,6 +352,25 @@ class _EditAccountPageState extends State<EditAccountPage> {
             child: Text(
                 FlutterI18n.translate(
                     context, "account.logout_dialog.answer_yes"),
+                style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: _logout,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future _openVerificationRequiredDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        title: I18nText("account.verification_required_dialog.title"),
+        content: I18nText("account.verification_required_dialog.info"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+                FlutterI18n.translate(
+                    context, "account.verification_required_dialog.ok"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: _logout,
           ),

@@ -117,6 +117,10 @@ account:
   toast_account_settings_saved: "Settings saved"
   toast_error_updating_account: "An error occurred updating the account"
   toast_login_failed: "Login failed, please try again later"
+  verification_required_dialog:
+    title: Verification required
+    info: To continue using Partido, please verify your email address by clicking on the link we sent you per email. Don't forget to check your spam folder as well.
+    ok: Ok
 group_form:
   toast_group_created: "New group created"
   toast_group_creation_failed: "Group creation failed"

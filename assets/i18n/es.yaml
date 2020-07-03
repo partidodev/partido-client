@@ -120,6 +120,10 @@ account:
   toast_account_settings_saved: Cambios guardados
   toast_error_updating_account: Se produjo un error al actualizar la cuenta
   toast_login_failed: Acceso fallido. Por favor intenta nuevamente
+  verification_required_dialog:
+    title: Verificación necesaria
+    info: Para continuar usando Partido, verifica tu dirección email haciendo clic en el enlace que te enviamos por email. No olvides revisar tu carpeta de spam también.
+    ok: Ok
 group_form:
   toast_group_created: Nuevo grupo creado
   toast_group_creation_failed: Creación de grupo fallida
