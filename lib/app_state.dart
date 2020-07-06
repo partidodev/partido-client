@@ -213,7 +213,10 @@ class AppState extends ChangeNotifier {
       } else {
         int month = DateTime.parse(entries[i].creationDate).month;
         int year = DateTime.parse(entries[i].creationDate).year;
-        if (titleUsed["MONTH_${month}#${year}"] == null) {
+        if (now.year == year && titleUsed["MONTH_${month}"] == null) {
+          processEntryListTitles[i] = 'MONTH_${month}';
+          titleUsed['MONTH_${month}'] = "true";
+        } else if (now.year != year && titleUsed["MONTH_${month}#${year}"] == null) {
           processEntryListTitles[i] = 'MONTH_${month}#${year}';
           titleUsed['MONTH_${month}#${year}'] = "true";
         }
