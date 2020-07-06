@@ -35,10 +35,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() async {
     try {
-      HttpResponse<String> response =
-          await api.login("$_email", "$_password", "$rememberMeNumber");
-      Provider.of<AppState>(context, listen: false)
-          .setRememberLoginStatus("$rememberMeNumber");
+      HttpResponse<String> response = await api.login("$_email", "$_password", "$rememberMeNumber");
+      Provider.of<AppState>(context, listen: false).setRememberLoginStatus("$rememberMeNumber");
       if (response.response.statusCode == 200) {
         navService.pushReplacementNamed("/");
       } else if (response.response.statusCode == 429) {

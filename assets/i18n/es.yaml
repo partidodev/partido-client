@@ -47,6 +47,8 @@ home:
     title: Unirse al grupo
     join_code: Código de unión
     join_code_empty_validation_error: Ingresa el código de unión que recibiste
+    join_code_invalid_validation_error: Por favor, ingresa un código de unión válido
+    join_code_not_found_validation_error: Código no encontrado o deactivado
     button_join: Unirse
   create_entry_tooltip: Crear entrada
   groups_tooltip: Grupos
