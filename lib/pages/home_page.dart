@@ -107,31 +107,41 @@ class _HomePageState extends State<HomePage> {
           ),
           body: TabBarView(
             children: [
-              ListView(
-                padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      if (appState.getSelectedGroup().name == null)
-                        buildWelcomeCard(context, appState.getMyGroups()),
-                      if (appState.getSelectedGroup().name != null)
-                        buildGroupInfoCard(appState, context),
-                      if (appState.getSelectedGroup().name != null)
-                        buildGroupBalancesCard(context, appState),
-                      if (appState.getSelectedGroup().name != null &&
-                          appState.getSelectedGroup().joinModeActive)
-                        buildJoinModeInfoCard(context, appState),
-                    ],
-                  ),
-                ],
+              RefreshIndicator(
+                child: ListView(
+                  padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        if (appState.getSelectedGroup().name == null)
+                          buildWelcomeCard(context, appState.getMyGroups()),
+                        if (appState.getSelectedGroup().name != null)
+                          buildGroupInfoCard(appState, context),
+                        if (appState.getSelectedGroup().name != null)
+                          buildGroupBalancesCard(context, appState),
+                        if (appState.getSelectedGroup().name != null &&
+                            appState.getSelectedGroup().joinModeActive)
+                          buildJoinModeInfoCard(context, appState),
+                      ],
+                    ),
+                  ],
+                ),
+                onRefresh: () async {
+                  await appState.refreshAppState();
+                },
               ),
-              ListView.builder(
-                padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
-                //separatorBuilder: (context, index) => Divider(),
-                itemCount: appState.getEntries().length,
-                itemBuilder: (context, index) {
-                  return buildEntryListItem(appState, index, context);
+              RefreshIndicator(
+                child: ListView.builder(
+                  padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
+                  //separatorBuilder: (context, index) => Divider(),
+                  itemCount: appState.getEntries().length,
+                  itemBuilder: (context, index) {
+                    return buildEntryListItem(appState, index, context);
+                  },
+                ),
+                onRefresh: () async {
+                  await appState.refreshAppState();
                 },
               ),
             ],
