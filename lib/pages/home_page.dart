@@ -109,6 +109,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               RefreshIndicator(
                 child: ListView(
+                  physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
                   children: <Widget>[
                     Column(
@@ -133,6 +134,7 @@ class _HomePageState extends State<HomePage> {
               ),
               RefreshIndicator(
                 child: ListView.builder(
+                  physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
                   //separatorBuilder: (context, index) => Divider(),
                   itemCount: appState.getEntries().length,
@@ -143,6 +145,7 @@ class _HomePageState extends State<HomePage> {
                 onRefresh: () async {
                   await appState.refreshAppState();
                 },
+
               ),
             ],
           ),
