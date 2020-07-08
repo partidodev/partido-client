@@ -24,6 +24,7 @@ class AppState extends ChangeNotifier {
   Map _availableEntryCategories = new Map();
   DateTime now = DateTime.now();
   Map<int, String> _processedEntryListTitles;
+  bool stateInitialized = false;
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -48,6 +49,8 @@ class AppState extends ChangeNotifier {
           }
         }
       }
+      stateInitialized = true;
+      notifyListeners();
     }
     _availableEntryCategories = loadAvailableEntryCategories();
   }
@@ -60,12 +63,14 @@ class AppState extends ChangeNotifier {
   }
 
   void refreshAppState() async {
-    _selectedGroup = await api.getGroup(_selectedGroupId);
-    _entries = await api.getEntriesForGroup(_selectedGroupId);
-    _processedEntryListTitles = processEntryListTitles(_entries);
-    _report = await api.getReportForGroup(_selectedGroupId);
-    _myGroups = await api.getMyGroups();
-    notifyListeners();
+    if (_selectedGroupId != -1) {
+      _selectedGroup = await api.getGroup(_selectedGroupId);
+      _entries = await api.getEntriesForGroup(_selectedGroupId);
+      _processedEntryListTitles = processEntryListTitles(_entries);
+      _report = await api.getReportForGroup(_selectedGroupId);
+      _myGroups = await api.getMyGroups();
+      notifyListeners();
+    }
   }
 
   void addEntry(Entry entry) {

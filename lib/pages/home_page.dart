@@ -112,10 +112,10 @@ class _HomePageState extends State<HomePage> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
                   children: <Widget>[
-                    Column(
+                    appState.stateInitialized? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        if (appState.getSelectedGroup().name == null)
+                      children: [
+                        if (appState.getSelectedGroup().name == null && appState.stateInitialized)
                           buildWelcomeCard(context, appState.getMyGroups()),
                         if (appState.getSelectedGroup().name != null)
                           buildGroupInfoCard(appState, context),
@@ -124,6 +124,15 @@ class _HomePageState extends State<HomePage> {
                         if (appState.getSelectedGroup().name != null &&
                             appState.getSelectedGroup().joinModeActive)
                           buildJoinModeInfoCard(context, appState),
+                      ],
+                    ) : Column(
+                      // Show loading indicator when opening app and hide all
+                      // cards before we know what card will be displayed finally
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 45),
+                          child: RefreshProgressIndicator(),
+                        )
                       ],
                     ),
                   ],
@@ -145,7 +154,6 @@ class _HomePageState extends State<HomePage> {
                 onRefresh: () async {
                   await appState.refreshAppState();
                 },
-
               ),
             ],
           ),
