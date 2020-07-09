@@ -24,6 +24,7 @@ home:
     share:
       text: "Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code (More information aboout how to join a group on https://partido.rocks/faq/#join-group):"
       subject: "Join my group on Partido!"
+    faq_link: "https://partido.rocks/faq-groups/"
   menu:
     account: "My Account"
     about: "About Partido"

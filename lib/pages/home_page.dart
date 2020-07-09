@@ -249,11 +249,22 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
+            contentPadding: EdgeInsets.only(left: 16, right: 0),
             title: Text(
               FlutterI18n.translate(context, "home.join_mode.title_enabled"),
               style: TextStyle(fontSize: 18),
             ),
             leading: Icon(LinearIcons.users_plus, color: Colors.green),
+            trailing: IconButton(
+              icon: Icon(
+                LinearIcons.bubble_question,
+                size: 20,
+              ),
+              tooltip: FlutterI18n.translate(context, "entry_form.split_faq_tooltip"),
+              onPressed: () {
+                _launchJoinModeFaqUrl(context);
+              },
+            ),
           ),
           Divider(),
           ListTile(
@@ -666,6 +677,15 @@ class _HomePageState extends State<HomePage> {
   _launchFeedbackUrl() async {
     const url =
         'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchJoinModeFaqUrl(BuildContext context) async {
+    String url =  FlutterI18n.translate(context, "home.join_mode.faq_link");
     if (await canLaunch(url)) {
       await launch(url);
     } else {
