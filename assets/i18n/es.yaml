@@ -84,7 +84,7 @@ entry_form:
   select_category_dialog:
     title: "Seleccionar categoría"
   split_faq_tooltip: "Abrir FAQ de divisiones"
-  split_faq_link: "https://partido.rocks/faq"
+  split_faq_link: "https://partido.rocks/faq-entry-management/"
 entry_details:
   title: Detalles
   created_by: Creado por

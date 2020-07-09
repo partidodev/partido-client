@@ -84,7 +84,7 @@ entry_form:
   select_category_dialog:
     title: "Kategorie ändern"
   split_faq_tooltip: "FAQ für Aufteilungen öffnen"
-  split_faq_link: "https://partido.rocks/faq"
+  split_faq_link: "https://partido.rocks/faq-entry-management/"
 entry_details:
   title: Details
   created_by: Erstellt von
