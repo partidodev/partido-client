@@ -115,14 +115,13 @@ class _HomePageState extends State<HomePage> {
                     appState.stateInitialized? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (appState.getSelectedGroup().name == null && appState.stateInitialized)
+                        if (appState.getSelectedGroup().name == null)
                           buildWelcomeCard(context, appState.getMyGroups()),
                         if (appState.getSelectedGroup().name != null)
-                          buildGroupInfoCard(appState, context),
-                        if (appState.getSelectedGroup().name != null)
+                          buildGroupInfoCard(context, appState),
+                        if (appState.getReport().balances.length != 0)
                           buildGroupBalancesCard(context, appState),
-                        if (appState.getSelectedGroup().name != null &&
-                            appState.getSelectedGroup().joinModeActive)
+                        if (appState.getSelectedGroup().joinModeActive)
                           buildJoinModeInfoCard(context, appState),
                       ],
                     ) : Column(
@@ -346,7 +345,7 @@ class _HomePageState extends State<HomePage> {
   /// This card displays some custom information about the current group like
   /// name, status text and later maybe an image.
   /// This card is linked to the group settings page too.
-  Card buildGroupInfoCard(AppState appState, BuildContext context) {
+  Card buildGroupInfoCard(BuildContext context, AppState appState) {
     return Card(
       child: ListTile(
           title: Text(
