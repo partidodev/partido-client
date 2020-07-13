@@ -158,6 +158,8 @@ group_form:
     answer_no: Nein, abbrechen
     answer_yes: Ja, weiter
     checkout_failed: Ein Fehler ist aufgetreten. Bitte versuche es später noch einmal.
+    checkout_precondition_failed: Guthaben sind alle null, Kassensturz noch nicht möglich.
+    loading: Lade...
 login:
   toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
   login_failed_too_many_attempts: "Zu viele fehlgeschlagene Anmeldeversuche. Versuche es in 5 Minuten erneut."

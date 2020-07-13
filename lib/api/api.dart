@@ -72,5 +72,5 @@ abstract class Api {
   Future<Report> getReportForGroup(@Path("groupId") int groupId);
 
   @POST("/groups/{groupId}/checkout")
-  Future<HttpResponse<CheckoutReport>> checkoutGroup(@Path("groupId") int groupId);
+  Future<HttpResponse<dynamic>> checkoutGroup(@Path("groupId") int groupId);
 }

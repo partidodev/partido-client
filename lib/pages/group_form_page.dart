@@ -346,7 +346,10 @@ class _GroupFormPageState extends State<GroupFormPage> {
                 FlutterI18n.translate(context, "group_form.checkout_dialog.answer_yes"),
                 style: TextStyle(fontWeight: FontWeight.w400),
             ),
-            onPressed: _checkout,
+            onPressed: () {
+              _showLoadingDialog(context);
+              _checkout();
+            },
           ),
         ],
       ),
@@ -355,9 +358,10 @@ class _GroupFormPageState extends State<GroupFormPage> {
 
   void _checkout() async {
     try {
-      HttpResponse<CheckoutReport> response = await api.checkoutGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      HttpResponse<dynamic> response = await api.checkoutGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack(); // close loading dialog
         navService.goBack(); // close group checkout dialog
         navService.goBack(); // close group page
         navService.push(
@@ -365,10 +369,35 @@ class _GroupFormPageState extends State<GroupFormPage> {
             builder: (context) => CheckoutResultPage(checkoutReport: response.data),
           ),
         );
+      } else if (response.response.statusCode == 412) {
+        // Precondition failed: cannot checkout due to zero balances
+        navService.goBack(); // close loading dialog
+        navService.goBack(); // close group checkout dialog
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.checkout_dialog.checkout_precondition_failed"));
       }
     } catch (e) {
       logger.e("Failed to checkout group", e);
       PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.checkout_dialog.checkout_failed"));
     }
+  }
+
+  _showLoadingDialog(BuildContext context){
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder:(BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              I18nText('group_form.checkout_dialog.loading')
+            ],
+          ),
+        );
+      },
+    );
   }
 }

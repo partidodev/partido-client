@@ -155,6 +155,8 @@ group_form:
     answer_no: No, cancel
     answer_yes: Yes, checkout
     checkout_failed: An error occurred. Please try again later.
+    checkout_precondition_failed: Balances are all zero, you cannot checkout now.
+    loading: Loading...
 login:
   toast_login_failed: "Login failed, please try again"
   login_failed_too_many_attempts: "Too many failed login attempts. Try again in 5 minutes."

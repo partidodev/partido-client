@@ -158,6 +158,8 @@ group_form:
     answer_no: No, cancelar
     answer_yes: Sí, continuar
     checkout_failed: Ocurrió un error. Por favor, inténtalo de nuevo más tarde.
+    checkout_precondition_failed: Los saldos son todos cero, revisa ahora no posible.
+    loading: Cargando...
 login:
   toast_login_failed: Acceso fallido. Por favor intenta nuevamente
   login_failed_too_many_attempts: "Demasiados intentos fallidos. Intenta nuevamente en 5 minutos."
