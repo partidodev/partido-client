@@ -144,6 +144,17 @@ group_form:
   save_changes_button: "Save changes"
   join_mode: Join mode
   details: Details
+  actions:
+    checkout: Checkout
+    leave_group: Leave group
+    delete_group: Delete group
+  checkout_dialog:
+    title: Checkout
+    question: Do you want to checkout the group now and clear the entry list?
+    info: All group members will be notified about the checkout via email with a list of compensation payment recommendations.
+    answer_no: No, cancel
+    answer_yes: Yes, checkout
+    checkout_failed: An error occurred. Please try again later.
 login:
   toast_login_failed: "Login failed, please try again"
   login_failed_too_many_attempts: "Too many failed login attempts. Try again in 5 minutes."
@@ -211,3 +222,10 @@ date:
   MONTH_10: October
   MONTH_11: November
   MONTH_12: December
+checkout_result:
+  title: Checkout
+  subtitle: Group checked out
+  success_notice: Your group has been checked out and the entry list has been cleared.
+  additional_info: All group members will recieve an email containing additional information about the checkout, including a list with recommended compensation payments.
+  compensation_payments:
+    title: Compensation payments

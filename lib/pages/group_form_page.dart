@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:logger/logger.dart';
+import 'package:partido_client/model/checkout_report.dart';
 import 'package:partido_client/model/group.dart';
+import 'package:partido_client/pages/checkout_result_page.dart';
 import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
@@ -274,9 +276,99 @@ class _GroupFormPageState extends State<GroupFormPage> {
                 ],
               ),
             ),
+            !createNewGroupMode ? Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ListTile(
+                    title: I18nText("group_form.actions.checkout"),
+                    trailing: Icon(LinearIcons.chevron_right),
+                    onTap: _openCheckoutDialog,
+                  ),
+//                  Divider(),
+//                  ListTile(
+//                    title: Text(
+//                      FlutterI18n.translate(context, "group_form.actions.leave_group"),
+//                      style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
+//                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+//                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+//                      ),
+//                    ),
+//                    trailing: Icon(LinearIcons.chevron_right),
+//                    onTap: null,
+//                  ),
+//                  Divider(),
+//                  ListTile(
+//                    title: Text(
+//                      FlutterI18n.translate(context, "group_form.actions.delete_group"),
+//                      style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
+//                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+//                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+//                      ),
+//                    ),
+//                    trailing: Icon(LinearIcons.chevron_right),
+//                    onTap: null,
+//                  ),
+                ],
+              ),
+            ) : Container(),
           ],
         ),
       ),
     );
+  }
+
+  Future _openCheckoutDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        title: I18nText("group_form.checkout_dialog.title"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            I18nText("group_form.checkout_dialog.question"),
+            SizedBox(height: 16),
+            I18nText("group_form.checkout_dialog.info"),
+          ],
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+                FlutterI18n.translate(context, "group_form.checkout_dialog.answer_no"),
+                style: TextStyle(fontWeight: FontWeight.w400),
+            ),
+            onPressed: () {
+              navService.goBack();
+            },
+          ),
+          FlatButton(
+            child: Text(
+                FlutterI18n.translate(context, "group_form.checkout_dialog.answer_yes"),
+                style: TextStyle(fontWeight: FontWeight.w400),
+            ),
+            onPressed: _checkout,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _checkout() async {
+    try {
+      HttpResponse<CheckoutReport> response = await api.checkoutGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).refreshAppState();
+        navService.goBack(); // close group checkout dialog
+        navService.goBack(); // close group page
+        navService.push(
+          MaterialPageRoute(
+            builder: (context) => CheckoutResultPage(checkoutReport: response.data),
+          ),
+        );
+      }
+    } catch (e) {
+      logger.e("Failed to checkout group", e);
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.checkout_dialog.checkout_failed"));
+    }
   }
 }

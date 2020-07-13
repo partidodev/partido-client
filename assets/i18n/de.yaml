@@ -147,6 +147,17 @@ group_form:
   save_changes_button: Änderungen speichern
   join_mode: Beitrittsmodus
   details: Details
+  actions:
+    checkout: Kassensturz
+    leave_group: Gruppe verlassen
+    delete_group: Gruppe löschen
+  checkout_dialog:
+    title: Kassensturz
+    question: Jetzt Kassensturz durchführen und Eintragsliste leeren?
+    info: Alle Gruppenmitglieder werden per Email über den Kassensturz mit Vorschlägen für Ausgleichszahlungs benachrichtigt.
+    answer_no: Nein, abbrechen
+    answer_yes: Ja, weiter
+    checkout_failed: Ein Fehler ist aufgetreten. Bitte versuche es später noch einmal.
 login:
   toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
   login_failed_too_many_attempts: "Zu viele fehlgeschlagene Anmeldeversuche. Versuche es in 5 Minuten erneut."
@@ -214,3 +225,10 @@ date:
   MONTH_10: Oktober
   MONTH_11: November
   MONTH_12: Dezember
+checkout_result:
+  title: Kassensturz
+  subtitle: Kassensturz durchgeführt
+  success_notice: Für deine Gruppe wurde ein Kassensturz durchgeführt und die Eintragsliste wurde geleert.
+  additional_info: Alle Gruppenmitglieder erhalten eine E-Mail mit zusätzlichen Informationen zum Kassensturz, einschließlich einer Liste mit den empfohlenen Ausgleichszahlungen.
+  compensation_payments:
+    title: Ausgleichszahlungen

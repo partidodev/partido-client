@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:partido_client/model/checkout_report.dart';
 import 'package:partido_client/model/entry.dart';
 import 'package:partido_client/model/group.dart';
 import 'package:partido_client/model/group_join_body.dart';
@@ -69,4 +70,7 @@ abstract class Api {
 
   @GET("/groups/{groupId}/report")
   Future<Report> getReportForGroup(@Path("groupId") int groupId);
+
+  @POST("/groups/{groupId}/checkout")
+  Future<HttpResponse<CheckoutReport>> checkoutGroup(@Path("groupId") int groupId);
 }

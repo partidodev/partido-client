@@ -147,6 +147,17 @@ group_form:
   save_changes_button: Guardar cambios
   join_mode: Modo de unión
   details: Detalles
+  actions:
+    checkout: Revisa
+    leave_group: Salir del grupo
+    delete_group: Eliminar grupo
+  checkout_dialog:
+    title: Revisa
+    question: Deseas revisar el grupo ahora y borrar la lista de entradas?
+    info: Todos los miembros del grupo serán notificados sobre ésta acción por correo electrónico con una lista de recomendaciones para los pagos de compensación.
+    answer_no: No, cancelar
+    answer_yes: Sí, continuar
+    checkout_failed: Ocurrió un error. Por favor, inténtalo de nuevo más tarde.
 login:
   toast_login_failed: Acceso fallido. Por favor intenta nuevamente
   login_failed_too_many_attempts: "Demasiados intentos fallidos. Intenta nuevamente en 5 minutos."
@@ -214,3 +225,10 @@ date:
   MONTH_10: Octubre
   MONTH_11: Noviembre
   MONTH_12: Diciembre
+checkout_result:
+  title: Revisa
+  subtitle: Grupo revisado
+  success_notice: Tu grupo ha sido revisado y la lista de entradas ha sido borrada.
+  additional_info: Todos los miembros del grupo recibirán un correo electrónico con información adicional sobre ésta acción, incluida una lista con los pagos de compensación recomendados.
+  compensation_payments:
+    title: Pagos de compensación
