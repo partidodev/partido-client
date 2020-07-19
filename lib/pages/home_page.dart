@@ -51,7 +51,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     currencyFormatter = new NumberFormat(
         FlutterI18n.translate(context, "global.currency_format"),
-        FlutterI18n.translate(context, "global.locale"));
+        FlutterI18n.translate(context, "global.locale"),
+    );
     return DefaultTabController(
       length: 2,
       child: Consumer<AppState>(builder: (context, appState, child) {
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             title: Image(
               image: AssetImage('assets/images/logo-small.png'),
               height: 20,
-            ), //I18nText('global.partido_title'),
+            ),
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(LinearIcons.home4)),
@@ -112,16 +113,16 @@ class _HomePageState extends State<HomePage> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
                   children: <Widget>[
-                    appState.stateInitialized? Column(
+                    appState.stateInitialized ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (appState.getSelectedGroup().name == null)
+                        if (appState.getSelectedGroup() == null)
                           buildWelcomeCard(context, appState.getMyGroups()),
-                        if (appState.getSelectedGroup().name != null)
+                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup().name != null)
                           buildGroupInfoCard(context, appState),
-                        if (appState.getReport().balances.length != 0)
+                        if (appState.getReport() != null && appState.getReport().balances.length != 0)
                           buildGroupBalancesCard(context, appState),
-                        if (appState.getSelectedGroup().joinModeActive)
+                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup().joinModeActive)
                           buildJoinModeInfoCard(context, appState),
                       ],
                     ) : Column(
@@ -138,6 +139,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 onRefresh: () async {
                   await appState.refreshAppState();
+                  PartidoToast.showToast(msg: FlutterI18n.translate(context, 'home.group_refreshed_toast'));
                 },
               ),
               RefreshIndicator(
@@ -145,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
                   //separatorBuilder: (context, index) => Divider(),
-                  itemCount: appState.getEntries().length,
+                  itemCount: appState.getEntries() != null ? appState.getEntries().length : 0,
                   itemBuilder: (context, index) {
                     return buildEntryListItem(appState, index, context);
                   },
@@ -156,15 +158,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          floatingActionButton: appState.getSelectedGroup().name != null
+          floatingActionButton: appState.getSelectedGroup() != null
               ? FloatingActionButton(
                   onPressed: () {
                     if (appState.getSelectedGroup().name != null) {
                       navService.pushNamed('/create-entry');
                     }
                   },
-                  tooltip: FlutterI18n.translate(
-                      context, "home.create_entry_tooltip"),
+                  tooltip: FlutterI18n.translate(context, "home.create_entry_tooltip"),
                   child: Icon(LinearIcons.plus),
                 )
               : Container(),
@@ -259,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                 LinearIcons.bubble_question,
                 size: 20,
               ),
-              tooltip: FlutterI18n.translate(context, "entry_form.split_faq_tooltip"),
+              tooltip: FlutterI18n.translate(context, "home.join_mode.faq_tooltip"),
               onPressed: () {
                 _launchJoinModeFaqUrl(context);
               },
@@ -390,13 +391,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Divider(),
-          if (myGroups.length != 0)
+          if (myGroups != null && myGroups.length != 0)
             ListTile(
               title: I18nText("home.welcome.open_my_groups"),
               trailing: Icon(LinearIcons.chevron_right),
               onTap: _openGroupsDialog,
             ),
-          if (myGroups.length != 0) Divider(),
+          if (myGroups != null && myGroups.length != 0) Divider(),
           ListTile(
             title: I18nText("home.welcome.create_new_group"),
             trailing: Icon(LinearIcons.chevron_right),

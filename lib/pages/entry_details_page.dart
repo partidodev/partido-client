@@ -101,13 +101,11 @@ class EntryDetailsPage extends StatelessWidget {
                         leading: Icon(LinearIcons.tag),
                       ),
                       ListTile(
-                        title: Text(
-                            '${currencyFormatter.format(entry.totalAmount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
+                        title: Text('${currencyFormatter.format(entry.totalAmount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}'),
                         leading: Icon(LinearIcons.bag_dollar),
                       ),
                       ListTile(
-                        title: Text(
-                            '${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(entry.billingDate))}'),
+                        title: Text('${dateFormatter.format(new DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(entry.billingDate))}'),
                         leading: Icon(LinearIcons.calendar_31),
                       ),
                     ],
@@ -122,8 +120,7 @@ class EntryDetailsPage extends StatelessWidget {
                           FlutterI18n.translate(context, "entry_details.splits"),
                           style: TextStyle(fontSize: 18),
                         ),
-                        leading:
-                            Icon(LinearIcons.arrows_split, color: Colors.green),
+                        leading: Icon(LinearIcons.arrows_split, color: Colors.green),
                       ),
                       Divider(),
                       ListView.builder(

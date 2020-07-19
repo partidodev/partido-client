@@ -28,6 +28,8 @@ home:
         herunter und tritt meiner Gruppe mit diesem Code bei (Hilfe beim Beitreten einer Gruppe findest du unter https://partido.rocks/faq/#join-group):
       subject: Tritt meiner Gruppe auf Partido bei!
     faq_link: "https://partido.rocks/faq-groups/"
+    faq_tooltip: FAQ öffnen
+  group_refreshed_toast: Gruppe aktualisiert
   menu:
     account: Mein Profil
     about: Über Partido
@@ -154,7 +156,7 @@ group_form:
   checkout_dialog:
     title: Kassensturz
     question: Jetzt Kassensturz durchführen und Eintragsliste leeren?
-    info: Alle Gruppenmitglieder werden per Email über den Kassensturz mit Vorschlägen für Ausgleichszahlungs benachrichtigt.
+    info: Alle Gruppenmitglieder werden per Email über den Kassensturz mit Vorschlägen zu Ausgleichszahlungen benachrichtigt.
     answer_no: Nein, abbrechen
     answer_yes: Ja, weiter
     checkout_failed: Ein Fehler ist aufgetreten. Bitte versuche es später noch einmal.

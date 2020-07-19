@@ -26,6 +26,7 @@ class SignupSuccessfulPage extends StatelessWidget {
                       FlutterI18n.translate(context, "signup.success.title"),
                       style: TextStyle(fontSize: 18),
                     ),
+                    leading: Icon(LinearIcons.notification, color: Colors.green),
                   ),
                   Divider(),
                   Padding(
@@ -50,13 +51,19 @@ class SignupSuccessfulPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(),
+                ],
+              ),
+            ),
+            Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
                   ListTile(
                     title: I18nText("signup.success.login_button"),
                     trailing: Icon(LinearIcons.chevron_right),
                     onTap: () {
-                      navService.pushNamedAndRemoveUntil("/login");
-                    }),
+                      navService.pushNamedAndRemoveUntil("/login");},
+                  ),
                 ],
               ),
             ),

@@ -358,7 +358,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
 
   void _checkout() async {
     try {
-      HttpResponse<dynamic> response = await api.checkoutGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      HttpResponse<CheckoutReport> response = await api.checkoutGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack(); // close loading dialog

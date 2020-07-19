@@ -15,13 +15,13 @@ import 'model/user.dart';
 class AppState extends ChangeNotifier {
   Api api = ApiService.getApi();
 
-  User _currentUser = new User();
-  Group _selectedGroup = new Group(users: []);
+  User _currentUser;
+  Group _selectedGroup;
   List<Group> _myGroups = [];
   List<Entry> _entries = [];
-  Report _report = new Report(balances: []);
+  Report _report;
   int _selectedGroupId = -1; // initial value to check if id must be loaded or not
-  Map _availableEntryCategories = new Map();
+  Map _availableEntryCategories;
   DateTime now = DateTime.now();
   Map<int, String> _processedEntryListTitles;
   bool stateInitialized = false;
@@ -57,9 +57,9 @@ class AppState extends ChangeNotifier {
 
   void clearAppState() async {
     _selectedGroupId = -1;
-    _selectedGroup = new Group(users: []);
+    _selectedGroup = null;
     _entries = [];
-    _report = new Report(balances: []);
+    _report = null;
   }
 
   void refreshAppState() async {
