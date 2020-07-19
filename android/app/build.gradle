@@ -36,8 +36,8 @@ android {
         applicationId "net.fosforito.partido"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 41
-        versionName "2.0.5"
+        versionCode 42
+        versionName "2.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
