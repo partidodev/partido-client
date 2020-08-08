@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:     
+    - uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      uses: steebchen/flutter@v1.1.0
+      with:
+        args: pub get
+
+    - name: Generate code
+      uses: steebchen/flutter@v1.1.0
+      with:
+        args: pub run build_runner build
+
+#    - name: Run tests
+#      uses: steebchen/flutter@v1.1.0
+#      with:
+#        args: test
+      
+    - name: Build unsigned appbundle
+      uses: steebchen/flutter@v1.1.0
+      with:
+        args: build appbundle --debug
+
+#    - name: Build webapp
+#      uses: steebchen/flutter@v1.1.0
+#      with:
+#        args: build web

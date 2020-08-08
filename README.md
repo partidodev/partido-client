@@ -1,5 +1,6 @@
 # Partido Client
-[![Build Status](https://ci.fosforito.net/api/badges/Fosforito/partido-client/status.svg)](https://ci.fosforito.net/Fosforito/partido-client)
+
+![CI](https://github.com/jens-wagner/partido-client/workflows/CI/badge.svg)
 
 Client App for Partido written in Flutter/Dart.
 
@@ -66,7 +67,7 @@ Make sure that the path of the chrome.exe matches to your system. The `--user-da
 ### Icons
 
 Icons are generated with the flutter_launcher_icons plugin.
-See [[https://pub.dev/packages/flutter_launcher_icons]] for detailed usage information.
+See https://pub.dev/packages/flutter_launcher_icons for detailed usage information.
 
 The configuration of the plugin can be found in the `pubspec.yaml` file and the media file to be used for generation should be put in the `<partido-project>/assets/images` folder.
 
@@ -81,7 +82,3 @@ The command to re-generate all icons, using the image files specified in the pre
 ### General information
 
 To translate Partido to another language not available yet in the `<partido-project>/assets/i18n/` folder, copy the file `<partido-project>/assets/i18n/en.yaml` and rename it according to the new language like `<partido-project>/assets/i18n/<language>.yaml`. The file `en.yaml` always contains the latest and up to date default strings. If a specific other language file does not contain a certain translation, the default string from `en.yaml` is shown to the user.
-
-### Tools to translate YAML files
-
-You can use a tool like https://pikock.github.io/pollly/ to upload the `en.yml` as first file and another file, where the new translations should go into, as the second file. This second file can be an existing other translation file where strings need to be updated or just the `en.yml` again as base to create a completely new translation file.
