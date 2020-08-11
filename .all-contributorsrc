@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "jens",
+      "name": "Jens Norrgrann",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/358?v=4",
+      "profile": "http://www.bukowskis.com",
+      "contributions": [
+        "code",
+        "translation",
+        "infra",
+        "maintenance",
+        "test"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "partido-client",
+  "projectOwner": "jens-wagner",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
