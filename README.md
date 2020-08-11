@@ -1,4 +1,7 @@
 # Partido Client
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![CI](https://github.com/jens-wagner/partido-client/workflows/CI/badge.svg)
 
@@ -82,3 +85,22 @@ The command to re-generate all icons, using the image files specified in the pre
 ### General information
 
 To translate Partido to another language not available yet in the `<partido-project>/assets/i18n/` folder, copy the file `<partido-project>/assets/i18n/en.yaml` and rename it according to the new language like `<partido-project>/assets/i18n/<language>.yaml`. The file `en.yaml` always contains the latest and up to date default strings. If a specific other language file does not contain a certain translation, the default string from `en.yaml` is shown to the user.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://www.bukowskis.com"><img src="https://avatars3.githubusercontent.com/u/358?v=4" width="100px;" alt=""/><br /><sub><b>Jens Norrgrann</b></sub></a><br /><a href="https://github.com/jens-wagner/partido-client/commits?author=jens" title="Code">💻</a> <a href="#translation-jens" title="Translation">🌍</a> <a href="#infra-jens" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-jens" title="Maintenance">🚧</a> <a href="https://github.com/jens-wagner/partido-client/commits?author=jens" title="Tests">⚠️</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
