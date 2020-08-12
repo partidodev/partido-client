@@ -95,7 +95,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://www.fosforito.de"><img src="https://avatars3.githubusercontent.com/u/5000255?v=4" width="50px;" alt=""/><br /><sub><b>Jens Wagner</b></sub></a><br /><a href="https://github.com/jenslw/partido-client/commits?author=jenslw" title="Code">💻</a> <a href="#translation-jenslw" title="Translation">🌍</a> <a href="#infra-jenslw" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-jenslw" title="Maintenance">🚧</a> <a href="https://github.com/jenslw/partido-client/commits?author=jenslw" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.fosforito.de"><img src="https://avatars3.githubusercontent.com/u/5000255?v=4" width="100px;" alt=""/><br /><sub><b>Jens Wagner</b></sub></a><br /><a href="https://github.com/jenslw/partido-client/commits?author=jenslw" title="Code">💻</a> <a href="#translation-jenslw" title="Translation">🌍</a> <a href="#infra-jenslw" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-jenslw" title="Maintenance">🚧</a> <a href="https://github.com/jenslw/partido-client/commits?author=jenslw" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
