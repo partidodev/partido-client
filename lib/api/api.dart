@@ -12,24 +12,35 @@ part 'api.g.dart';
 
 @RestApi(baseUrl: "https://partido.rocks/api/")
 abstract class Api {
+
   factory Api(Dio dio) = _Api;
 
   @POST("/login")
   @MultiPart()
   Future<HttpResponse<String>> login(
-      @Part(name: "username") String username,
-      @Part(name: "password") String password,
-      @Part(name: "remember-me") String rememberMe);
+    @Part(name: "username") String username,
+    @Part(name: "password") String password,
+    @Part(name: "remember-me") String rememberMe,
+  );
 
   @POST("/logout")
   Future<HttpResponse<String>> logout();
 
   @POST("/users")
-  Future<HttpResponse<User>> register(@Body() NewUser data);
+  Future<HttpResponse<User>> register(
+    @Body() NewUser data,
+  );
 
   @PUT("/users/{userId}")
   Future<HttpResponse<User>> updateUser(
-      @Body() NewUser user, @Path("userId") int userId);
+    @Body() NewUser user,
+    @Path("userId") int userId,
+  );
+
+  @DELETE("/users/{userId}")
+  Future<HttpResponse<String>> deleteUser(
+    @Path("userId") int userId,
+  );
 
   @GET("/currentuser")
   Future<User> getCurrentUser();
@@ -41,36 +52,57 @@ abstract class Api {
   Future<List<Group>> getMyGroups();
 
   @POST("/groups/")
-  Future<HttpResponse<Group>> createGroup(@Body() Group group);
+  Future<HttpResponse<Group>> createGroup(
+    @Body() Group group,
+  );
 
   @PUT("/groups/{groupId}")
   Future<HttpResponse<Group>> updateGroup(
-      @Path("groupId") int groupId, @Body() Group group);
+    @Path("groupId") int groupId,
+    @Body() Group group,
+  );
 
   @GET("/groups/{groupId}")
-  Future<Group> getGroup(@Path("groupId") int groupId);
+  Future<Group> getGroup(
+    @Path("groupId") int groupId,
+  );
 
   @POST("/groups/{groupId}/join")
   Future<HttpResponse<String>> joinGroup(
-      @Path("groupId") int groupId, @Body() GroupJoinBody groupJoinBody);
+    @Path("groupId") int groupId,
+    @Body() GroupJoinBody groupJoinBody,
+  );
 
   @GET("/groups/{groupId}/bills")
-  Future<List<Entry>> getEntriesForGroup(@Path("groupId") int groupId);
+  Future<List<Entry>> getEntriesForGroup(
+    @Path("groupId") int groupId,
+  );
 
   @POST("/groups/{groupId}/bills")
   Future<HttpResponse<Entry>> createEntry(
-      @Body() Entry entry, @Path("groupId") int groupId);
+    @Body() Entry entry,
+    @Path("groupId") int groupId,
+  );
 
   @PUT("/groups/{groupId}/bills/{billId}")
-  Future<HttpResponse<Entry>> updateEntry(@Body() Entry entry,
-      @Path("groupId") int groupId, @Path("billId") int billId);
+  Future<HttpResponse<Entry>> updateEntry(
+    @Body() Entry entry,
+    @Path("groupId") int groupId,
+    @Path("billId") int billId,
+  );
 
   @DELETE("/bills/{billId}")
-  Future<HttpResponse<String>> deleteEntry(@Path("billId") int billId);
+  Future<HttpResponse<String>> deleteEntry(
+    @Path("billId") int billId,
+  );
 
   @GET("/groups/{groupId}/report")
-  Future<Report> getReportForGroup(@Path("groupId") int groupId);
+  Future<Report> getReportForGroup(
+    @Path("groupId") int groupId,
+  );
 
   @POST("/groups/{groupId}/checkout")
-  Future<HttpResponse<CheckoutReport>> checkoutGroup(@Path("groupId") int groupId);
+  Future<HttpResponse<CheckoutReport>> checkoutGroup(
+    @Path("groupId") int groupId,
+  );
 }

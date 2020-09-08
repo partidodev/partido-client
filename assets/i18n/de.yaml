@@ -129,6 +129,17 @@ account:
     title: Verifizierung erforderlich
     info: Um Partido weiter zu nutzen, verifiziere bitte deine Email-Adresse, indem du auf den Link klickst, den wir dir per Email gesendet haben. Vergiss nicht, auch im Spam-Ordner nachzuschauen.
     ok: Ok
+  delete: Account löschen
+  delete_dialog:
+    title: Account löschen
+    question: Willst du deinen Account wirklich löschen? Deine persönlichen Daten werden aus unserer Datenbank entfernt.
+    verification_info: Bitte gib "LÖSCHEN" (ohne Anführungszeichen) zur Betsätigung ein.
+    verification_word: LÖSCHEN
+    verification_field_label: Löschung bestätigen
+    answer_delete: Bestätigen
+    field_empty_validation_error: Feld darf nicht leer sein
+    wrong_verification_word_validation_error: Bitte gib das richtige Wort zur Bestätigung ein
+    groups_not_settled_up_validation_error: Deine Gruppen müssen alle durch einen Kassensturz genullt werden, bevor dein Account gelöscht werden kann.
 group_form:
   toast_group_created: Neue Gruppe erstellt
   toast_group_creation_failed: Erstellen der Gruppe fehlgeschlagen
