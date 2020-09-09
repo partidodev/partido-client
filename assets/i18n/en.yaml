@@ -170,6 +170,13 @@ group_form:
     checkout_failed: An error occurred. Please try again later.
     checkout_precondition_failed: Balances are all zero, there is nothing to settle up now.
     loading: Loading...
+  leave_group_dialog:
+    title: Leave group
+    question: Do you really want to leave this group?
+    answer_no: No, cancel
+    answer_yes: Yes, leave
+    group_not_settled_up_error: Please settle up the group at first
+    unexpected_error: An unexpected error occurred
 login:
   toast_login_failed: "Login failed, please try again"
   login_failed_too_many_attempts: "Too many failed login attempts. Try again in 5 minutes."

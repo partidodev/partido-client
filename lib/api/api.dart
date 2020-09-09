@@ -12,7 +12,6 @@ part 'api.g.dart';
 
 @RestApi(baseUrl: "https://partido.rocks/api/")
 abstract class Api {
-
   factory Api(Dio dio) = _Api;
 
   @POST("/login")
@@ -71,6 +70,11 @@ abstract class Api {
   Future<HttpResponse<String>> joinGroup(
     @Path("groupId") int groupId,
     @Body() GroupJoinBody groupJoinBody,
+  );
+
+  @POST("/groups/{groupId}/leave")
+  Future<HttpResponse<String>> leaveGroup(
+    @Path("groupId") int groupId,
   );
 
   @GET("/groups/{groupId}/bills")
