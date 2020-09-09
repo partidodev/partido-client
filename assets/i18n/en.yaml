@@ -126,6 +126,17 @@ account:
     title: Verification required
     info: To continue using Partido, please verify your email address by clicking on the link we sent you per email. Don't forget to check your spam folder as well.
     ok: Ok
+  delete: Delete account
+  delete_dialog:
+    title: Delete account
+    question: Do you really want to delete your account? Your personal information will be removed from our database.
+    verification_info: Enter "DELETE" (without quotes) to confirm account deletion.
+    verification_word: DELETE
+    verification_field_label: Verify deletion
+    answer_delete: Confirm
+    field_empty_validation_error: Field cannot be empty
+    wrong_verification_word_validation_error: Please enter the correct word to confirm
+    groups_not_settled_up_validation_error: Please settle up all groups you're member of before deleting your account
 group_form:
   toast_group_created: "New group created"
   toast_group_creation_failed: "Group creation failed"
@@ -147,17 +158,17 @@ group_form:
   join_mode: Join mode
   details: Details
   actions:
-    checkout: Checkout
+    checkout: Settle up
     leave_group: Leave group
     delete_group: Delete group
   checkout_dialog:
-    title: Checkout
-    question: Do you want to checkout the group now and clear the entry list?
-    info: All group members will be notified about the checkout via email with a list of compensation payment recommendations.
+    title: Settle up
+    question: Do you want to settle up the group now and clear the entry list?
+    info: All group members will be notified about the settle  up via email with a list of compensation payment recommendations.
     answer_no: No, cancel
-    answer_yes: Yes, checkout
+    answer_yes: Yes, settle up
     checkout_failed: An error occurred. Please try again later.
-    checkout_precondition_failed: Balances are all zero, you cannot checkout now.
+    checkout_precondition_failed: Balances are all zero, there is nothing to settle up now.
     loading: Loading...
 login:
   toast_login_failed: "Login failed, please try again"
@@ -227,9 +238,9 @@ date:
   MONTH_11: November
   MONTH_12: December
 checkout_result:
-  title: Checkout
-  subtitle: Group checked out
-  success_notice: Your group has been checked out and the entry list has been cleared.
-  additional_info: All group members will recieve an email containing additional information about the checkout, including a list with recommended compensation payments.
+  title: Settle up
+  subtitle: Group settled up
+  success_notice: Your group has been settled up and the entry list has been cleared.
+  additional_info: All group members will recieve an email containing additional information about the settle up, including a list with recommended compensation payments.
   compensation_payments:
     title: Compensation payments

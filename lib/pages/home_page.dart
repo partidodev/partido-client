@@ -439,7 +439,7 @@ class _HomePageState extends State<HomePage> {
         });
       }
     } catch (e) {
-      logger.e("Failed to join grop", e);
+      logger.e("Failed to join group", e);
     }
   }
 
@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
                 contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
                 title: I18nText("home.join_group_dialog.title"),
                 content: Container(
-                  padding: EdgeInsets.only(left: 20, right: 20),
+                  padding: EdgeInsets.only(left: 24, right: 24),
                   width: double.maxFinite,
                   child: Form(
                     key: _formKey,

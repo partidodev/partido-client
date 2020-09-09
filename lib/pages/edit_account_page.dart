@@ -28,6 +28,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
+  final _deleteAccountDialogformKey = GlobalKey<FormState>();
 
   String _username;
   String _oldEmail;
@@ -39,6 +40,12 @@ class _EditAccountPageState extends State<EditAccountPage> {
 
   TextEditingController usernameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
+
+  StateSetter _setStateOfDeleteAccountDialog;
+  bool deleteAccountFormSaved = false;
+  bool _deleteAccountVerificationWordInvalid = false;
+  bool _deleteAccountGroupsNotSettledUp = false;
+  String _deleteAccountVerificationWord;
 
   @override
   void initState() {
@@ -227,19 +234,36 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: MaterialButton(
-                        minWidth: double.infinity,
-                        textColor: MediaQuery.of(context).platformBrightness == Brightness.light
-                            ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-                            : Color.fromRGBO(255, 99, 71, 1),
-                        // Color for dark theme
-                        child: Text(
-                            FlutterI18n.translate(context, "account.logout_tooltip"),
-                            style: TextStyle(fontWeight: FontWeight.w400),
+
+                  Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ListTile(
+                          title: I18nText("account.logout_tooltip"),
+                          trailing: Icon(LinearIcons.chevron_right),
+                          onTap: _openLogoutDialog,
                         ),
-                        onPressed: _openLogoutDialog),
+                      ],
+                    ),
+                  ),
+                  Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ListTile(
+                          title: Text(
+                            FlutterI18n.translate(context, "account.delete"),
+                            style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                            ),
+                          ),
+                          trailing: Icon(LinearIcons.chevron_right),
+                          onTap: _openDeleteAccountDialog,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -330,6 +354,135 @@ class _EditAccountPageState extends State<EditAccountPage> {
         ],
       ),
     );
+  }
+
+  Future _openDeleteAccountDialog() async {
+    setState(() => deleteAccountFormSaved = false);
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return Consumer<AppState>(builder: (context, appState, child) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              _setStateOfDeleteAccountDialog = setState;
+              return AlertDialog(
+                contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                title: I18nText("account.delete_dialog.title"),
+                content: Container(
+                  padding: EdgeInsets.only(left: 24, right: 24),
+                  width: double.maxFinite,
+                  child: Form(
+                    key: _deleteAccountDialogformKey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        I18nText("account.delete_dialog.question"),
+                        SizedBox(height: 16),
+                        I18nText("account.delete_dialog.verification_info"),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          onSaved: (value) => _deleteAccountVerificationWord = value,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelText: FlutterI18n.translate(context, "account.delete_dialog.verification_field_label"),
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return FlutterI18n.translate(context, "account.delete_dialog.field_empty_validation_error");
+                            }
+                            return null;
+                          },
+                        ),
+                        (deleteAccountFormSaved && _deleteAccountVerificationWordInvalid)
+                            ? Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                              child: Text(
+                                FlutterI18n.translate(context, "account.delete_dialog.wrong_verification_word_validation_error"),
+                                style: TextStyle(
+                                  color: Color(0xFFe53935),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ))
+                            : SizedBox(height: 0),
+                        (deleteAccountFormSaved && _deleteAccountGroupsNotSettledUp)
+                            ? Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                              child: Text(
+                                FlutterI18n.translate(context, "account.delete_dialog.groups_not_settled_up_validation_error"),
+                                style: TextStyle(
+                                  color: Color(0xFFe53935),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ))
+                            : SizedBox(height: 0),
+                      ],
+                    ),
+                  ),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      FlutterI18n.translate(context, "global.cancel"),
+                      style: TextStyle(fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () {
+                      navService.goBack();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      FlutterI18n.translate(context, "account.delete_dialog.answer_delete"),
+                      style: TextStyle(fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () {
+                      _deleteAccountVerificationWordInvalid = false;
+                      _deleteAccountGroupsNotSettledUp = false;
+                      final form = _deleteAccountDialogformKey.currentState;
+                      form.save();
+                      setState(() => deleteAccountFormSaved = true);
+                      if (form.validate()) {
+                        _deleteAccount();
+                      }
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
+      },
+    );
+  }
+
+  void _deleteAccount() async {
+    if (_deleteAccountVerificationWord != FlutterI18n.translate(context, "account.delete_dialog.verification_word")) {
+      _setStateOfDeleteAccountDialog(() {
+        _deleteAccountVerificationWordInvalid = true;
+      });
+      return;
+    }
+    try {
+      HttpResponse<String> response = await api.deleteUser(Provider.of<AppState>(context, listen: false).getCurrentUser().id);
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).clearAppState();
+        navService.pushReplacementNamed("/login");
+      } else if (response.response.statusCode == 412) {
+        _setStateOfDeleteAccountDialog(() {
+          _deleteAccountGroupsNotSettledUp = true;
+        });
+      }
+    } catch (e) {
+      logger.e("Failed to delete account", e);
+    }
   }
 
   Future _openVerificationRequiredDialog() async {
