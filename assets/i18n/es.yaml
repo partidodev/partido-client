@@ -139,7 +139,7 @@ account:
     answer_delete: Confirmar
     field_empty_validation_error: Éste campo no puede estar vacío
     wrong_verification_word_validation_error: Por favor, ingresa la palabra correcta
-    groups_not_settled_up_validation_error: Necesitas revisar tus grupos antes de eliminar tu cuenta.
+    groups_not_settled_up_validation_error: Necesitas liquidar tus grupos antes de eliminar tu cuenta.
 group_form:
   toast_group_created: Nuevo grupo creado
   toast_group_creation_failed: Creación de grupo fallida
@@ -166,13 +166,20 @@ group_form:
     delete_group: Eliminar grupo
   checkout_dialog:
     title: Revisa
-    question: Deseas revisar el grupo ahora y borrar la lista de entradas?
+    question: Deseas liquidar el grupo ahora y borrar la lista de entradas?
     info: Todos los miembros del grupo serán notificados sobre ésta acción por correo electrónico con una lista de recomendaciones para los pagos de compensación.
     answer_no: No, cancelar
     answer_yes: Sí, continuar
     checkout_failed: Ocurrió un error. Por favor, inténtalo de nuevo más tarde.
-    checkout_precondition_failed: Los saldos son todos cero, revisa ahora no posible.
+    checkout_precondition_failed: Los saldos son todos cero, acción ahora no posible.
     loading: Cargando...
+  leave_group_dialog:
+    title: Salir del grupo
+    question: Estás seguro que deseas salir de éste grupo?
+    answer_no: No, cancelar
+    answer_yes: Sí, continuar
+    group_not_settled_up_error: Por favor, liquida el grupo primero
+    unexpected_error: Ha ocurrido un error inesperado
 login:
   toast_login_failed: Acceso fallido. Por favor intenta nuevamente
   login_failed_too_many_attempts: "Demasiados intentos fallidos. Intenta nuevamente en 5 minutos."
@@ -242,8 +249,8 @@ date:
   MONTH_12: Diciembre
 checkout_result:
   title: Revisa
-  subtitle: Grupo revisado
-  success_notice: Tu grupo ha sido revisado y la lista de entradas ha sido borrada.
+  subtitle: Grupo liquidado
+  success_notice: Tu grupo ha sido liquidado y la lista de entradas ha sido borrada.
   additional_info: Todos los miembros del grupo recibirán un correo electrónico con información adicional sobre ésta acción, incluida una lista con los pagos de compensación recomendados.
   compensation_payments:
     title: Pagos de compensación

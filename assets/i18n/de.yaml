@@ -173,6 +173,13 @@ group_form:
     checkout_failed: Ein Fehler ist aufgetreten. Bitte versuche es später noch einmal.
     checkout_precondition_failed: Guthaben sind alle null, Kassensturz noch nicht möglich.
     loading: Lade...
+  leave_group_dialog:
+    title: Gruppe verlassen
+    question: Möchtest du diese Gruppe wirklich verlassen?
+    answer_no: Nein, abbrechen
+    answer_yes: Ja, weiter
+    group_not_settled_up_error: Bitte führe zuerst einen Kassensturz durch
+    unexpected_error: Es ist ein unerwarteter Fehler aufgetreten
 login:
   toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
   login_failed_too_many_attempts: "Zu viele fehlgeschlagene Anmeldeversuche. Versuche es in 5 Minuten erneut."

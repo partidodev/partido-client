@@ -285,30 +285,24 @@ class _GroupFormPageState extends State<GroupFormPage> {
                     trailing: Icon(LinearIcons.chevron_right),
                     onTap: _openCheckoutDialog,
                   ),
-//                  Divider(),
-//                  ListTile(
-//                    title: Text(
-//                      FlutterI18n.translate(context, "group_form.actions.leave_group"),
-//                      style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
-//                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-//                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-//                      ),
-//                    ),
-//                    trailing: Icon(LinearIcons.chevron_right),
-//                    onTap: null,
-//                  ),
-//                  Divider(),
-//                  ListTile(
-//                    title: Text(
-//                      FlutterI18n.translate(context, "group_form.actions.delete_group"),
-//                      style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
-//                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-//                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-//                      ),
-//                    ),
-//                    trailing: Icon(LinearIcons.chevron_right),
-//                    onTap: null,
-//                  ),
+                ],
+              ),
+            ) : Container(),
+            !createNewGroupMode ? Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      FlutterI18n.translate(context, "group_form.actions.leave_group"),
+                      style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
+                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                      ),
+                    ),
+                    trailing: Icon(LinearIcons.chevron_right),
+                    onTap: _openLeaveGroupDialog,
+                  ),
                 ],
               ),
             ) : Container(),
@@ -316,6 +310,50 @@ class _GroupFormPageState extends State<GroupFormPage> {
         ),
       ),
     );
+  }
+
+  Future _openLeaveGroupDialog() async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        title: I18nText("group_form.leave_group_dialog.title"),
+        content: I18nText("group_form.leave_group_dialog.question"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+                FlutterI18n.translate(context, "group_form.leave_group_dialog.answer_no"),
+                style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: () {
+              navService.goBack();
+            },
+          ),
+          FlatButton(
+            child: Text(
+                FlutterI18n.translate(context, "group_form.leave_group_dialog.answer_yes"),
+                style: TextStyle(fontWeight: FontWeight.w400)),
+            onPressed: _leaveGroup,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _leaveGroup() async {
+    try {
+      HttpResponse<String> response = await api.leaveGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
+      if (response.response.statusCode == 200) {
+        Provider.of<AppState>(context, listen: false).clearAppState();
+        navService.pushReplacementNamed("/");
+      } else if (response.response.statusCode == 412) {
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.leave_group_dialog.group_not_settled_up_error"));
+        navService.goBack();
+      } else {
+        PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.leave_group_dialog.unexpected_error"));
+      }
+    } catch (e) {
+      logger.e("Failed to leave group", e);
+      PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.leave_group_dialog.unexpected_error"));
+    }
   }
 
   Future _openCheckoutDialog() async {
@@ -376,6 +414,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
         PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.checkout_dialog.checkout_precondition_failed"));
       }
     } catch (e) {
+      navService.goBack(); // close loading dialog
       logger.e("Failed to checkout group", e);
       PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.checkout_dialog.checkout_failed"));
     }
