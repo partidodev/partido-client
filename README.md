@@ -7,6 +7,8 @@
 
 Client App for Partido written in Flutter/Dart.
 
+Partido is a platform independent App for sharing group expenses.
+
 ## Developer information
 
 ### Generated code
