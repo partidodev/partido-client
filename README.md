@@ -1,5 +1,5 @@
 # Partido Client
-![CI](https://github.com/jens-wagner/partido-client/workflows/CI/badge.svg) ![Github All Contributors](https://img.shields.io/github/all-contributors/partidodev/partido-client/main)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/partidodev/partido-client/CI?style=flat-square) ![Github All Contributors](https://img.shields.io/github/all-contributors/partidodev/partido-client/main?style=flat-square)
 
 Client App for Partido written in Flutter/Dart.
 
