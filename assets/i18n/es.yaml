@@ -64,7 +64,7 @@ entry_form:
   toast_failed_to_delete_entry: Se produjo un error al intentar eliminar la entrada
   delete_entry_dialog:
     title: Eliminar entrada
-    question: ¿Estás seguro de que quieres eliminar esta entrada?
+    question: ¿Estás seguro que deseas eliminar esta entrada?
     answer_no: 'No, cancelar'
     answer_yes: 'Sí, eliminar'
   parts: Partes
