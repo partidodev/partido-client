@@ -19,10 +19,16 @@ Or use this command to continuously regenerate the code if the relevant files ar
 
 ### Local testing for Web
 
-When testing local Web Client with remote Backend, the Chrome instance must be run in insecure mode (due to CORS - Cross-Origin Resource Sharing - issues). To do this, just create a shortcut script (for example a .bat File on Windows) with the following contents:
+When testing local Web Client with remote Backend, the Chrome instance must be run in insecure mode (due to CORS - Cross-Origin Resource Sharing - issues). To do this, just create a shortcut script (for example a .bat file on Windows or .sh file on Linux) with the following contents:
 
+On Windows:
 ```
 "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --user-data-dir="C:\Libraries\chromeDevSession" --disable-web-security
+```
+
+On Linux:
+```
+chrome-browser --user-data-dir="~/.chromeDevSession" --disable-web-security
 ```
 
 Make sure that the path of the chrome.exe matches to your system. The `--user-data-dir` can be any unused location (just to make it possible to open an insecure chrome instance along other _normal_ open chrome instances).
