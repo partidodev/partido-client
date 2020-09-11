@@ -20,7 +20,7 @@ home:
   join_mode:
     title_enabled: Beitrittsmodus aktiviert
     info: "Teile folgenden Code mit deinen Freunden, damit diese deiner Gruppe beitreten können."
-    security_notice: Deaktiviere aus Sicherheitsgründen den Beitrittsmodus, sobald alle Nutzer der Gruppe beigetreten sind.
+    security_notice: "Deaktiviere aus Sicherheitsgründen den Beitrittsmodus, sobald alle Nutzer der Gruppe beigetreten sind."
     share:
       text: >-
         Lade die Partido App aus dem Google Play Store
@@ -64,7 +64,7 @@ entry_form:
   toast_failed_to_delete_entry: Beim Löschen des Eintrages ist ein Fehler aufgetreten
   delete_entry_dialog:
     title: Eintrag löschen
-    question: 'Bist du sicher, dass du diesen Eintrag löschen willst?'
+    question: Bist du sicher, dass du diesen Eintrag löschen willst?
     answer_no: 'Nein, abbrechen'
     answer_yes: 'Ja, löschen'
   parts: Anteile
@@ -73,10 +73,10 @@ entry_form:
   edit_entry_title: Eintrag bearbeiten
   delete_entry_tooltip: Eintrag löschen
   description: Beschreibung
-  description_empty_validation_error: Bitte gib eine Beschreibung ein
+  description_empty_validation_error: 'Bitte gib eine Beschreibung ein'
   description_too_long_validation_error: Max. 255 Zeichen erlaubt
   amount: Betrag
-  amount_empty_validation_error: Bitte gib den Gesamtbetrag ein
+  amount_empty_validation_error: 'Bitte gib den Gesamtbetrag ein'
   amount_not_positive_validation_error: 'Bitte gib eine positive Zahl, größer als 0 ein'
   date: Datum
   create_entry_button: Eintrag erstellen
@@ -99,18 +99,18 @@ account:
   title: Mein Profil
   logout_tooltip: Ausloggen
   username: Nutzername
-  username_empty_validation_error: Bitte gib einen Nutzernamen ein
+  username_empty_validation_error: 'Bitte gib einen Nutzernamen ein'
   username_too_long_validation_error: Max. 50 Zeichen erlaubt
   email: Email
   email_already_in_use_validation_error: "Diese Email ist bereits registriert"
-  email_empty_validation_error: Bitte gib deine Email-Adresse ein
-  email_invalid_validation_error: Bitte gib eine gültige Email-Adresse ein
+  email_empty_validation_error: 'Bitte gib deine Email-Adresse ein'
+  email_invalid_validation_error: 'Bitte gib eine gültige Email-Adresse ein'
   email_too_long_validation_error: Max. 50 Zeichen erlaubt
   password: Passwort
-  current_password_input_required: Bitte gib dein aktuelles Passwort ein
+  current_password_input_required: 'Bitte gib dein aktuelles Passwort ein'
   change_password:
     title: Passwort ändern
-    description: 'Frei lassen, wenn du dein Passwort nicht ändern möchtest'
+    description: Frei lassen, wenn du dein Passwort nicht ändern möchtest
     new_password: Neues Passwort (optional)
     new_password_too_long_validation_error: Max. 100 Zeichen erlaubt
     new_password_too_short_validation_error: Min. 8 Zeichen benötigt
@@ -124,7 +124,7 @@ account:
     answer_yes: 'Ja, ausloggen'
   toast_account_settings_saved: Einstellungen gespeichert
   toast_error_updating_account: Beim Aktualisieren des Profils ist ein Fehler aufgetreten
-  toast_login_failed: 'Login fehlgeschlagen, bitte versuche es später erneut'
+  toast_login_failed: Login fehlgeschlagen, bitte versuche es später erneut
   verification_required_dialog:
     title: Verifizierung erforderlich
     info: Um Partido weiter zu nutzen, verifiziere bitte deine Email-Adresse, indem du auf den Link klickst, den wir dir per Email gesendet haben. Vergiss nicht, auch im Spam-Ordner nachzuschauen.
@@ -148,12 +148,12 @@ group_form:
   create_group_title: Gruppe erstellen
   group_settings_title: Gruppeneinstellungen
   group_name: Gruppenname
-  group_name_empty_validation_error: Bitte gib einen Gruppennamen ein
+  group_name_empty_validation_error: 'Bitte gib einen Gruppennamen ein'
   group_name_too_long_validation_error: Max. 255 Zeichen erlaubt
   group_description: Beschreibung (optional)
   group_description_too_long_validation_error: Max. 255 Zeichen erlaubt
   currency: Währung
-  currency_empty_validation_error: Bitte gib eine Währung ein
+  currency_empty_validation_error: 'Bitte gib eine Währung ein'
   currency_too_long_validation_error: Max. 3 Zeichen erlaubt
   activate_join_mode: Andere Nutzer können der Gruppe mit einem Code beitreten
   create_group_button: Gruppe erstellen
@@ -181,14 +181,14 @@ group_form:
     group_not_settled_up_error: Bitte führe zuerst einen Kassensturz durch
     unexpected_error: Es ist ein unerwarteter Fehler aufgetreten
 login:
-  toast_login_failed: 'Login fehlgeschlagen, bitte versuche es erneut'
+  toast_login_failed: Login fehlgeschlagen, bitte versuche es erneut
   login_failed_too_many_attempts: "Zu viele fehlgeschlagene Anmeldeversuche. Versuche es in 5 Minuten erneut."
   login_failed_not_verified: "Account nicht verifiziert. Bitte überprüfe deine E-Mails."
   login_title: Login
   email: Email-Addresse
-  email_empty_validation_error: Bitte gib deine Email-Adresse eine
+  email_empty_validation_error: 'Bitte gib deine Email-Adresse eine'
   password: Passwort
-  password_empty_validation_error: Bitte gib dein Passwort ein
+  password_empty_validation_error: 'Bitte gib dein Passwort ein'
   remember: Eingeloggt bleiben
   login_button: Login
   signup_button: Registrieren
@@ -196,7 +196,7 @@ login:
 signup:
   title: Registrieren
   username: Nutzername
-  password_empty_validation_error: Bitte gib ein Passwort ein
+  password_empty_validation_error: 'Bitte gib ein Passwort ein'
   password_too_long_validation_error: Max. 100 Zeichen erlaubt
   password_too_short_validation_error: Min. 8 Zeichen benötigt
   password_confirmation: Passwort bestätigen
@@ -205,7 +205,7 @@ signup:
   accept_privacy_text_after_link: " von Partido gelesen und akzeptiere diese."
   privacy_policy_link_text: "Datenschutzerklärung"
   privacy_policy_link_url: 'https://partido.rocks/de/datenschutz'
-  privacy_policy_not_accepted_error: 'Du kannst Partido nur nutzen, wenn du akzeptierst'
+  privacy_policy_not_accepted_error: Du kannst Partido nur nutzen, wenn du akzeptierst
   success:
     title: Email Verifizierung erforderlich
     success_notice: Du wurdest erfolgreich registriert!
