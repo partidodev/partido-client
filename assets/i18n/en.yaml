@@ -1,83 +1,84 @@
 global:
-  partido_title: "Partido"
-  locale: "en"
-  copied: "Copied"
-  close: "Close"
-  cancel: "Cancel"
-  date_format: "yyyy-MM-dd"
-  currency_format: "#,##0.00"
-  part_format: "#,##0.###"
+  partido_title: Partido
+  locale: en
+  copied: Copied
+  close: Close
+  cancel: Cancel
+  date_format: yyyy-MM-dd
+  currency_format: '#,##0.00'
+  part_format: '#,##0.###'
 home:
   welcome:
-    title: "Welcome to Partido!"
-    subtitle: "Select an option to start"
-    group_settings_tooltip: "Group settings"
+    title: Welcome to Partido!
+    subtitle: Select an option to start
+    group_settings_tooltip: Group settings
     open_my_groups: Open my groups
     create_new_group: Create a new group
     join_existing_group: Join a friend's group
   balances:
-    title: "Balances"
+    title: Balances
   join_mode:
-    title_enabled: "Join mode active"
+    title_enabled: Join mode active
     info: "Share the following join code with your friends to let them enter your group."
     security_notice: "For security reasons, disable the group join mode when all users joined the group."
     share:
-      text: "Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code (More information aboout how to join a group on https://partido.rocks/faq/#join-group):"
-      subject: "Join my group on Partido!"
+      text: >-
+        Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code (More information aboout how to join a group on https://partido.rocks/faq/#join-group):
+      subject: Join my group on Partido!
     faq_link: "https://partido.rocks/faq-groups/"
     faq_tooltip: Open FAQ
   group_refreshed_toast: Group refreshed
   menu:
-    account: "My Account"
-    about: "About Partido"
-    feedback: "Send Feedback"
+    account: My Account
+    about: About Partido
+    feedback: Send Feedback
   about_dialog:
-    title: "About Partido"
-    homepage: "Homepage"
-    homepage_url: "https://partido.rocks/"
-    imprint: "Imprint"
-    imprint_url: "https://partido.rocks/imprint/"
-    privacy_policy: "Privacy Policy"
-    privacy_policy_url: "https://partido.rocks/privacy/"
+    title: About Partido
+    homepage: Homepage
+    homepage_url: 'https://partido.rocks/'
+    imprint: Imprint
+    imprint_url: 'https://partido.rocks/imprint/'
+    privacy_policy: Privacy Policy
+    privacy_policy_url: 'https://partido.rocks/privacy/'
   groups_dialog:
-    title: "My Groups"
-    join_existing_button: "Join existing"
-    create_button: "Create new"
+    title: My Groups
+    join_existing_button: Join existing
+    create_button: Create new
   join_group_dialog:
-    title: "Join Group"
-    join_code: "Join code"
-    join_code_empty_validation_error: "Please enter the join code you recieved"
+    title: Join Group
+    join_code: Join code
+    join_code_empty_validation_error: Please enter the join code you recieved
     join_code_invalid_validation_error: Please enter a valid join code
     join_code_not_found_validation_error: Join code not found or deactivated
-    button_join: "Join"
-  create_entry_tooltip: "Create entry"
-  groups_tooltip: "Groups"
+    button_join: Join
+  create_entry_tooltip: Create entry
+  groups_tooltip: Groups
 entry_form:
-  toast_entry_created: "New entry created"
-  toast_failed_to_save_entry: "An error occurred creating the entry"
-  toast_entry_updated: "Entry updated"
-  toast_failed_to_update_entry: "An error occurred updating the entry"
-  toast_entry_deleted: "Entry deleted"
-  toast_failed_to_delete_entry: "An error occurred trying to delete the entry"
+  toast_entry_created: New entry created
+  toast_failed_to_save_entry: An error occurred creating the entry
+  toast_entry_updated: Entry updated
+  toast_failed_to_update_entry: An error occurred updating the entry
+  toast_entry_deleted: Entry deleted
+  toast_failed_to_delete_entry: An error occurred trying to delete the entry
   delete_entry_dialog:
-    title: "Delete Entry"
-    question: "Are you sure, that you want to delete this entry?"
-    answer_no: "No, cancel"
-    answer_yes: "Yes, delete"
-  parts: "Parts"
-  paid: "Paid"
-  create_entry_title: "Create entry"
-  edit_entry_title: "Edit entry"
-  delete_entry_tooltip: "Delete entry"
-  description: "Description"
-  description_empty_validation_error: "Please enter a description"
-  description_too_long_validation_error: "Max. 255 characters allowed"
-  amount: "Amount"
-  amount_empty_validation_error: "Please enter the total amount"
-  amount_not_positive_validation_error: "Please enter a positive amount greater than 0"
-  date: "Date"
-  create_entry_button: "Create entry"
-  update_entry_button: "Update entry"
+    title: Delete Entry
+    question: Are you sure, that you want to delete this entry?
+    answer_no: 'No, cancel'
+    answer_yes: 'Yes, delete'
+  parts: Parts
+  paid: Paid
+  create_entry_title: Create entry
+  edit_entry_title: Edit entry
+  delete_entry_tooltip: Delete entry
+  description: Description
+  description_empty_validation_error: 'Please enter a description'
+  description_too_long_validation_error: Max. 255 characters allowed
+  amount: Amount
+  amount_empty_validation_error: 'Please enter the total amount'
+  amount_not_positive_validation_error: 'Please enter a positive amount greater than 0'
+  date: Date
+  create_entry_button: Create entry
+  update_entry_button: Update entry
   amount_of_splits_sum_not_total_validation_error: "The paid amounts sum must match the total amount of the entry"
   details_title: "Details"
   category: "Category"
@@ -86,42 +87,42 @@ entry_form:
   split_faq_tooltip: "Open Split FAQ"
   split_faq_link: "https://partido.rocks/faq-entry-management/"
 entry_details:
-  title: "Details"
-  created_by: "Created by"
-  splits: "Splits"
-  parts: "Parts:"
-  paid: "Paid:"
+  title: Details
+  created_by: Created by
+  splits: Splits
+  parts: 'Parts:'
+  paid: 'Paid:'
 account:
   details: Details
-  title: "My account"
-  logout_tooltip: "Logout"
-  username: "Username"
-  username_empty_validation_error: "Please enter an username"
-  username_too_long_validation_error: "Max. 50 characters allowed"
-  email: "Email"
+  title: My account
+  logout_tooltip: Logout
+  username: Username
+  username_empty_validation_error: 'Please enter an username'
+  username_too_long_validation_error: Max. 50 characters allowed
+  email: Email
   email_already_in_use_validation_error: "Email already registered"
-  email_empty_validation_error: "Please enter your email address"
-  email_invalid_validation_error: "Please enter a valid email address"
-  email_too_long_validation_error: "Max. 50 characters allowed"
-  password: "Password"
-  current_password_input_required: "Please enter your current password"
+  email_empty_validation_error: 'Please enter your email address'
+  email_invalid_validation_error: 'Please enter a valid email address'
+  email_too_long_validation_error: Max. 50 characters allowed
+  password: Password
+  current_password_input_required: 'Please enter your current password'
   change_password:
-    title: "Change password"
-    description: "Leave empty if you don't want to change your current password."
-    new_password: "New password (optional)"
-    new_password_too_long_validation_error: "Max. 100 characters allowed"
-    new_password_too_short_validation_error: "Min. 8 characters required"
-    new_password_confirmation: "New password confirmation"
-    new_password_confirmation_not_matching_validation_error: "Passwords do not match"
-  save_button: "Save changes"
+    title: Change password
+    description: Leave empty if you don't want to change your current password.
+    new_password: New password (optional)
+    new_password_too_long_validation_error: Max. 100 characters allowed
+    new_password_too_short_validation_error: Min. 8 characters required
+    new_password_confirmation: New password confirmation
+    new_password_confirmation_not_matching_validation_error: Passwords do not match
+  save_button: Save changes
   logout_dialog:
-    title: "Logout"
-    question: "Do you want to log out?"
-    answer_no: "No, cancel"
-    answer_yes: "Yes, logout"
-  toast_account_settings_saved: "Settings saved"
-  toast_error_updating_account: "An error occurred updating the account"
-  toast_login_failed: "Login failed, please try again later"
+    title: Logout
+    question: Do you want to log out?
+    answer_no: 'No, cancel'
+    answer_yes: 'Yes, logout'
+  toast_account_settings_saved: Settings saved
+  toast_error_updating_account: An error occurred updating the account
+  toast_login_failed: Login failed, please try again later
   verification_required_dialog:
     title: Verification required
     info: To continue using Partido, please verify your email address by clicking on the link we sent you per email. Don't forget to check your spam folder as well.
@@ -138,23 +139,23 @@ account:
     wrong_verification_word_validation_error: Please enter the correct word to confirm
     groups_not_settled_up_validation_error: Please settle up all groups you're member of before deleting your account
 group_form:
-  toast_group_created: "New group created"
-  toast_group_creation_failed: "Group creation failed"
-  toast_group_settings_saved: "Group settings saved"
-  toast_group_settings_saving_failed: "Saving group settings failed"
-  create_group_title: "Create group"
-  group_settings_title: "Group settings"
-  group_name: "Group name"
-  group_name_empty_validation_error: "Please enter a group name"
-  group_name_too_long_validation_error: "Max. 255 characters allowed"
-  group_description: "Description (optional)"
-  group_description_too_long_validation_error: "Max. 255 characters allowed"
-  currency: "Currency"
-  currency_empty_validation_error: "Please enter a currency"
-  currency_too_long_validation_error: "Max. 3 characters allowed"
-  activate_join_mode: "Let other users join the group with a key"
-  create_group_button: "Create group"
-  save_changes_button: "Save changes"
+  toast_group_created: New group created
+  toast_group_creation_failed: Group creation failed
+  toast_group_settings_saved: Group settings saved
+  toast_group_settings_saving_failed: Saving group settings failed
+  create_group_title: Create group
+  group_settings_title: Group settings
+  group_name: Group name
+  group_name_empty_validation_error: 'Please enter a group name'
+  group_name_too_long_validation_error: Max. 255 characters allowed
+  group_description: Description (optional)
+  group_description_too_long_validation_error: Max. 255 characters allowed
+  currency: Currency
+  currency_empty_validation_error: 'Please enter a currency'
+  currency_too_long_validation_error: Max. 3 characters allowed
+  activate_join_mode: Let other users join the group with a key
+  create_group_button: Create group
+  save_changes_button: Save changes
   join_mode: Join mode
   details: Details
   actions:
@@ -178,36 +179,36 @@ group_form:
     group_not_settled_up_error: Please settle up the group at first
     unexpected_error: An unexpected error occurred
 login:
-  toast_login_failed: "Login failed, please try again"
+  toast_login_failed: Login failed, please try again
   login_failed_too_many_attempts: "Too many failed login attempts. Try again in 5 minutes."
   login_failed_not_verified: "Account not verified. Please check your emails."
-  login_title: "Login"
-  email: "Email Address"
-  email_empty_validation_error: "Please enter your email address"
-  password: "Password"
-  password_empty_validation_error: "Please enter your password"
-  remember: "Remember me"
-  login_button: "Login"
-  signup_button: "Sign up"
+  login_title: Login
+  email: Email Address
+  email_empty_validation_error: 'Please enter your email address'
+  password: Password
+  password_empty_validation_error: 'Please enter your password'
+  remember: Remember me
+  login_button: Login
+  signup_button: Sign up
   login_failed_unauthorized: "Login failed, please verify your credentials"
 signup:
-  title: "Sign up"
-  username: "Username"
-  password_empty_validation_error: "Please enter a password"
-  password_too_long_validation_error: "Max. 100 characters allowed"
-  password_too_short_validation_error: "Min. 8 characters required"
-  password_confirmation: "Password confirmation"
-  password_confirmation_not_matching_validation_error: "Passwords do not match"
+  title: Sign up
+  username: Username
+  password_empty_validation_error: 'Please enter a password'
+  password_too_long_validation_error: Max. 100 characters allowed
+  password_too_short_validation_error: Min. 8 characters required
+  password_confirmation: Password confirmation
+  password_confirmation_not_matching_validation_error: Passwords do not match
   accept_privacy_text_before_link: "I have read and accept the "
   accept_privacy_text_after_link: " of Partido"
   privacy_policy_link_text: "Privacy Policy"
-  privacy_policy_link_url: "https://partido.rocks/privacy/"
-  privacy_policy_not_accepted_error: "You can use Partido only if you accept"
+  privacy_policy_link_url: 'https://partido.rocks/privacy/'
+  privacy_policy_not_accepted_error: You can use Partido only if you accept
   success:
-    title: "Email verification required"
-    success_notice: "You have been signed up successfully!"
-    additional_info: "Before you can start using Partido, please verify your email address by clicking on the link we sent you per email."
-    additional_info_2: "You should receive the verification mail in the next few minutes. Also check your spam folder if needed."
+    title: Email verification required
+    success_notice: You have been signed up successfully!
+    additional_info: Before you can start using Partido, please verify your email address by clicking on the link we sent you per email.
+    additional_info_2: You should receive the verification mail in the next few minutes. Also check your spam folder if needed.
     login_button: Done, proceed to login!
 entry:
   categories:
