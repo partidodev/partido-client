@@ -5,6 +5,10 @@ Client App for Partido written in Flutter/Dart.
 
 Partido is a platform independent App for sharing group expenses.
 
+## How to contribute to the project
+
+You can contribute in various ways - even if you're not a software developer. You can translate Partido to your language, report bugs, request features or code. Please check the [contribution guidelines](https://github.com/partidodev/partido-client/blob/main/CONTRIBUTING.md) to start.
+
 ## Developer information
 
 ### Generated code
