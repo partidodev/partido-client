@@ -1,5 +1,5 @@
 # Partido Client
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/partidodev/partido-client/CI?style=flat-square) ![Github All Contributors](https://img.shields.io/github/all-contributors/partidodev/partido-client/main?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/partidodev/partido-client/CI?style=flat-square)
 
 Client App for Partido written in Flutter/Dart.
 
@@ -55,22 +55,3 @@ The command to re-generate all icons, using the image files specified in the pre
 ### General information
 
 To translate Partido to another language not available yet in the `<partido-project>/assets/i18n/` folder, copy the file `<partido-project>/assets/i18n/en.yaml` and rename it according to the new language like `<partido-project>/assets/i18n/<language>.yaml`. The file `en.yaml` always contains the latest and up to date default strings. If a specific other language file does not contain a certain translation, the default string from `en.yaml` is shown to the user.
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://www.fosforito.de"><img src="https://avatars3.githubusercontent.com/u/5000255?v=4" width="100px;" alt=""/><br /><sub><b>Jens Wagner</b></sub></a><br /><a href="https://github.com/jenslw/partido-client/commits?author=jenslw" title="Code">💻</a> <a href="#translation-jenslw" title="Translation">🌍</a> <a href="#infra-jenslw" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-jenslw" title="Maintenance">🚧</a> <a href="https://github.com/jenslw/partido-client/commits?author=jenslw" title="Tests">⚠️</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
