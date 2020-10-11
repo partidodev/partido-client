@@ -150,7 +150,9 @@ class _LoginPageState extends State<LoginPage> {
                                       FlutterI18n.translate(context,
                                           "login.login_failed_unauthorized"),
                                       style: TextStyle(
-                                          color: Color(0xFFe53935),
+                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
                                     ),
@@ -163,7 +165,9 @@ class _LoginPageState extends State<LoginPage> {
                                       FlutterI18n.translate(context,
                                           "login.login_failed_too_many_attempts"),
                                       style: TextStyle(
-                                          color: Color(0xFFe53935),
+                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
                                     ),
@@ -176,7 +180,9 @@ class _LoginPageState extends State<LoginPage> {
                                       FlutterI18n.translate(context,
                                           "login.login_failed_not_verified"),
                                       style: TextStyle(
-                                          color: Color(0xFFe53935),
+                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
                                     ),

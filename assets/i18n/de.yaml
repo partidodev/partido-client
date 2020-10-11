@@ -25,7 +25,8 @@ home:
       text: >-
         Lade die Partido App aus dem Google Play Store
         https://play.google.com/store/apps/details?id=net.fosforito.partido
-        herunter und tritt meiner Gruppe mit diesem Code bei (Hilfe beim Beitreten einer Gruppe findest du unter https://partido.rocks/faq/#join-group):
+        herunter und tritt meiner Gruppe mit diesem Code bei (Hilfe beim Beitreten
+        einer Gruppe findest du unter https://partido.rocks/faq/#join-group):
       subject: Tritt meiner Gruppe auf Partido bei!
     faq_link: "https://partido.rocks/faq-groups/"
     faq_tooltip: FAQ öffnen

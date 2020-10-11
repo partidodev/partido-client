@@ -396,7 +396,9 @@ class _EntryFormPageState extends State<EntryFormPage> {
                                       FlutterI18n.translate(context,
                                           "entry_form.amount_of_splits_sum_not_total_validation_error"),
                                       style: TextStyle(
-                                          color: Color(0xFFe53935),
+                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
                                     ),
@@ -408,20 +410,28 @@ class _EntryFormPageState extends State<EntryFormPage> {
                     ],
                   ),
                 ),
-                if (!createNewEntryMode)
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: MaterialButton(
-                        minWidth: double.infinity,
-                        textColor: MediaQuery.of(context).platformBrightness == Brightness.light
-                            ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-                            : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-                        child: Text(
-                            FlutterI18n.translate(
-                                context, "entry_form.delete_entry_tooltip"),
-                            style: TextStyle(fontWeight: FontWeight.w400)),
-                        onPressed: _openDeleteEntryDialog),
+                !createNewEntryMode ? Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          FlutterI18n.translate(context, "entry_form.delete_entry_tooltip"),
+                          style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light
+                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme),
+                        )),
+                        trailing: Icon(
+                          LinearIcons.chevron_right,
+                          color: MediaQuery.of(context).platformBrightness == Brightness.light
+                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme,
+                        ),
+                        onTap: _openDeleteEntryDialog,
+                      ),
+                    ],
                   ),
+                ) : Container(),
               ],
             ),
           ),

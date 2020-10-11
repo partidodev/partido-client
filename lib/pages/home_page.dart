@@ -293,8 +293,9 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(LinearIcons.share2),
                   onPressed: () {
                     Share.share(
-                        '${FlutterI18n.translate(context, "home.join_mode.share.text")} ${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
-                        subject: FlutterI18n.translate(context, "home.join_mode.share.subject"),
+                      '${FlutterI18n.translate(context, "home.join_mode.share.text")}\n\n'
+                          '${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                      subject: FlutterI18n.translate(context, "home.join_mode.share.subject"),
                     );
                   },
                 ),
@@ -538,7 +539,9 @@ class _HomePageState extends State<HomePage> {
                                   child: Text(
                                     FlutterI18n.translate(context, "home.join_group_dialog.join_code_not_found_validation_error"),
                                     style: TextStyle(
-                                      color: Color(0xFFe53935),
+                                      color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                     ),

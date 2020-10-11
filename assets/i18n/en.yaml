@@ -23,7 +23,10 @@ home:
     security_notice: "For security reasons, disable the group join mode when all users joined the group."
     share:
       text: >-
-        Download the Partido app from Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido and join my group with the following code (More information aboout how to join a group on https://partido.rocks/faq/#join-group):
+        Download the Partido app from Google Play Store
+        https://play.google.com/store/apps/details?id=net.fosforito.partido
+        and join my group with the following code (More information aboout how
+        to join a group on https://partido.rocks/faq/#join-group):
       subject: Join my group on Partido!
     faq_link: "https://partido.rocks/faq-groups/"
     faq_tooltip: Open FAQ

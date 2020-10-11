@@ -259,7 +259,12 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                             ),
                           ),
-                          trailing: Icon(LinearIcons.chevron_right),
+                          trailing: Icon(
+                            LinearIcons.chevron_right,
+                            color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                          ),
                           onTap: _openDeleteAccountDialog,
                         ),
                       ],
@@ -402,7 +407,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               child: Text(
                                 FlutterI18n.translate(context, "account.delete_dialog.wrong_verification_word_validation_error"),
                                 style: TextStyle(
-                                  color: Color(0xFFe53935),
+                                  color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                      ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                      : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -417,7 +424,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               child: Text(
                                 FlutterI18n.translate(context, "account.delete_dialog.groups_not_settled_up_validation_error"),
                                 style: TextStyle(
-                                  color: Color(0xFFe53935),
+                                  color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                      ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                      : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                 ),

@@ -25,7 +25,8 @@ home:
       text: >-
         Descarga la aplicación Partido del Google Play Store
         https://play.google.com/store/apps/details?id=net.fosforito.partido
-        y únete a mi grupo con éste código (Más información sobre cómo unirse a un grupo encuentras en https://partido.rocks/faq/#join-group):
+        y únete a mi grupo con éste código (Más información sobre cómo unirse a un
+        grupo encuentras en https://partido.rocks/faq/#join-group):
       subject: Únete a mi grupo en Partido!
     faq_link: "https://partido.rocks/faq-groups/"
     faq_tooltip: Abrir FAQ

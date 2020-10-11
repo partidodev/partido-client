@@ -111,14 +111,14 @@ class _GroupFormPageState extends State<GroupFormPage> {
   }
 
   void _onJoinModeActiveChanged(bool newValue) => setState(() {
+    int joinModeKeyLength = 6;
         _joinModeActive = newValue;
         if (_joinModeActive) {
           // Do not add @. This character is used as separator in the combined joinKey (key@groupId)
-          const chars =
-              "ABCD?EFGH!JKLMNP_/QRSTUVWX+*YZabcdefghkmn'§pqrstuv%wxyz12345()6789";
+          const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
           Random rnd = new Random.secure();
           String result = "";
-          for (var i = 0; i < 12; i++) {
+          for (var i = 0; i < joinModeKeyLength; i++) {
             result += chars[rnd.nextInt(chars.length)];
           }
           _joinKey = result;
@@ -300,7 +300,12 @@ class _GroupFormPageState extends State<GroupFormPage> {
                           : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
                       ),
                     ),
-                    trailing: Icon(LinearIcons.chevron_right),
+                    trailing: Icon(
+                      LinearIcons.chevron_right,
+                      color: MediaQuery.of(context).platformBrightness == Brightness.light
+                          ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                          : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                    ),
                     onTap: _openLeaveGroupDialog,
                   ),
                 ],

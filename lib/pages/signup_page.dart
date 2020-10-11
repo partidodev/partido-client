@@ -170,7 +170,13 @@ class _SignupPageState extends State<SignupPage> {
                                       padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                       child: Text(
                                           FlutterI18n.translate(context, "signup.privacy_policy_not_accepted_error"),
-                                        style: TextStyle(color: Color(0xFFe53935), fontSize: 12, fontWeight: FontWeight.w400),
+                                        style: TextStyle(
+                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                        ),
                                       ),
                                   ) : null,
                                   onChanged: (bool value) => setState(() => _acceptTerms = value),
