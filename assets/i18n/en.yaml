@@ -11,6 +11,8 @@ home:
   welcome:
     title: Welcome to Partido!
     subtitle: Select an option to start
+    info: To start splitting expenses between multiple persons, you need to create a new group and invite your friends to it.
+    info2: Or enter an existing group if you already got a join code from a friend.
     group_settings_tooltip: Group settings
     open_my_groups: Open my groups
     create_new_group: Create a new group
@@ -56,6 +58,7 @@ home:
     button_join: Join
   create_entry_tooltip: Create entry
   groups_tooltip: Groups
+  list_empty: No entries yet...
 entry_form:
   toast_entry_created: New entry created
   toast_failed_to_save_entry: An error occurred creating the entry

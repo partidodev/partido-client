@@ -11,6 +11,8 @@ home:
   welcome:
     title: Willkommen zu Partido!
     subtitle: Wähle eine Option um zu starten
+    info: Um Ausgaben mit mehreren Personen teilen zu können, musst du erst eine neue Gruppe erstellen und deine Freunde einladen.
+    info2: Oder tritt einer bestehenden Gruppe bei, wenn du von einem Freund bereits einen Beitrittscode erhalten hast.
     group_settings_tooltip: Gruppeneinstellungen
     open_my_groups: Meine Gruppen öffnen
     create_new_group: Neue Gruppe erstellen
@@ -56,6 +58,7 @@ home:
     button_join: Beitreten
   create_entry_tooltip: Eintrag erstellen
   groups_tooltip: Gruppen
+  list_empty: Noch keine Einträge vorhanden...
 entry_form:
   toast_entry_created: Neuen Eintrag erstellt
   toast_failed_to_save_entry: Beim Erstellen des Eintrages ist ein Fehler aufgetreten

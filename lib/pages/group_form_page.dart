@@ -37,7 +37,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
   String _name;
   String _description;
   String _currency;
-  bool _joinModeActive = false;
+  bool _joinModeActive = true;
   String _joinKey;
 
   TextEditingController groupNameController = new TextEditingController();

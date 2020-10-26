@@ -143,17 +143,18 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               RefreshIndicator(
-                child: ListView.builder(
+                child: appState.getEntries() != null && appState.getEntries().isNotEmpty
+                    ? ListView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
-                  //separatorBuilder: (context, index) => Divider(),
                   itemCount: appState.getEntries() != null ? appState.getEntries().length : 0,
                   itemBuilder: (context, index) {
                     return buildEntryListItem(appState, index, context);
                   },
-                ),
+                ) : Center(child: I18nText("home.list_empty")),
                 onRefresh: () async {
                   await appState.refreshAppState();
+                  PartidoToast.showToast(msg: FlutterI18n.translate(context, 'home.group_refreshed_toast'));
                 },
               ),
             ],
@@ -388,6 +389,18 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Icon(LinearIcons.landscape, color: Colors.green, size: 30),
+              ],
+            ),
+          ),
+          Divider(),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                I18nText("home.welcome.info"),
+                SizedBox(height: 16),
+                I18nText("home.welcome.info2"),
               ],
             ),
           ),

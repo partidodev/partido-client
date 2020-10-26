@@ -11,6 +11,8 @@ home:
   welcome:
     title: Bienvenido a Partido!
     subtitle: Selecciona una opción para empezar
+    info: Para comenzar a compartir gastos entre varias personas, necesitas crear un nuevo grupo e invitar a tus amigos.
+    info2: O ingresa a un grupo existente si ya recibiste un código de ingreso de un amigo.
     group_settings_tooltip: Configuración de grupo
     open_my_groups: Abrir mis grupos
     create_new_group: Crear un nuevo grupo
@@ -56,6 +58,7 @@ home:
     button_join: Unirse
   create_entry_tooltip: Crear entrada
   groups_tooltip: Grupos
+  list_empty: Aún no hay entradas...
 entry_form:
   toast_entry_created: Nueva entrada creada
   toast_failed_to_save_entry: Se produjo un error al crear la entrada
