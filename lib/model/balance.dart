@@ -4,8 +4,8 @@ part 'balance.g.dart';
 
 @JsonSerializable()
 class Balance {
-  int user;
-  double balance;
+  int? user;
+  double? balance;
 
   Balance({this.user, this.balance});
 

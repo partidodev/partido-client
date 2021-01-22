@@ -4,8 +4,8 @@ part 'group_join_body.g.dart';
 
 @JsonSerializable()
 class GroupJoinBody {
-  int userId;
-  String joinKey;
+  int? userId;
+  String? joinKey;
 
   GroupJoinBody({this.userId, this.joinKey});
 

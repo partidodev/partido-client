@@ -5,10 +5,8 @@ part 'new_user.g.dart';
 
 @JsonSerializable()
 class NewUser extends User {
-
-  String password;
-
-  String newPassword;
+  String? password;
+  String? newPassword;
 
   NewUser({this.password, this.newPassword});
 

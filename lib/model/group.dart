@@ -5,14 +5,14 @@ part 'group.g.dart';
 
 @JsonSerializable()
 class Group {
-  int id;
-  String name;
-  String status;
-  String currency;
-  bool joinModeActive;
-  String joinKey;
-  int founder;
-  List<User> users = null;
+  int? id;
+  String? name;
+  String? status;
+  String? currency;
+  bool? joinModeActive;
+  String? joinKey;
+  int? founder;
+  List<User> users;
 
   Group({
     this.id,
@@ -22,7 +22,7 @@ class Group {
     this.joinModeActive,
     this.joinKey,
     this.founder,
-    this.users
+    required this.users
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

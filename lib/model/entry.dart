@@ -5,15 +5,15 @@ part 'entry.g.dart';
 
 @JsonSerializable()
 class Entry {
-  int id;
-  String description;
-  String category;
-  double totalAmount;
-  String billingDate;
-  String creationDate;
+  int? id;
+  String? description;
+  String? category;
+  double? totalAmount;
+  String? billingDate;
+  String? creationDate;
   double parts;
-  int creator;
-  List<Split> splits = null;
+  int? creator;
+  List<Split>? splits;
 
   Entry({
     this.id,
@@ -22,7 +22,7 @@ class Entry {
     this.totalAmount,
     this.billingDate,
     this.creationDate,
-    this.parts,
+    required this.parts,
     this.creator,
     this.splits
   });

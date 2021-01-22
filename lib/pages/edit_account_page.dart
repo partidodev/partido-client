@@ -16,7 +16,7 @@ import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class EditAccountPage extends StatefulWidget {
-  EditAccountPage({Key key}) : super(key: key);
+  EditAccountPage({Key? key}) : super(key: key);
 
   @override
   _EditAccountPageState createState() => _EditAccountPageState();
@@ -28,30 +28,30 @@ class _EditAccountPageState extends State<EditAccountPage> {
   Api api = ApiService.getApi();
 
   final _formKey = GlobalKey<FormState>();
-  final _deleteAccountDialogformKey = GlobalKey<FormState>();
+  final _deleteAccountDialogFormKey = GlobalKey<FormState>();
 
-  String _username;
-  String _oldEmail;
-  String _email;
-  String _oldPassword;
-  String _newPassword;
+  String? _username;
+  String? _oldEmail;
+  String? _email;
+  String? _oldPassword;
+  String? _newPassword;
 
   bool emailAlreadyRegistered = false;
 
   TextEditingController usernameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
 
-  StateSetter _setStateOfDeleteAccountDialog;
+  StateSetter? _setStateOfDeleteAccountDialog;
   bool deleteAccountFormSaved = false;
   bool _deleteAccountVerificationWordInvalid = false;
   bool _deleteAccountGroupsNotSettledUp = false;
-  String _deleteAccountVerificationWord;
+  String? _deleteAccountVerificationWord;
 
   @override
   void initState() {
-    User user = Provider.of<AppState>(context, listen: false).getCurrentUser();
-    usernameController.text = user.username;
-    emailController.text = user.email;
+    User? user = Provider.of<AppState>(context, listen: false).getCurrentUser();
+    usernameController.text = user!.username!;
+    emailController.text = user.email!;
     _oldEmail = user.email;
     return super.initState();
   }
@@ -75,7 +75,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
               onPressed: () {
                 emailAlreadyRegistered = false;
                 final form = _formKey.currentState;
-                form.save();
+                form!.save();
                 if (form.validate()) {
                   _updateAccount();
                 }
@@ -116,7 +116,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 ),
                                 controller: usernameController,
                                 validator: (value) {
-                                  if (value.isEmpty) {
+                                  if (value!.isEmpty) {
                                     return FlutterI18n.translate(context, "account.username_empty_validation_error");
                                   }
                                   if (value.length > 50) {
@@ -138,7 +138,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                   if (emailAlreadyRegistered) {
                                     return FlutterI18n.translate(context, "account.email_already_in_use_validation_error");
                                   }
-                                  if (value.isEmpty) {
+                                  if (value!.isEmpty) {
                                     return FlutterI18n.translate(context, "account.email_empty_validation_error");
                                   }
                                   if (!RegExp(r'^[a-zA-Z0-9\.]+@[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
@@ -159,7 +159,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                   prefixIcon: Icon(LinearIcons.key),
                                 ),
                                 validator: (value) {
-                                  if (value.isEmpty) {
+                                  if (value!.isEmpty) {
                                     return FlutterI18n.translate(context, "account.current_password_input_required");
                                   }
                                   return null;
@@ -205,7 +205,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                   prefixIcon: Icon(LinearIcons.lock),
                                 ),
                                 validator: (value) {
-                                  if (value.length > 100) {
+                                  if (value!.length > 100) {
                                     return FlutterI18n.translate(context, "account.change_password.new_password_too_long_validation_error");
                                   }
                                   if (value.length < 8 && value.length != 0) {
@@ -288,7 +288,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
 
     try {
       HttpResponse<User> response = await api.updateUser(updatedUser,
-          Provider.of<AppState>(context, listen: false).getCurrentUser().id);
+          Provider.of<AppState>(context, listen: false).getCurrentUser()!.id!);
       if (response.response.statusCode == 200) {
         if (_oldEmail != _email) {
           _openVerificationRequiredDialog();
@@ -301,7 +301,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
           // Automatically re-login after changing account's settings
           try {
             var loginPassword;
-            if (_newPassword.length == 0) {
+            if (_newPassword!.length == 0) {
               loginPassword = _oldPassword;
             } else {
               loginPassword = _newPassword;
@@ -319,7 +319,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
       } else if (response.response.statusCode == 412) {
         // HTTP status "precondition failed"; email is already in use
         emailAlreadyRegistered = true;
-        _formKey.currentState.validate();
+        _formKey.currentState!.validate();
       }
     } catch (e) {
       logger.e("Failed to save account", e);
@@ -338,11 +338,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
   Future _openLogoutDialog() async {
     await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         title: I18nText("account.logout_dialog.title"),
         content: I18nText("account.logout_dialog.question"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "account.logout_dialog.answer_no"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
@@ -350,7 +350,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
               navService.goBack();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "account.logout_dialog.answer_yes"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
@@ -377,7 +377,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   padding: EdgeInsets.only(left: 24, right: 24),
                   width: double.maxFinite,
                   child: Form(
-                    key: _deleteAccountDialogformKey,
+                    key: _deleteAccountDialogFormKey,
                     child: ListView(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -387,13 +387,13 @@ class _EditAccountPageState extends State<EditAccountPage> {
                         I18nText("account.delete_dialog.verification_info"),
                         SizedBox(height: 16),
                         TextFormField(
-                          onSaved: (value) => _deleteAccountVerificationWord = value,
+                          onSaved: (value) => _deleteAccountVerificationWord = value!,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: FlutterI18n.translate(context, "account.delete_dialog.verification_field_label"),
                           ),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return FlutterI18n.translate(context, "account.delete_dialog.field_empty_validation_error");
                             }
                             return null;
@@ -438,7 +438,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   ),
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       FlutterI18n.translate(context, "global.cancel"),
                       style: TextStyle(fontWeight: FontWeight.w400),
@@ -447,7 +447,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       navService.goBack();
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       FlutterI18n.translate(context, "account.delete_dialog.answer_delete"),
                       style: TextStyle(fontWeight: FontWeight.w400),
@@ -455,8 +455,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     onPressed: () {
                       _deleteAccountVerificationWordInvalid = false;
                       _deleteAccountGroupsNotSettledUp = false;
-                      final form = _deleteAccountDialogformKey.currentState;
-                      form.save();
+                      final form = _deleteAccountDialogFormKey.currentState;
+                      form!.save();
                       setState(() => deleteAccountFormSaved = true);
                       if (form.validate()) {
                         _deleteAccount();
@@ -474,18 +474,18 @@ class _EditAccountPageState extends State<EditAccountPage> {
 
   void _deleteAccount() async {
     if (_deleteAccountVerificationWord != FlutterI18n.translate(context, "account.delete_dialog.verification_word")) {
-      _setStateOfDeleteAccountDialog(() {
+      _setStateOfDeleteAccountDialog!(() {
         _deleteAccountVerificationWordInvalid = true;
       });
       return;
     }
     try {
-      HttpResponse<String> response = await api.deleteUser(Provider.of<AppState>(context, listen: false).getCurrentUser().id);
+      HttpResponse<String> response = await api.deleteUser(Provider.of<AppState>(context, listen: false).getCurrentUser()!.id!);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).clearAppState();
         navService.pushReplacementNamed("/login");
       } else if (response.response.statusCode == 412) {
-        _setStateOfDeleteAccountDialog(() {
+        _setStateOfDeleteAccountDialog!(() {
           _deleteAccountGroupsNotSettledUp = true;
         });
       }
@@ -497,11 +497,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
   Future _openVerificationRequiredDialog() async {
     await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         title: I18nText("account.verification_required_dialog.title"),
         content: I18nText("account.verification_required_dialog.info"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "account.verification_required_dialog.ok"),
                 style: TextStyle(fontWeight: FontWeight.w400),

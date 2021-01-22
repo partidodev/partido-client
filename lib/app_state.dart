@@ -15,15 +15,15 @@ import 'model/user.dart';
 class AppState extends ChangeNotifier {
   Api api = ApiService.getApi();
 
-  User _currentUser;
-  Group _selectedGroup;
+  User? _currentUser;
+  Group? _selectedGroup;
   List<Group> _myGroups = [];
   List<Entry> _entries = [];
-  Report _report;
+  Report? _report;
   int _selectedGroupId = -1; // initial value to check if id must be loaded or not
-  Map _availableEntryCategories;
+  Map? _availableEntryCategories;
   DateTime now = DateTime.now();
-  Map<int, String> _processedEntryListTitles;
+  Map<int, String>? _processedEntryListTitles;
   bool stateInitialized = false;
 
   void initAppState() async {
@@ -38,10 +38,10 @@ class AppState extends ChangeNotifier {
       // (the user may have logged in with an other account, where he cannot
       // see the same groups as before)
       if (_selectedGroupId == -1) {
-        int preferredGroupId = preferences.getInt('SELECTEDGROUP');
+        int? preferredGroupId = preferences.getInt('SELECTEDGROUP');
         for (Group group in _myGroups) {
           if (group.id == preferredGroupId) {
-            _selectedGroupId = preferredGroupId;
+            _selectedGroupId = preferredGroupId!;
             reloadReport();
             _selectedGroup = group;
             reloadEntryList();
@@ -62,7 +62,7 @@ class AppState extends ChangeNotifier {
     _report = null;
   }
 
-  void refreshAppState() async {
+  Future<void> refreshAppState() async {
     if (_selectedGroupId != -1) {
       _selectedGroup = await api.getGroup(_selectedGroupId);
       _entries = await api.getEntriesForGroup(_selectedGroupId);
@@ -87,11 +87,11 @@ class AppState extends ChangeNotifier {
     return _entries;
   }
 
-  Map<int, String> getProcessedEntryListTitles() {
+  Map<int, String>? getProcessedEntryListTitles() {
     return _processedEntryListTitles;
   }
 
-  Report getReport() {
+  Report? getReport() {
     return _report;
   }
 
@@ -129,11 +129,11 @@ class AppState extends ChangeNotifier {
     return _selectedGroupId;
   }
 
-  Group getSelectedGroup() {
+  Group? getSelectedGroup() {
     return _selectedGroup;
   }
 
-  User getCurrentUser() {
+  User? getCurrentUser() {
     return _currentUser;
   }
 
@@ -146,8 +146,8 @@ class AppState extends ChangeNotifier {
     return _myGroups;
   }
 
-  User getUserFromGroupById(int creatorId) {
-    for (User user in _selectedGroup.users) {
+  User? getUserFromGroupById(int creatorId) {
+    for (User user in _selectedGroup!.users) {
       if (user.id == creatorId) {
         return user;
       }
@@ -161,7 +161,7 @@ class AppState extends ChangeNotifier {
     preferences.setString("REMEMBERLOGIN", boolAsNumber);
   }
 
-  Future<String> getRememberLoginStatus() async {
+  Future<String?> getRememberLoginStatus() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString("REMEMBERLOGIN");
   }
@@ -187,7 +187,7 @@ class AppState extends ChangeNotifier {
     return entryCategories;
   }
 
-  Map getAvailableEntryCategories() {
+  Map? getAvailableEntryCategories() {
     return _availableEntryCategories;
   }
 
@@ -216,14 +216,14 @@ class AppState extends ChangeNotifier {
           titleUsed['THIS_MONTH'] = "true";
         }
       } else {
-        int month = DateTime.parse(entries[i].creationDate).month;
-        int year = DateTime.parse(entries[i].creationDate).year;
-        if (now.year == year && titleUsed["MONTH_${month}"] == null) {
-          processEntryListTitles[i] = 'MONTH_${month}';
-          titleUsed['MONTH_${month}'] = "true";
-        } else if (now.year != year && titleUsed["MONTH_${month}#${year}"] == null) {
-          processEntryListTitles[i] = 'MONTH_${month}#${year}';
-          titleUsed['MONTH_${month}#${year}'] = "true";
+        int month = DateTime.parse(entries[i].creationDate!).month;
+        int year = DateTime.parse(entries[i].creationDate!).year;
+        if (now.year == year && titleUsed["MONTH_$month"] == null) {
+          processEntryListTitles[i] = 'MONTH_$month';
+          titleUsed['MONTH_$month'] = "true";
+        } else if (now.year != year && titleUsed["MONTH_$month#$year"] == null) {
+          processEntryListTitles[i] = 'MONTH_$month#$year';
+          titleUsed['MONTH_$month#$year'] = "true";
         }
       }
     }
@@ -231,32 +231,32 @@ class AppState extends ChangeNotifier {
   }
 
   bool isToday(Entry entry) {
-    if (DateTime.parse(entry.creationDate).isAfter(startOfToday())
-        && DateTime.parse(entry.creationDate).isBefore(endOfToday())) {
+    if (DateTime.parse(entry.creationDate!).isAfter(startOfToday())
+        && DateTime.parse(entry.creationDate!).isBefore(endOfToday())) {
       return true;
     }
     return false;
   }
 
   bool isYesterday(Entry entry) {
-    if (DateTime.parse(entry.creationDate).isAfter(startOfYesterday()) &&
-        DateTime.parse(entry.creationDate).isBefore(startOfToday())) {
+    if (DateTime.parse(entry.creationDate!).isAfter(startOfYesterday()) &&
+        DateTime.parse(entry.creationDate!).isBefore(startOfToday())) {
       return true;
     }
     return false;
   }
 
   bool isThisWeek(Entry entry) {
-    if (DateTime.parse(entry.creationDate).isAfter(startOfThisWeek()) &&
-        DateTime.parse(entry.creationDate).isBefore(startOfYesterday())) {
+    if (DateTime.parse(entry.creationDate!).isAfter(startOfThisWeek()) &&
+        DateTime.parse(entry.creationDate!).isBefore(startOfYesterday())) {
       return true;
     }
     return false;
   }
 
   bool isThisMonth(Entry entry) {
-    if (DateTime.parse(entry.creationDate).isAfter(startOfThisMonth()) &&
-        DateTime.parse(entry.creationDate).isBefore(startOfThisWeek())) {
+    if (DateTime.parse(entry.creationDate!).isAfter(startOfThisMonth()) &&
+        DateTime.parse(entry.creationDate!).isBefore(startOfThisWeek())) {
       return true;
     }
     return false;

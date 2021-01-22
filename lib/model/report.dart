@@ -6,8 +6,8 @@ part 'report.g.dart';
 @JsonSerializable()
 class Report {
 
-  String timestamp;
-  List<Balance> balances;
+  String? timestamp;
+  List<Balance>? balances;
 
   Report({this.timestamp, this.balances});
 

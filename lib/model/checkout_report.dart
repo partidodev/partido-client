@@ -10,7 +10,7 @@ class CheckoutReport {
   String timestamp;
   List<CompensationPayment> compensationPayments;
 
-  CheckoutReport({this.timestamp, this.compensationPayments});
+  CheckoutReport({required this.timestamp, required this.compensationPayments});
 
   factory CheckoutReport.fromJson(Map<String, dynamic> json) => _$CheckoutReportFromJson(json);
   Map<String, dynamic> toJson() => _$CheckoutReportToJson(this);

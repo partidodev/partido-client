@@ -18,9 +18,9 @@ import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class GroupFormPage extends StatefulWidget {
-  final Group group;
+  final Group? group;
 
-  GroupFormPage({Key key, this.group}) : super(key: key);
+  GroupFormPage({Key? key, this.group}) : super(key: key);
 
   @override
   _GroupFormPageState createState() => _GroupFormPageState();
@@ -34,11 +34,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool createNewGroupMode = true;
 
-  String _name;
-  String _description;
-  String _currency;
+  String? _name;
+  String? _description;
+  String? _currency;
   bool _joinModeActive = true;
-  String _joinKey;
+  String? _joinKey;
 
   TextEditingController groupNameController = new TextEditingController();
   TextEditingController groupDescriptionController =
@@ -50,11 +50,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
     if (widget.group != null) {
       // edit existing group
       createNewGroupMode = false;
-      groupNameController.text = widget.group.name;
-      groupDescriptionController.text = widget.group.status;
-      groupCurrencyController.text = widget.group.currency;
-      _joinModeActive = widget.group.joinModeActive;
-      _joinKey = widget.group.joinKey;
+      groupNameController.text = widget.group!.name!;
+      groupDescriptionController.text = widget.group!.status!;
+      groupCurrencyController.text = widget.group!.currency!;
+      _joinModeActive = widget.group!.joinModeActive!;
+      _joinKey = widget.group!.joinKey!;
     }
     // else: create new group
     return super.initState();
@@ -66,12 +66,13 @@ class _GroupFormPageState extends State<GroupFormPage> {
         status: _description,
         currency: _currency,
         joinModeActive: _joinModeActive,
-        joinKey: _joinKey);
+        joinKey: _joinKey,
+        users: []);
     try {
       HttpResponse<Group> response = await api.createGroup(group);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false)
-            .changeSelectedGroup(response.data.id);
+            .changeSelectedGroup(response.data.id!);
         navService.goBack();
         PartidoToast.showToast(
             msg: FlutterI18n.translate(
@@ -91,10 +92,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
         status: _description,
         currency: _currency,
         joinModeActive: _joinModeActive,
-        joinKey: _joinKey);
+        joinKey: _joinKey,
+        users: []);
     try {
       HttpResponse<Group> response =
-          await api.updateGroup(widget.group.id, updatedGroup);
+          await api.updateGroup(widget.group!.id!, updatedGroup);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
@@ -110,9 +112,9 @@ class _GroupFormPageState extends State<GroupFormPage> {
     }
   }
 
-  void _onJoinModeActiveChanged(bool newValue) => setState(() {
+  void _onJoinModeActiveChanged(bool? newValue) => setState(() {
     int joinModeKeyLength = 6;
-        _joinModeActive = newValue;
+        _joinModeActive = newValue!;
         if (_joinModeActive) {
           // Do not add @. This character is used as separator in the combined joinKey (key@groupId)
           const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -149,7 +151,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                       context, "group_form.save_changes_button"),
               onPressed: () {
                 final form = _formKey.currentState;
-                form.save();
+                form!.save();
                 if (form.validate()) {
                   if (createNewGroupMode) {
                     _createGroup();
@@ -192,7 +194,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                           ),
                           textCapitalization: TextCapitalization.sentences,
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return FlutterI18n.translate(context,
                                   "group_form.group_name_empty_validation_error");
                             }
@@ -214,7 +216,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                           ),
                           textCapitalization: TextCapitalization.sentences,
                           validator: (value) {
-                            if (value.length > 255) {
+                            if (value!.length > 255) {
                               return FlutterI18n.translate(context,
                                   "group_form.group_description_too_long_validation_error");
                             }
@@ -232,7 +234,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
                           ),
                           textCapitalization: TextCapitalization.sentences,
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return FlutterI18n.translate(context,
                                   "group_form.currency_empty_validation_error");
                             }
@@ -320,11 +322,11 @@ class _GroupFormPageState extends State<GroupFormPage> {
   Future _openLeaveGroupDialog() async {
     await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         title: I18nText("group_form.leave_group_dialog.title"),
         content: I18nText("group_form.leave_group_dialog.question"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "group_form.leave_group_dialog.answer_no"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
@@ -332,7 +334,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
               navService.goBack();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "group_form.leave_group_dialog.answer_yes"),
                 style: TextStyle(fontWeight: FontWeight.w400)),
@@ -364,7 +366,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
   Future _openCheckoutDialog() async {
     await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         title: I18nText("group_form.checkout_dialog.title"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -375,7 +377,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
           ],
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "group_form.checkout_dialog.answer_no"),
                 style: TextStyle(fontWeight: FontWeight.w400),
@@ -384,7 +386,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
               navService.goBack();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(context, "group_form.checkout_dialog.answer_yes"),
                 style: TextStyle(fontWeight: FontWeight.w400),

@@ -9,7 +9,7 @@ class CompensationPayment {
   int toUser;
   double amount;
 
-  CompensationPayment({this.fromUser, this.toUser, this.amount});
+  CompensationPayment({required this.fromUser, required this.toUser, required this.amount});
 
   factory CompensationPayment.fromJson(Map<String, dynamic> json) => _$CompensationPaymentFromJson(json);
   Map<String, dynamic> toJson() => _$CompensationPaymentToJson(this);

@@ -18,9 +18,9 @@ import '../navigation_service.dart';
 import 'entry_details_page.dart';
 
 class EntryFormPage extends StatefulWidget {
-  final Entry entry;
+  final Entry? entry;
 
-  EntryFormPage({Key key, @required this.entry}) : super(key: key);
+  EntryFormPage({Key? key, @required this.entry}) : super(key: key);
 
   @override
   _EntryFormPageState createState() => _EntryFormPageState();
@@ -31,20 +31,20 @@ class _EntryFormPageState extends State<EntryFormPage> {
 
   Api api = ApiService.getApi();
 
-  NumberFormat currencyFormatter;
-  NumberFormat partFormatter;
-  DateFormat dateFormatter;
+  late NumberFormat currencyFormatter;
+  late NumberFormat partFormatter;
+  late DateFormat dateFormatter;
 
   final _formKey = GlobalKey<FormState>();
   bool createNewEntryMode = true;
   bool initDone = false;
   bool formSaved = false;
 
-  String _category;
+  String? _category;
   static String DEFAULT_CATEGORY = "UNCATEGORIZED";
-  String _description;
-  String _amount;
-  DateTime _selectedDate;
+  String? _description;
+  String? _amount;
+  DateTime? _selectedDate;
 
   TextEditingController entryDescriptionController = new TextEditingController();
   TextEditingController entryAmountController = new TextEditingController();
@@ -75,15 +75,15 @@ class _EntryFormPageState extends State<EntryFormPage> {
       _category = DEFAULT_CATEGORY;
       // create new entry
       Provider.of<AppState>(context, listen: false)
-          .getSelectedGroup()
+          .getSelectedGroup()!
           .users
           .forEach((user) {
-        splitUsers.putIfAbsent(user.id, () => true);
+        splitUsers.putIfAbsent(user.id!, () => true);
         var splitPaidController =
             new TextEditingController(text: currencyFormatter.format(0.00));
-        splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
+        splitPaidControllers.putIfAbsent(user.id!, () => splitPaidController);
         var splitPartsController = new TextEditingController(text: "1");
-        splitPartsControllers.putIfAbsent(user.id, () => splitPartsController);
+        splitPartsControllers.putIfAbsent(user.id!, () => splitPartsController);
       });
       if (_selectedDate == null) {
         _selectedDate = DateTime.now();
@@ -91,70 +91,70 @@ class _EntryFormPageState extends State<EntryFormPage> {
     } else {
       // edit existing entry
       createNewEntryMode = false;
-      entryDescriptionController.text = widget.entry.description;
-      if (widget.entry.category != null) {
-        _category = widget.entry.category;
+      entryDescriptionController.text = widget.entry!.description!;
+      if (widget.entry!.category != null) {
+        _category = widget.entry!.category;
       } else {
         _category = DEFAULT_CATEGORY;
       }
       entryAmountController.text =
-          currencyFormatter.format(widget.entry.totalAmount);
+          currencyFormatter.format(widget.entry!.totalAmount);
       if (_selectedDate == null) {
-        _selectedDate = DateTime.parse(widget.entry.billingDate);
+        _selectedDate = DateTime.parse(widget.entry!.billingDate!);
       }
 
       Provider.of<AppState>(context, listen: false)
-          .getSelectedGroup()
+          .getSelectedGroup()!
           .users
           .forEach((user) {
         bool splitFound = false;
-        for (Split split in widget.entry.splits) {
+        for (Split split in widget.entry!.splits!) {
           if (split.debtor == user.id) {
             splitFound = true;
-            splitUsers.putIfAbsent(user.id, () => true);
+            splitUsers.putIfAbsent(user.id!, () => true);
             var splitPartsController = new TextEditingController(
                 text: partFormatter.format(split.partsOfBill));
             splitPartsControllers.putIfAbsent(
-                user.id, () => splitPartsController);
+                user.id!, () => splitPartsController);
             var splitPaidController = new TextEditingController(
                 text: currencyFormatter.format(split.paid));
             splitPaidControllers.putIfAbsent(
-                user.id, () => splitPaidController);
+                user.id!, () => splitPaidController);
             break;
           }
         }
         // if no split exists for an user, create defaults with zero-values
         if (!splitFound) {
-          splitUsers.putIfAbsent(user.id, () => false);
+          splitUsers.putIfAbsent(user.id!, () => false);
           var splitPartsController = new TextEditingController(text: "0");
           splitPartsControllers.putIfAbsent(
-              user.id, () => splitPartsController);
+              user.id!, () => splitPartsController);
           var splitPaidController =
               new TextEditingController(text: currencyFormatter.format(0.00));
-          splitPaidControllers.putIfAbsent(user.id, () => splitPaidController);
+          splitPaidControllers.putIfAbsent(user.id!, () => splitPaidController);
         }
       });
     }
-    entryDateController.text = dateFormatter.format(_selectedDate);
-    entryCategoryController.text = FlutterI18n.translate(context, 'entry.categories.' + _category);
+    entryDateController.text = dateFormatter.format(_selectedDate!);
+    entryCategoryController.text = FlutterI18n.translate(context, 'entry.categories.' + _category!);
     initDone = true;
   }
 
   @override
   Widget build(BuildContext context) {
     init(context);
-    List<Widget> splitEditingRows = new List();
+    List<Widget> splitEditingRows = List.empty(growable: true);
     Provider.of<AppState>(context, listen: false)
-        .getSelectedGroup()
+        .getSelectedGroup()!
         .users
         .forEach((user) {
       splitEditingRows.add(Row(
         children: <Widget>[
           Flexible(
             child: CheckboxListTile(
-              title: Text(user.username),
+              title: Text(user.username!),
               onChanged: (newValue) {
-                _splitUserChanged(user.id, newValue);
+                _splitUserChanged(user.id!, newValue!);
               },
               value: splitUsers[user.id],
               controlAffinity: ListTileControlAffinity.leading,
@@ -179,7 +179,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                   suffixText: Provider.of<AppState>(context, listen: false)
-                      .getSelectedGroup()
+                      .getSelectedGroup()!
                       .currency,
                   labelText: FlutterI18n.translate(context, "entry_form.paid")),
               textAlign: TextAlign.end,
@@ -212,7 +212,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
                     onPressed: () {
                       // save the fields..
                       final form = _formKey.currentState;
-                      form.save();
+                      form!.save();
                       setState(() => formSaved = true);
                       if (form.validate() && sumOfActiveSplitsEqualsAmount()) {
                         _createEntry();
@@ -226,7 +226,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
                     onPressed: () {
                       // save the fields..
                       final form = _formKey.currentState;
-                      form.save();
+                      form!.save();
                       setState(() => formSaved = true);
                       if (form.validate() && sumOfActiveSplitsEqualsAmount()) {
                         _updateEntry();
@@ -268,7 +268,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
                                       context, "entry_form.description")),
                               controller: entryDescriptionController,
                               validator: (value) {
-                                if (value.isEmpty) {
+                                if (value!.isEmpty) {
                                   return FlutterI18n.translate(context,
                                       "entry_form.description_empty_validation_error");
                                 }
@@ -301,8 +301,8 @@ class _EntryFormPageState extends State<EntryFormPage> {
                                         splitPaidControllers[Provider.of<AppState>(
                                             context,
                                             listen: false)
-                                            .getCurrentUser()
-                                            .id]
+                                            .getCurrentUser()!
+                                            .id]!
                                             .text =
                                             currencyFormatter
                                                 .format(_normalizeDouble(value));
@@ -319,14 +319,14 @@ class _EntryFormPageState extends State<EntryFormPage> {
                                           context, "entry_form.amount"),
                                       suffixText: Provider.of<AppState>(context,
                                           listen: false)
-                                          .getSelectedGroup()
+                                          .getSelectedGroup()!
                                           .currency,
                                       errorMaxLines: 2,
                                     ),
                                     textAlign: TextAlign.right,
                                     controller: entryAmountController,
                                     validator: (value) {
-                                      if (value.isEmpty) {
+                                      if (value!.isEmpty) {
                                         return FlutterI18n.translate(context,
                                             "entry_form.amount_empty_validation_error");
                                       }
@@ -444,19 +444,19 @@ class _EntryFormPageState extends State<EntryFormPage> {
     double sum = 0;
     splitUsers.forEach((key, value) {
       if (value) {
-        sum += _normalizeDouble(splitPaidControllers[key].text);
+        sum += _normalizeDouble(splitPaidControllers[key]!.text);
       }
     });
     if (_amount == "") {
       return true;
     }
-    return sum == _normalizeDouble(_amount);
+    return sum == _normalizeDouble(_amount!);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: _selectedDate,
+        initialDate: _selectedDate!,
         firstDate: DateTime(2000, 1),
         lastDate: DateTime(2100, 12));
     if (picked != null && picked != _selectedDate) {
@@ -464,13 +464,13 @@ class _EntryFormPageState extends State<EntryFormPage> {
         _selectedDate = picked;
       });
     }
-    entryDateController.text = dateFormatter.format(_selectedDate);
+    entryDateController.text = dateFormatter.format(_selectedDate!);
   }
 
   Future _selectCategory(BuildContext context) async {
     await showDialog(
         context: context,
-        child: Consumer<AppState>(builder: (context, appState, child) {
+        builder: (_) => Consumer<AppState>(builder: (context, appState, child) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
             title: I18nText('entry_form.select_category_dialog.title'),
@@ -478,13 +478,13 @@ class _EntryFormPageState extends State<EntryFormPage> {
               width: double.maxFinite,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: appState.getAvailableEntryCategories().length,
+                itemCount: appState.getAvailableEntryCategories()!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  String key = appState.getAvailableEntryCategories().keys.elementAt(index);
+                  String key = appState.getAvailableEntryCategories()!.keys.elementAt(index);
                   return ListTile(
                     contentPadding: EdgeInsets.only(left: 24),
                     title: I18nText('entry.categories.' + key),
-                    leading: Icon(appState.getAvailableEntryCategories()[key]),
+                    leading: Icon(appState.getAvailableEntryCategories()![key]),
                     onTap: () => {
                       setState(() {
                         _category = key;
@@ -497,7 +497,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text(FlutterI18n.translate(context, "global.cancel"),
                     style: TextStyle(fontWeight: FontWeight.w400)),
                 onPressed: () {
@@ -514,26 +514,23 @@ class _EntryFormPageState extends State<EntryFormPage> {
   }
 
   void _createEntry() async {
-    Entry entry = new Entry();
-    entry.description = _description;
-    entry.category = _category;
-    entry.totalAmount = _normalizeDouble(_amount);
-    entry.billingDate =
-        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    entry.parts = 0;
+    Entry entry = new Entry(parts: 0);
+    entry.description = _description!;
+    entry.category = _category!;
+    entry.totalAmount = _normalizeDouble(_amount!);
+    entry.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate!);
 
     List<Split> splits = [];
     for (User user in Provider.of<AppState>(context, listen: false)
-        .getSelectedGroup()
+        .getSelectedGroup()!
         .users) {
-      if (splitUsers[user.id]) {
+      if (splitUsers[user.id]!) {
         // create splits for users only if they are involved in the entry
-        entry.parts += _normalizeDouble(splitPartsControllers[user.id].text);
+        entry.parts += _normalizeDouble(splitPartsControllers[user.id]!.text);
         Split split = new Split();
         split.debtor = user.id;
-        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
-        split.partsOfBill =
-            _normalizeDouble(splitPartsControllers[user.id].text);
+        split.paid = _normalizeDouble(splitPaidControllers[user.id]!.text);
+        split.partsOfBill = _normalizeDouble(splitPartsControllers[user.id]!.text);
         splits.add(split);
       }
     }
@@ -558,27 +555,25 @@ class _EntryFormPageState extends State<EntryFormPage> {
   }
 
   void _updateEntry() async {
-    Entry updatedEntry = new Entry();
-    updatedEntry.description = _description;
-    updatedEntry.category = _category;
-    updatedEntry.totalAmount = _normalizeDouble(_amount);
-    updatedEntry.billingDate =
-        DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate);
-    updatedEntry.parts = 0;
+    Entry updatedEntry = new Entry(parts: 0);
+    updatedEntry.description = _description!;
+    updatedEntry.category = _category!;
+    updatedEntry.totalAmount = _normalizeDouble(_amount!);
+    updatedEntry.billingDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(_selectedDate!);
 
     List<Split> splits = [];
     for (User user in Provider.of<AppState>(context, listen: false)
-        .getSelectedGroup()
+        .getSelectedGroup()!
         .users) {
-      if (splitUsers[user.id]) {
+      if (splitUsers[user.id]!) {
         // create splits for users only if they are involved in the entry
         updatedEntry.parts +=
-            _normalizeDouble(splitPartsControllers[user.id].text);
+            _normalizeDouble(splitPartsControllers[user.id]!.text);
         Split split = new Split();
         split.debtor = user.id;
-        split.paid = _normalizeDouble(splitPaidControllers[user.id].text);
+        split.paid = _normalizeDouble(splitPaidControllers[user.id]!.text);
         split.partsOfBill =
-            _normalizeDouble(splitPartsControllers[user.id].text);
+            _normalizeDouble(splitPartsControllers[user.id]!.text);
         splits.add(split);
       }
     }
@@ -588,7 +583,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
       HttpResponse<Entry> response = await api.updateEntry(
           updatedEntry,
           Provider.of<AppState>(context, listen: false).getSelectedGroupId(),
-          widget.entry.id);
+          widget.entry!.id!);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack(); // close entry editing screen
@@ -609,7 +604,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
 
   void _deleteEntry() async {
     try {
-      HttpResponse<String> response = await api.deleteEntry(widget.entry.id);
+      HttpResponse<String> response = await api.deleteEntry(widget.entry!.id!);
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack(); // close entry deleting dialog
@@ -630,11 +625,11 @@ class _EntryFormPageState extends State<EntryFormPage> {
   Future _openDeleteEntryDialog() async {
     await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         title: I18nText("entry_form.delete_entry_dialog.title"),
         content: I18nText("entry_form.delete_entry_dialog.question"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(
                     context, "entry_form.delete_entry_dialog.answer_no"),
@@ -643,7 +638,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
               navService.goBack();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
                 FlutterI18n.translate(
                     context, "entry_form.delete_entry_dialog.answer_yes"),

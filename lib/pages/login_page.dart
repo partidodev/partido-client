@@ -12,7 +12,7 @@ import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -28,9 +28,9 @@ class _LoginPageState extends State<LoginPage> {
   bool loginFailed = false;
   bool tooManyLoginAttempts = false;
   bool accountNotVerified = false;
-  String _password;
-  String _email;
-  bool _rememberMe = false;
+  String? _password;
+  String? _email;
+  bool? _rememberMe = false;
   int rememberMeNumber = 0;
 
   void _login() async {
@@ -61,9 +61,9 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _onRememberMeChanged(bool newValue) => setState(() {
+  void _onRememberMeChanged(bool? newValue) => setState(() {
         _rememberMe = newValue;
-        if (_rememberMe) {
+        if (_rememberMe! == true) {
           rememberMeNumber = 1;
         } else {
           rememberMeNumber = 0;
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                                   prefixIcon: Icon(LinearIcons.at_sign),
                                 ),
                                 validator: (value) {
-                                  if (value.isEmpty) {
+                                  if (value!.isEmpty) {
                                     return FlutterI18n.translate(context, "login.email_empty_validation_error");
                                   }
                                   return null;
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                                   prefixIcon: Icon(LinearIcons.key),
                                 ),
                                 validator: (value) {
-                                  if (value.isEmpty) {
+                                  if (value!.isEmpty) {
                                     return FlutterI18n.translate(context, "login.password_empty_validation_error");
                                   }
                                   return null;
@@ -205,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                                     tooManyLoginAttempts = false;
                                     accountNotVerified = false;
                                     final form = _formKey.currentState;
-                                    form.save();
+                                    form!.save();
                                     setState(() => formSaved = true);
                                     if (form.validate()) {
                                       _login();
@@ -213,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                                   }),
                               SizedBox(
                                 width: double.infinity,
-                                child: FlatButton(
+                                child: TextButton(
                                   child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w400)),
                                   onPressed: () {
                                     navService.pushNamed('/signup');

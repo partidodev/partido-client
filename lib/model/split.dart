@@ -5,10 +5,10 @@ part 'split.g.dart';
 @JsonSerializable()
 class Split {
 
-  int id;
-  int debtor;
-  double paid;
-  double partsOfBill;
+  int? id;
+  int? debtor;
+  double? paid;
+  double? partsOfBill;
 
   Split({this.id, this.debtor, this.paid, this.partsOfBill});
 

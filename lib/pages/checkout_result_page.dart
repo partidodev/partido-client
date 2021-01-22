@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +13,7 @@ class CheckoutResultPage extends StatelessWidget {
   final CheckoutReport checkoutReport;
 
   // Constructor needs an entry object to show it's details page
-  CheckoutResultPage({Key key, @required this.checkoutReport}) : super(key: key);
+  CheckoutResultPage({Key? key, required this.checkoutReport}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -123,12 +121,12 @@ class CheckoutResultPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return ListTile(
                             title: Text(
-                                '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(checkoutReport.compensationPayments[index].fromUser).username}'
+                                '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(checkoutReport.compensationPayments[index].fromUser)!.username}'
                                     + ' ➞ '
-                                    + '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(checkoutReport.compensationPayments[index].toUser).username}'
+                                    + '${Provider.of<AppState>(context, listen: false).getUserFromGroupById(checkoutReport.compensationPayments[index].toUser)!.username}'
                             ),
                             trailing: Text(
-                              '${currencyFormatter.format(checkoutReport.compensationPayments[index].amount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup().currency}',
+                              '${currencyFormatter.format(checkoutReport.compensationPayments[index].amount)} ${Provider.of<AppState>(context, listen: false).getSelectedGroup()!.currency}',
                               style: TextStyle(fontSize: 16),
                             ),
                           );

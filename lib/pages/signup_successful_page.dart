@@ -6,7 +6,7 @@ import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
 class SignupSuccessfulPage extends StatelessWidget {
-  SignupSuccessfulPage({Key key}) : super(key: key);
+  SignupSuccessfulPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -23,7 +23,7 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -34,12 +34,12 @@ class _HomePageState extends State<HomePage> {
   var logger = Logger(printer: PrettyPrinter());
 
   final _formKey = GlobalKey<FormState>();
-  StateSetter _setStateOfJoinGroupDialog;
+  StateSetter? _setStateOfJoinGroupDialog;
   bool joinGroupFormSaved = false;
   bool groupToJoinNotFound = false;
-  String _groupJoinKey;
+  String? _groupJoinKey;
 
-  NumberFormat currencyFormatter;
+  NumberFormat? currencyFormatter;
 
   @override
   void initState() {
@@ -118,11 +118,11 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         if (appState.getSelectedGroup() == null)
                           buildWelcomeCard(context, appState.getMyGroups()),
-                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup().name != null)
+                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup()!.name != null)
                           buildGroupInfoCard(context, appState),
-                        if (appState.getReport() != null && appState.getReport().balances.length != 0)
+                        if (appState.getReport() != null && appState.getReport()!.balances!.length != 0)
                           buildGroupBalancesCard(context, appState),
-                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup().joinModeActive)
+                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup()!.joinModeActive!)
                           buildJoinModeInfoCard(context, appState),
                       ],
                     ) : Column(
@@ -143,11 +143,11 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               RefreshIndicator(
-                child: appState.getEntries() != null && appState.getEntries().isNotEmpty
+                child: appState.getEntries().isNotEmpty
                     ? ListView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
-                  itemCount: appState.getEntries() != null ? appState.getEntries().length : 0,
+                  itemCount: appState.getEntries().length,
                   itemBuilder: (context, index) {
                     return buildEntryListItem(appState, index, context);
                   },
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
           floatingActionButton: appState.getSelectedGroup() != null
               ? FloatingActionButton(
                   onPressed: () {
-                    if (appState.getSelectedGroup().name != null) {
+                    if (appState.getSelectedGroup()!.name != null) {
                       navService.pushNamed('/create-entry');
                     }
                   },
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
   /// Or a tappable entry tile that opens a detailed view of the entry on tap.
   Card buildEntryListItem(AppState appState, int index, BuildContext context) {
     return Card(
-      margin: appState.getProcessedEntryListTitles()[index + 1] != null
+      margin: appState.getProcessedEntryListTitles()![index + 1] != null
           ? EdgeInsets.only(bottom: 8)
           : EdgeInsets.zero,
       shape: Border(
@@ -187,25 +187,25 @@ class _HomePageState extends State<HomePage> {
         top: BorderSide(color: Color(0x0F000000), width: 1),
         right: BorderSide(color: Color(0x0F000000), width: 1),
         bottom: index == appState.getEntries().length - 1 ||
-                appState.getProcessedEntryListTitles()[index + 1] != null
+                appState.getProcessedEntryListTitles()![index + 1] != null
             ? BorderSide(color: Color(0x0F000000), width: 1)
             : BorderSide(color: Color(0x0F000000), width: 0),
       ),
       child: Column(
         children: <Widget>[
-          appState.getProcessedEntryListTitles()[index] != null
+          appState.getProcessedEntryListTitles()![index] != null
               ? Column(
                   children: [
-                    appState.getProcessedEntryListTitles()[index].contains("#")
+                    appState.getProcessedEntryListTitles()![index]!.contains("#")
                         ? ListTile(
                             title: Text(
-                            FlutterI18n.translate(context, "date." + appState.getProcessedEntryListTitles()[index].split("#")[0])
-                                + " " + appState.getProcessedEntryListTitles()[index].split("#")[1],
+                            FlutterI18n.translate(context, "date." + appState.getProcessedEntryListTitles()![index]!.split("#")[0])
+                                + " " + appState.getProcessedEntryListTitles()![index]!.split("#")[1],
                             style: TextStyle(fontSize: 18),
                           ))
                         : ListTile(
                             title: Text(
-                            FlutterI18n.translate(context, "date." + appState.getProcessedEntryListTitles()[index]),
+                            FlutterI18n.translate(context, "date." + appState.getProcessedEntryListTitles()![index]!),
                             style: TextStyle(fontSize: 18),
                           )),
                     Divider(),
@@ -217,16 +217,16 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Icon(
-                  appState.getAvailableEntryCategories()[
+                  appState.getAvailableEntryCategories()![
                       appState.getEntries()[index].category],
                   size: 27,
                 ),
               ],
             ),
             title: Text('${appState.getEntries()[index].description}'),
-            subtitle: Text('${appState.getUserFromGroupById(appState.getEntries()[index].creator).username}'),
+            subtitle: Text('${appState.getUserFromGroupById(appState.getEntries()[index].creator!)!.username!}'),
             trailing: Text(
-              '${currencyFormatter.format(appState.getEntries()[index].totalAmount)} ${appState.getSelectedGroup().currency}',
+              '${currencyFormatter!.format(appState.getEntries()[index].totalAmount)} ${appState.getSelectedGroup()!.currency}',
               style: TextStyle(fontSize: 16),
             ),
             onTap: () {
@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
               title: I18nText("home.join_mode.security_notice"),
           ),
           ListTile(
-            title: SelectableText("${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"),
+            title: SelectableText("${appState.getSelectedGroup()!.joinKey}@${appState.getSelectedGroup()!.id}"),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -286,7 +286,7 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(LinearIcons.copy),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(
-                          text: "${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}"
+                          text: "${appState.getSelectedGroup()!.joinKey}@${appState.getSelectedGroup()!.id}"
                       ));
                       PartidoToast.showToast(msg: FlutterI18n.translate(context, "global.copied"));
                     }),
@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Share.share(
                       '${FlutterI18n.translate(context, "home.join_mode.share.text")}\n\n'
-                          '${appState.getSelectedGroup().joinKey}@${appState.getSelectedGroup().id}',
+                          '${appState.getSelectedGroup()!.joinKey}@${appState.getSelectedGroup()!.id}',
                       subject: FlutterI18n.translate(context, "home.join_mode.share.subject"),
                     );
                   },
@@ -325,15 +325,15 @@ class _HomePageState extends State<HomePage> {
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: appState.getReport().balances.length,
+            itemCount: appState.getReport()!.balances!.length,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: Icon(LinearIcons.user),
-                title: Text('${appState.getUserFromGroupById(appState.getReport().balances[index].user).username}'),
+                title: Text('${appState.getUserFromGroupById(appState.getReport()!.balances![index].user!)!.username}'),
                 trailing: Text(
-                  '${currencyFormatter.format(appState.getReport().balances[index].balance)} ${appState.getSelectedGroup().currency}',
+                  '${currencyFormatter!.format(appState.getReport()!.balances![index].balance)} ${appState.getSelectedGroup()!.currency}',
                   style: TextStyle(
-                    color: _getColorForNumberBalance(appState.getReport().balances[index].balance.toStringAsFixed(2)),
+                    color: _getColorForNumberBalance(appState.getReport()!.balances![index].balance!.toStringAsFixed(2)),
                     fontSize: 16,
                   ),
                 ),
@@ -352,11 +352,11 @@ class _HomePageState extends State<HomePage> {
     return Card(
       child: ListTile(
           title: Text(
-            '${appState.getSelectedGroup().name}',
+            '${appState.getSelectedGroup()!.name}',
             style: TextStyle(fontSize: 18),
           ),
-          subtitle: appState.getSelectedGroup().status != ""
-              ? Text('${appState.getSelectedGroup().status}')
+          subtitle: appState.getSelectedGroup()!.status != ""
+              ? Text('${appState.getSelectedGroup()!.status}')
               : null,
           trailing: Icon(LinearIcons.chevron_right),
           onTap: () {
@@ -405,13 +405,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Divider(),
-          if (myGroups != null && myGroups.length != 0)
+          if (myGroups.length != 0)
             ListTile(
               title: I18nText("home.welcome.open_my_groups"),
               trailing: Icon(LinearIcons.chevron_right),
               onTap: _openGroupsDialog,
             ),
-          if (myGroups != null && myGroups.length != 0) Divider(),
+          if (myGroups.length != 0) Divider(),
           ListTile(
             title: I18nText("home.welcome.create_new_group"),
             trailing: Icon(LinearIcons.chevron_right),
@@ -433,11 +433,11 @@ class _HomePageState extends State<HomePage> {
   /// Try to join a group
   /// Called only when submitting a join group form (dialog)
   void _joinGroup() async {
-    String groupKey = _groupJoinKey.split("@")[0];
-    int groupId = int.parse(_groupJoinKey.split("@")[1]);
+    String groupKey = _groupJoinKey!.split("@")[0];
+    int groupId = int.parse(_groupJoinKey!.split("@")[1]);
 
     GroupJoinBody groupJoinBody = new GroupJoinBody(
-        userId: Provider.of<AppState>(context, listen: false).getCurrentUser().id,
+        userId: Provider.of<AppState>(context, listen: false).getCurrentUser()!.id,
         joinKey: groupKey
     );
 
@@ -448,7 +448,7 @@ class _HomePageState extends State<HomePage> {
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
       } else if (response.response.statusCode == 404) {
-        _setStateOfJoinGroupDialog(() {
+        _setStateOfJoinGroupDialog!(() {
           groupToJoinNotFound = true;
         });
       }
@@ -462,7 +462,7 @@ class _HomePageState extends State<HomePage> {
   Future _openGroupsDialog() async {
     await showDialog(
         context: context,
-        child: Consumer<AppState>(builder: (context, appState, child) {
+        builder: (_) => Consumer<AppState>(builder: (context, appState, child) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
             title: I18nText("home.groups_dialog.title"),
@@ -474,9 +474,9 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     contentPadding: EdgeInsets.only(left: 24),
-                    title: Text(appState.getMyGroups()[index].name),
+                    title: Text(appState.getMyGroups()[index].name!),
                     onTap: () => {
-                      appState.changeSelectedGroup(appState.getMyGroups()[index].id),
+                      appState.changeSelectedGroup(appState.getMyGroups()[index].id!),
                       navService.goBack()
                     },
                   );
@@ -484,7 +484,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text(
                     FlutterI18n.translate(context, "home.groups_dialog.join_existing_button"),
                     style: TextStyle(fontWeight: FontWeight.w400)),
@@ -493,7 +493,7 @@ class _HomePageState extends State<HomePage> {
                   _openJoinGroupDialog();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(
                     FlutterI18n.translate(context, "home.groups_dialog.create_button"),
                     style: TextStyle(fontWeight: FontWeight.w400)),
@@ -535,7 +535,7 @@ class _HomePageState extends State<HomePage> {
                               labelText: FlutterI18n.translate(context, "home.join_group_dialog.join_code"),
                           ),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return FlutterI18n.translate(context, "home.join_group_dialog.join_code_empty_validation_error");
                             }
                             if (!RegExp(r'^.+@\d+$').hasMatch(value)) {
@@ -566,7 +566,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       FlutterI18n.translate(context, "global.cancel"),
                       style: TextStyle(fontWeight: FontWeight.w400),
@@ -575,7 +575,7 @@ class _HomePageState extends State<HomePage> {
                       navService.goBack();
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       FlutterI18n.translate(context, "home.join_group_dialog.button_join"),
                       style: TextStyle(fontWeight: FontWeight.w400),
@@ -583,7 +583,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       groupToJoinNotFound = false;
                       final form = _formKey.currentState;
-                      form.save();
+                      form!.save();
                       setState(() => joinGroupFormSaved = true);
                       if (form.validate()) {
                         _joinGroup();
@@ -602,7 +602,7 @@ class _HomePageState extends State<HomePage> {
   Future _openAboutDialog() async {
     await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         contentPadding: EdgeInsets.fromLTRB(0, 24, 0, 0),
         title: I18nText("home.about_dialog.title"),
         content: Container(
@@ -636,7 +636,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(FlutterI18n.translate(context, 'global.close'),
                 style: TextStyle(fontWeight: FontWeight.w400)),
             onPressed: () {
@@ -648,7 +648,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Color _getColorForNumberBalance(String number) {
+  Color? _getColorForNumberBalance(String number) {
     if (double.parse(number) >= 0) {
       return null; // Use default text color
     } else {
