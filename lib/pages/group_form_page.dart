@@ -54,9 +54,12 @@ class _GroupFormPageState extends State<GroupFormPage> {
       groupDescriptionController.text = widget.group!.status!;
       groupCurrencyController.text = widget.group!.currency!;
       _joinModeActive = widget.group!.joinModeActive!;
-      _joinKey = widget.group!.joinKey!;
+      _joinKey = widget.group?.joinKey;
+    } else {
+      // create new group
+      _joinKey = generateJoinKey();
     }
-    // else: create new group
+
     return super.initState();
   }
 
@@ -113,19 +116,23 @@ class _GroupFormPageState extends State<GroupFormPage> {
   }
 
   void _onJoinModeActiveChanged(bool? newValue) => setState(() {
-    int joinModeKeyLength = 6;
         _joinModeActive = newValue!;
         if (_joinModeActive) {
-          // Do not add @. This character is used as separator in the combined joinKey (key@groupId)
-          const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-          Random rnd = new Random.secure();
-          String result = "";
-          for (var i = 0; i < joinModeKeyLength; i++) {
-            result += chars[rnd.nextInt(chars.length)];
-          }
-          _joinKey = result;
+          _joinKey = generateJoinKey();
         }
       });
+
+  String generateJoinKey() {
+    int joinModeKeyLength = 6;
+    // Do not add @. This character is used as separator in the combined joinKey (key@groupId)
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    Random rnd = new Random.secure();
+    String result = "";
+    for (var i = 0; i < joinModeKeyLength; i++) {
+      result += chars[rnd.nextInt(chars.length)];
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
