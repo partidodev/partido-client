@@ -18,6 +18,7 @@ jobs:
       with:
         flutter-version: '2.5.0'
     - run: flutter pub get
+    - run: pub run build_runner build
 #    - run: flutter test
-    - run: flutter build apk
-    - run: flutter build appbundle
+#    - run: flutter build apk
+    - run: flutter build appbundle --debug
