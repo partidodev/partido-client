@@ -40,11 +40,11 @@ home:
   about_dialog:
     title: Über Partido
     homepage: Homepage
-    homepage_url: 'https://partido.rocks/de'
+    homepage_url: 'https://partido.rocks'
     imprint: Impressum
-    imprint_url: 'https://partido.rocks/de/impressum/'
+    imprint_url: 'https://partido.rocks/imprint/'
     privacy_policy: Datenschutzerklärung
-    privacy_policy_url: 'https://partido.rocks/de/datenschutz'
+    privacy_policy_url: 'https://partido.rocks/privacy/'
   groups_dialog:
     title: Meine Gruppen
     join_existing_button: Beitreten
@@ -208,7 +208,7 @@ signup:
   accept_privacy_text_before_link: "Ich habe die "
   accept_privacy_text_after_link: " von Partido gelesen und akzeptiere diese."
   privacy_policy_link_text: "Datenschutzerklärung"
-  privacy_policy_link_url: 'https://partido.rocks/de/datenschutz'
+  privacy_policy_link_url: 'https://partido.rocks/privacy/'
   privacy_policy_not_accepted_error: Du kannst Partido nur nutzen, wenn du akzeptierst
   success:
     title: Email Verifizierung erforderlich

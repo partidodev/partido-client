@@ -40,7 +40,7 @@ home:
   about_dialog:
     title: Acerca de
     homepage: Página de inicio
-    homepage_url: 'https://partido.rocks/es/'
+    homepage_url: 'https://partido.rocks/'
     imprint: Imprenta
     imprint_url: 'https://partido.rocks/imprint/'
     privacy_policy: Política de privacidad
