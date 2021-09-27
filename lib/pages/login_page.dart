@@ -80,153 +80,157 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 47),
-                    child: Image(
-                      image: AssetImage('assets/images/logo.png'),
-                      height: 40,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        FlutterI18n.translate(context, "login.login_title"),
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+              child: AutofillGroup(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 47),
+                      child: Image(
+                        image: AssetImage('assets/images/logo.png'),
+                        height: 40,
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              TextFormField(
-                                onSaved: (value) => _email = value,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "login.email"),
-                                  prefixIcon: Icon(LinearIcons.at_sign),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return FlutterI18n.translate(context, "login.email_empty_validation_error");
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 8),
-                              TextFormField(
-                                onSaved: (value) => _password = value,
-                                obscureText: true,
-                                decoration:
-                                InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "login.password"),
-                                  prefixIcon: Icon(LinearIcons.key),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return FlutterI18n.translate(context, "login.password_empty_validation_error");
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 8),
-                              (formSaved && loginFailed) ? Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
-                                    child: Text(
-                                      FlutterI18n.translate(context,
-                                          "login.login_failed_unauthorized"),
-                                      style: TextStyle(
-                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
-                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  )) : SizedBox(height: 0),
-                              (formSaved && tooManyLoginAttempts) ? Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
-                                    child: Text(
-                                      FlutterI18n.translate(context,
-                                          "login.login_failed_too_many_attempts"),
-                                      style: TextStyle(
-                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
-                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  )) : SizedBox(height: 0),
-                              (formSaved && accountNotVerified) ? Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
-                                    child: Text(
-                                      FlutterI18n.translate(context,
-                                          "login.login_failed_not_verified"),
-                                      style: TextStyle(
-                                          color: MediaQuery.of(context).platformBrightness == Brightness.light
-                                              ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
-                                              : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  )) : SizedBox(height: 0),
-                              CheckboxListTile(
-                                title: I18nText("login.remember"),
-                                value: _rememberMe,
-                                onChanged: _onRememberMeChanged,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                              ),
-                              SizedBox(height: 8),
-                              MaterialButton(
-                                  minWidth: double.infinity,
-                                  color: Theme.of(context).primaryColor,
-                                  textColor: Colors.white,
-                                  child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
-                                  onPressed: () {
-                                    loginFailed = false;
-                                    tooManyLoginAttempts = false;
-                                    accountNotVerified = false;
-                                    final form = _formKey.currentState;
-                                    form!.save();
-                                    setState(() => formSaved = true);
-                                    if (form.validate()) {
-                                      _login();
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          FlutterI18n.translate(context, "login.login_title"),
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                TextFormField(
+                                  onSaved: (value) => _email = value,
+                                  keyboardType: TextInputType.emailAddress,
+                                  autofillHints: const <String>[AutofillHints.username],
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "login.email"),
+                                    prefixIcon: Icon(LinearIcons.at_sign),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return FlutterI18n.translate(context, "login.email_empty_validation_error");
                                     }
-                                  }),
-                              SizedBox(
-                                width: double.infinity,
-                                child: TextButton(
-                                  child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w400)),
-                                  onPressed: () {
-                                    navService.pushNamed('/signup');
+                                    return null;
                                   },
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 8),
+                                TextFormField(
+                                  onSaved: (value) => _password = value,
+                                  obscureText: true,
+                                  autofillHints: const <String>[AutofillHints.password],
+                                  decoration:
+                                  InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "login.password"),
+                                    prefixIcon: Icon(LinearIcons.key),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return FlutterI18n.translate(context, "login.password_empty_validation_error");
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 8),
+                                (formSaved && loginFailed) ? Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                      child: Text(
+                                        FlutterI18n.translate(context,
+                                            "login.login_failed_unauthorized"),
+                                        style: TextStyle(
+                                            color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                                ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                                : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    )) : SizedBox(height: 0),
+                                (formSaved && tooManyLoginAttempts) ? Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                      child: Text(
+                                        FlutterI18n.translate(context,
+                                            "login.login_failed_too_many_attempts"),
+                                        style: TextStyle(
+                                            color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                                ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                                : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    )) : SizedBox(height: 0),
+                                (formSaved && accountNotVerified) ? Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
+                                      child: Text(
+                                        FlutterI18n.translate(context,
+                                            "login.login_failed_not_verified"),
+                                        style: TextStyle(
+                                            color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                                ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                                : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    )) : SizedBox(height: 0),
+                                CheckboxListTile(
+                                  title: I18nText("login.remember"),
+                                  value: _rememberMe,
+                                  onChanged: _onRememberMeChanged,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                ),
+                                SizedBox(height: 8),
+                                MaterialButton(
+                                    minWidth: double.infinity,
+                                    color: Theme.of(context).primaryColor,
+                                    textColor: Colors.white,
+                                    child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
+                                    onPressed: () {
+                                      loginFailed = false;
+                                      tooManyLoginAttempts = false;
+                                      accountNotVerified = false;
+                                      final form = _formKey.currentState;
+                                      form!.save();
+                                      setState(() => formSaved = true);
+                                      if (form.validate()) {
+                                        _login();
+                                      }
+                                    }),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: TextButton(
+                                    child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w400)),
+                                    onPressed: () {
+                                      navService.pushNamed('/signup');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

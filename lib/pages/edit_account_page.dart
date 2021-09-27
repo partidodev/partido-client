@@ -154,6 +154,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               TextFormField(
                                 onSaved: (value) => _oldPassword = value,
                                 obscureText: true,
+                                autofillHints: const <String>[AutofillHints.password],
                                 decoration: InputDecoration(
                                   labelText: FlutterI18n.translate(context, "account.password"),
                                   prefixIcon: Icon(LinearIcons.key),
@@ -195,40 +196,44 @@ class _EditAccountPageState extends State<EditAccountPage> {
                         Divider(),
                         Container(
                           padding: EdgeInsets.all(8),
-                          child: Column(
-                            children: <Widget>[
-                              TextFormField(
-                                onSaved: (value) => _newPassword = value,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "account.change_password.new_password"),
-                                  prefixIcon: Icon(LinearIcons.lock),
+                          child: AutofillGroup(
+                            child: Column(
+                              children: <Widget>[
+                                TextFormField(
+                                  onSaved: (value) => _newPassword = value,
+                                  obscureText: true,
+                                  autofillHints: const <String>[AutofillHints.newPassword],
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "account.change_password.new_password"),
+                                    prefixIcon: Icon(LinearIcons.lock),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.length > 100) {
+                                      return FlutterI18n.translate(context, "account.change_password.new_password_too_long_validation_error");
+                                    }
+                                    if (value.length < 8 && value.length != 0) {
+                                      return FlutterI18n.translate(context, "account.change_password.new_password_too_short_validation_error");
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (value!.length > 100) {
-                                    return FlutterI18n.translate(context, "account.change_password.new_password_too_long_validation_error");
-                                  }
-                                  if (value.length < 8 && value.length != 0) {
-                                    return FlutterI18n.translate(context, "account.change_password.new_password_too_short_validation_error");
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 8),
-                              TextFormField(
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  labelText: FlutterI18n.translate(context, "account.change_password.new_password_confirmation"),
-                                  prefixIcon: Icon(LinearIcons.rotation_lock),
+                                SizedBox(height: 8),
+                                TextFormField(
+                                  obscureText: true,
+                                  autofillHints: const <String>[AutofillHints.newPassword],
+                                  decoration: InputDecoration(
+                                    labelText: FlutterI18n.translate(context, "account.change_password.new_password_confirmation"),
+                                    prefixIcon: Icon(LinearIcons.rotation_lock),
+                                  ),
+                                  validator: (value) {
+                                    if (value != _newPassword) {
+                                      return FlutterI18n.translate(context, "account.change_password.new_password_confirmation_not_matching_validation_error");
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (value != _newPassword) {
-                                    return FlutterI18n.translate(context, "account.change_password.new_password_confirmation_not_matching_validation_error");
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
