@@ -36,7 +36,7 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 ## Use a Consistent Coding Style
 We use the [Dart Coding Style](https://dart.dev/guides/language/effective-dart/style) to format the code with following exceptions:
 
-- A line of may be up to 100 characters long (analogue to the Java Coding Style used in the Partido Server repository)
+- A line of Code may be up to 100 characters long (analogue to the Java Coding Style used in the Partido Server repository)
 
 ## License
 By contributing, you agree that your contributions will be licensed under the MIT License, used by the project.
