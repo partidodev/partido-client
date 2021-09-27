@@ -130,9 +130,10 @@ void main() async {
           '/account': (_) => EditAccountPage(),
         },
         supportedLocales: [
-          Locale('en'),
           Locale('de'),
+          Locale('en'),
           Locale('es'),
+          Locale('pt'),
         ],
         localizationsDelegates: [
           FlutterI18nDelegate(
