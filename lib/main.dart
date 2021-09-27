@@ -129,14 +129,23 @@ void main() async {
           '/create-group': (_) => GroupFormPage(group: null),
           '/account': (_) => EditAccountPage(),
         },
+        supportedLocales: [
+          Locale('en'),
+          Locale('de'),
+          Locale('es'),
+        ],
         localizationsDelegates: [
           FlutterI18nDelegate(
-              translationLoader: FileTranslationLoader(
-            useCountryCode: false,
-            fallbackFile: 'en',
-            basePath: 'assets/i18n',
-            decodeStrategies: [YamlDecodeStrategy()],
-          )),
+            translationLoader: FileTranslationLoader(
+              useCountryCode: false,
+              fallbackFile: 'en',
+              basePath: 'assets/i18n',
+              decodeStrategies: [YamlDecodeStrategy()],
+            ),
+            missingTranslationHandler: (key, locale) {
+              print("--- Missing Key: $key, languageCode: ${locale!.languageCode}");
+            },
+          ),
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
