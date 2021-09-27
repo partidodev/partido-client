@@ -692,7 +692,7 @@ class _HomePageState extends State<HomePage> {
 
   _launchFeedbackUrl() async {
     const url =
-        'mailto:jens.wagner@fosforito.de?subject=[Feedback] Partido Client';
+        'mailto:jens.leon@wagner.pink?subject=[Feedback] Partido Client';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
