@@ -691,8 +691,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchFeedbackUrl() async {
-    const url =
-        'mailto:jens.leon@wagner.pink?subject=[Feedback] Partido Client';
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: 'jens.leon@wagner.pink',
+      query: 'subject=[Feedback] Partido Client',
+    );
+    String url = params.toString();
     if (await canLaunch(url)) {
       await launch(url);
     } else {
