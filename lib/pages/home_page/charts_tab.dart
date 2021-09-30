@@ -88,6 +88,11 @@ class ChartsTab {
       ).toList();
     }
 
+    // Save stats from last two weeks in AppState
+    appState.setLastWeeklyExpenseStatistics(weeklyExpenses.getRange(
+        weeklyExpenses.length - 2, weeklyExpenses.length
+    ).toList());
+
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,6 +227,11 @@ class ChartsTab {
           monthlyExpenses.length - 12, monthlyExpenses.length
       ).toList();
     }
+
+    // Save stats from last two weeks in AppState
+    appState.setLastMonthlyExpenseStatistics(monthlyExpenses.getRange(
+        monthlyExpenses.length - 2, monthlyExpenses.length
+    ).toList());
 
     // Translate Months
     for (MonthlyExpense monthlyExpense in monthlyExpenses) {

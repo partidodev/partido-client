@@ -125,6 +125,8 @@ class _HomePageState extends State<HomePage> {
                           buildGroupInfoCard(context, appState),
                         if (appState.getReport() != null && appState.getReport()!.balances!.length != 0)
                           buildGroupBalancesCard(context, appState),
+                        if (appState.getLastWeeklyExpenseStatistics().length == 2)
+                          buildQuickStatisticsCard(context, appState),
                         if (appState.getSelectedGroup() != null && appState.getSelectedGroup()!.joinModeActive!)
                           buildJoinModeInfoCard(context, appState),
                       ],
@@ -372,6 +374,61 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Card buildQuickStatisticsCard(BuildContext context, AppState appState) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ListTile(
+            title: Text(
+              //FlutterI18n.translate(context, "home.balances.title"),
+              "Ausgaben",
+              style: TextStyle(fontSize: 18),
+            ),
+            leading: Icon(LinearIcons.chart_bars, color: Colors.green),
+          ),
+          Divider(),
+          ListTile(
+            title: Text("Diese Woche",),
+            subtitle: Text(
+              'Letzte Woche: ${currencyFormatter!.format(appState.getLastWeeklyExpenseStatistics()[0].expense)} ${appState.getSelectedGroup()!.currency}',
+            ),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(LinearIcons.arrow_down),
+              ],
+            ),
+            trailing: Text(
+              '${currencyFormatter!.format(appState.getLastWeeklyExpenseStatistics()[1].expense)} ${appState.getSelectedGroup()!.currency}',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text("Dieser Monat",),
+            subtitle: Text(
+              'Letzter Monat: ${currencyFormatter!.format(appState.getLastMonthlyExpenseStatistics()[0].expense)} ${appState.getSelectedGroup()!.currency}',
+            ),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(LinearIcons.arrow_up, color: Colors.red),
+              ],
+            ),
+            trailing: Text(
+              '${currencyFormatter!.format(appState.getLastMonthlyExpenseStatistics()[1].expense)} ${appState.getSelectedGroup()!.currency}',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
           ),
         ],
       ),

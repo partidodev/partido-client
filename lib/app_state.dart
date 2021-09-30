@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:partido_client/linear_icons_icons.dart';
 import 'package:partido_client/model/entry.dart';
+import 'package:partido_client/pages/home_page/charts_tab.dart';
 import 'package:retrofit/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +26,8 @@ class AppState extends ChangeNotifier {
   DateTime now = DateTime.now();
   Map<int, String>? _processedEntryListTitles;
   bool stateInitialized = false;
+  List<WeeklyExpense> _lastWeeklyExpenseStatistics = [];
+  List<MonthlyExpense> _lastMonthlyExpenseStatistics = [];
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -280,5 +283,21 @@ class AppState extends ChangeNotifier {
 
   DateTime endOfToday() {
     return DateTime(now.year, now.month, now.day, 23, 59, 59, 999, 999);
+  }
+
+  List<WeeklyExpense> getLastWeeklyExpenseStatistics() {
+    return _lastWeeklyExpenseStatistics;
+  }
+
+  void setLastWeeklyExpenseStatistics(List<WeeklyExpense> list) {
+    _lastWeeklyExpenseStatistics = list;
+  }
+
+  List<MonthlyExpense> getLastMonthlyExpenseStatistics() {
+    return _lastMonthlyExpenseStatistics;
+  }
+
+  void setLastMonthlyExpenseStatistics(List<MonthlyExpense> list) {
+    _lastMonthlyExpenseStatistics = list;
   }
 }
