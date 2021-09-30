@@ -22,6 +22,8 @@ import '../navigation_service.dart';
 import 'dart:ui';
 import 'package:intl/intl.dart';
 
+import 'home_page/charts_tab.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage> {
         FlutterI18n.translate(context, "global.locale"),
     );
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Consumer<AppState>(builder: (context, appState, child) {
         return Scaffold(
           appBar: AppBar(
@@ -66,6 +68,7 @@ class _HomePageState extends State<HomePage> {
               tabs: [
                 Tab(icon: Icon(LinearIcons.home4)),
                 Tab(icon: Icon(LinearIcons.list)),
+                Tab(icon: Icon(LinearIcons.pie_chart)),
               ],
             ),
             actions: <Widget>[
@@ -152,6 +155,36 @@ class _HomePageState extends State<HomePage> {
                     return buildEntryListItem(appState, index, context);
                   },
                 ) : Center(child: I18nText("home.list_empty")),
+                onRefresh: () async {
+                  await appState.refreshAppState();
+                  PartidoToast.showToast(msg: FlutterI18n.translate(context, 'home.group_refreshed_toast'));
+                },
+              ),
+              RefreshIndicator(
+                child: ListView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
+                  children: <Widget>[
+                    appState.stateInitialized ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (appState.getEntries().length != 0)
+                          ChartsTab.buildWeeklyGroupStatisticsCard(context, appState),
+                        if (appState.getEntries().length != 0)
+                          ChartsTab.buildMonthlyGroupStatisticsCard(context, appState),
+                      ],
+                    ) : Column(
+                      // Show loading indicator when opening app and hide all
+                      // cards before we know what card will be displayed finally
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 45),
+                          child: RefreshProgressIndicator(),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
                 onRefresh: () async {
                   await appState.refreshAppState();
                   PartidoToast.showToast(msg: FlutterI18n.translate(context, 'home.group_refreshed_toast'));

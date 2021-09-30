@@ -5,6 +5,7 @@ global:
   close: Close
   cancel: Cancel
   date_format: yyyy-MM-dd
+  date_format_short: MM-dd
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
 home:
@@ -258,3 +259,10 @@ checkout_result:
   additional_info: All group members will recieve an email containing additional information about the settle up, including a list with recommended compensation payments.
   compensation_payments:
     title: Compensation payments
+charts:
+  weekly_expenses:
+    title: Weekly expenses
+    tooltip: Expenses / week
+  monthly_expenses:
+    title: Monthly expenses
+    tooltip: Expenses / month

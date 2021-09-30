@@ -5,6 +5,7 @@ global:
   close: Cerrar
   cancel: Cancelar
   date_format: dd-MM-yyyy
+  date_format_short: dd-MM
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
 home:
@@ -258,3 +259,10 @@ checkout_result:
   additional_info: Todos los miembros del grupo recibirán un correo electrónico con información adicional sobre ésta acción, incluida una lista con los pagos de compensación recomendados.
   compensation_payments:
     title: Pagos de compensación
+charts:
+  weekly_expenses:
+    title: Gastos semanales
+    tooltip: Gastos / semana
+  monthly_expenses:
+    title: Gastos mensuales
+    tooltip: Gastos / mes

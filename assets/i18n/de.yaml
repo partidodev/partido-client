@@ -5,6 +5,7 @@ global:
   close: Schließen
   cancel: Abbrechen
   date_format: dd-MM-yyyy
+  date_format_short: dd-MM
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
 home:
@@ -258,3 +259,10 @@ checkout_result:
   additional_info: Alle Gruppenmitglieder erhalten eine E-Mail mit zusätzlichen Informationen zum Kassensturz, einschließlich einer Liste mit den empfohlenen Ausgleichszahlungen.
   compensation_payments:
     title: Ausgleichszahlungen
+charts:
+  weekly_expenses:
+    title: Wöchentliche Ausgaben
+    tooltip: Ausgaben / Woche
+  monthly_expenses:
+    title: Monatliche Ausgaben
+    tooltip: Ausgaben / Monat
