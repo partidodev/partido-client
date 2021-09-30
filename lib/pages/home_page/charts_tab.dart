@@ -29,6 +29,7 @@ class MonthlyExpense {
   String year;
   String month;
   double expense;
+  Map entryCategories = {};
 }
 
 class ChartsTab {
@@ -115,8 +116,13 @@ class ChartsTab {
                 ),
               ),
               legend: Legend(isVisible: false),
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <ChartSeries<WeeklyExpense, String>>[
+              tooltipBehavior: TooltipBehavior(enable: false),
+              trackballBehavior: TrackballBehavior(
+                enable: true,
+                activationMode: ActivationMode.longPress,
+                tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+              ),
+              series: <ChartSeries>[
                 LineSeries<WeeklyExpense, String>(
                   dataSource: weeklyExpenses,
                   xValueMapper: (WeeklyExpense weeklyExpense, _) => weeklyExpense.label,
@@ -156,9 +162,20 @@ class ChartsTab {
       double totalAmount = entry.totalAmount!;
       if (monthlyExpensesMonths.contains(year + month)) {
         monthlyExpenses[monthlyExpensesMonths.indexOf(year + month)].expense += totalAmount;
+        if (monthlyExpenses[monthlyExpensesMonths.indexOf(year + month)].entryCategories[entry.category] != null) {
+          monthlyExpenses[monthlyExpensesMonths.indexOf(year + month)].entryCategories[entry.category] += totalAmount;
+        } else {
+          monthlyExpenses[monthlyExpensesMonths.indexOf(year + month)].entryCategories[entry.category] = totalAmount;
+        }
       } else {
         monthlyExpensesMonths.add(year + month);
-        monthlyExpenses.add(new MonthlyExpense(year, month, totalAmount));
+        MonthlyExpense monthlyExpense = new MonthlyExpense(year, month, totalAmount);
+        if (monthlyExpense.entryCategories[entry.category] != null) {
+          monthlyExpense.entryCategories[entry.category] += totalAmount;
+        } else {
+          monthlyExpense.entryCategories[entry.category] = totalAmount;
+        }
+        monthlyExpenses.add(monthlyExpense);
       }
     }
 
@@ -220,11 +237,11 @@ class ChartsTab {
               FlutterI18n.translate(context, "charts.monthly_expenses.title"),
               style: TextStyle(fontSize: 18),
             ),
-            leading: Icon(LinearIcons.calendar_empty, color: Colors.green),
+            leading: Icon(LinearIcons.calendar_31, color: Colors.green),
           ),
           Divider(),
           Container(
-            height: 200,
+            height: 250,
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(
                 labelIntersectAction: AxisLabelIntersectAction.wrap,
@@ -239,21 +256,132 @@ class ChartsTab {
                 ),
               ),
               legend: Legend(isVisible: false),
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <ChartSeries<MonthlyExpense, String>>[
+              tooltipBehavior: TooltipBehavior(enable: false),
+              trackballBehavior: TrackballBehavior(
+                enable: true,
+                activationMode: ActivationMode.longPress,
+                tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+              ),
+              series: <ChartSeries>[
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['FOOD_GROCERIES'],
+                  name: FlutterI18n.translate(context, "entry.categories.FOOD_GROCERIES"),
+                  color: Color(0xFF26A69A),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['BARS_RESTAURANTS'],
+                  name: FlutterI18n.translate(context, "entry.categories.BARS_RESTAURANTS"),
+                  color: Color(0xFF29B6F6),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['SHOPPING'],
+                  name: FlutterI18n.translate(context, "entry.categories.SHOPPING"),
+                  color: Color(0xFFC0CA33),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['LEISURE_ENTERTAINMENT'],
+                  name: FlutterI18n.translate(context, "entry.categories.LEISURE_ENTERTAINMENT"),
+                  color: Color(0xFF7986CB),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['FAMILY_FRIENDS'],
+                  name: FlutterI18n.translate(context, "entry.categories.FAMILY_FRIENDS"),
+                  color: Color(0xFF26C6DA),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['HEALTH_DRUGSTORES'],
+                  name: FlutterI18n.translate(context, "entry.categories.HEALTH_DRUGSTORES"),
+                  color: Color(0xFF9CCC65),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['HOUSEHOLD_UTILITIES'],
+                  name: FlutterI18n.translate(context, "entry.categories.HOUSEHOLD_UTILITIES"),
+                  color: Color(0xFF42A5F5),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['MEDIA_ELECTRONICS'],
+                  name: FlutterI18n.translate(context, "entry.categories.MEDIA_ELECTRONICS"),
+                  color: Color(0xFF7E57C2),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['TRAVEL_VACATION'],
+                  name: FlutterI18n.translate(context, "entry.categories.TRAVEL_VACATION"),
+                  color: Color(0xFF039BE5),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['SUBSCRIPTIONS_DONATIONS'],
+                  name: FlutterI18n.translate(context, "entry.categories.SUBSCRIPTIONS_DONATIONS"),
+                  color: Color(0xFFF06292),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['EDUCATION'],
+                  name: FlutterI18n.translate(context, "entry.categories.EDUCATION"),
+                  color: Color(0xFF00ACC1),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['MISCELLANEOUS'],
+                  name: FlutterI18n.translate(context, "entry.categories.MISCELLANEOUS"),
+                  color: Color(0xFF80CBC4),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['TAXES_DUTIES'],
+                  name: FlutterI18n.translate(context, "entry.categories.MISCELLANEOUS"),
+                  color: Color(0xFF7CB342),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['TRANSPORT_CAR'],
+                  name: FlutterI18n.translate(context, "entry.categories.TRANSPORT_CAR"),
+                  color: Color(0xFFFFB74D),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['INSURANCE_FINANCE'],
+                  name: FlutterI18n.translate(context, "entry.categories.INSURANCE_FINANCE"),
+                  color: Color(0xFFFF8A65),
+                ),
+                StackedColumnSeries<MonthlyExpense, String>(
+                  dataSource: monthlyExpenses,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.entryCategories['UNCATEGORIZED'],
+                  name: FlutterI18n.translate(context, "entry.categories.UNCATEGORIZED"),
+                  color: Color(0xFF9E9E9E),
+                ),
                 LineSeries<MonthlyExpense, String>(
                   dataSource: monthlyExpenses,
-                  xValueMapper: (MonthlyExpense monthlyExpense, _) => monthlyExpense.month,
-                  yValueMapper: (MonthlyExpense monthlyExpense, _) => monthlyExpense.expense,
-                  width: 1.5,
-                  color: Theme.of(context).accentColor,
+                  xValueMapper: (MonthlyExpense expense, _) => expense.month,
+                  yValueMapper: (MonthlyExpense expense, _) => expense.expense,
+                  opacity: 0,
+                  color: Color(0xFFFFFFFF),
                   name: FlutterI18n.translate(context, "charts.monthly_expenses.tooltip"),
-                  markerSettings: MarkerSettings(
-                    isVisible: true,
-                    width: 2,
-                    height: 2,
-                    borderWidth: 4,
-                  ),
                 ),
               ],
             ),

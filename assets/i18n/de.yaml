@@ -262,7 +262,7 @@ checkout_result:
 charts:
   weekly_expenses:
     title: Wöchentliche Ausgaben
-    tooltip: Ausgaben / Woche
+    tooltip: Gesamt
   monthly_expenses:
     title: Monatliche Ausgaben
-    tooltip: Ausgaben / Monat
+    tooltip: Gesamt
