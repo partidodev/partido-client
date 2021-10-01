@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:partido_client/model/entry.dart';
+import 'package:partido_client/model/remote/entry.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';

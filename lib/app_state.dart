@@ -2,15 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:partido_client/linear_icons_icons.dart';
-import 'package:partido_client/model/entry.dart';
+import 'package:partido_client/model/local/StatisticsService.dart';
+import 'package:partido_client/model/remote/entry.dart';
 import 'package:retrofit/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
 import 'api/api_service.dart';
-import 'model/group.dart';
-import 'model/report.dart';
-import 'model/user.dart';
+import 'model/local/MonthlyExpense.dart';
+import 'model/local/WeeklyExpense.dart';
+import 'model/remote/group.dart';
+import 'model/remote/report.dart';
+import 'model/remote/user.dart';
 
 class AppState extends ChangeNotifier {
   Api api = ApiService.getApi();
@@ -25,6 +28,8 @@ class AppState extends ChangeNotifier {
   DateTime now = DateTime.now();
   Map<int, String>? _processedEntryListTitles;
   bool stateInitialized = false;
+  List<WeeklyExpense> _weeklyExpenseStatistics = [];
+  List<MonthlyExpense> _monthlyExpenseStatistics = [];
 
   void initAppState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -68,6 +73,7 @@ class AppState extends ChangeNotifier {
       _entries = await api.getEntriesForGroup(_selectedGroupId);
       _processedEntryListTitles = processEntryListTitles(_entries);
       _report = await api.getReportForGroup(_selectedGroupId);
+      updateExpenseStatistics();
       _myGroups = await api.getMyGroups();
       notifyListeners();
     }
@@ -112,6 +118,7 @@ class AppState extends ChangeNotifier {
   void reloadEntryList() async {
     _entries = await api.getEntriesForGroup(_selectedGroupId);
     _processedEntryListTitles = processEntryListTitles(_entries);
+    updateExpenseStatistics();
     notifyListeners();
   }
 
@@ -280,5 +287,28 @@ class AppState extends ChangeNotifier {
 
   DateTime endOfToday() {
     return DateTime(now.year, now.month, now.day, 23, 59, 59, 999, 999);
+  }
+
+  void updateExpenseStatistics() {
+    _weeklyExpenseStatistics = StatisticsService.calculateWeeklyExpenses(_entries);
+    _monthlyExpenseStatistics = StatisticsService.calculateMonthlyExpenses(_entries);
+  }
+
+  List<WeeklyExpense> getWeeklyExpenseStatistics() {
+    return _weeklyExpenseStatistics;
+  }
+
+  void setWeeklyExpenseStatistics(List<WeeklyExpense> list) {
+    _weeklyExpenseStatistics = list;
+    notifyListeners();
+  }
+
+  List<MonthlyExpense> getMonthlyExpenseStatistics() {
+    return _monthlyExpenseStatistics;
+  }
+
+  void setMonthlyExpenseStatistics(List<MonthlyExpense> list) {
+    _monthlyExpenseStatistics = list;
+    notifyListeners();
   }
 }

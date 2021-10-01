@@ -5,6 +5,7 @@ global:
   close: Cerrar
   cancel: Cancelar
   date_format: dd-MM-yyyy
+  date_format_short: dd-MM
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
 home:
@@ -19,6 +20,7 @@ home:
     join_existing_group: Unir al grupo de un amigo
   balances:
     title: Saldos
+    need_more_users_info: Datos significativos solo aparecen aquí si al menos otra persona se une a tu grupo.
   join_mode:
     title_enabled: Modo de unión activo
     info: "Comparte el código de unión con tus amigos para que puedan unirse a tu grupo."
@@ -258,3 +260,18 @@ checkout_result:
   additional_info: Todos los miembros del grupo recibirán un correo electrónico con información adicional sobre ésta acción, incluida una lista con los pagos de compensación recomendados.
   compensation_payments:
     title: Pagos de compensación
+charts:
+  weekly_expenses:
+    title: Gastos semanales
+    tooltip: Total
+  monthly_expenses:
+    title: Gastos mensuales
+    tooltip: Total
+  dashboard:
+    title: Gastos
+    this_week: Esta semana
+    last_week: Semana pasada
+    this_month: Este mes
+    last_month: Mes pasado
+  tips:
+    long_press_description: Mantener pulsado el gráfico para más detalles

@@ -5,6 +5,7 @@ global:
   close: Schließen
   cancel: Abbrechen
   date_format: dd-MM-yyyy
+  date_format_short: dd-MM
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
 home:
@@ -19,6 +20,7 @@ home:
     join_existing_group: Der Gruppe eines Freundes beitreten
   balances:
     title: Guthaben
+    need_more_users_info: Hier erscheinen erst sinnvolle Daten wenn mindestens eine weitere Person deiner Gruppe beitritt.
   join_mode:
     title_enabled: Beitrittsmodus aktiviert
     info: "Teile folgenden Code mit deinen Freunden, damit diese deiner Gruppe beitreten können."
@@ -258,3 +260,18 @@ checkout_result:
   additional_info: Alle Gruppenmitglieder erhalten eine E-Mail mit zusätzlichen Informationen zum Kassensturz, einschließlich einer Liste mit den empfohlenen Ausgleichszahlungen.
   compensation_payments:
     title: Ausgleichszahlungen
+charts:
+  weekly_expenses:
+    title: Wöchentliche Ausgaben
+    tooltip: Gesamt
+  monthly_expenses:
+    title: Monatliche Ausgaben
+    tooltip: Gesamt
+  dashboard:
+    title: Ausgaben
+    this_week: Diese Woche
+    last_week: Letzte Woche
+    this_month: Dieser Monat
+    last_month: Letzter Monat
+  tips:
+    long_press_description: Für mehr Details lange auf Statistik drücken

@@ -5,6 +5,7 @@ global:
   close: Fechar
   cancel: Cancelar
   date_format: dd-MM-yyyy
+  date_format_short: dd-MM
   currency_format: '#.##0,00'
   part_format: '#.##0,###'
 home:
@@ -19,6 +20,7 @@ home:
     join_existing_group: Entrar no grupo de um amigo
   balances:
     title: Saldos
+    need_more_users_info: Dados significativos só aparecem aqui se pelo menos uma outra pessoa se juntar ao seu grupo.
   join_mode:
     title_enabled: Modo de conexão ativo
     info: "Compartilhe o seguinte código com seus amigos para que eles possam conectar-se ao seu grupo."
@@ -258,3 +260,18 @@ checkout_result:
   additional_info: Todos os membros do grupo receberão um email com informações adicionais sobre o fechamento da conta, inclusive uma lista com possíveis formas de pagamento entre cada um de vocês.
   compensation_payments:
     title: Pagamentos
+charts:
+  weekly_expenses:
+    title: Despesas semanais
+    tooltip: Total
+  monthly_expenses:
+    title: Despesas por mês
+    tooltip: Total
+  dashboard:
+    title: Despesas
+    this_week: Esta semana
+    last_week: Semana passada
+    this_month: Este mês
+    last_month: Mês passado
+  tips:
+    long_press_description: Pressione e segure no gráfico para mais detalhes

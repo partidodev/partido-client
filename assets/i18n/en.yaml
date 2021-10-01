@@ -5,6 +5,7 @@ global:
   close: Close
   cancel: Cancel
   date_format: yyyy-MM-dd
+  date_format_short: MM-dd
   currency_format: '#,##0.00'
   part_format: '#,##0.###'
 home:
@@ -19,6 +20,7 @@ home:
     join_existing_group: Join a friend's group
   balances:
     title: Balances
+    need_more_users_info: Meaningful data only appears here if at least one other person joins your group.
   join_mode:
     title_enabled: Join mode active
     info: "Share the following join code with your friends to let them enter your group."
@@ -258,3 +260,18 @@ checkout_result:
   additional_info: All group members will recieve an email containing additional information about the settle up, including a list with recommended compensation payments.
   compensation_payments:
     title: Compensation payments
+charts:
+  weekly_expenses:
+    title: Weekly expenses
+    tooltip: Total
+  monthly_expenses:
+    title: Monthly expenses
+    tooltip: Total
+  dashboard:
+    title: Expenses
+    this_week: This week
+    last_week: Last week
+    this_month: This month
+    last_month: Last month
+  tips:
+    long_press_description: Long press on chart to get more details

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:partido_client/model/checkout_report.dart';
-import 'package:partido_client/model/entry.dart';
-import 'package:partido_client/model/group.dart';
-import 'package:partido_client/model/group_join_body.dart';
-import 'package:partido_client/model/new_user.dart';
-import 'package:partido_client/model/report.dart';
-import 'package:partido_client/model/user.dart';
+import 'package:partido_client/model/remote/checkout_report.dart';
+import 'package:partido_client/model/remote/entry.dart';
+import 'package:partido_client/model/remote/group.dart';
+import 'package:partido_client/model/remote/group_join_body.dart';
+import 'package:partido_client/model/remote/new_user.dart';
+import 'package:partido_client/model/remote/report.dart';
+import 'package:partido_client/model/remote/user.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api.g.dart';

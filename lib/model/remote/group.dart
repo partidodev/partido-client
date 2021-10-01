@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:partido_client/model/user.dart';
+import 'package:partido_client/model/remote/user.dart';
 
 part 'group.g.dart';
 
