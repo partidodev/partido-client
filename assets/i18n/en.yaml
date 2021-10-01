@@ -20,6 +20,7 @@ home:
     join_existing_group: Join a friend's group
   balances:
     title: Balances
+    need_more_users_info: Meaningful data only appears here if at least one other person joins your group.
   join_mode:
     title_enabled: Join mode active
     info: "Share the following join code with your friends to let them enter your group."
@@ -266,3 +267,11 @@ charts:
   monthly_expenses:
     title: Monthly expenses
     tooltip: Total
+  dashboard:
+    title: Expenses
+    this_week: This week
+    last_week: Last week
+    this_month: This month
+    last_month: Last month
+  tips:
+    long_press_description: Long press on chart to get more details

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:partido_client/model/entry.dart';
-import 'package:partido_client/model/split.dart';
-import 'package:partido_client/model/user.dart';
+import 'package:partido_client/model/remote/entry.dart';
+import 'package:partido_client/model/remote/split.dart';
+import 'package:partido_client/model/remote/user.dart';
 import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
@@ -41,7 +41,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
   bool formSaved = false;
 
   String? _category;
-  static String DEFAULT_CATEGORY = "UNCATEGORIZED";
+  static String defaultCategory = "UNCATEGORIZED";
   String? _description;
   String? _amount;
   DateTime? _selectedDate;
@@ -72,7 +72,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
         FlutterI18n.translate(context, "global.locale"));
 
     if (widget.entry == null) {
-      _category = DEFAULT_CATEGORY;
+      _category = defaultCategory;
       // create new entry
       Provider.of<AppState>(context, listen: false)
           .getSelectedGroup()!
@@ -95,7 +95,7 @@ class _EntryFormPageState extends State<EntryFormPage> {
       if (widget.entry!.category != null) {
         _category = widget.entry!.category;
       } else {
-        _category = DEFAULT_CATEGORY;
+        _category = defaultCategory;
       }
       entryAmountController.text =
           currencyFormatter.format(widget.entry!.totalAmount);

@@ -20,6 +20,7 @@ home:
     join_existing_group: Der Gruppe eines Freundes beitreten
   balances:
     title: Guthaben
+    need_more_users_info: Hier erscheinen erst sinnvolle Daten wenn mindestens eine weitere Person deiner Gruppe beitritt.
   join_mode:
     title_enabled: Beitrittsmodus aktiviert
     info: "Teile folgenden Code mit deinen Freunden, damit diese deiner Gruppe beitreten können."
@@ -266,3 +267,11 @@ charts:
   monthly_expenses:
     title: Monatliche Ausgaben
     tooltip: Gesamt
+  dashboard:
+    title: Ausgaben
+    this_week: Diese Woche
+    last_week: Letzte Woche
+    this_month: Dieser Monat
+    last_month: Letzter Monat
+  tips:
+    long_press_description: Für mehr Details lange auf Statistik drücken

@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:partido_client/model/new_user.dart';
-import 'package:partido_client/model/user.dart';
+import 'package:partido_client/model/remote/new_user.dart';
+import 'package:partido_client/model/remote/user.dart';
 import 'package:retrofit/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
 

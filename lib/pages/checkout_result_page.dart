@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:partido_client/model/checkout_report.dart';
+import 'package:partido_client/model/remote/checkout_report.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';

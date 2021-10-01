@@ -20,6 +20,7 @@ home:
     join_existing_group: Unir al grupo de un amigo
   balances:
     title: Saldos
+    need_more_users_info: Datos significativos solo aparecen aquí si al menos otra persona se une a tu grupo.
   join_mode:
     title_enabled: Modo de unión activo
     info: "Comparte el código de unión con tus amigos para que puedan unirse a tu grupo."
@@ -266,3 +267,11 @@ charts:
   monthly_expenses:
     title: Gastos mensuales
     tooltip: Total
+  dashboard:
+    title: Gastos
+    this_week: Esta semana
+    last_week: Semana pasada
+    this_month: Este mes
+    last_month: Mes pasado
+  tips:
+    long_press_description: Mantener pulsado el gráfico para más detalles

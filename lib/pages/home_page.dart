@@ -2,8 +2,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:logger/logger.dart';
-import 'package:partido_client/model/group.dart';
-import 'package:partido_client/model/group_join_body.dart';
+import 'package:partido_client/model/remote/group.dart';
+import 'package:partido_client/model/remote/group_join_body.dart';
 import 'package:partido_client/pages/entry_details_page.dart';
 import 'package:partido_client/pages/group_form_page.dart';
 import 'package:partido_client/widgets/partido_toast.dart';
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                           buildGroupInfoCard(context, appState),
                         if (appState.getReport() != null && appState.getReport()!.balances!.length != 0)
                           buildGroupBalancesCard(context, appState),
-                        if (appState.getLastWeeklyExpenseStatistics().length == 2)
+                        if (appState.getWeeklyExpenseStatistics().length >= 2)
                           buildQuickStatisticsCard(context, appState),
                         if (appState.getSelectedGroup() != null && appState.getSelectedGroup()!.joinModeActive!)
                           buildJoinModeInfoCard(context, appState),
@@ -375,6 +375,13 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
+          // appState.getReport()!.balances!.length == 1 ?
+          //   Divider() : SizedBox(height: 0),
+          appState.getReport()!.balances!.length == 1 ?
+            ListTile(
+              contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 12),
+              title: I18nText("home.balances.need_more_users_info"),
+            ) : SizedBox(height: 0),
         ],
       ),
     );
@@ -387,44 +394,55 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           ListTile(
             title: Text(
-              //FlutterI18n.translate(context, "home.balances.title"),
-              "Ausgaben",
+              FlutterI18n.translate(context, "charts.dashboard.title"),
               style: TextStyle(fontSize: 18),
             ),
             leading: Icon(LinearIcons.chart_bars, color: Colors.green),
           ),
           Divider(),
           ListTile(
-            title: Text("Diese Woche",),
+            title: Text('${FlutterI18n.translate(context, "charts.dashboard.this_week")}'),
             subtitle: Text(
-              'Letzte Woche: ${currencyFormatter!.format(appState.getLastWeeklyExpenseStatistics()[0].expense)} ${appState.getSelectedGroup()!.currency}',
+              '${FlutterI18n.translate(context, "charts.dashboard.last_week")}: ${currencyFormatter!.format(appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-2].expense)} ${appState.getSelectedGroup()!.currency}',
             ),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(LinearIcons.arrow_down),
+                appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-2].expense >= appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-1].expense ?
+                Icon(LinearIcons.arrow_down) : Icon(
+                  LinearIcons.arrow_up,
+                  color: MediaQuery.of(context).platformBrightness == Brightness.light
+                      ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                      : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                ),
               ],
             ),
             trailing: Text(
-              '${currencyFormatter!.format(appState.getLastWeeklyExpenseStatistics()[1].expense)} ${appState.getSelectedGroup()!.currency}',
+              '${currencyFormatter!.format(appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-1].expense)} ${appState.getSelectedGroup()!.currency}',
               style: TextStyle(
                 fontSize: 16,
               ),
             ),
           ),
           ListTile(
-            title: Text("Dieser Monat",),
+            title: Text('${FlutterI18n.translate(context, "charts.dashboard.this_month")}'),
             subtitle: Text(
-              'Letzter Monat: ${currencyFormatter!.format(appState.getLastMonthlyExpenseStatistics()[0].expense)} ${appState.getSelectedGroup()!.currency}',
+              '${FlutterI18n.translate(context, "charts.dashboard.last_month")}: ${currencyFormatter!.format(appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-2].expense)} ${appState.getSelectedGroup()!.currency}',
             ),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(LinearIcons.arrow_up, color: Colors.red),
+                appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-2].expense >= appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense ?
+                Icon(LinearIcons.arrow_down) : Icon(
+                  LinearIcons.arrow_up,
+                  color: MediaQuery.of(context).platformBrightness == Brightness.light
+                      ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                      : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                ),
               ],
             ),
             trailing: Text(
-              '${currencyFormatter!.format(appState.getLastMonthlyExpenseStatistics()[1].expense)} ${appState.getSelectedGroup()!.currency}',
+              '${currencyFormatter!.format(appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense)} ${appState.getSelectedGroup()!.currency}',
               style: TextStyle(
                 fontSize: 16,
               ),
