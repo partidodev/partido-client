@@ -193,12 +193,13 @@ login:
   login_title: Login
   email: Endereço de email
   email_empty_validation_error: 'Digite seu endereço de email'
-  password: Password
+  password: Senha
   password_empty_validation_error: 'Digite sua senha'
   remember: Lembrar de mim
   login_button: Login
   signup_button: Inscrever-se
   login_failed_unauthorized: "Falha no login, por favor confira seus dados."
+  forgot_password_button: Esqueceu sua senha?
 signup:
   title: Inscrever-se
   username: Usuário

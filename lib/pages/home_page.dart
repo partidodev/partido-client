@@ -1,3 +1,4 @@
+import 'package:custom_rounded_rectangle_border/custom_rounded_rectangle_border.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
@@ -217,14 +218,36 @@ class _HomePageState extends State<HomePage> {
       margin: appState.getProcessedEntryListTitles()![index + 1] != null
           ? EdgeInsets.only(bottom: 8)
           : EdgeInsets.zero,
-      shape: Border(
-        left: BorderSide(color: Color(0x0F000000), width: 1),
-        top: BorderSide(color: Color(0x0F000000), width: 1),
-        right: BorderSide(color: Color(0x0F000000), width: 1),
-        bottom: index == appState.getEntries().length - 1 ||
-                appState.getProcessedEntryListTitles()![index + 1] != null
+      shape: CustomRoundedRectangleBorder(
+        borderRadius: (appState.getProcessedEntryListTitles()![index + 1] != null
+            && appState.getProcessedEntryListTitles()![index] == null)
+            || appState.getEntries().length == index + 1
+            ? BorderRadius.only(
+          bottomLeft: Radius.circular(4),
+          bottomRight: Radius.circular(4),
+        ) : appState.getProcessedEntryListTitles()![index + 1] != null
+            && appState.getProcessedEntryListTitles()![index] != null
+            ? BorderRadius.only(
+          topLeft: Radius.circular(4),
+          topRight: Radius.circular(4),
+          bottomLeft: Radius.circular(4),
+          bottomRight: Radius.circular(4),
+        ) : appState.getProcessedEntryListTitles()![index] != null
+            ? BorderRadius.only(
+          topLeft: Radius.circular(4),
+          topRight: Radius.circular(4),
+        ) : BorderRadius.circular(0),
+        leftSide: BorderSide(color: Color(0x0F000000), width: 1),
+        topLeftCornerSide: BorderSide(color: Color(0x0F000000), width: 1),
+        topSide: BorderSide(color: Color(0x0F000000), width: 1),
+        topRightCornerSide: BorderSide(color: Color(0x0F000000), width: 1),
+        rightSide: BorderSide(color: Color(0x0F000000), width: 1),
+        bottomRightCornerSide: BorderSide(color: Color(0x0F000000), width: 1),
+        bottomSide: index == appState.getEntries().length - 1 ||
+            appState.getProcessedEntryListTitles()![index + 1] != null
             ? BorderSide(color: Color(0x0F000000), width: 1)
             : BorderSide(color: Color(0x0F000000), width: 0),
+        bottomLeftCornerSide: BorderSide(color: Color(0x0F000000), width: 1),
       ),
       child: Column(
         children: <Widget>[

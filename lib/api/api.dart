@@ -109,4 +109,9 @@ abstract class Api {
   Future<HttpResponse<CheckoutReport>> checkoutGroup(
     @Path("groupId") int groupId,
   );
+
+  @GET("/users/{email}/reset-password")
+  Future<HttpResponse<String>> requestPasswordReset(
+    @Path("email") String email,
+  );
 }

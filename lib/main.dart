@@ -5,9 +5,11 @@ import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:partido_client/pages/edit_account_page.dart';
 import 'package:partido_client/pages/entry_form_page.dart';
+import 'package:partido_client/pages/forgot_password_page.dart';
 import 'package:partido_client/pages/group_form_page.dart';
 import 'package:partido_client/pages/home_page.dart';
 import 'package:partido_client/pages/login_page.dart';
+import 'package:partido_client/pages/password_reset_requested_page.dart';
 import 'package:partido_client/pages/signup_page.dart';
 import 'package:partido_client/pages/signup_successful_page.dart';
 import 'package:provider/provider.dart';
@@ -25,29 +27,22 @@ void main() async {
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.green,
+          canvasColor: Colors.white,
           fontFamily: 'Roboto',
           textTheme: defaultTextTheme(),
-          appBarTheme: AppBarTheme(
-            textTheme: defaultAppBarTextTheme(),
-          ),
-          buttonTheme: ButtonThemeData(
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(20),
-            ),
-          ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            border: InputBorder.none,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+              borderSide: BorderSide.none,
+            ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
               borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
               borderSide: BorderSide(color: Color.fromRGBO(235, 64, 52, 1)),
             ),
             errorStyle: TextStyle(
-              fontSize: 12,
               fontWeight: FontWeight.w400,
               color: Color.fromRGBO(235, 64, 52, 1),
             ),
@@ -55,7 +50,7 @@ void main() async {
           cardTheme: CardTheme(
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius: BorderRadius.circular(4),
               side: BorderSide(
                 color: Color(0x0F000000),
                 width: 1,
@@ -72,33 +67,24 @@ void main() async {
           brightness: Brightness.dark,
           primarySwatch: Colors.green,
           accentColor: Colors.green,
-          textSelectionHandleColor: Colors.green,
           toggleableActiveColor: Colors.green,
           highlightColor: Colors.green,
           indicatorColor: Colors.green,
           fontFamily: 'Roboto',
           textTheme: defaultTextTheme(),
-          appBarTheme: AppBarTheme(
-            textTheme: defaultAppBarTextTheme(),
-          ),
-          buttonTheme: ButtonThemeData(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
-            ),
-          ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            border: InputBorder.none,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+              borderSide: BorderSide.none,
+            ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
               borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
               borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
             ),
             errorStyle: TextStyle(
-              fontSize: 12,
               fontWeight: FontWeight.w400,
               color: Color.fromRGBO(255, 99, 71, 1),
             ),
@@ -106,7 +92,7 @@ void main() async {
           cardTheme: CardTheme(
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderRadius: BorderRadius.circular(4),
               side: BorderSide(
                 color: Color(0x0F000000),
                 width: 1,
@@ -118,6 +104,9 @@ void main() async {
             color: Color(0x0F000000),
             space: 0,
           ),
+          textSelectionTheme: TextSelectionThemeData(
+            selectionHandleColor: Colors.green,
+          ),
         ),
         navigatorKey: NavigationService.navigationKey,
         routes: {
@@ -128,6 +117,8 @@ void main() async {
           '/create-entry': (_) => EntryFormPage(entry: null),
           '/create-group': (_) => GroupFormPage(group: null),
           '/account': (_) => EditAccountPage(),
+          '/forgot-password': (_) => ForgotPasswordPage(),
+          '/password-reset-requested': (_) => PasswordResetRequestedPage(),
         },
         supportedLocales: [
           Locale('de'),
@@ -155,27 +146,15 @@ void main() async {
 
 TextTheme defaultTextTheme() {
   return TextTheme(
-    headline1: TextStyle(fontSize: 96, fontWeight: FontWeight.w400),
-    headline2: TextStyle(fontSize: 60, fontWeight: FontWeight.w400),
-    headline3: TextStyle(fontSize: 48, fontWeight: FontWeight.w400),
-    headline4: TextStyle(fontSize: 34, fontWeight: FontWeight.w400),
-    headline5: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-    headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.w400), // AppBar title, Dialog title, etc
-    subtitle1: TextStyle(fontSize: 16, fontWeight: FontWeight.w300), // List tile titles
-    subtitle2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-    bodyText1: TextStyle(fontSize: 14, fontWeight: FontWeight.w400), // Emphasized text
-    bodyText2: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w300), // List leading/trailing, etc
-  );
-}
-
-TextTheme defaultAppBarTextTheme() {
-  return TextTheme(
-    headline6: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w400,
-        color: Colors.white
-    ), // AppBar title, Dialog title, etc
+    headline1: TextStyle(fontWeight: FontWeight.w400),
+    headline2: TextStyle(fontWeight: FontWeight.w400),
+    headline3: TextStyle(fontWeight: FontWeight.w400),
+    headline4: TextStyle(fontWeight: FontWeight.w400),
+    headline5: TextStyle(fontWeight: FontWeight.w400),
+    headline6: TextStyle(fontWeight: FontWeight.w400), // AppBar title, Dialog title, etc
+    subtitle1: TextStyle(fontWeight: FontWeight.w300), // List tile titles
+    subtitle2: TextStyle(fontWeight: FontWeight.w300),
+    bodyText1: TextStyle(fontWeight: FontWeight.w400), // Emphasized text
+    bodyText2: TextStyle(fontWeight: FontWeight.w300), // List leading/trailing, etc
   );
 }

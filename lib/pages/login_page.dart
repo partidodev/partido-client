@@ -198,11 +198,20 @@ class _LoginPageState extends State<LoginPage> {
                                       ListTileControlAffinity.leading,
                                 ),
                                 SizedBox(height: 8),
-                                MaterialButton(
-                                    minWidth: double.infinity,
-                                    color: Theme.of(context).primaryColor,
-                                    textColor: Colors.white,
-                                    child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
+                                Row(children: <Widget>[
+                                  Expanded(child: OutlinedButton(
+                                    child: Text(
+                                        FlutterI18n.translate(context, "login.signup_button"),
+                                        style: TextStyle(fontWeight: FontWeight.w400),
+                                    ),
+                                    onPressed: () { navService.pushNamed('/signup'); },
+                                  )),
+                                  SizedBox(width: 8),
+                                  Expanded(child: ElevatedButton(
+                                    child: Text(
+                                        FlutterI18n.translate(context, "login.login_button"),
+                                        style: TextStyle(fontWeight: FontWeight.w400),
+                                    ),
                                     onPressed: () {
                                       loginFailed = false;
                                       tooManyLoginAttempts = false;
@@ -213,14 +222,14 @@ class _LoginPageState extends State<LoginPage> {
                                       if (form.validate()) {
                                         _login();
                                       }
-                                    }),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: TextButton(
-                                    child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w400)),
-                                    onPressed: () {
-                                      navService.pushNamed('/signup');
                                     },
+                                  )),
+                                ]),
+                                TextButton(
+                                  onPressed: () { navService.pushNamed('/forgot-password'); },
+                                  child: Text(
+                                    FlutterI18n.translate(context, "login.forgot_password_button"),
+                                    style: TextStyle(fontWeight: FontWeight.w400),
                                   ),
                                 ),
                               ],

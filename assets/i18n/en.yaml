@@ -199,6 +199,17 @@ login:
   login_button: Login
   signup_button: Sign up
   login_failed_unauthorized: "Login failed, please verify your credentials"
+  forgot_password_button: Forgot password?
+forgot_password:
+  toast_password_reset_request_failed: An error occurred. Please try again later.
+  title: Reset password
+  submit_button: Reset password
+  request_success:
+    title: Password reset requested
+    login_button: Go to login
+    success_notice: You successfully requested to reset your password!
+    additional_info: If the provided email address exists in our database, we'll send out an email to verify it's you. Please also check your spam folder if the email doesn't arrive within 5 minutes.
+    additional_info_2: After clicking on the verification link in the email, you'll get a new password.
 signup:
   title: Sign up
   username: Username

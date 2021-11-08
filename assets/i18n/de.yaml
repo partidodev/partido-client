@@ -199,6 +199,17 @@ login:
   login_button: Login
   signup_button: Registrieren
   login_failed_unauthorized: "Login fehlgeschlagen, bitte überprüfe deine Eingaben"
+  forgot_password_button: Passwort vergessen?
+forgot_password:
+  toast_password_reset_request_failed: Ein Fehler ist aufgetreten. Bitte versuche es später erneut.
+  title: Passwort zurücksetzen
+  submit_button: Zurücksetzen
+  request_success:
+    title: Passwort-Reset angefordert
+    login_button: Weiter zum Login
+    success_notice: Du hast erfolgreich einen Passwort-Reset angefordert!
+    additional_info: Wenn die angegebene Email-Adresse in unserer Datenbank vorhanden ist, senden wir dir zur Bestätigung eine Email. Bitte überprüfe auch deinen Spam-Ordner, wenn die Email nicht innerhalb von 5 Minuten ankommt.
+    additional_info_2: Nachdem du auf den Bestätigungslink in der Email geklickt hast, erhältst du ein neues Passwort.
 signup:
   title: Registrieren
   username: Nutzername

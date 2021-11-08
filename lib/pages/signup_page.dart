@@ -184,30 +184,33 @@ class _SignupPageState extends State<SignupPage> {
                                     controlAffinity: ListTileControlAffinity.leading,
                                   ),
                                   SizedBox(height: 8),
-                                  MaterialButton(
-                                      minWidth: double.infinity,
-                                      color: Theme.of(context).primaryColor,
-                                      textColor: Colors.white,
-                                      child: Text(FlutterI18n.translate(context, "login.signup_button"), style: TextStyle(fontWeight: FontWeight.w400)),
-                                      onPressed: () {
-                                        emailAlreadyRegistered = false;
-                                        final form = _formKey.currentState;
-                                        form!.save();
-                                        setState(() => formSaved = true);
-                                        if (form.validate() && _acceptTerms) {
-                                          _signup();
-                                        }
-                                      }
-                                  ),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: TextButton(
-                                      child: Text(FlutterI18n.translate(context, "login.login_button"), style: TextStyle(fontWeight: FontWeight.w400)),
+                                  Row(children: <Widget>[
+                                    Expanded(child: OutlinedButton(
+                                      child: Text(
+                                        FlutterI18n.translate(context, "login.login_button"),
+                                        style: TextStyle(fontWeight: FontWeight.w400),
+                                      ),
                                       onPressed: () {
                                         navService.goBack();
                                       },
-                                    ),
-                                  ),
+                                    )),
+                                    SizedBox(width: 8),
+                                    Expanded(child: ElevatedButton(
+                                        child: Text(
+                                          FlutterI18n.translate(context, "login.signup_button"),
+                                          style: TextStyle(fontWeight: FontWeight.w400),
+                                        ),
+                                        onPressed: () {
+                                          emailAlreadyRegistered = false;
+                                          final form = _formKey.currentState;
+                                          form!.save();
+                                          setState(() => formSaved = true);
+                                          if (form.validate() && _acceptTerms) {
+                                            _signup();
+                                          }
+                                        }
+                                    )),
+                                  ]),
                                 ],
                               ),
                           ),

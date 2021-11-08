@@ -199,6 +199,7 @@ login:
   login_button: Login
   signup_button: Crear nueva cuenta
   login_failed_unauthorized: "Acceso fallido. Por favor verifica tus datos ingesados"
+  forgot_password_button: Contraseña olvidada?
 signup:
   title: Crear nueva cuenta
   username: Nombre de usuario
