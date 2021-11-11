@@ -140,7 +140,7 @@ account:
   delete_dialog:
     title: Delete account
     question: Do you really want to delete your account? Your personal information will be removed from our database.
-    verification_info: Enter "DELETE" (without quotes) to confirm account deletion.
+    verification_info: Enter "DELETE" (without quotes, note upper and lower case) to confirm account deletion.
     verification_word: DELETE
     verification_field_label: Verify deletion
     answer_delete: Confirm

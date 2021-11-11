@@ -139,7 +139,7 @@ account:
   delete_dialog:
     title: Deletar conta
     question: Tem certeza de que quer deletar sua conta? Suas informações pessoais serão removidas do nosso banco de dados.
-    verification_info: Digite "DELETAR" (sem aspas) para confirmar a exclusão de sua conta.
+    verification_info: Digite "DELETAR" (sem aspas, observe as letras maiúsculas e minúsculas) para confirmar a exclusão de sua conta.
     verification_word: DELETAR
     verification_field_label: Confirmar exclusão
     answer_delete: Confirmar

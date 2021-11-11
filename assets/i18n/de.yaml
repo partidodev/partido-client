@@ -140,7 +140,7 @@ account:
   delete_dialog:
     title: Account löschen
     question: Willst du deinen Account wirklich löschen? Deine persönlichen Daten werden aus unserer Datenbank entfernt.
-    verification_info: Bitte gib "LÖSCHEN" (ohne Anführungszeichen) zur Bestätigung ein.
+    verification_info: Bitte gib "LÖSCHEN" (ohne Anführungszeichen, Groß- und Kleinschreibung beachten) zur Bestätigung ein.
     verification_word: LÖSCHEN
     verification_field_label: Löschung bestätigen
     answer_delete: Bestätigen

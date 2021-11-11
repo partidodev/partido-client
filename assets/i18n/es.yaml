@@ -139,7 +139,7 @@ account:
   delete_dialog:
     title: Eliminar cuenta
     question: Seguro, que deseas eliminar tu cuenta? Todos tus datos personales se eliminarán de nuestra base de datos.
-    verification_info: Ingresa "ELIMINAR" (sin comillas) para confirmar.
+    verification_info: Ingresa "ELIMINAR" (sin comillas, nota mayúsculas y minúsculas) para confirmar.
     verification_word: ELIMINAR
     verification_field_label: Confirmar eliminación
     answer_delete: Confirmar
