@@ -5,6 +5,7 @@ final NavigationService navService = NavigationService();
 class NavigationService<T, U> {
   static GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
+  // Add new named route
   Future<T?> pushNamed(String routeName, {Object? args}) async {
     return await navigationKey.currentState!.pushNamed<T>(
       routeName,
@@ -12,10 +13,12 @@ class NavigationService<T, U> {
     );
   }
 
+  // Add new route
   Future<T?> push(Route<T> route) async {
     return await navigationKey.currentState!.push<T>(route);
   }
 
+  // Replace current route with new named one
   Future<T?> pushReplacementNamed(String routeName, {Object? args}) async {
     return await navigationKey.currentState!.pushReplacementNamed<T, U>(
       routeName,
@@ -23,6 +26,7 @@ class NavigationService<T, U> {
     );
   }
 
+  // Remove all routes and open new named one
   Future<T?> pushNamedAndRemoveUntil(String routeName, {Object? args}) async {
     return await navigationKey.currentState!.pushNamedAndRemoveUntil<T>(
       routeName,

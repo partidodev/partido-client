@@ -357,7 +357,7 @@ class _GroupFormPageState extends State<GroupFormPage> {
       HttpResponse<String> response = await api.leaveGroup(Provider.of<AppState>(context, listen: false).getSelectedGroupId());
       if (response.response.statusCode == 200) {
         Provider.of<AppState>(context, listen: false).clearAppState();
-        navService.pushReplacementNamed("/");
+        navService.pushNamedAndRemoveUntil("/");
       } else if (response.response.statusCode == 412) {
         PartidoToast.showToast(msg: FlutterI18n.translate(context, "group_form.leave_group_dialog.group_not_settled_up_error"));
         navService.goBack();
