@@ -168,16 +168,14 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               RefreshIndicator(
-                child: ListView(
+                child: appState.getEntries().length != 0 ? ListView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(4, 4, 4, 70),
                   children: <Widget>[
                     appState.stateInitialized ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (appState.getEntries().length != 0)
                           ChartsTab.buildWeeklyGroupStatisticsCard(context, appState),
-                        if (appState.getEntries().length != 0)
                           ChartsTab.buildMonthlyGroupStatisticsCard(context, appState),
                       ],
                     ) : Column(
@@ -191,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ],
-                ),
+                ) : Center(child: I18nText("home.list_empty")),
                 onRefresh: () async {
                   await appState.refreshAppState();
                   PartidoToast.showToast(msg: FlutterI18n.translate(context, 'home.group_refreshed_toast'));
