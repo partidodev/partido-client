@@ -57,6 +57,7 @@ home:
     join_code_empty_validation_error: Please enter the join code you recieved
     join_code_invalid_validation_error: Please enter a valid join code
     join_code_not_found_validation_error: Join code not found or deactivated
+    group_already_joined_validation_error: You are already a member of this group
     button_join: Join
   create_entry_tooltip: Create entry
   groups_tooltip: Groups

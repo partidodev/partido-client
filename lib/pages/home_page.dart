@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   StateSetter? _setStateOfJoinGroupDialog;
   bool joinGroupFormSaved = false;
-  bool groupToJoinNotFound = false;
+  bool groupNotAllowedToJoin = false;
+  bool groupAlreadyJoined = false;
   String? _groupJoinKey;
 
   NumberFormat? currencyFormatter;
@@ -122,13 +123,16 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         if (appState.getSelectedGroup() == null)
                           buildWelcomeCard(context, appState.getMyGroups()),
-                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup()!.name != null)
+                        if (appState.getSelectedGroup() != null
+                            && appState.getSelectedGroup()!.name != null)
                           buildGroupInfoCard(context, appState),
-                        if (appState.getReport() != null && appState.getReport()!.balances!.length != 0)
+                        if (appState.getReport() != null
+                            && appState.getReport()!.balances!.length != 0)
                           buildGroupBalancesCard(context, appState),
-                        if (appState.getWeeklyExpenseStatistics().length >= 2)
+                        if (appState.getSelectedGroup() != null)
                           buildQuickStatisticsCard(context, appState),
-                        if (appState.getSelectedGroup() != null && appState.getSelectedGroup()!.joinModeActive!)
+                        if (appState.getSelectedGroup() != null
+                            && appState.getSelectedGroup()!.joinModeActive!)
                           buildJoinModeInfoCard(context, appState),
                       ],
                     ) : Column(
@@ -425,23 +429,35 @@ class _HomePageState extends State<HomePage> {
           Divider(),
           ListTile(
             title: Text('${FlutterI18n.translate(context, "charts.dashboard.this_week")}'),
-            subtitle: Text(
+            subtitle: appState.getWeeklyExpenseStatistics().length >= 2 ? Text(
               '${FlutterI18n.translate(context, "charts.dashboard.last_week")}: ${currencyFormatter!.format(appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-2].expense)} ${appState.getSelectedGroup()!.currency}',
+            ) : Text(
+              '${FlutterI18n.translate(context, "charts.dashboard.last_week")}: ${currencyFormatter!.format(0)} ${appState.getSelectedGroup()!.currency}',
             ),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-2].expense >= appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-1].expense ?
-                Icon(LinearIcons.arrow_down) : Icon(
+                (appState.getWeeklyExpenseStatistics().length >= 2
+                    && appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-2].expense
+                        < appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-1].expense)
+                    || (appState.getWeeklyExpenseStatistics().length == 1
+                    && appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-1].expense > 0) ?
+                Icon(
                   LinearIcons.arrow_up,
                   color: MediaQuery.of(context).platformBrightness == Brightness.light
                       ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
                       : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-                ),
+                ) :
+                Icon(LinearIcons.arrow_down),
               ],
             ),
-            trailing: Text(
+            trailing: appState.getWeeklyExpenseStatistics().length >= 1 ? Text(
               '${currencyFormatter!.format(appState.getWeeklyExpenseStatistics()[appState.getWeeklyExpenseStatistics().length-1].expense)} ${appState.getSelectedGroup()!.currency}',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ) : Text(
+              '${currencyFormatter!.format(0)} ${appState.getSelectedGroup()!.currency}',
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -449,23 +465,34 @@ class _HomePageState extends State<HomePage> {
           ),
           ListTile(
             title: Text('${FlutterI18n.translate(context, "charts.dashboard.this_month")}'),
-            subtitle: Text(
+            subtitle: appState.getMonthlyExpenseStatistics().length >= 2 ? Text(
               '${FlutterI18n.translate(context, "charts.dashboard.last_month")}: ${currencyFormatter!.format(appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-2].expense)} ${appState.getSelectedGroup()!.currency}',
+            ) : Text(
+              '${FlutterI18n.translate(context, "charts.dashboard.last_month")}: ${currencyFormatter!.format(0)} ${appState.getSelectedGroup()!.currency}',
             ),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-2].expense >= appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense ?
-                Icon(LinearIcons.arrow_down) : Icon(
+                (appState.getMonthlyExpenseStatistics().length >= 2
+                    && appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-2].expense
+                        < appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense)
+                    || (appState.getMonthlyExpenseStatistics().length >= 1
+                    && appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense > 0) ?
+                Icon(
                   LinearIcons.arrow_up,
                   color: MediaQuery.of(context).platformBrightness == Brightness.light
                       ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
                       : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
-                ),
+                ) : Icon(LinearIcons.arrow_down),
               ],
             ),
-            trailing: Text(
+            trailing: appState.getMonthlyExpenseStatistics().length >= 1 ? Text(
               '${currencyFormatter!.format(appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense)} ${appState.getSelectedGroup()!.currency}',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ) : Text(
+              '${currencyFormatter!.format(0)} ${appState.getSelectedGroup()!.currency}',
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -575,12 +602,19 @@ class _HomePageState extends State<HomePage> {
     try {
       HttpResponse<String> response = await api.joinGroup(groupId, groupJoinBody);
       if (response.response.statusCode == 200) {
+        // 200 ok
         Provider.of<AppState>(context, listen: false).changeSelectedGroup(groupId);
         Provider.of<AppState>(context, listen: false).refreshAppState();
         navService.goBack();
-      } else if (response.response.statusCode == 404) {
+      } else if (response.response.statusCode == 404 || response.response.statusCode == 403) {
+        // 404 not found or 403 forbidden
         _setStateOfJoinGroupDialog!(() {
-          groupToJoinNotFound = true;
+          groupNotAllowedToJoin = true;
+        });
+      } else if (response.response.statusCode == 304) {
+        // 304 not modified
+        _setStateOfJoinGroupDialog!(() {
+          groupAlreadyJoined = true;
         });
       }
     } catch (e) {
@@ -675,7 +709,7 @@ class _HomePageState extends State<HomePage> {
                             return null;
                           },
                         ),
-                        (joinGroupFormSaved && groupToJoinNotFound)
+                        (joinGroupFormSaved && groupNotAllowedToJoin)
                             ? Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
@@ -691,6 +725,22 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ))
+                            : (joinGroupFormSaved && groupAlreadyJoined)
+                            ? Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                              child: Text(
+                                FlutterI18n.translate(context, "home.join_group_dialog.group_already_joined_validation_error"),
+                                style: TextStyle(
+                                  color: MediaQuery.of(context).platformBrightness == Brightness.light
+                                      ? Color.fromRGBO(235, 64, 52, 1) // Color for light theme
+                                      : Color.fromRGBO(255, 99, 71, 1), // Color for dark theme
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ))
                             : SizedBox(height: 0),
                       ],
                     ),
@@ -712,7 +762,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(fontWeight: FontWeight.w400),
                     ),
                     onPressed: () {
-                      groupToJoinNotFound = false;
+                      groupNotAllowedToJoin = false;
                       final form = _formKey.currentState;
                       form!.save();
                       setState(() => joinGroupFormSaved = true);

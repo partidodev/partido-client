@@ -12,6 +12,10 @@ class StatisticsService {
   static List<WeeklyExpense> calculateWeeklyExpenses(List<Entry> entries) {
     List<WeeklyExpense> weeklyExpenses = [];
 
+    if (entries.length == 0) {
+      return weeklyExpenses;
+    }
+
     // Sort entries by billingDate first
     // because default is sorted by creationDate
     List<Entry> sortedEntries = List.from(entries);
@@ -57,11 +61,6 @@ class StatisticsService {
           weeklyExpenses.length - 12, weeklyExpenses.length
       ).toList();
     }
-
-    // Save stats from last two weeks in AppState
-    // setWeeklyExpenseStatistics(weeklyExpenses.getRange(
-    //     weeklyExpenses.length - 2, weeklyExpenses.length
-    // ).toList());
 
     return weeklyExpenses;
   }

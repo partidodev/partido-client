@@ -57,6 +57,7 @@ home:
     join_code_empty_validation_error: Bitte gib den erhaltenen Beitrittscode ein
     join_code_invalid_validation_error: Bitte gib einen gültigen Beitrittscode ein
     join_code_not_found_validation_error: Beitrittscode nicht gefunden oder deaktiviert
+    group_already_joined_validation_error: Du bist bereits Mitglied dieser Gruppe
     button_join: Beitreten
   create_entry_tooltip: Eintrag erstellen
   groups_tooltip: Gruppen

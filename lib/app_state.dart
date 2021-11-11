@@ -65,6 +65,8 @@ class AppState extends ChangeNotifier {
     _selectedGroup = null;
     _entries = [];
     _report = null;
+    _weeklyExpenseStatistics = [];
+    _monthlyExpenseStatistics = [];
   }
 
   Future<void> refreshAppState() async {
