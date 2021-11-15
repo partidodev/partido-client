@@ -474,7 +474,7 @@ class _HomePageState extends State<HomePage> {
                 (appState.getMonthlyExpenseStatistics().length >= 2
                     && appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-2].expense
                         < appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense)
-                    || (appState.getMonthlyExpenseStatistics().length >= 1
+                    || (appState.getMonthlyExpenseStatistics().length == 1
                     && appState.getMonthlyExpenseStatistics()[appState.getMonthlyExpenseStatistics().length-1].expense > 0) ?
                 Icon(
                   LinearIcons.arrow_up,
