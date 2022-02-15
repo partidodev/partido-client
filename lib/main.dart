@@ -65,8 +65,6 @@ void main() async {
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          primarySwatch: Colors.green,
-          accentColor: Colors.green,
           toggleableActiveColor: Colors.green,
           highlightColor: Colors.green,
           indicatorColor: Colors.green,
@@ -106,6 +104,11 @@ void main() async {
           ),
           textSelectionTheme: TextSelectionThemeData(
             selectionHandleColor: Colors.green,
+          ),
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.green,
+          ).copyWith(
+            secondary: Colors.green,
           ),
         ),
         navigatorKey: NavigationService.navigationKey,
