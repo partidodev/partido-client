@@ -1,286 +1,275 @@
 global:
   partido_title: Partido
-  locale: nb_NO
-  copied: Kopiert
-  close: Lukk
-  cancel: Avbryt
+  locale: es
+  copied: Copiado
+  close: Cerrar
+  cancel: Cancelar
   date_format: dd-MM-yyyy
   date_format_short: dd-MM
-  currency_format: '###0,00'
-  part_format: '###0,###'
+  currency_format: '#,##0.00'
+  part_format: '#,##0.###'
 home:
   welcome:
-    title: Velkommen til Partido
-    subtitle: Velg et alternativ for å begynne
-    info: Opprett en ny gruppe og inviter venner til den for å dele utgifter.
-    info2: Eller ta del i en eksiterende gruppe hvis du fikk en kode fra en venn.
-    group_settings_tooltip: Gruppeinnstillinger
-    open_my_groups: Åpne mine grupper
-    create_new_group: Opprett en ny gruppe
-    join_existing_group: Ta del i en venns gruppe
+    title: Bienvenido a Partido!
+    subtitle: Selecciona una opción para empezar
+    info: Para comenzar a compartir gastos entre varias personas, necesitas crear un nuevo grupo e invitar a tus amigos.
+    info2: O ingresa a un grupo existente si ya recibiste un código de ingreso de un amigo.
+    group_settings_tooltip: Configuración de grupo
+    open_my_groups: Abrir mis grupos
+    create_new_group: Crear un nuevo grupo
+    join_existing_group: Unir al grupo de un amigo
   balances:
-    title: Saldoer
-    need_more_users_info: Nyttig data vises her når minst én person tar del i gruppen din.
+    title: Saldos
+    need_more_users_info: Datos significativos solo aparecen aquí si al menos otra persona se une a tu grupo.
   join_mode:
-    title_enabled: Deltagelsesmodus påslått
-    info: "Del følgende deltagelseskode med dine venner for å la dem ta del i gruppen."
-    security_notice: "Av sikkerhetshensyn kan du skru av grippedeltagelse når alle brukerne har tatt del i gruppen."
+    title_enabled: Modo de unión activo
+    info: "Comparte el código de unión con tus amigos para que puedan unirse a tu grupo."
+    security_notice: "Por razones de seguridad, desactiva el modo de unión de grupo cuando todos los usuarios se unieron al grupo."
     share:
       text: >-
-        Last ned Partido-programmet fra Google Play-butikken https://play.google.com/store/apps/details?id=net.fosforito.partido og ta del i min gruppe med følgende kode ( mer info om hvordan man tar del i en gruppe på https://partido.rocks/faq/#join-group):
-      subject: Ta del i min gruppe på Partido.
+        Descarga la aplicación Partido del Google Play Store https://play.google.com/store/apps/details?id=net.fosforito.partido y únete a mi grupo con éste código (Más información sobre cómo unirse a un grupo encuentras en https://partido.rocks/faq/#join-group):
+      subject: Únete a mi grupo en Partido!
     faq_link: "https://partido.rocks/faq-groups/"
-    faq_tooltip: Åpne O-S-S
-  group_refreshed_toast: Gruppe oppdatert
+    faq_tooltip: Abrir FAQ
+  group_refreshed_toast: Grupo actualizado
   menu:
-    account: Min konto
-    about: Om Partido
-    feedback: Send tilbakemedling
+    account: Mi cuenta
+    about: Acerca de
+    feedback: Enviar Feedback
   about_dialog:
-    title: Om Partido
-    homepage: Hjemmeside
+    title: Acerca de
+    homepage: Página de inicio
     homepage_url: 'https://partido.rocks/'
-    imprint: Sammendrag
+    imprint: Imprenta
     imprint_url: 'https://partido.rocks/imprint/'
-    privacy_policy: Personvernspraksis
+    privacy_policy: Política de privacidad
     privacy_policy_url: 'https://partido.rocks/privacy/'
   groups_dialog:
-    title: Mine grupper
-    join_existing_button: Ta del i eksisterende
-    create_button: Opprett ny
+    title: Mis grupos
+    join_existing_button: Unirse con
+    create_button: Crear nuevo
   join_group_dialog:
-    title: Ta del i gruppe
-    join_code: Deltagelseskode
-    join_code_empty_validation_error: Skriv inn koden du har mottatt
-    join_code_invalid_validation_error: Angi en gyldig kode
-    join_code_not_found_validation_error: Fant ikke koden, eller så er den avskrudd
-    group_already_joined_validation_error: Du er allerede i denne gruppen
-    button_join: Ta del
-  create_entry_tooltip: Opprett oppføring
-  groups_tooltip: Grupper
-  list_empty: Ingen oppføringer enda …
+    title: Unirse al grupo
+    join_code: Código de unión
+    join_code_empty_validation_error: Ingresa el código de unión que recibiste
+    join_code_invalid_validation_error: Por favor, ingresa un código de unión válido
+    join_code_not_found_validation_error: Código no encontrado o deactivado
+    button_join: Unirse
+  create_entry_tooltip: Crear entrada
+  groups_tooltip: Grupos
+  list_empty: Aún no hay entradas...
 entry_form:
-  toast_entry_created: Ny oppføring opprettet
-  toast_failed_to_save_entry: Kunne ikke opprette oppføringen
-  toast_entry_updated: Oppføring oppdatert
-  toast_failed_to_update_entry: Kunne ikke oppdatere oppføringen
-  toast_entry_deleted: Oppføring slettet
-  toast_failed_to_delete_entry: En feil inntraff under sletting av oppføringen
+  toast_entry_created: Nueva entrada creada
+  toast_failed_to_save_entry: Se produjo un error al crear la entrada
+  toast_entry_updated: Cuenta actualizada
+  toast_failed_to_update_entry: Se produjo un error al actualizar la entrada
+  toast_entry_deleted: Cuenta eliminada
+  toast_failed_to_delete_entry: Se produjo un error al intentar eliminar la entrada
   delete_entry_dialog:
-    title: Slett oppføring
-    question: Slett denne oppføringen?
-    answer_no: 'Nei, avbryt'
-    answer_yes: 'Ja, slett'
-  parts: Deler
-  paid: Betalt
-  create_entry_title: Opprett oppføring
-  edit_entry_title: Rediger oppføring
-  delete_entry_tooltip: Slett oppføring
-  description: Beskrivelse
-  description_empty_validation_error: 'Angi en beskrivelse'
-  description_too_long_validation_error: Maks. 255 tegn
-  amount: Beløp
-  amount_empty_validation_error: 'Skriv inn totalt beløp'
-  amount_not_positive_validation_error: 'Angi et tall høyere enn 0'
-  date: Dato
-  create_entry_button: Opprett oppføring
-  update_entry_button: Oppdater oppføring
-  amount_of_splits_sum_not_total_validation_error: "De betalte summene må beløpe seg til totalsummen for oppføringen"
-  details_title: "Detaljer"
-  category: "Kategori"
+    title: Eliminar entrada
+    question: '¿Estás seguro que deseas eliminar esta entrada?'
+    answer_no: 'No, cancelar'
+    answer_yes: 'Sí, eliminar'
+  parts: Partes
+  paid: Pagado
+  create_entry_title: Crear entrada
+  edit_entry_title: Editar entrada
+  delete_entry_tooltip: Eliminar entrada
+  description: Descripción
+  description_empty_validation_error: 'Por favor, ingresa una descripción'
+  description_too_long_validation_error: Max. 255 caracteres permitidos
+  amount: Monto
+  amount_empty_validation_error: 'Por favor, ingresa el monto total'
+  amount_not_positive_validation_error: 'Por favor, ingresa un valor mayor que 0'
+  date: Fecha
+  create_entry_button: Crear entrada
+  update_entry_button: Actualizar entrada
+  amount_of_splits_sum_not_total_validation_error: "La suma de los montos pagados debe coincidir con el monto total"
+  details_title: "Detalles"
+  category: "Categoría"
   select_category_dialog:
-    title: "Velg kategori"
-  split_faq_tooltip: "Åpne delt O-S-S"
+    title: "Seleccionar categoría"
+  split_faq_tooltip: "Abrir FAQ de divisiones"
   split_faq_link: "https://partido.rocks/faq-entry-management/"
 entry_details:
-  title: Detaljer
-  created_by: Opprettet av
-  splits: Oppdelinger
-  parts: 'Deler:'
-  paid: 'Betalt:'
+  title: Detalles
+  created_by: Creado por
+  splits: Divisiones
+  parts: 'Partes:'
+  paid: 'Pagado:'
 account:
-  details: Detaljer
-  title: Min konto
-  logout_tooltip: Logg ut
-  username: Brukernavn
-  username_empty_validation_error: 'Skriv inn et brukernavn'
-  username_too_long_validation_error: Maks. 50 tegn
-  email: E-post
-  email_already_in_use_validation_error: "E-postadressen er allerede registrert"
-  email_empty_validation_error: 'Skriv inn e-postadressen din'
-  email_invalid_validation_error: 'Skriv inn en gyldig e-postadresse'
-  email_too_long_validation_error: Maks. 50 tegn
-  password: Passord
-  current_password_input_required: 'Skriv inn ditt nåværende passord'
+  details: Detalles
+  title: Mi cuenta
+  logout_tooltip: Logout
+  username: Nombre de usuario
+  username_empty_validation_error: 'Por favor, ingresa un nombre de usuario'
+  username_too_long_validation_error: Max. 50 caracteres permitidos
+  email: Email
+  email_already_in_use_validation_error: "Email ya en uso"
+  email_empty_validation_error: 'Por favor, ingresa tu email'
+  email_invalid_validation_error: 'Por favor, ingresa un email válido'
+  email_too_long_validation_error: Max. 50 caracteres permitidos
+  password: Contraseña
+  current_password_input_required: 'Por favor, ingresa tu contraseña actual'
   change_password:
-    title: Endre passord
-    description: La stå tomt hvis du ikke vil endre ditt nåværende passord.
-    new_password: Nytt passord (valgfritt)
-    new_password_too_long_validation_error: Maks. 100 tegn
-    new_password_too_short_validation_error: Min. 8 tegn
-    new_password_confirmation: Bekreftelse av nytt passord
-    new_password_confirmation_not_matching_validation_error: Passordene samsvarer ikke
-  save_button: Lagre endringer
+    title: Cambiar contraseña
+    description: Deja en blanco si no deseas cambiar tu contraseña actual.
+    new_password: Nueva contraseña (opcional)
+    new_password_too_long_validation_error: Max. 100 caracteres permitidos
+    new_password_too_short_validation_error: Min. 8 caracteres necesarios
+    new_password_confirmation: Confirmar nueva contraseña
+    new_password_confirmation_not_matching_validation_error: Contraseñas no coinciden
+  save_button: Guardar cambios
   logout_dialog:
-    title: Logg ut
-    question: Logg ut?
-    answer_no: 'Nei, avbryt'
-    answer_yes: 'Ja, logg ut'
-  toast_account_settings_saved: Innstillinger lagret
-  toast_error_updating_account: Kunne ikke oppdatere kontoen
-  toast_login_failed: Kunne ikke logge inn. Prøv igjen senere.
+    title: Logout
+    question: '¿Quieres cerrar sesión?'
+    answer_no: 'No, cancelar'
+    answer_yes: 'Sí, logout'
+  toast_account_settings_saved: Cambios guardados
+  toast_error_updating_account: Se produjo un error al actualizar la cuenta
+  toast_login_failed: Acceso fallido. Por favor intenta nuevamente
   verification_required_dialog:
-    title: Bekreftelse kreves
-    info: Bekreft e-postadressen din ved å klikke på lenken du fikk per e-post. Det kan hende den har havnet i søppelposten.
-    ok: OK
-  delete: Slett konto
+    title: Verificación necesaria
+    info: Para continuar usando Partido, verifica tu dirección email haciendo clic en el enlace que te enviamos por email. No olvides revisar tu carpeta de spam también.
+    ok: Ok
+  delete: Eliminar cuenta
   delete_dialog:
-    title: Slett konto
-    question: Slett kontoen? Din info vil bli slettet fra databasen vår.
-    verification_info: Skriv «SLETT» (uten sitattegn, med store bokstaver) for å bekrefte sletting.
-    verification_word: SLETT
-    verification_field_label: Bekreft sletting
-    answer_delete: Bekreft
-    field_empty_validation_error: Feltet kan ikke stå tomt
-    wrong_verification_word_validation_error: Skriv inn riktig ord for å bekrefte sletting av konto
-    groups_not_settled_up_validation_error: Gjør opp alle grupper du er i før du sletter kontoen din
+    title: Eliminar cuenta
+    question: Seguro, que deseas eliminar tu cuenta? Todos tus datos personales se eliminarán de nuestra base de datos.
+    verification_info: Ingresa "ELIMINAR" (sin comillas, nota mayúsculas y minúsculas) para confirmar.
+    verification_word: ELIMINAR
+    verification_field_label: Confirmar eliminación
+    answer_delete: Confirmar
+    field_empty_validation_error: Éste campo no puede estar vacío
+    wrong_verification_word_validation_error: Por favor, ingresa la palabra correcta
+    groups_not_settled_up_validation_error: Necesitas liquidar tus grupos antes de eliminar tu cuenta.
 group_form:
-  toast_group_created: Ny gruppe opprettet
-  toast_group_creation_failed: Kunne ikke opprette gruppe
-  toast_group_settings_saved: Gruppeinnstillinger lagret
-  toast_group_settings_saving_failed: Kunne ikke lagre gruppeinnstillinger
-  create_group_title: Opprett gruppe
-  group_settings_title: Gruppeinnstillinger
-  group_name: Gruppenavn
-  group_name_empty_validation_error: 'Skriv inn et gruppenavn'
-  group_name_too_long_validation_error: Maks. 255 tegn
-  group_description: Beskrivelse (valgfritt)
-  group_description_too_long_validation_error: Maks. 255 tegn
-  currency: Valuta
-  currency_empty_validation_error: 'Angi en valuta'
-  currency_too_long_validation_error: Maks. 3 tegn
-  activate_join_mode: La andre brukere ta del i gruppen med en kode
-  create_group_button: Opprett gruppe
-  save_changes_button: Lagre endringer
-  join_mode: Deltagelsesmodus
-  details: Detaljer
+  toast_group_created: Nuevo grupo creado
+  toast_group_creation_failed: Creación de grupo fallida
+  toast_group_settings_saved: Cambios guardados
+  toast_group_settings_saving_failed: Se produjo un error al actualizar el grupo
+  create_group_title: Crear grupo
+  group_settings_title: Ajustes del grupo
+  group_name: Nombre del grupo
+  group_name_empty_validation_error: 'Por favor, ingresa un nombre de grupo'
+  group_name_too_long_validation_error: Max. 255 caracteres permitidos
+  group_description: Descripción (opcional)
+  group_description_too_long_validation_error: Max. 255 caracteres permitidos
+  currency: Moneda
+  currency_empty_validation_error: 'Por favor, ingresa una moneda'
+  currency_too_long_validation_error: Max. 3 caracteres permitidos
+  activate_join_mode: Dejar a otros usuarios unirse al grupo con un código
+  create_group_button: Crear grupo
+  save_changes_button: Guardar cambios
+  join_mode: Modo de unión
+  details: Detalles
   actions:
-    checkout: Gjør opp
-    leave_group: Forlat gruppen
-    delete_group: Slett gruppen
+    checkout: Revisa
+    leave_group: Salir del grupo
+    delete_group: Eliminar grupo
   checkout_dialog:
-    title: Gjør opp
-    question: Gjør opp gruppen nå og tøm oppføringslisten?
-    info: Alle gruppemedlemmer vil få beskjed om oppgjøret via e-post med en liste over anbefalinger om kompensasjonsbetaling.
-    answer_no: Nei, avbryt
-    answer_yes: Ja, gjør opp
-    checkout_failed: En feil inntraff. Prøv igjen senere.
-    checkout_precondition_failed: Alle saldoene er i null. Det er ingenting å gjøre opp nå.
-    loading: Loster inn …
+    title: Revisa
+    question: Deseas liquidar el grupo ahora y borrar la lista de entradas?
+    info: Todos los miembros del grupo serán notificados sobre ésta acción por correo electrónico con una lista de recomendaciones para los pagos de compensación.
+    answer_no: No, cancelar
+    answer_yes: Sí, continuar
+    checkout_failed: Ocurrió un error. Por favor, inténtalo de nuevo más tarde.
+    checkout_precondition_failed: Los saldos son todos cero, acción ahora no posible.
+    loading: Cargando...
   leave_group_dialog:
-    title: Forlat gruppen
-    question: Forlat gruppen?
-    answer_no: Nei, avbryt
-    answer_yes: Ja, forlat
-    group_not_settled_up_error: Gjør opp gruppen først
-    unexpected_error: En uventet feil inntraff
+    title: Salir del grupo
+    question: Estás seguro que deseas salir de éste grupo?
+    answer_no: No, cancelar
+    answer_yes: Sí, continuar
+    group_not_settled_up_error: Por favor, liquida el grupo primero
+    unexpected_error: Ha ocurrido un error inesperado
 login:
-  toast_login_failed: Kunne ikke logge inn. Prøv igjen.
-  login_failed_too_many_attempts: "For mange mislykkede innloggingsforsøk. Prøv igjen om fem minutter."
-  login_failed_not_verified: "Kontoen er ikke bekreftet. Sjekk e-posten din."
-  login_title: Logg inn
-  email: Email Adresse
-  email_empty_validation_error: 'Skriv inn e-postadressen din'
-  password: Passord
-  password_empty_validation_error: 'Skriv inn passordet ditt'
-  remember: Husk meg
-  login_button: Logg inn
-  signup_button: Registrer deg
-  login_failed_unauthorized: "Kunne ikke logge inn. Sjekk at detaljene stemmer."
-  forgot_password_button: Glemt passordet?
-forgot_password:
-  toast_password_reset_request_failed: Noe gikk galt. Prøv igjen senere.
-  title: Tilbakestill passordet
-  submit_button: Tilbakestill passord
-  request_success:
-    title: Tilbakestilling av passord forespurt
-    login_button: Gå til innloggingen
-    success_notice: Du har bedt om å få passordet ditt tilbakestilt.
-    additional_info: Hvis angitt e-postadresse er registrert får du en e-post for å bekrefte at du eier kontoen. Husk å sjekke søppelposten hvis du ikke får e-posten innen fem minutter.
-    additional_info_2: After clicking on the verification link in the email, you'll get a new password.
+  toast_login_failed: Acceso fallido. Por favor intenta nuevamente
+  login_failed_too_many_attempts: "Demasiados intentos fallidos. Intenta nuevamente en 5 minutos."
+  login_failed_not_verified: "Cuenta no verificada. Por favor revisa tus correos electrónicos."
+  login_title: Login
+  email: Email
+  email_empty_validation_error: 'Por favor, ingresa tu email'
+  password: Contraseña
+  password_empty_validation_error: 'Por favor, ingresa tu contraseña'
+  remember: Recuérdame
+  login_button: Login
+  signup_button: Crear nueva cuenta
+  login_failed_unauthorized: "Acceso fallido. Por favor verifica tus datos ingesados"
+  forgot_password_button: Contraseña olvidada?
 signup:
-  title: Registrering
-  username: Brukernavn
-  password_empty_validation_error: 'Skriv inn et passord'
-  password_too_long_validation_error: Maks. 100 tegn
-  password_too_short_validation_error: Min. 8 tegn
-  password_confirmation: Passordbekreftelse
-  password_confirmation_not_matching_validation_error: Passordene samsvarer ikke
-  accept_privacy_text_before_link: "Jeg har lest og samtykker til "
-  accept_privacy_text_after_link: " for Partido"
-  privacy_policy_link_text: "personvernspraksisen"
+  title: Crear nueva cuenta
+  username: Nombre de usuario
+  password_empty_validation_error: 'Por favor, ingresa una contraseña'
+  password_too_long_validation_error: Max. 100 caracteres permitidos
+  password_too_short_validation_error: Min. 8 caracteres necesarios
+  password_confirmation: Confirmar contraseña
+  password_confirmation_not_matching_validation_error: Las contraseñas no coinciden
+  accept_privacy_text_before_link: "He leído y acepto la "
+  accept_privacy_text_after_link: " de Partido"
+  privacy_policy_link_text: "política de privacidad"
   privacy_policy_link_url: 'https://partido.rocks/privacy/'
-  privacy_policy_not_accepted_error: Du kan kun bruke Partido hvis du samtykker til
+  privacy_policy_not_accepted_error: Puedes usar Partido solo si aceptas
   success:
-    title: Bekreftelse av e-postadresse kreves
-    success_notice: Du er registrert!
-    additional_info: Før du kan begynne å bruke Partido må du bekrefte e-postadressen din ved å klikke på lenken du fikk i e-posten du fikk.
-    additional_info_2: Du bør få anmodning om bekreftelse per e-post i løpet av et par minutter. Sjekk søppelposten din hvis du ikke finner den.
-    login_button: Du kan nå logge inn.
+    title: Verificación de email necesaria
+    success_notice: '¡Te has registrado con éxito!'
+    additional_info: Antes de comenzar usando la Partido App, por favor verifica tu dirección de email mediante el enlace que te enviamos por email.
+    additional_info_2: El email debería llegar en breve. No olvides examinar la carpeta de spam, si necesario.
+    login_button: Listo, continuar con login!
 entry:
   categories:
-    SUBSCRIPTIONS_DONATIONS: "Abonnementer og donasjoner"
-    BARS_RESTAURANTS: "Barer og restauranter"
-    EDUCATION: "Utdannelse"
-    FOOD_GROCERIES: "Mat og dagligvarer"
-    FAMILY_FRIENDS: "Familie og venner"
-    LEISURE_ENTERTAINMENT: "Nytelse og underholdning"
-    HEALTH_DRUGSTORES: "Helse og apotek"
-    HOUSEHOLD_UTILITIES: "Husholdningsartikler og utstyr"
-    MEDIA_ELECTRONICS: "Media og elektronikk"
-    TRAVEL_VACATION: "Reise og ferie"
+    SUBSCRIPTIONS_DONATIONS: "Suscripciones & Donaciones"
+    BARS_RESTAURANTS: "Bares & Restaurantes"
+    EDUCATION: "Educación"
+    FOOD_GROCERIES: "Alimentos & Comestibles"
+    FAMILY_FRIENDS: "Familia & Amigos"
+    LEISURE_ENTERTAINMENT: "Ocio & Entretenimiento"
+    HEALTH_DRUGSTORES: "Salud & Drogerías"
+    HOUSEHOLD_UTILITIES: "Hogar & Utilidades"
+    MEDIA_ELECTRONICS: "Medios & Electrónica"
+    TRAVEL_VACATION: "Viajes & Vacaciones"
     SHOPPING: "Shopping"
-    MISCELLANEOUS: "Ymse"
-    TAXES_DUTIES: "Skatt og avgifter"
-    TRANSPORT_CAR: "Transport og bil"
-    UNCATEGORIZED: "Ikke kategorisert"
-    INSURANCE_FINANCE: "Forsikring og finans"
+    MISCELLANEOUS: "Diversos"
+    TAXES_DUTIES: "Impuestos & Deberes"
+    TRANSPORT_CAR: "Transporte & Auto"
+    UNCATEGORIZED: "Sin categoría"
+    INSURANCE_FINANCE: "Seguros & Finanzas"
 date:
-  TODAY: I dag
-  YESTERDAY: I går
-  THIS_WEEK: Denne uken
-  THIS_MONTH: Denne måneden
-  MONTH_1: Januar
-  MONTH_2: Februar
-  MONTH_3: Mars
-  MONTH_4: April
-  MONTH_5: Mai
-  MONTH_6: Juni
-  MONTH_7: Juli
-  MONTH_8: August
-  MONTH_9: September
-  MONTH_10: Oktober
-  MONTH_11: November
-  MONTH_12: Desember
+  TODAY: Hoy
+  YESTERDAY: Ayer
+  THIS_WEEK: Ésta semana
+  THIS_MONTH: Éste mes
+  MONTH_1: Enero
+  MONTH_2: Febrero
+  MONTH_3: Marzo
+  MONTH_4: Abril
+  MONTH_5: Mayo
+  MONTH_6: Junio
+  MONTH_7: Julio
+  MONTH_8: Agosto
+  MONTH_9: Septiembre
+  MONTH_10: Octubre
+  MONTH_11: Noviembre
+  MONTH_12: Diciembre
 checkout_result:
-  title: Gjør opp
-  subtitle: Gruppen er gjort opp
-  success_notice: Gruppen din har blitt gjort opp og oppføringslisten har blitt tømt.
-  additional_info: Alle gruppemedlemmer vil motta e-post med ytterligere info om oppgjør, inkludert en liste over anbefalinger om kompensasjonsbetaling.
+  title: Revisa
+  subtitle: Grupo liquidado
+  success_notice: Tu grupo ha sido liquidado y la lista de entradas ha sido borrada.
+  additional_info: Todos los miembros del grupo recibirán un correo electrónico con información adicional sobre ésta acción, incluida una lista con los pagos de compensación recomendados.
   compensation_payments:
-    title: Kompensasjonsbetaling
+    title: Pagos de compensación
 charts:
   weekly_expenses:
-    title: Ukentlige utgifter
-    tooltip: Totalt
+    title: Gastos semanales
+    tooltip: Total
   monthly_expenses:
-    title: Månedlige utgifter
-    tooltip: Totalt
+    title: Gastos mensuales
+    tooltip: Total
   dashboard:
-    title: Utgifter
-    this_week: Denne uken
-    last_week: Siste uke
-    this_month: Denne måneden
-    last_month: Forrige måned
+    title: Gastos
+    this_week: Esta semana
+    last_week: Semana pasada
+    this_month: Este mes
+    last_month: Mes pasado
   tips:
-    long_press_description: Lang-trykk på diagrammet for flere detaljer
+    long_press_description: Mantener pulsado el gráfico para más detalles
