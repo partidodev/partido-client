@@ -202,7 +202,7 @@ login:
   login_failed_unauthorized: "Acceso fallido. Por favor verifica tus datos ingesados"
   forgot_password_button: Contraseña olvidada?
 forgot_password:
-  toast_password_reset_request_failed: Ocurrió un error. Por favor, inténtalo de más tarde.
+  toast_password_reset_request_failed: Ocurrió un error. Por favor, inténtalo más tarde.
   title: Restablecer contraseña
   submit_button: Restablecer contraseña
   request_success:
