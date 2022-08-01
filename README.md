@@ -52,6 +52,12 @@ The command to re-generate all icons, using the image files specified in the pre
 
 ## Translating Partido
 
+![POEditor](https://img.shields.io/poeditor/progress/550083/en?style=flat-square&token=36600ce7684f3410cc4469c2ff3d305c)
+![POEditor](https://img.shields.io/poeditor/progress/550083/de?style=flat-square&token=36600ce7684f3410cc4469c2ff3d305c)
+![POEditor](https://img.shields.io/poeditor/progress/550083/es?style=flat-square&token=36600ce7684f3410cc4469c2ff3d305c)
+![POEditor](https://img.shields.io/poeditor/progress/550083/pt?style=flat-square&token=36600ce7684f3410cc4469c2ff3d305c)
+![POEditor](https://img.shields.io/poeditor/progress/550083/nb?style=flat-square&token=36600ce7684f3410cc4469c2ff3d305c)
+
 ### Online with POEditor
 
 You can contribute to existing languages or start with a new language online on poeditor.com.
