@@ -57,6 +57,7 @@ home:
     join_code_empty_validation_error: Ingresa el código de unión que recibiste
     join_code_invalid_validation_error: Por favor, ingresa un código de unión válido
     join_code_not_found_validation_error: Código no encontrado o deactivado
+    group_already_joined_validation_error: Ya eres miembro del grupo
     button_join: Unirse
   create_entry_tooltip: Crear entrada
   groups_tooltip: Grupos
@@ -200,6 +201,16 @@ login:
   signup_button: Crear nueva cuenta
   login_failed_unauthorized: "Acceso fallido. Por favor verifica tus datos ingesados"
   forgot_password_button: Contraseña olvidada?
+forgot_password:
+  toast_password_reset_request_failed: Ocurrió un error. Por favor, inténtalo de más tarde.
+  title: Restablecer contraseña
+  submit_button: Restablecer contraseña
+  request_success:
+    title: Restablecimiento de contraseña
+    login_button: Ir al login
+    success_notice: Has solicitado con éxito el restablecimiento de contraseña!
+    additional_info: Si la dirección de correo electrónico proporcionada existe en nuestra base de datos, te enviaremos un correo electrónico para verificar. Por favor, revisa también tu carpeta de spam si el correo electrónico no llega en 5 minutos.
+    additional_info_2: Después de hacer clic en el enlace de verificación en el correo electrónico, obtendrás una nueva contraseña.
 signup:
   title: Crear nueva cuenta
   username: Nombre de usuario
