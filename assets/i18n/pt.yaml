@@ -202,7 +202,7 @@ login:
   login_failed_unauthorized: "Falha no login, por favor confira seus dados."
   forgot_password_button: Esqueceu sua senha?
 forgot_password:
-  toast_password_reset_request_failed: An error occurred. Please try again later.
+  toast_password_reset_request_failed: Houve um erro. Por favor, tente novamente mais tarde.
   title: Reset password
   submit_button: Reset password
   request_success:
