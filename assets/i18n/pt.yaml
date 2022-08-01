@@ -13,7 +13,7 @@ home:
     title: Bem vindo ao Partido!
     subtitle: Selecione uma opção para começar
     info: Para começar a dividir despesas entre várias pessoas, você precisa criar um novo grupo e convidar seus amigos.
-    info2: Ou entre em um grupo já existente se você tem o código de um amigo. 
+    info2: Ou entre em um grupo já existente se você tem o código de um amigo.
     group_settings_tooltip: Configurações de grupos
     open_my_groups: Abrir meus grupos
     create_new_group: Criar um novo grupo
@@ -57,6 +57,7 @@ home:
     join_code_empty_validation_error: Por favor, digite o código que você recebeu
     join_code_invalid_validation_error: Por favor, digite um código válido
     join_code_not_found_validation_error: Código não encontrado ou desativado
+    group_already_joined_validation_error: You are already a member of this group
     button_join: Conectar-se
   create_entry_tooltip: Criar uma entrada
   groups_tooltip: Grupos
@@ -200,6 +201,16 @@ login:
   signup_button: Inscrever-se
   login_failed_unauthorized: "Falha no login, por favor confira seus dados."
   forgot_password_button: Esqueceu sua senha?
+forgot_password:
+  toast_password_reset_request_failed: An error occurred. Please try again later.
+  title: Reset password
+  submit_button: Reset password
+  request_success:
+    title: Password reset requested
+    login_button: Go to login
+    success_notice: You successfully requested to reset your password!
+    additional_info: If the provided email address exists in our database, we'll send out an email to verify it's you. Please also check your spam folder if the email doesn't arrive within 5 minutes.
+    additional_info_2: After clicking on the verification link in the email, you'll get a new password.
 signup:
   title: Inscrever-se
   username: Usuário
