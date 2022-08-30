@@ -61,6 +61,62 @@ void main() async {
             color: Color(0x0F000000),
             space: 0,
           ),
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.green,
+          ).copyWith(
+            secondary: Colors.green,
+            brightness: Brightness.light,
+          ),
+        ),
+        darkTheme: ThemeData.from(
+          colorScheme: ColorScheme.dark().copyWith(
+            secondary: Colors.green,
+            primary: Colors.green,
+          ),
+        ).copyWith(
+          toggleableActiveColor: Colors.green,
+          highlightColor: Colors.green,
+          indicatorColor: Colors.green,
+          //fontFamily: 'Roboto',
+          textTheme: defaultTextTheme(),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+              borderSide: BorderSide.none,
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
+            ),
+            errorStyle: TextStyle(
+              fontWeight: FontWeight.w400,
+              color: Color.fromRGBO(255, 99, 71, 1),
+            ),
+          ),
+          cardTheme: CardTheme(
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+              side: BorderSide(
+                color: Color(0x0F000000),
+                width: 1,
+              ),
+            ),
+          ),
+          dividerTheme: DividerThemeData(
+            thickness: 1,
+            color: Color(0x0F000000),
+            space: 0,
+          ),
+          textSelectionTheme: TextSelectionThemeData(
+            selectionHandleColor: Colors.green,
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Colors.green,
+          ),
         ),
         navigatorKey: NavigationService.navigationKey,
         routes: {

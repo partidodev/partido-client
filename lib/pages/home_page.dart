@@ -1,7 +1,6 @@
 import 'package:custom_rounded_rectangle_border/custom_rounded_rectangle_border.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:logger/logger.dart';
 import 'package:partido_client/model/remote/group.dart';
 import 'package:partido_client/model/remote/group_join_body.dart';
@@ -20,7 +19,6 @@ import '../app_state.dart';
 import '../linear_icons_icons.dart';
 import '../navigation_service.dart';
 
-import 'dart:ui';
 import 'package:intl/intl.dart';
 
 import 'home_page/charts_tab.dart';

@@ -66,7 +66,7 @@ class ChartsTab {
                   xValueMapper: (WeeklyExpense weeklyExpense, _) => weeklyExpense.label,
                   yValueMapper: (WeeklyExpense weeklyExpense, _) => weeklyExpense.expense,
                   width: 1.5,
-                  color: Theme.of(context).accentColor,
+                  color: Colors.green,
                   name: FlutterI18n.translate(context, "charts.weekly_expenses.tooltip"),
                   markerSettings: MarkerSettings(
                     isVisible: true,
