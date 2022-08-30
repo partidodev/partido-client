@@ -510,7 +510,11 @@ class _EntryFormPageState extends State<EntryFormPage> {
   }
 
   double _normalizeDouble(String _doubleString) {
-    return double.parse(_doubleString.replaceAll(",", "."));
+    _doubleString = _doubleString.replaceAll(",", ".");
+    while (_doubleString.indexOf(".") != _doubleString.lastIndexOf(".")) {
+      _doubleString = _doubleString.replaceFirst(".", "");
+    }
+    return double.parse(_doubleString);
   }
 
   void _createEntry() async {
