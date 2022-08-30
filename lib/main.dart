@@ -25,7 +25,6 @@ void main() async {
         title: 'Partido',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          brightness: Brightness.light,
           primarySwatch: Colors.green,
           canvasColor: Colors.white,
           fontFamily: 'Roboto',
@@ -63,54 +62,6 @@ void main() async {
             space: 0,
           ),
         ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          toggleableActiveColor: Colors.green,
-          highlightColor: Colors.green,
-          indicatorColor: Colors.green,
-          fontFamily: 'Roboto',
-          textTheme: defaultTextTheme(),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: BorderSide.none,
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromRGBO(255, 99, 71, 1)),
-            ),
-            errorStyle: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Color.fromRGBO(255, 99, 71, 1),
-            ),
-          ),
-          cardTheme: CardTheme(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
-              side: BorderSide(
-                color: Color(0x0F000000),
-                width: 1,
-              ),
-            ),
-          ),
-          dividerTheme: DividerThemeData(
-            thickness: 1,
-            color: Color(0x0F000000),
-            space: 0,
-          ),
-          textSelectionTheme: TextSelectionThemeData(
-            selectionHandleColor: Colors.green,
-          ),
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.green,
-          ).copyWith(
-            secondary: Colors.green,
-          ),
-        ),
         navigatorKey: NavigationService.navigationKey,
         routes: {
           '/': (_) => HomePage(),
@@ -128,11 +79,12 @@ void main() async {
           Locale('en'),
           Locale('es'),
           Locale('pt'),
+          Locale('nb', 'NO'),
         ],
         localizationsDelegates: [
           FlutterI18nDelegate(
             translationLoader: FileTranslationLoader(
-              useCountryCode: false,
+              useCountryCode: true,
               fallbackFile: 'en',
               basePath: 'assets/i18n',
               decodeStrategies: [YamlDecodeStrategy()],
@@ -142,7 +94,8 @@ void main() async {
             },
           ),
           GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
         ],
       )));
 }

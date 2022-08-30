@@ -6,8 +6,8 @@ global:
   cancel: Cancelar
   date_format: dd-MM-yyyy
   date_format_short: dd-MM
-  currency_format: '#.##0,00'
-  part_format: '#.##0,###'
+  currency_format: '#,##0.00'
+  part_format: '#,##0.###'
 home:
   welcome:
     title: Bem vindo ao Partido!
