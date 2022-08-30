@@ -8,7 +8,7 @@ import 'package:partido_client/model/remote/user.dart';
 import 'package:partido_client/widgets/partido_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
@@ -660,8 +660,8 @@ class _EntryFormPageState extends State<EntryFormPage> {
 
   _launchFaqUrl(BuildContext context) async {
     String url =  FlutterI18n.translate(context, "entry_form.split_faq_link");
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }

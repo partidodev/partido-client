@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:retrofit/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../api/api.dart';
 import '../api/api_service.dart';
@@ -840,8 +840,8 @@ class _HomePageState extends State<HomePage> {
   _launchHomepageUrl(BuildContext context) async {
     String url =
         FlutterI18n.translate(context, "home.about_dialog.homepage_url");
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -850,8 +850,8 @@ class _HomePageState extends State<HomePage> {
   _launchImprintUrl(BuildContext context) async {
     String url =
         FlutterI18n.translate(context, "home.about_dialog.imprint_url");
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -860,8 +860,8 @@ class _HomePageState extends State<HomePage> {
   _launchPrivacyPolicyUrl(BuildContext context) async {
     String url =
         FlutterI18n.translate(context, "home.about_dialog.privacy_policy_url");
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -874,8 +874,8 @@ class _HomePageState extends State<HomePage> {
       query: 'subject=[Feedback] Partido Client',
     );
     String url = params.toString();
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -883,8 +883,8 @@ class _HomePageState extends State<HomePage> {
 
   _launchJoinModeFaqUrl(BuildContext context) async {
     String url =  FlutterI18n.translate(context, "home.join_mode.faq_link");
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
